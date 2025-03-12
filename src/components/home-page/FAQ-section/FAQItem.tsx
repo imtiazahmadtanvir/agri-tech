@@ -1,7 +1,7 @@
 const FAQItem = () => {
     return (
         <div>
-            
+            <div></div>
         </div>
     );
 };
