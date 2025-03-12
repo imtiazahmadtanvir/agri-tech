@@ -5,7 +5,7 @@ import Container from "./max-w-container/Container";
 const TopInfoBar = () => {
   return (
     <section className="bg-[#0D401C] ">
-      <Container className="flex items-center px-4 justify-between text-white py-5">
+      <Container className="flex items-center px-5 justify-between text-white py-5">
         <div className="bg-[#FFFFFF17] w-fit flex items-center gap-4 py-2 px-5 font-normal text-sm rounded-3xl">
           <h5>Welcome to AgriTech</h5>
           <span className="size-1.5 bg-[#F8C32C] rounded-full"></span>
