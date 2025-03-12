@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Container from "./max-w-container/Container";
 import Link from "next/link";
+import CommonButton from "./common-button/CommonButton";
 
 const Navbar = () => {
   return (
@@ -24,7 +25,9 @@ const Navbar = () => {
             </li>
           </ul>
           {/* button   */}
-          <div></div>
+          <div>
+            <CommonButton className="text-red-400">Get In Touch!</CommonButton>
+          </div>
         </div>
       </Container>
     </nav>
