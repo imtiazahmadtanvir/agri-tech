@@ -84,7 +84,7 @@ export default function PatnerSection() {
   return (
     <section className=" py-8 px-3 sm:py-12 sm:px-4 md:py-16 lg:py-20 xl:py-24">
       <div className="max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
-        <h2 className="text-center' text-3xl md:text-4xl font-bold mb-4 text-gray-600">
+        <h2 className="text-center mb-6 text-3xl md:text-4xl font-bold  text-gray-600">
           Agriculture Partners
         </h2>
 
