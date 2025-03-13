@@ -10,7 +10,7 @@ const services = [
 
 const ServicesBanner: React.FC = () => {
     return (
-        <section className="bg-green-700 text-white py-12">
+        <section className="bg-green-900 text-white py-12">
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
                 {services.map((service, index) => (
                     <div 
