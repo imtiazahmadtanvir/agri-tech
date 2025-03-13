@@ -3,13 +3,13 @@ import SectionBlock from "@/components/shared/section-block/Section-Block";
 
 const PricingPlans: React.FC = () => {
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 flex flex-col justify-center items-center">
       <SectionBlock
-        shortTitle="Our Specialty"
-        title="Premium Quality Rice"
-        description="We provide the best quality rice from organic farms."
+        shortTitle="Pricing Tables"
+        title="Pricing Plans For You"
+        description="Duis eleifend euismod arcu, nec faucibus mauris finibus id. Integer mattis, tellus non finibus rutrum."
       ></SectionBlock>
-      <div className="flex justify-center gap-6 p-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
         <PricingCard
           title="Basic Plan"

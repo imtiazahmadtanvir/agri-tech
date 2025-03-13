@@ -53,8 +53,8 @@ const PricingCard: React.FC<PricingCardProps> = ({
           </li>
         ))}
       </ul>
-      <button className="mt-6 bg-white text-green-800 p-2 pl-5 gap-5 rounded-full flex justify-between items-center">
-        Get Started <span className="bg-yellow-400 p-3 rounded-full"><MdArrowForwardIos /></span>
+      <button className="mt-6 bg-white text-green-800 p-2  gap-5 rounded-full flex justify-between items-center">
+        <span className="px-5 font-semibold">Get Started</span> <span className="bg-yellow-400 p-3 rounded-full"><MdArrowForwardIos /></span>
       </button>
     </div>
   );

@@ -22,7 +22,7 @@ const testimonials: Testimonial[] = [
     role: "Director, Radical Orange Pty Ltd.",
     message:
       "Having been a host farmer for three seasons, we've seen firsthand the difference this internship makes in beginning farmers and host farms alike.",
-    image: "https://i.ibb.co.com/tcRQDCQ/depositphotos-179308454-stock-illustration-unknown-person-silhouette-glasses-profile.webp",
+    image: "https://i.ibb.co/tcRQDCQ/depositphotos-179308454-stock-illustration-unknown-person-silhouette-glasses-profile.webp",
   },
   {
     title: "Rogue Farm Corps Has Helped Us Recruit And Retain Great! ",
@@ -72,7 +72,7 @@ const TestimonialCard: React.FC = () => {
   const [isHoveredNext, setIsHoveredNext] = useState(false);
 
   return (
-    <section className="w-full py-10 relative flex justify-center items-center">
+    <section className="max-w-7xl mx-auto py-10 relative flex justify-center items-center">
       <Image
         src={isHoveredPrev ? "/icons/arrow.svg" : "/icons/arrow hover.svg"}
         alt="Previous"
