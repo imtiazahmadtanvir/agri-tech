@@ -1,10 +1,4 @@
 import React from "react";
-import {
-  FaMapMarkerAlt,
-  FaEnvelope,
-  FaPhoneAlt,
-  FaClock,
-} from "react-icons/fa";
 import ContactInfo from "./ContactInfo";
 import ContactForm from "./ContactForm";
 

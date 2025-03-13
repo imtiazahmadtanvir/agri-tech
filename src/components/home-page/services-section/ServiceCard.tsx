@@ -6,11 +6,7 @@ type ServiceCardProps = {
   image: string;
 };
 
-const ServiceCard: React.FC<ServiceCardProps> = ({
-  title,
-  description,
-  image,
-}) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ title, image }) => {
   return (
     <section className="rounded-3xl">
       <div className="relative overflow-hidden h-fit w-fit">
