@@ -1,5 +1,6 @@
 import Container from "@/components/shared/max-w-container/Container";
 import ServiceCard from "./ServiceCard";
+import Image from "next/image";
 
 const ServicesOverview = () => {
   const data = [
@@ -27,8 +28,25 @@ const ServicesOverview = () => {
   ];
 
   return (
-    <section className="mb-5">
-      <div className="bg-[#F8C32C] h-[430px] py-8"></div>
+    <section className="mb-5 ">
+      <div className="relative">
+        <Image
+          alt="Service Mask"
+          width={478}
+          height={313}
+          className="absolute right-0 bottom-2"
+          src={"/shapes/chicken.svg"}
+        />
+        <div className="bg-[#F8C32C] h-[430px] py-8"></div>
+        <Image
+          style={{ width: "100%" }}
+          alt="Service Mask"
+          width={1920}
+          height={10}
+          className="-mt-1.5"
+          src={"/shapes/whiteMask.svg"}
+        />
+      </div>
 
       <Container className="flex items-center -mt-44 md:-mt-80" weight={1320}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-4">
