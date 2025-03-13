@@ -127,12 +127,12 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-yellow-400">News Posts</h3>
             <div className="space-y-4">
               <NewsPost
-                imageSrc="/footer-img1.webp"
+                imageSrc="/FooterImage/footer-img1.webp"
                 title="FMAC Business Center Continues to Deliver"
                 date="25 May 2023"
               />
               <NewsPost
-                imageSrc="/footer-img2.webp"
+                imageSrc="/FooterImage/footer-img2.webp"
                 title="Organic Farm Business Crop Insurance"
                 date="21 May 2023"
               />
