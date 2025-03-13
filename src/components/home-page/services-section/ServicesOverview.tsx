@@ -1,3 +1,4 @@
+import Container from "@/components/shared/max-w-container/Container";
 import ServiceCard from "./ServiceCard";
 
 const ServicesOverview = () => {
@@ -27,16 +28,18 @@ const ServicesOverview = () => {
 
   return (
     <section className="bg-[#F8C32C] py-8">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
-        {data.map((item) => (
-          <ServiceCard
-            key={item.id}
-            title={item.title}
-            description={item.description}
-            image={item.image}
-          />
-        ))}
-      </div>
+      <Container weight={1320}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-4">
+          {data.map((item) => (
+            <ServiceCard
+              key={item.id}
+              title={item.title}
+              description={item.description}
+              image={item.image}
+            />
+          ))}
+        </div>
+      </Container>
     </section>
   );
 };
