@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-// import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 const blogPosts = [
   {
@@ -23,8 +23,8 @@ const blogPosts = [
     title: "Breaking Down Barriers to Crop Insurance",
     excerpt:
       "Crop insurance is vital to ensuring the stability and security of farmers. This article highlights key strategies for improving access and overcoming challenges.",
-      image: "/BlogSection/blog2.webp",
-      date: "23",
+    image: "/BlogSection/blog2.webp",
+    date: "23",
     month: "May 24",
     author: "Hardson",
     categories: ["Bread", "Fruits"],
@@ -35,8 +35,8 @@ const blogPosts = [
     title: "The Potential of Virtual Reality in Agrifood",
     excerpt:
       "Virtual reality has the potential to revolutionize the agrifood industry by providing immersive training, simulation, and improved research methods.",
-      image: "/BlogSection/blog3.webp",
-      date: "23",
+    image: "/BlogSection/blog3.webp",
+    date: "23",
     month: "May 24",
     author: "Hardson",
     categories: ["Bread", "Fruits"],
@@ -45,21 +45,45 @@ const blogPosts = [
 ]
 
 export default function BlogSection() {
-  const [currentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
 
-  // const [currentIndex, setCurrentIndex] = useState(0)
+  // Check if we're on a mobile device
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
 
-  // const nextSlide = () => {
-  //   setCurrentIndex((prevIndex) => (prevIndex === blogPosts.length - 1 ? 0 : prevIndex + 1))
-  // }
+    // Initial check
+    checkIfMobile()
 
-  // const prevSlide = () => {
-  //   setCurrentIndex((prevIndex) => (prevIndex === 0 ? blogPosts.length - 1 : prevIndex - 1))
-  // }
+    // Add event listener for window resize
+    window.addEventListener("resize", checkIfMobile)
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkIfMobile)
+  }, [])
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % blogPosts.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + blogPosts.length) % blogPosts.length)
+  }
 
   // Calculate visible posts based on screen size and current index
   const getVisiblePosts = () => {
-    return blogPosts.slice(currentIndex, currentIndex + 3)
+    if (isMobile) {
+      return [blogPosts[currentIndex]]
+    } else {
+      // Show 3 posts in a sliding window effect
+      return [
+        blogPosts[currentIndex],
+        blogPosts[(currentIndex + 1) % blogPosts.length],
+        blogPosts[(currentIndex + 2) % blogPosts.length],
+      ]
+    }
   }
 
   return (
@@ -73,39 +97,42 @@ export default function BlogSection() {
             Stay updated with the latest trends and insights in the agricultural and food sectors.
           </p>
           <div className="flex justify-center my-6 h-4">
-            <Image src="/BlogSection/pxl-heading-shap.webp" alt="" width={40} height={20} className="text-yellow-400" />
+            <Image src="/BlogSection/pxl-heading-shap.webp" alt="" width={40} height={20} />
           </div>
         </div>
 
-        {/* Blog Posts Grid */}
+        {/* Blog Posts Grid with Carousel for Mobile */}
         <div className="relative">
-          {/* Navigation Buttons for Small Devices */}
-          {/* <button
+          {/* Navigation Buttons */}
+          <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors md:hidden lg:hidden"
-            aria-label="Previous posts"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors"
+            aria-label="Previous post"
           >
-            <ChevronLeft className="h-6 w-6 text-gray-600" />
-          </button> */}
+            <ChevronLeft className="md:hidden lg:hidden  h-6 w-6 text-gray-600" />
+          </button>
 
-          <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:w-full md:w-full w-11/12 mx-auto px-2 ">
             {getVisiblePosts().map((post) => (
               <article
                 key={post.id}
-                className="bg-white rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:-translate-y-1"
+                className="bg-white rounded-lg overflow-hidden shadow-md transition-all duration-500 hover:-translate-y-1 w-full max-w-full"
               >
                 {/* Image Container */}
-                <div className="relative h-64 w-full md:h-[250px] overflow-hidden">
+                <div className="relative h-64 w-full md:h-[250px] overflow-hidden group rounded-t-lg">
                   <Image
-                    src={post.image || "/placeholder.svg"}
+                    src={post.image}
                     alt={post.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width:full max-height-full) 50vw, 33vw"
+                    width={450}  // Set your desired width
+                    height={250} 
+                    className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                    // sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     loading="lazy"
                   />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-20"></div>
                   {/* Date Badge */}
-                  <div className="absolute top-4 left-4 bg-yellow-400 rounded-lg p-2 text-center">
+                  <div className="absolute top-4 left-4 bg-yellow-400 rounded-lg p-2 text-center transition-transform duration-300 group-hover:scale-110">
                     <span className="block text-2xl font-bold text-gray-800">{post.date}</span>
                     <span className="text-sm text-gray-700">{post.month}</span>
                   </div>
@@ -114,7 +141,7 @@ export default function BlogSection() {
                 {/* Content */}
                 <div className="p-6">
                   {/* Meta */}
-                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
                     <span className="flex items-center gap-1">
                       <span className="text-green-600">By</span> {post.author}
                     </span>
@@ -139,7 +166,7 @@ export default function BlogSection() {
                   {/* Continue Reading Link */}
                   <Link
                     href="#"
-                    className="inline-block text-green-600 hover:text-green-700 font-medium transition-colors after:content-[''] after:block after:w-0 after:h-0.5 after:bg-green-600 after:transition-all hover:after:w-full"
+                    className="inline-block text-green-600 hover:text-green-700 font-medium transition-colors"
                   >
                     Continue Reading
                   </Link>
@@ -148,14 +175,14 @@ export default function BlogSection() {
             ))}
           </div>
 
-          {/* Navigation Buttons for Small Devices */}
-          {/* <button
+          {/* Navigation Buttons */}
+          <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors md:hidden lg:hidden"
-            aria-label="Next posts"
+            className="absolute md:hidden lg:hidden right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors"
+            aria-label="Next post"
           >
             <ChevronRight className="h-6 w-6 text-gray-600" />
-          </button> */}
+          </button>
         </div>
       </div>
     </section>
