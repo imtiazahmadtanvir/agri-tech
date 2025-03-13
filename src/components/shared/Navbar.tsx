@@ -1,19 +1,22 @@
+"use client";
 import Image from "next/image";
 import Container from "./max-w-container/Container";
 import Link from "next/link";
 import CommonButton from "./common-button/CommonButton";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [isMenuOpen, setMenuOpen] = useState(false);
   return (
     <nav className="z-50 relative ">
       <Container className="px-5 my-5 bg-white">
         <div className="flex bg-white  justify-between items-center">
           {/* logo */}
           <div>
-            <Image src="/logo.png" alt="logo" width={200} height={50} />
+            <Image src="/logo.png" alt="logo" width={150} height={50} />
           </div>
           {/* nav links */}
-          <ul className="flex gap-5">
+          <ul className="md:flex hidden gap-5">
             <li>
               <Link href={"/"}>Home</Link>
             </li>
@@ -24,8 +27,11 @@ const Navbar = () => {
               <Link href={"/contact"}>Contact</Link>
             </li>
           </ul>
+          <button className="lg:hidden">
+            <Image height={45} width={45} alt="menu" src={"/icons/menu.svg"} />
+          </button>
           {/* button   */}
-          <div>
+          <div className="hidden lg:block">
             <CommonButton>Get In Touch!</CommonButton>
           </div>
         </div>
