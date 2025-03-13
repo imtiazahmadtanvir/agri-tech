@@ -5,8 +5,8 @@ import Image from "next/image";
 const AboutUs = () => {
   return (
     <section className="my-16">
-      <Container className="px-4 flex gap-7" weight={1320}>
-        <div className="md:w-3/4 flex flex-col items-start gap-5">
+      <Container className="px-4 flex flex-col lg:flex-row gap-7" weight={1320}>
+        <div className="lg:w-3/4 flex flex-col items-start gap-5">
           <p className="text-[#278D45]">
             We have 30 years of agriculture & eco farming experience
           </p>
@@ -36,7 +36,7 @@ const AboutUs = () => {
             src={"/hut.webp"}
           />
         </div>
-        <div className="md:w-2/4">
+        <div className="lg:w-2/4">
           <div className="bg-[#F8C32C] rounded-2xl p-5">
             <div className="border border-white rounded-2xl border-dashed">
               <div className="p-6 text-[#52320A]">
