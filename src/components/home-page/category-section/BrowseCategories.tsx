@@ -1,47 +1,46 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Apple, Package, Milk, Beef, Nut, Bird } from "lucide-react"
 
 const categories = [
   {
     id: 1,
     title: "Fruits And Vegetables",
-    icon: Apple,
+    imageSrc: "/categories/fruits-vegetables.png",
     bgColor: "bg-[#BDFFC7]",
     href: "#",
   },
   {
     id: 2,
     title: "Packaged Foods",
-    icon: Package,
+    imageSrc: "/categories/packaged-foods.png",
     bgColor: "bg-[#FFE5D8]",
     href: "#",
   },
   {
     id: 3,
     title: "Milks And Dairies",
-    icon: Milk,
+    imageSrc: "/categories/milk-dairies.png",
     bgColor: "bg-[#D6F3FF]",
     href: "#",
   },
   {
     id: 4,
     title: "Types Of Livestock Meat",
-    icon: Beef,
+    imageSrc: "/categories/livestock-meat.png",
     bgColor: "bg-[#FFF3D1]",
     href: "#",
   },
   {
     id: 5,
     title: "Health And Wellness",
-    icon: Nut,
+    imageSrc: "/categories/health-wellness.png",
     bgColor: "bg-[#FFE1EC]",
     href: "#",
   },
   {
     id: 6,
     title: "Poultry Meat And Eggs",
-    icon: Bird,
+    imageSrc: "/categories/poultry-eggs.png",
     bgColor: "bg-[#E8FFBD]",
     href: "#",
   },
@@ -61,7 +60,7 @@ export function BrowseCategories() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6">
           {categories.map((category) => (
             <Link
               key={category.id}
@@ -70,7 +69,13 @@ export function BrowseCategories() {
             >
               <div className="aspect-square p-6 flex flex-col items-center justify-center text-center">
                 <div className="relative w-20 h-20 mb-4 bg-white rounded-full flex items-center justify-center shadow-sm">
-                  <category.icon className="w-10 h-10 text-gray-600 transition-transform duration-300 group-hover:scale-110" />
+                  <Image
+                    src={category.imageSrc}
+                    alt={category.title}
+                    width={60}
+                    height={60}
+                    className="transition-transform duration-300 group-hover:scale-110"
+                  />
                 </div>
                 <h3 className="text-base font-semibold text-gray-800 group-hover:text-green-600 transition-colors">
                   {category.title}
@@ -85,4 +90,3 @@ export function BrowseCategories() {
     </section>
   )
 }
-
