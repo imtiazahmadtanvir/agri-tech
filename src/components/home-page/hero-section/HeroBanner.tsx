@@ -48,7 +48,7 @@ const HeroBanner: React.FC = () => {
   ];
 
   return (
-    <section className="relative -mt-2 z-0">
+    <section className="relative -mt-2">
       <Swiper
         modules={[Navigation, A11y]}
         spaceBetween={0}
@@ -59,7 +59,7 @@ const HeroBanner: React.FC = () => {
       >
         {data.map((item) => (
           <SwiperSlide key={item.id}>
-            <div className="relative w-full h-[600px]">
+            <div className="relative w-full h-[600px] ">
               <Image
                 src={item.image}
                 alt="slide"

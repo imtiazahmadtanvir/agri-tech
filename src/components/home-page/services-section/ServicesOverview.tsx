@@ -27,8 +27,10 @@ const ServicesOverview = () => {
   ];
 
   return (
-    <section className="bg-[#F8C32C] py-8">
-      <Container weight={1320}>
+    <section className="mb-5">
+      <div className="bg-[#F8C32C] h-[430px] py-8"></div>
+
+      <Container className="flex items-center -mt-44 md:-mt-80" weight={1320}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-4">
           {data.map((item) => (
             <ServiceCard
