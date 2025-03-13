@@ -48,7 +48,7 @@ const NewsPost : React.FC<NewsPostProps>  = ({ imageSrc, title, date }) => (
   <div className="flex">
     <div className="w-16 h-16 mr-2 flex-shrink-0 overflow-hidden rounded-sm">
       <Image
-        src={imageSrc || "/public/blog-post-7-300x300.webp"}
+        src={imageSrc || "/blog-post-7-300x300.webp"}
         width={64}
         height={64}
         alt=""
@@ -102,15 +102,22 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
           <div className="flex items-center">
             <div className="mr-2">
-              <div className="bg-yellow-400 p-1 rounded-sm">
-                <div className="w-6 h-6 relative">
+              <div className="bg-yellow mx-auto rounded-sm">
+                {/* <div className="w-6 h-6 relative">
                   <div
                     className="absolute inset-0 bg-green-700 rounded-sm"
                     style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}
                     aria-hidden="true"
                   ></div>
                   <div className="absolute inset-0 flex items-center justify-center text-yellow-400 font-bold">AT</div>
-                </div>
+                </div> */}
+                <Image
+                            src="/Web-logo/web-log-with-bg.png" // Ensure this file exists in the public folder
+                            width={40}
+                            height={50}
+                            alt="Agri-Tech Logo"
+                            className="rounded-md"
+                />
               </div>
             </div>
             <div>
