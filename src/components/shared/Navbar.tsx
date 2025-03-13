@@ -5,9 +5,9 @@ import CommonButton from "./common-button/CommonButton";
 
 const Navbar = () => {
   return (
-    <nav>
-      <Container className="px-5">
-        <div>
+    <nav className="z-50 relative ">
+      <Container className="px-5 my-5 bg-white">
+        <div className="flex bg-white  justify-between items-center">
           {/* logo */}
           <div>
             <Image src="/logo.png" alt="logo" width={200} height={50} />
@@ -26,10 +26,19 @@ const Navbar = () => {
           </ul>
           {/* button   */}
           <div>
-            <CommonButton className="text-red-400">Get In Touch!</CommonButton>
+            <CommonButton>Get In Touch!</CommonButton>
           </div>
         </div>
       </Container>
+      <div className="w-full">
+        <Image
+          src={"/shapes/navMask.svg"}
+          style={{ width: "100%" }}
+          alt=""
+          width={1920}
+          height={9}
+        />
+      </div>
     </nav>
   );
 };

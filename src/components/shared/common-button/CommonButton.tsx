@@ -18,7 +18,9 @@ export default function CommonButton({
 }: CommonButtonProps) {
   return (
     <button
-      className={`${className} ${textColor} ${bgColor} ${hoverBgColor} text-white flex items-center p-1.5 rounded-full`}
+      className={`${className} ${textColor} ${bgColor} ${
+        hoverBgColor === "hover:bg-none" ? "" : hoverBgColor
+      } flex items-center p-1.5 rounded-full transition duration-300`}
     >
       <span className="pl-6 pr-7 font-medium">{children}</span>
       <span className="bg-[#F8C32C] p-3 text-xl text-[#0D401C] rounded-full">
