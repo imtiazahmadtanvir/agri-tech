@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/shared/Footer";
 import PatnerSection from "@/components/home-page/patner-section/partner-section";
 import BlogSection from "@/components/home-page/blog-section/blog-section";
+import { BrowseCategories } from "@/components/home-page/category-section/BrowseCategories";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
         {children}
          
         </main>
+        <BrowseCategories></BrowseCategories>
         <BlogSection></BlogSection>
         <PatnerSection></PatnerSection>
         <Footer></Footer>
