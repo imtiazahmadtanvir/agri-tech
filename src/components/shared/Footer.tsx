@@ -1,11 +1,29 @@
 "use client"
 
-import Image from "next/image"
-import Link from "next/link"
-import { Mail, Phone, MapPin, Clock, Facebook, Twitter, Instagram, Youtube } from "lucide-react"
+import Image from "next/image";
+import Link from "next/link";
+import { Clock,Facebook, Instagram, Twitter, Youtube, MapPin, Mail, Phone } from "lucide-react";
 
+// Define TypeScript interfaces
+interface SocialLinkProps {
+    href: string;
+    icon: React.ElementType;
+    label: string;
+  }
+
+  interface ContactItemProps {
+    icon: React.ElementType;
+    children: React.ReactNode;
+  }
+  
+  interface NewsPostProps {
+    imageSrc: string;
+    title: string;
+    date: string;
+  }
+  
 // Social media link component for reusability
-const SocialLink = ({ href, icon: Icon, label }) => (
+const SocialLink: React.FC<SocialLinkProps> = ({ href, icon: Icon, label }) => (
   <Link
     href={href}
     className="bg-yellow-400 text-[#0a4a1c] rounded-full p-2 hover:bg-yellow-300 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 focus:ring-offset-[#0a4a1c]"
@@ -17,15 +35,16 @@ const SocialLink = ({ href, icon: Icon, label }) => (
 )
 
 // Contact item component for reusability
-const ContactItem = ({ icon: Icon, children }) => (
+const ContactItem : React.FC<ContactItemProps>  = ({ icon: Icon, children }) => (
   <li className="flex items-start">
     <Icon size={18} className="mr-2 mt-1 flex-shrink-0 text-yellow-400" aria-hidden="true" />
     <span className="text-sm">{children}</span>
   </li>
 )
 
+
 // News post component for reusability
-const NewsPost = ({ imageSrc, title, date }) => (
+const NewsPost : React.FC<NewsPostProps>  = ({ imageSrc, title, date }) => (
   <div className="flex">
     <div className="w-16 h-16 mr-2 flex-shrink-0 overflow-hidden rounded-sm">
       <Image
