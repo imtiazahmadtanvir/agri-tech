@@ -84,11 +84,11 @@ export default function PatnerSection() {
   return (
     <section className=" py-8 px-3 sm:py-12 sm:px-4 md:py-16 lg:py-20 xl:py-24">
       <div className="max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
-        <h2 className="text-center  text-3xl sm:text-2xl font-3xl sm:font-2xl font-bold text-gray-700 mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+        <h2 className="text-center' text-3xl md:text-4xl font-bold mb-4 text-gray-600">
           Agriculture Partners
         </h2>
 
-        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10" role="list" aria-label="Agriculture partner logos">
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8 lg:gap-10" role="list" aria-label="Agriculture partner logos">
           {logos.map((logo, index) => (
             <div key={logo.name} className="flex items-center justify-center p-2 sm:p-3 md:p-4 transition-all duration-300 hover:opacity-80 focus-within:ring-2 focus-within:ring-green-600 rounded-md" role="listitem">
               <div className="relative w-full h-12 xs:h-14 sm:h-16 md:h-18 lg:h-20 xl:h-24">
