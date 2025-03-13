@@ -3,6 +3,7 @@ import HeroBanner from "./hero-section/HeroBanner";
 import ServicesOverview from "./services-section/ServicesOverview";
 import StatsOverview from "./stats-section/StatsOverview";
 import FAQSection from "./FAQ-section/FAQSection";
+import AboutUs from "./about-us-section/AboutUs";
 
 const HomePage = () => {
   return (
@@ -20,8 +21,9 @@ const HomePage = () => {
         />
       </div>
       <ServicesOverview />
-      <StatsOverview/>
-      <FAQSection/>
+      <AboutUs />
+      <StatsOverview />
+      <FAQSection />
     </section>
   );
 };
