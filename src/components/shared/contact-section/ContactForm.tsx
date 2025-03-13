@@ -1,7 +1,9 @@
 const ContactForm = () => {
   return (
     <div className="bg-gray-100 shadow-lg p-6 rounded-lg">
-      <h1 className="my-3 text-green-700 text-xs">Let's Cooperate Together</h1>
+      <h1 className="my-3 text-green-700 text-xs">
+        Let&apos;s Cooperate Together
+      </h1>
       <h2 className="mb-2 font-bold text-black text-2xl">Contact Us Today!</h2>
       <p className="mb-6 text-gray-600 text-xs">
         We will reply within 24 hours via email, thank you for contacting us.
