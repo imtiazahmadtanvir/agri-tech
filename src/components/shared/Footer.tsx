@@ -116,7 +116,7 @@ export default function Footer() {
                             width={40}
                             height={50}
                             alt="Agri-Tech Logo"
-                            className="rounded-md"
+                            className="rounded-xl"
                 />
               </div>
             </div>
