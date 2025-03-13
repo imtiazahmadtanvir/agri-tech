@@ -1,9 +1,11 @@
+import HeroBanner from "./hero-section/HeroBanner";
+
 const HomePage = () => {
-    return (
-        <div>
-            <h1>Home Page</h1>
-        </div>
-    );
+  return (
+    <section className="-z-20">
+      <HeroBanner />
+    </section>
+  );
 };
 
 export default HomePage;
