@@ -27,7 +27,9 @@ const Navbar = () => {
               <Link href={"/contact"}>Contact</Link>
             </li>
           </ul>
-          <button></button>
+          <button className="lg:hidden">
+            <Image height={45} width={45} alt="menu" src={"/icons/menu.svg"} />
+          </button>
           {/* button   */}
           <div className="hidden lg:block">
             <CommonButton>Get In Touch!</CommonButton>
