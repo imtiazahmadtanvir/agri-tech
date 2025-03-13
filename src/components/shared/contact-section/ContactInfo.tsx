@@ -1,12 +1,15 @@
+import Image from "next/image";
 import { FaClock, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 const ContactInfo = () => {
   return (
     <div>
-      <img
-        src="/farmer.png" // Directly reference the image in public folder
+      <Image
+        src="/farmer.png" // Image from public folder
         alt="Farmer"
         className="rounded-lg w-full h-56 object-cover"
+        width={500} // Set the width of the image
+        height={224} // Set the height of the image
       />
       <div className="space-y-4 bg-yellow-500 shadow-lg mt-6 p-6 rounded-lg text-xs">
         <div className="flex items-center gap-2">
