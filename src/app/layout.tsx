@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/shared/Footer";
-import PatnerSection from "@/components/home-page/patner-section/partner-section";
-import BlogSection from "@/components/home-page/blog-section/blog-section";
-import { BrowseCategories } from "@/components/home-page/category-section/BrowseCategories";
 import Navbar from "@/components/shared/Navbar";
 import TopInfoBar from "@/components/shared/TopInfoBar";
 
@@ -33,16 +30,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-                <TopInfoBar />
-                <Navbar />
- 
-             
-             {children}
-        <BrowseCategories></BrowseCategories>
-        <BlogSection></BlogSection>
-        <PatnerSection></PatnerSection>
-        <Footer></Footer>
+        <TopInfoBar />
+        <Navbar />
 
+        {children}
+
+        <Footer></Footer>
       </body>
     </html>
   );
