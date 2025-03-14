@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import StatCard from "./StatCard";
 import Image from "next/image";
+import { Swiper as SwiperType } from "swiper"; // Import Swiper's type
 
 interface Testimonial {
   title: string;
@@ -22,15 +23,16 @@ const testimonials: Testimonial[] = [
     role: "Director, Radical Orange Pty Ltd.",
     message:
       "Having been a host farmer for three seasons, we've seen firsthand the difference this internship makes in beginning farmers and host farms alike.",
-    image: "https://i.ibb.co/tcRQDCQ/depositphotos-179308454-stock-illustration-unknown-person-silhouette-glasses-profile.webp",
+    image:
+      "https://i.ibb.co/tcRQDCQ/depositphotos-179308454-stock-illustration-unknown-person-silhouette-glasses-profile.webp",
   },
   {
-    title: "Rogue Farm Corps Has Helped Us Recruit And Retain Great! ",
+    title: "Rogue Farm Corps Has Helped Us Recruit And Retain Great!",
     name: "SINCERELY",
     role: "General Agriculture Crop Consultant.",
     message:
       "As you know I am an organic wheat farmer here in Wyoming and we had one of driest and coldest winters on record.",
-    image: "https://i.ibb.co.com/Vc3Tx49K/download-3.jpg",
+    image: "https://i.ibb.co/Vc3Tx49K/download-3.jpg",
   },
   {
     title: "The Best Farm I Trust Uses Products",
@@ -38,15 +40,15 @@ const testimonials: Testimonial[] = [
     role: "Director, Radical Orange Pty Ltd.",
     message:
       "Having been a host farmer for three seasons, we've seen firsthand the difference this internship makes in beginning farmers and host farms alike.",
-    image: "https://i.ibb.co.com/q3NHPMxG/Add-a-subheading.jpg",
+    image: "https://i.ibb.co/q3NHPMxG/Add-a-subheading.jpg",
   },
   {
-    title: "Rogue Farm Corps Has Helped Us Recruit And Retain Great! ",
+    title: "Rogue Farm Corps Has Helped Us Recruit And Retain Great!",
     name: "SINCERELY",
     role: "General Agriculture Crop Consultant.",
     message:
       "As you know I am an organic wheat farmer here in Wyoming and we had one of driest and coldest winters on record.",
-    image: "https://i.ibb.co.com/k1GXKQP/how-to-create-online-course.png",
+    image: "https://i.ibb.co/k1GXKQP/how-to-create-online-course.png",
   },
   {
     title: "The Best Farm I Trust Uses Products",
@@ -54,20 +56,20 @@ const testimonials: Testimonial[] = [
     role: "Farm Owner, Green Fields Ltd.",
     message:
       "Interns bring fresh ideas and energy, and our farm has benefited immensely from their contributions.",
-    image: "https://i.ibb.co.com/xzPmjjV/images.jpg",
+    image: "https://i.ibb.co/xzPmjjV/images.jpg",
   },
   {
-    title: "Rogue Farm Corps Has Helped Us Recruit And Retain Great! ",
+    title: "Rogue Farm Corps Has Helped Us Recruit And Retain Great!",
     name: "JANE SMITH",
     role: "Agricultural Scientist",
     message:
       "Working with young professionals has helped advance our sustainable farming techniques.",
-    image: "https://i.ibb.co.com/z2zPJSJ/How-to-create-an-online-course-jpg.webp",
+    image: "https://i.ibb.co/z2zPJSJ/How-to-create-an-online-course-jpg.webp",
   },
 ];
 
 const TestimonialCard: React.FC = () => {
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<SwiperType | null>(null); // Updated type from any to SwiperType
   const [isHoveredPrev, setIsHoveredPrev] = useState(false);
   const [isHoveredNext, setIsHoveredNext] = useState(false);
 
@@ -89,10 +91,10 @@ const TestimonialCard: React.FC = () => {
         modules={[Navigation]}
         className="mySwiper w-3/4"
         breakpoints={{
-            640: { slidesPerView: 1 },
-            1024: { slidesPerView: 2 },
-            1280: { slidesPerView: 2 },
-          }}
+          640: { slidesPerView: 1 },
+          1024: { slidesPerView: 2 },
+          1280: { slidesPerView: 2 },
+        }}
       >
         {testimonials.map((testimonial, index) => (
           <SwiperSlide key={index}>
