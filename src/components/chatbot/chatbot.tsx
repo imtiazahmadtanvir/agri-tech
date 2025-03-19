@@ -145,28 +145,30 @@ export default function Chatbot() {
   }
 
   return (
-    <Card className="w-full h-full flex flex-col shadow-lg border-0">
-      <CardHeader className="border-b bg-card">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <CardTitle className="text-2xl font-bold text-primary">AgriChatBot</CardTitle>
-            <Badge variant="outline" className="ml-2">
+    <Card className="lg:w-full h-full flex flex-col shadow-lg border-0 md:w-full  ">
+      <CardHeader className="border-b  ">
+        <div className="flex items-center justify-between ">
+        <CardTitle className="text-2xl text-gray-800 mx-auto font-bold text-center">Agri-Tech ChatBot</CardTitle>
+
+          {/* <div className="flex items-center gap-2"> */}
+            {/* <CardTitle className="text-2xl font-bold text-primary text-center">Agri-Tech ChatBot</CardTitle> */}
+            {/* <Badge variant="outline" className="ml-2">
               {MODEL_NAME}
-            </Badge>
-          </div>
-          <div className="flex items-center space-x-2">
+            </Badge> */}
+          {/* </div> */}
+          {/* <div className="flex items-center space-x-2  mr-3">
             <Label htmlFor="dark-mode" className="text-sm">
-              Dark Mode
+              Mode
             </Label>
             <Switch id="dark-mode" checked={isDarkMode} onCheckedChange={setIsDarkMode} />
-          </div>
+          </div> */}
         </div>
       </CardHeader>
 
       <CardContent className="flex-1 p-0 relative">
         {error && (
-          <Alert variant="destructive" className="m-4">
-            <AlertCircle className="h-4 w-4" />
+          <Alert variant="destructive" className="m-7">
+            <AlertCircle className="h-6 w-6" />
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
@@ -216,7 +218,7 @@ export default function Chatbot() {
             className="flex-1"
           />
           <Button onClick={handleSendMessage} disabled={isLoading || !userInput.trim()} size="icon">
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin " /> : <Send className="h-4 w-4 " />}
           </Button>
         </div>
       </div>
