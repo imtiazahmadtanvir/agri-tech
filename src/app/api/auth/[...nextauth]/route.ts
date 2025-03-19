@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
                 const gUser = await userCollection.findOne({ providerAccountId })
                 if (!gUser) {
                     const payload = {
-                        providerAccountId, provider, email, image, name
+                        providerAccountId, provider, email, image, name, role: "farmer"
                     }
                     await userCollection.insertOne(payload)
                 }
