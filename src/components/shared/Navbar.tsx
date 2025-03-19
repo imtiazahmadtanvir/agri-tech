@@ -7,7 +7,7 @@ import Container from "./max-w-container/Container";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  console.log("Navbar session (client):", session, "status:", status); // Debug
+  console.log("Navbar session (client):", session, "status:", status);
 
   const links = (
     <>
@@ -38,9 +38,16 @@ const Navbar = () => {
     </>
   );
 
-  const handleLogout = async () => {
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault();
     await signOut({ callbackUrl: "/login" });
   };
+
+  // Determine display name based on available fields
+  const displayName =
+    session?.user?.firstName && session?.user?.lastName
+      ? `${session.user.firstName} ${session.user.lastName}`
+      : session?.user?.name || "User";
 
   return (
     <nav className="z-50 relative bg-white shadow-md">
@@ -49,20 +56,36 @@ const Navbar = () => {
           <div>
             <Image src="/logo.png" alt="Logo" width={150} height={50} />
           </div>
-          {/* Nav links */}
           <ul className="md:flex hidden gap-6">{links}</ul>
           <MobileNav links={links} />
-          {/* Auth Button */}
-          <div>
+          <div className="flex items-center gap-4">
             {status === "loading" ? (
               <span>Loading...</span>
             ) : session ? (
-              <button
-                onClick={handleLogout}
-                className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
-              >
-                Logout
-              </button>
+              <>
+                <div className="flex items-center gap-2">
+                  {session?.user?.image && (
+                    <Image
+                      src={session.user.image}
+                      alt="Profile"
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                  )}
+                  <span className="text-[#0D401C]">
+                    Welcome, {displayName} ({session?.user?.role})
+                  </span>
+                </div>
+                <form onSubmit={handleLogout}>
+                  <button
+                    type="submit"
+                    className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
+                  >
+                    Logout
+                  </button>
+                </form>
+              </>
             ) : (
               <Link
                 href="/login"
