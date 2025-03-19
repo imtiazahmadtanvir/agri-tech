@@ -6,15 +6,17 @@ import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { loginUser } from "@/app/action/auth/login";
 
 
-
+// Extend the JWT type to include custom fields
 declare module "next-auth/jwt" {
     interface JWT {
         role?: string;
         firstName?: string;
         lastName?: string;
         isOAuth?: boolean;
+        image?: string | null;
     }
 }
+
 
 declare module "next-auth" {
     interface Session {
@@ -33,6 +35,7 @@ declare module "next-auth" {
         role?: string;
         firstName?: string;
         lastName?: string;
+        image?: string | null;
     }
 }
 
@@ -81,7 +84,7 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async signIn({ user, account }) {
-            console.log('Account provider:', account);
+            console.log("Account provider:", account);
             if (account?.provider === "google" || account?.provider === "github") {
                 const { providerAccountId, provider } = account;
                 const { email, name, image } = user;
@@ -99,18 +102,22 @@ export const authOptions: NextAuthOptions = {
                     };
                     await userCollection.insertOne(payload);
                     user.role = "farmer";
+                    user.image = image;
                 } else {
                     user.role = existingUser.role || "farmer";
+                    user.image = existingUser.image || image;
                 }
             }
             return true;
         },
         async jwt({ token, user, account }) {
             if (user) {
+
                 token.id = user.id;
                 token.name = user.name;
                 token.email = user.email;
                 token.role = user.role || "farmer";
+                token.image = user.image ?? null;
 
                 if (account?.provider === "google" || account?.provider === "github") {
                     token.isOAuth = true;
@@ -120,10 +127,12 @@ export const authOptions: NextAuthOptions = {
                     token.lastName = user.lastName || "";
                 }
 
+                // Fetch from DB for consistency
                 const userCollection = await dbConnect(collectionNameObj.userCollection);
                 const dbUser = await userCollection.findOne({ email: user.email });
                 if (dbUser) {
                     token.role = dbUser.role || "farmer";
+                    token.image = dbUser.image ?? user.image ?? null;
                     if (account?.provider === "credentials") {
                         token.firstName = dbUser.firstName || "";
                         token.lastName = dbUser.lastName || "";
@@ -137,11 +146,10 @@ export const authOptions: NextAuthOptions = {
                 session.user.id = token.id as string;
                 session.user.name = token.name ?? null;
                 session.user.email = token.email ?? null;
-                session.user.image = typeof token.image === 'string' ? token.image : null;
+                session.user.image = token.image ?? null;
                 session.user.role = token.role || "farmer";
 
                 if (token.isOAuth) {
-
                     delete session.user.firstName;
                     delete session.user.lastName;
                 } else {
