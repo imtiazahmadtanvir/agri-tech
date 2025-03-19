@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { registerUser } from "@/app/action/auth/registerUser";
+import Link from "next/link";
+import SocialLoginBtn from "@/components/shared/common-button/SocialLoginBtn";
 
 const Register = () => {
   const router = useRouter();
@@ -112,10 +114,11 @@ const Register = () => {
 
         <p className="mt-4 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500">
+          <Link href="/login" className="text-blue-500">
             Login
-          </a>
+          </Link>
         </p>
+        <SocialLoginBtn />
       </form>
     </section>
   );

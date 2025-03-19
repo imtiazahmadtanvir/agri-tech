@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import SocialLoginBtn from "@/components/shared/common-button/SocialLoginBtn";
+import Link from "next/link";
 
 const Login = () => {
   const router = useRouter();
@@ -91,10 +93,11 @@ const Login = () => {
 
         <p className="mt-4 text-center">
           Don&apos;t have an account?{" "}
-          <a href="/register" className="text-blue-500">
+          <Link href="/register" className="text-blue-500">
             Register
-          </a>
+          </Link>
         </p>
+        <SocialLoginBtn />
       </form>
     </section>
   );
