@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }) {
           {/* Sidebar */}
           <aside className="w-64 bg-white border-r border-gray-200 p-5">
             <div className="pb-5 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-800">Dashboard</h2>
+              <h2 className="text-xl font-semibold text-gray-800">Dashboard abc</h2>
             </div>
             <nav className="mt-5">
               <ul className="space-y-2">
