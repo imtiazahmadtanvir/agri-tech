@@ -9,16 +9,15 @@ interface MobileNavProps {
 
 export default function MobileNav({ links }: MobileNavProps) {
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null); // Ref for focus management
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => {
-      console.log("Menu is now:", !prev); // Log new state
+      console.log("Menu is now:", !prev);
       return !prev;
     });
   };
 
-  // Trap focus in menu when open
   useEffect(() => {
     if (isMenuOpen && menuRef.current) {
       menuRef.current.focus();
@@ -36,7 +35,7 @@ export default function MobileNav({ links }: MobileNavProps) {
       </button>
       <div
         ref={menuRef}
-        tabIndex={-1} // Make div focusable
+        tabIndex={-1}
         className={`md:hidden gap-6 py-20 w-56 px-10 fixed inset-y-0 left-0 z-50 text-white bg-[#0D401C] transition-transform duration-500 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}

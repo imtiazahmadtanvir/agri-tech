@@ -8,7 +8,7 @@ interface Payload {
     lastName: string;
     email: string;
     password: string;
-    role: string;
+    role?: string;
 }
 
 export const registerUser = async (payload: Payload) => {
