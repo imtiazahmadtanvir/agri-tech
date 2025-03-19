@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
+// import { Badge } from "@/components/ui/badge"
+// import { Switch } from "@/components/ui/switch"
+// import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Send, AlertCircle, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -26,7 +26,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [userInput, setUserInput] = useState("")
   const [chat, setChat] = useState<any>(null)
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  // const [isDarkMode, setIsDarkMode] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -34,14 +34,14 @@ export default function Chatbot() {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "AIzaSyDS1UScOoCOAKLe22DTgcFui9bJlKyjnEQ"
   const MODEL_NAME = "gemini-2.0-flash"
 
-  useEffect(() => {
-    // Apply dark mode class to document
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-  }, [isDarkMode])
+  // useEffect(() => {
+  //   // Apply dark mode class to document
+  //   if (isDarkMode) {
+  //     document.documentElement.classList.add("dark")
+  //   } else {
+  //     document.documentElement.classList.remove("dark")
+  //   }
+  // }, [isDarkMode])
 
   useEffect(() => {
     if (!apiKey) {
