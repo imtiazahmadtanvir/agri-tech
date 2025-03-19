@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { registerUser } from "@/app/action/auth/registerUser";
 import Link from "next/link";
+import SocialLoginBtn from "@/components/shared/common-button/SocialLoginBtn";
 
 const Register = () => {
   const router = useRouter();
@@ -117,6 +118,7 @@ const Register = () => {
             Login
           </Link>
         </p>
+        <SocialLoginBtn />
       </form>
     </section>
   );

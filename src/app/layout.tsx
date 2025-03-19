@@ -37,7 +37,7 @@ export default function RootLayout({
         <Toaster position="top-right" reverseOrder={false} />
         <TopInfoBar />
         <AuthProvider>
-          <Navbar></Navbar>
+          <Navbar />
         </AuthProvider>
         {children}
         <Footer></Footer>
