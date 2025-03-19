@@ -7,7 +7,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
-
   const links = (
     <>
       <li>
