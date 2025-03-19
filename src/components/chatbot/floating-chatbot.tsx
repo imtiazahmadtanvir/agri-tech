@@ -17,14 +17,14 @@ export default function FloatingChatbot() {
       <Button
         onClick={() => setIsOpen(true)}
         className={cn(
-          "fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg z-50",
+          "fixed  bottom-6 right-6 rounded-full w-14 h-14 shadow-lg z-50",
           "flex items-center justify-center",
-          "bg-primary hover:bg-primary/90 transition-all duration-300",
+          "bg-black text-gray-100 hover:bg-primary/90 transition-all duration-300",
           isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100",
         )}
         size="icon"
       >
-        <MessageCircle className="h-6 w-6" />
+        <MessageCircle className="h-6 w-6 text-white bg-transparent" />
       </Button>
 
       {/* Chatbot Dialog */}

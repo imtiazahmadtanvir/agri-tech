@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import TopInfoBar from "@/components/shared/TopInfoBar";
+import FloatingChatbot from "@/components/chatbot/floating-chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({
         {children}
 
         <Footer></Footer>
+        <FloatingChatbot></FloatingChatbot>
       </body>
     </html>
   );
