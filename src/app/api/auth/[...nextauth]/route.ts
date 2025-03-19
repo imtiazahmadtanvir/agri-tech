@@ -21,6 +21,7 @@ export const authOptions: NextAuthOptions = {
                 const user = await loginUser({ email, password });
                 console.log(user);
                 if (user) {
+
                     return {
                         id: user._id.toString(),
                         name: user.name,
