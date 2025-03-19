@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
-// Adjust path if needed
 import Link from "next/link";
-import MobileNav from "@/components/shared/MobileNav"; // Adjust path if needed
+import MobileNav from "@/components/shared/MobileNav";
 import { useSession, signOut } from "next-auth/react";
 import Container from "./max-w-container/Container";
 
@@ -39,16 +38,14 @@ const Navbar = () => {
     </>
   );
 
-  const handleLogout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await signOut({ callbackUrl: "/login" }); // Client-side logout
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/login" });
   };
 
   return (
     <nav className="z-50 relative bg-white shadow-md">
       <Container className="px-5 py-4">
         <div className="flex justify-between items-center">
-          {/* Logo */}
           <div>
             <Image src="/logo.png" alt="Logo" width={150} height={50} />
           </div>
@@ -58,7 +55,7 @@ const Navbar = () => {
           {/* Auth Button */}
           <div>
             {status === "loading" ? (
-              <span>Loading...</span> // Optional loading state
+              <span>Loading...</span>
             ) : session ? (
               <button
                 onClick={handleLogout}
