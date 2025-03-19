@@ -1,12 +1,15 @@
+"use client";
 import Image from "next/image";
-import Container from "./max-w-container/Container";
+// Adjust path if needed
 import Link from "next/link";
-import MobileNav from "./MobileNav";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import MobileNav from "@/components/shared/MobileNav"; // Adjust path if needed
+import { useSession, signOut } from "next-auth/react";
+import Container from "./max-w-container/Container";
 
-const Navbar = async () => {
-  const session = await getServerSession(authOptions);
+const Navbar = () => {
+  const { data: session, status } = useSession();
+  console.log("Navbar session (client):", session, "status:", status); // Debug
+
   const links = (
     <>
       <li>
@@ -36,6 +39,11 @@ const Navbar = async () => {
     </>
   );
 
+  const handleLogout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await signOut({ callbackUrl: "/login" }); // Client-side logout
+  };
+
   return (
     <nav className="z-50 relative bg-white shadow-md">
       <Container className="px-5 py-4">
@@ -49,15 +57,15 @@ const Navbar = async () => {
           <MobileNav links={links} />
           {/* Auth Button */}
           <div>
-            {session ? (
-              <form action="/api/logout" method="POST">
-                <button
-                  type="submit"
-                  className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
-                >
-                  Logout
-                </button>
-              </form>
+            {status === "loading" ? (
+              <span>Loading...</span> // Optional loading state
+            ) : session ? (
+              <button
+                onClick={handleLogout}
+                className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
+              >
+                Logout
+              </button>
             ) : (
               <Link
                 href="/login"
