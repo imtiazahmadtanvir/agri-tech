@@ -38,8 +38,7 @@ const Navbar = () => {
     </>
   );
 
-  const handleLogout = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogout = async () => {
     await signOut({ callbackUrl: "/login" });
   };
 
@@ -77,14 +76,13 @@ const Navbar = () => {
                     Welcome, {displayName} ({session?.user?.role})
                   </span>
                 </div>
-                <form onSubmit={handleLogout}>
-                  <button
-                    type="submit"
-                    className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
-                  >
-                    Logout
-                  </button>
-                </form>
+
+                <button
+                  onClick={handleLogout}
+                  className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
+                >
+                  Logout
+                </button>
               </>
             ) : (
               <Link
