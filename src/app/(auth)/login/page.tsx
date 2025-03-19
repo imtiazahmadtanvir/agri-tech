@@ -97,8 +97,8 @@ const Login = () => {
             Register
           </Link>
         </p>
-        <SocialLoginBtn />
       </form>
+      <SocialLoginBtn />
     </section>
   );
 };
