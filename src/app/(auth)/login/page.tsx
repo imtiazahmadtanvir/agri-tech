@@ -1,12 +1,15 @@
 "use client";
-
+import { signIn } from "next-auth/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,14 +25,17 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Replace with actual API call
-    const response = { success: true };
+    const result = await signIn("credentials", {
+      redirect: false,
+      ...formData,
+      callbackUrl,
+    });
 
-    if (response.success) {
-      toast.success("Login successful!");
-      router.push("/");
+    if (result?.error) {
+      toast.error("Invalid email or password!");
     } else {
-      toast.error("Invalid email or password.");
+      toast.success("Login successful!");
+      router.push(callbackUrl);
     }
 
     setLoading(false);
@@ -75,7 +81,9 @@ const Login = () => {
 
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded"
+          className={`w-full text-white py-2 rounded ${
+            loading ? "bg-gray-400 cursor-not-allowed" : "bg-black"
+          }`}
           disabled={loading}
         >
           {loading ? "Logging in..." : "Login"}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { registerUser } from "@/app/action/auth/registerUser";
 
 const Register = () => {
   const router = useRouter();
@@ -24,10 +25,10 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Replace with actual API call
-    const response = { success: true };
+    const data = await registerUser(formData);
+    console.log(data);
 
-    if (response.success) {
+    if (data.success) {
       toast.success("Registration successful!");
       router.push("/login");
     } else {
