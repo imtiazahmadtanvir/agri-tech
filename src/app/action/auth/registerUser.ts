@@ -8,27 +8,32 @@ interface Payload {
     lastName: string;
     email: string;
     password: string;
+    role: string;
 }
 
 export const registerUser = async (payload: Payload) => {
-    const { email, password } = payload;
+    const { email, password, role } = payload;
+    console.log(payload);
 
     try {
         // Connect to the database
         const userCollection = await dbConnect(collectionNameObj.userCollection);
 
         // Check if the user already exists
-        const existentUser = await userCollection.findOne({ email: email });
+        const existentUser = await userCollection.findOne({ email });
         if (existentUser) {
             return { success: false, message: "User already exists!" };
         }
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-        payload.password = hashedPassword;
 
-        // Insert the user into the database
-        const result = await userCollection.insertOne(payload);
+        // Insert the user into the database with role
+        const result = await userCollection.insertOne({
+            ...payload,
+            password: hashedPassword,
+            role: role || "farmer",
+        });
 
         return {
             success: true,
