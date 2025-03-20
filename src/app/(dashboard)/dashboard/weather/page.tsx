@@ -13,23 +13,29 @@ import { FaLocationDot } from "react-icons/fa6";
 export default function WeatherPage() {
   const [city, setCity] = useState(defaultWeatherData.displayCity);
   const [weather, setWeather] = useState(defaultWeatherData.currentWeather);
-  const [forecast, setForecast] = useState(defaultWeatherData.displayCity);
+  const [forecast, setForecast] = useState<ReturnType<typeof groupByDay>>(
+    defaultWeatherData.forecast
+  );
 
   const fetchWeatherData = async (lat: number, lon: number) => {
     try {
       // Fetch city name from coordinates
       const cityData = await fetchCityFromCoordinates(lat, lon);
       setCity(cityData.name);
+
       // Fetch current weather
       const current = await fetchCurrentWeather(lat, lon);
       setWeather(current);
-      const forecast = await fetchWeatherForecast(lat, lon);
-      const dailyForecast = groupByDay(forecast.list);
+
+      // Fetch 5-day forecast
+      const forecastData = await fetchWeatherForecast(lat, lon);
+      const dailyForecast = groupByDay(forecastData.list);
       setForecast(dailyForecast);
     } catch (error) {
       console.error("Error fetching weather data:", error);
       setCity(defaultWeatherData.displayCity);
       setWeather(defaultWeatherData.currentWeather);
+      setForecast(defaultWeatherData.forecast);
     }
   };
 
@@ -125,7 +131,7 @@ export default function WeatherPage() {
         {/* Today's Highlight */}
         <div className="bg-white p-4 rounded-2xl shadow-md mb-6">
           <h2 className="text-xl font-semibold text-gray-700 mb-4">
-            Today&apos;s Highlight
+            Today's Highlight
           </h2>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center">
@@ -181,31 +187,36 @@ export default function WeatherPage() {
           </div>
         </div>
 
-        {/* Forecast (Placeholder) */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-          {forecast.map((day) => (
-            <div
-              key={day.dt}
-              className="p-4 bg-gray-100 rounded-md text-center"
-            >
-              <p className="font-medium text-gray-800">
-                {new Date(day.dt * 1000).toLocaleDateString("en-US", {
-                  weekday: "short",
-                })}
-              </p>
-              <div className="p-2 bg-white rounded-full inline-block my-2">
-                <img
-                  src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-                  alt="Weather icon"
-                  className="w-12 h-12"
-                />
+        {/* Forecast */}
+        <div className="bg-white p-4 rounded-2xl shadow-md">
+          <h3 className="text-xl font-semibold text-gray-700 mb-4">
+            5-Day Forecast
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {forecast.map((day) => (
+              <div
+                key={day.dt}
+                className="p-4 bg-white rounded-2xl shadow-md text-center"
+              >
+                <p className="font-medium text-gray-800">
+                  {new Date(day.dt * 1000).toLocaleDateString("en-US", {
+                    weekday: "short",
+                  })}
+                </p>
+                <div className="p-2 bg-gray-200 rounded-full inline-block my-2">
+                  <img
+                    src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                    alt="Weather icon"
+                    className="w-12 h-12"
+                  />
+                </div>
+                <p className="text-lg font-semibold">{day.main.temp}°C</p>
+                <p className="capitalize text-gray-600">
+                  {day.weather[0].description}
+                </p>
               </div>
-              <p className="text-lg font-semibold">{day.main.temp}°C</p>
-              <p className="capitalize text-gray-600">
-                {day.weather[0].description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
