@@ -5,6 +5,7 @@ import {
   fetchWeatherForecast,
   groupByDay,
 } from "@/lib/weather";
+
 import { defaultWeatherData } from "@/utils/weatherData";
 import Image from "next/image";
 import { useEffect, useState } from "react";

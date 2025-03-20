@@ -61,7 +61,7 @@ export const fetchCityFromCoordinates = async (lat: number, lon: number): Promis
 };
 
 // Fetch Current Weather using Lat/Lon
-export const fetchCurrentWeather = async (lat: number, lon: number): Promise<WeatherData> => {
+export const fetchCurrentWeather = async (lat: number, lon: number) => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 

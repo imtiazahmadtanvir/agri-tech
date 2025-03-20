@@ -13,18 +13,18 @@ export type WeatherData = {
     main: {
         temp: number;
         feels_like: number;
-        temp_min: number;
-        temp_max: number;
+        temp_min?: number;
+        temp_max?: number;
         pressure: number;
         humidity: number;
-        sea_level: number;
-        grnd_level: number;
+        sea_level?: number;
+        grnd_level?: number;
     };
     visibility: number;
     wind: {
         speed: number;
         deg: number;
-        gust: number;
+        gust?: number;
     };
     clouds: {
         all: number;
@@ -39,4 +39,11 @@ export type WeatherData = {
     id: number;
     name: string;
     cod: number;
+    uvi?: number;
+    forecast?: {
+        dt: number;
+        main: { temp: number };
+        weather: { description: string; icon: string }[];
+        sys: { pod: string };
+    }[];
 };
