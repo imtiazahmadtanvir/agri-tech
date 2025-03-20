@@ -86,7 +86,7 @@ export default function WeatherPage() {
             <p className="text-gray-500 text-xs sm:text-sm mt-1">
               Last updated:{" "}
               {new Date(weather.dt * 1000).toLocaleTimeString("en-US", {
- W               hour: "numeric",
+                hour: "numeric",
                 minute: "numeric",
                 hour12: true,
               })}
