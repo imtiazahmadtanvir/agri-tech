@@ -118,7 +118,7 @@ export default function WeatherPage() {
           </div>
         </div>
 
-        {/* Other Countries (Placeholder) */}
+        {/* Other Countries  */}
         <div className="mt-4 sm:mt-6">
           <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
             Other Countries
