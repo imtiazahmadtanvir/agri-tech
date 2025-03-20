@@ -23,4 +23,36 @@ export const defaultWeatherData = {
         },
         dt: Math.floor(Date.now() / 1000), // Current time as the default last updated time
     },
+    forecast: [
+        {
+            dt: Math.floor(Date.now() / 1000),
+            main: { temp: 21 },
+            weather: [{ description: "clear sky", icon: "01d" }],
+            sys: { pod: "d" },
+        },
+        {
+            dt: Math.floor(Date.now() / 1000) + 86400, // +1 day
+            main: { temp: 22 },
+            weather: [{ description: "few clouds", icon: "02d" }],
+            sys: { pod: "d" },
+        },
+        {
+            dt: Math.floor(Date.now() / 1000) + 172800, // +2 days
+            main: { temp: 20 },
+            weather: [{ description: "scattered clouds", icon: "03d" }],
+            sys: { pod: "d" },
+        },
+        {
+            dt: Math.floor(Date.now() / 1000) + 259200, // +3 days
+            main: { temp: 19 },
+            weather: [{ description: "light rain", icon: "10d" }],
+            sys: { pod: "d" },
+        },
+        {
+            dt: Math.floor(Date.now() / 1000) + 345600, // +4 days
+            main: { temp: 23 },
+            weather: [{ description: "clear sky", icon: "01d" }],
+            sys: { pod: "d" },
+        },
+    ],
 };

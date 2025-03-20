@@ -182,25 +182,30 @@ export default function WeatherPage() {
         </div>
 
         {/* Forecast (Placeholder) */}
-        <div className="bg-white p-4 rounded-2xl shadow-md">
-          <h3 className="text-xl font-semibold text-gray-700 mb-4">
-            5-Day Forecast
-          </h3>
-          <div className="grid grid-cols-5 gap-4">
-            <div className="text-center">
-              <p className="font-medium text-gray-800">Mon</p>
-              <div className="p-2 bg-gray-200 rounded-full inline-block my-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          {forecast.map((day) => (
+            <div
+              key={day.dt}
+              className="p-4 bg-gray-100 rounded-md text-center"
+            >
+              <p className="font-medium text-gray-800">
+                {new Date(day.dt * 1000).toLocaleDateString("en-US", {
+                  weekday: "short",
+                })}
+              </p>
+              <div className="p-2 bg-white rounded-full inline-block my-2">
                 <img
-                  src="http://openweathermap.org/img/wn/01d@2x.png"
+                  src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
                   alt="Weather icon"
                   className="w-12 h-12"
                 />
               </div>
-              <p className="text-lg font-semibold">20°C</p>
-              <p className="capitalize text-gray-600">Clear Sky</p>
+              <p className="text-lg font-semibold">{day.main.temp}°C</p>
+              <p className="capitalize text-gray-600">
+                {day.weather[0].description}
+              </p>
             </div>
-            {/* Add more placeholder forecast cards as needed */}
-          </div>
+          ))}
         </div>
       </div>
     </div>
