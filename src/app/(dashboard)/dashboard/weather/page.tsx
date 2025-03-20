@@ -2,6 +2,7 @@
 import {
   fetchCityFromCoordinates,
   fetchCurrentWeather,
+  fetchUVIndex,
   fetchWeatherForecast,
   groupByDay,
 } from "@/lib/weather";
@@ -9,7 +10,9 @@ import {
 import { defaultWeatherData } from "@/utils/weatherData";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { FaWind } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
+import { MdWaterDrop } from "react-icons/md";
 
 export default function WeatherPage() {
   const [city, setCity] = useState(defaultWeatherData.displayCity);
@@ -17,7 +20,7 @@ export default function WeatherPage() {
   const [forecast, setForecast] = useState<ReturnType<typeof groupByDay>>(
     defaultWeatherData.forecast
   );
-
+  const [uvIndex, setUvIndex] = useState<number | null>(null);
   const fetchWeatherData = async (lat: number, lon: number) => {
     try {
       // Fetch city name from coordinates
@@ -30,6 +33,9 @@ export default function WeatherPage() {
 
       // Fetch 5-day forecast
       const forecastData = await fetchWeatherForecast(lat, lon);
+      const uv = await fetchUVIndex(lat, lon);
+      setUvIndex(uv);
+      console.log(uv);
       const dailyForecast = groupByDay(forecastData.list);
       setForecast(dailyForecast);
     } catch (error) {
@@ -129,8 +135,13 @@ export default function WeatherPage() {
             Today&apos;s Highlight
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <div className="text-center bg-[#F8FAFC] p-4 rounded-xl">
-              <p className="text-gray-500 text-sm sm:text-base">Wind Status</p>
+            <div className="text-center  bg-[#F8FAFC] p-4 rounded-xl">
+              <div className="flex items-center justify-center gap-2">
+                <FaWind />
+                <p className="text-gray-500 text-sm sm:text-base">
+                  Wind Status
+                </p>
+              </div>
               <h1 className="text-base sm:text-lg font-semibold">
                 {weather.wind.speed} m/s
               </h1>
@@ -144,10 +155,34 @@ export default function WeatherPage() {
               </p>
             </div>
             <div className="text-center bg-[#F8FAFC] p-4 rounded-xl">
-              <p className="text-gray-500 text-sm sm:text-base">Humidity</p>
+              <div className="flex items-center justify-center gap-2">
+                <MdWaterDrop />
+                <p className="text-gray-500 text-sm sm:text-base">Humidity</p>
+              </div>
               <h1 className="text-base sm:text-lg font-semibold">
                 {weather.main.humidity}%
               </h1>
+            </div>
+            <div className=" bg-[#F8FAFC] p-4 rounded-xl items-center justify-center gap-5 flex">
+              <Image
+                height={50}
+                width={50}
+                src={"/icons/sunrise-morning-svgrepo-com.svg"}
+                alt="icon"
+              />
+              <div className=" ">
+                <p className="">Sunrise</p>
+                <h1 className="text-base sm:text-lg font-semibold">
+                  {new Date(weather.sys.sunrise * 1000).toLocaleTimeString(
+                    "en-US",
+                    {
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                    }
+                  )}
+                </h1>
+              </div>
             </div>
             <div className="text-center bg-[#F8FAFC] p-4 rounded-xl">
               <p className="text-gray-500 text-sm sm:text-base">Visibility</p>
@@ -162,30 +197,35 @@ export default function WeatherPage() {
                 })}
               </p>
             </div>
-            <div className="text-center flex flex-col items-center">
-              <p className="text-gray-500 text-sm sm:text-base">Sunrise</p>
-              <div className="flex items-center">
-                <span className="text-yellow-500 mr-1 text-sm sm:text-base">
-                  🌅
-                </span>
-                <h1 className="text-base sm:text-lg font-semibold">
-                  {new Date(weather.sys.sunrise * 1000).toLocaleTimeString(
-                    "en-US",
-                    {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    }
-                  )}
-                </h1>
-              </div>
+            <div className="text-center bg-[#F8FAFC] p-4 rounded-xl">
+              <p className="text-gray-500 text-sm sm:text-base">UV Index</p>
+              <h1 className="text-base sm:text-lg font-semibold">
+                {uvIndex !== null ? uvIndex : 0}
+              </h1>
+              <p className="text-xs sm:text-sm mt-1 text-gray-500">
+                {uvIndex !== null
+                  ? uvIndex >= 11
+                    ? "Extreme ⚠️"
+                    : uvIndex >= 8
+                    ? "Very High 🔥"
+                    : uvIndex >= 6
+                    ? "High ☀️"
+                    : uvIndex >= 3
+                    ? "Moderate 🌤"
+                    : "Low 🌥"
+                  : ""}
+              </p>
             </div>
-            <div className="text-center flex flex-col items-center">
-              <p className="text-gray-500 text-sm sm:text-base">Sunset</p>
-              <div className="flex items-center">
-                <span className="text-orange-500 mr-1 text-sm sm:text-base">
-                  🌇
-                </span>
+
+            <div className=" bg-[#F8FAFC] p-4 rounded-xl flex items-center justify-center gap-3 ">
+              <Image
+                height={50}
+                width={50}
+                src={"/icons/sunset-svgrepo-com.svg"}
+                alt="icon"
+              />
+              <div className="space-x-3">
+                <p className="text-gray-500 text-sm sm:text-base">Sunset</p>
                 <h1 className="text-base sm:text-lg font-semibold">
                   {new Date(weather.sys.sunset * 1000).toLocaleTimeString(
                     "en-US",
