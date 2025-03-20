@@ -1,13 +1,13 @@
 // app/layout.jsx
-import { Inter } from "next/font/google";
+
 import Link from "next/link";
 
-const inter = Inter({ subsets: ["latin"] });
+import { ReactNode } from "react";
 
-export default function DashboardLayout({ children }) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <div className="flex min-h-screen bg-gray-100">
           {/* Sidebar */}
           <aside className="w-64 bg-white border-r border-gray-200 p-5">
@@ -48,6 +48,14 @@ export default function DashboardLayout({ children }) {
                     Settings
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/dashboard/weather"
+                    className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
+                  >
+                    Weather
+                  </Link>
+                </li>
               </ul>
             </nav>
           </aside>
@@ -68,7 +76,7 @@ export default function DashboardLayout({ children }) {
             </header>
 
             {/* Page Content */}
-            <main className="p-6">{children}</main>
+            <main className="p-6 bg-[#F5F6F7]">{children}</main>
           </div>
         </div>
       </body>
