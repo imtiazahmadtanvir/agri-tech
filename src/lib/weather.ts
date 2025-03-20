@@ -16,7 +16,7 @@ interface ReverseGeocodingResponse {
 }
 
 
-// Interface for Forecast
+// Interface for 
 interface ForecastItem {
     dt: number;
     main: { temp: number };
