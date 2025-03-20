@@ -21,6 +21,7 @@ export default function WeatherPage() {
     defaultWeatherData.forecast
   );
   const [uvIndex, setUvIndex] = useState<number | null>(null);
+  const [formattedDate, setFormattedDate] = useState("");
   const fetchWeatherData = async (lat: number, lon: number) => {
     try {
       // Fetch city name from coordinates
@@ -64,12 +65,22 @@ export default function WeatherPage() {
     }
   }, []);
 
+  useEffect(() => {
+    setFormattedDate(
+      new Date().toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    );
+  }, []);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 sm:p-6 ">
       {/* 1st Grid: Status and Other Countries */}
       <div>
         {/* Status */}
-        <div className="w-full bg-white p-4 sm:p-6 rounded-2xl shadow-md flex flex-col sm:flex-row justify-between items-center">
+        <div className="w-full bg-white p-4 sm:p-6 rounded-2xl  flex flex-col sm:flex-row justify-between items-center">
           <div className="w-full sm:w-auto">
             <h2 className="bg-[#11A146] w-fit text-white px-2 py-1 rounded-2xl flex items-center text-xs sm:text-sm">
               <span className="mr-1">
@@ -83,11 +94,7 @@ export default function WeatherPage() {
               })}
             </h2>
             <p className="text-gray-500 text-sm sm:text-base">
-              {new Date().toLocaleDateString("en-US", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
+              {formattedDate}
             </p>
           </div>
           <div className="flex items-center mt-4 sm:mt-0">
@@ -117,7 +124,7 @@ export default function WeatherPage() {
             Other Countries
           </h3>
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white p-4 rounded-2xl shadow-md">
+            <div className="bg-white p-4 rounded-2xl ">
               <p className="text-gray-500 text-sm">August</p>
               <h3 className="text-base sm:text-lg font-semibold">Coral</h3>
               <p className="text-xs sm:text-sm text-gray-600">Placeholder</p>
@@ -130,7 +137,7 @@ export default function WeatherPage() {
       {/* 2nd Grid: Today's Highlight and Forecast */}
       <div className="w-full">
         {/* Today's Highlight */}
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-4 sm:mb-6">
+        <div className="bg-white p-4 sm:p-6 rounded-xl  mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
             Today&apos;s Highlight
           </h2>
