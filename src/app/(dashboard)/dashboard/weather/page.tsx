@@ -123,12 +123,12 @@ export default function WeatherPage() {
       {/* 2nd Grid: Today's Highlight and Forecast */}
       <div className="w-full">
         {/* Today's Highlight */}
-        <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-md mb-4 sm:mb-6">
+        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
             Today&apos;s Highlight
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <div className="text-center">
+            <div className="text-center bg-[#F8FAFC] p-4 rounded-xl">
               <p className="text-gray-500 text-sm sm:text-base">Wind Status</p>
               <h1 className="text-base sm:text-lg font-semibold">
                 {weather.wind.speed} m/s
@@ -142,13 +142,13 @@ export default function WeatherPage() {
                 })}
               </p>
             </div>
-            <div className="text-center">
+            <div className="text-center bg-[#F8FAFC] p-4 rounded-xl">
               <p className="text-gray-500 text-sm sm:text-base">Humidity</p>
               <h1 className="text-base sm:text-lg font-semibold">
                 {weather.main.humidity}%
               </h1>
             </div>
-            <div className="text-center">
+            <div className="text-center bg-[#F8FAFC] p-4 rounded-xl">
               <p className="text-gray-500 text-sm sm:text-base">Visibility</p>
               <h1 className="text-base sm:text-lg font-semibold">
                 {weather.visibility / 1000} km
@@ -201,7 +201,7 @@ export default function WeatherPage() {
         </div>
 
         {/* Forecast */}
-        <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-md">
+        <div className="bg-white p-4 sm:p-6 rounded-2xl ">
           <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
             5-Day Forecast
           </h3>
@@ -209,7 +209,7 @@ export default function WeatherPage() {
             {forecast.map((day) => (
               <div
                 key={day.dt}
-                className="p-3 sm:p-4 bg-white rounded-2xl shadow-md text-center"
+                className="p-3 sm:p-4 bg-[#F8FAFC] rounded-2xl  text-center"
               >
                 <p className="font-medium text-gray-800 text-sm sm:text-base">
                   {new Date(day.dt * 1000).toLocaleDateString("en-US", {
