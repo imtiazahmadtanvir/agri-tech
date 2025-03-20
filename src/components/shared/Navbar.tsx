@@ -1,13 +1,16 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // ✅ usePathname Import
 import MobileNav from "@/components/shared/MobileNav";
 import { useSession, signOut } from "next-auth/react";
 import Container from "./max-w-container/Container";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  console.log("Navbar session (client):", session, "status:", status);
+  const pathname = usePathname(); // ✅ Get current route
+
+  if (pathname.startsWith("/dashboard")) return null;
 
   const links = (
     <>
@@ -42,7 +45,6 @@ const Navbar = () => {
     await signOut({ callbackUrl: "/login" });
   };
 
-  // Determine display name based on available fields
   const displayName =
     session?.user?.firstName && session?.user?.lastName
       ? `${session.user.firstName} ${session.user.lastName}`
