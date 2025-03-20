@@ -22,6 +22,7 @@ export const defaultWeatherData = {
             sunset: Math.floor(new Date().setHours(18, 0, 0, 0) / 1000), // 6:00 PM today
         },
         dt: Math.floor(Date.now() / 1000), // Current time as the default last updated time
+        uvi: 3, // Default UV Index
     },
     forecast: [
         {

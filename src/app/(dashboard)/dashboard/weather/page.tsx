@@ -48,7 +48,7 @@ export default function WeatherPage() {
         },
         (error) => {
           console.error("Error getting location:", error.message);
-          setCity(""); // Prompt manual search (you can add a search input later)
+          setCity("");
         }
       );
     } else {
@@ -58,7 +58,7 @@ export default function WeatherPage() {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 sm:p-6 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 sm:p-6 ">
       {/* 1st Grid: Status and Other Countries */}
       <div>
         {/* Status */}
@@ -77,18 +77,9 @@ export default function WeatherPage() {
             </h2>
             <p className="text-gray-500 text-sm sm:text-base">
               {new Date().toLocaleDateString("en-US", {
-                weekday: "long",
                 day: "numeric",
                 month: "long",
                 year: "numeric",
-              })}
-            </p>
-            <p className="text-gray-500 text-xs sm:text-sm mt-1">
-              Last updated:{" "}
-              {new Date(weather.dt * 1000).toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-                hour12: true,
               })}
             </p>
           </div>
@@ -134,7 +125,7 @@ export default function WeatherPage() {
         {/* Today's Highlight */}
         <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-md mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
-            Today's Highlight
+            Today&apos;s Highlight
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div className="text-center">
@@ -142,6 +133,14 @@ export default function WeatherPage() {
               <h1 className="text-base sm:text-lg font-semibold">
                 {weather.wind.speed} m/s
               </h1>
+              <p className="text-gray-500 text-xs sm:text-sm mt-1">
+                {" "}
+                {new Date(weather.dt * 1000).toLocaleTimeString("en-US", {
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: true,
+                })}
+              </p>
             </div>
             <div className="text-center">
               <p className="text-gray-500 text-sm sm:text-base">Humidity</p>
@@ -154,6 +153,13 @@ export default function WeatherPage() {
               <h1 className="text-base sm:text-lg font-semibold">
                 {weather.visibility / 1000} km
               </h1>
+              <p className="text-gray-500 text-xs sm:text-sm mt-1">
+                {new Date(weather.dt * 1000).toLocaleTimeString("en-US", {
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: true,
+                })}
+              </p>
             </div>
             <div className="text-center flex flex-col items-center">
               <p className="text-gray-500 text-sm sm:text-base">Sunrise</p>

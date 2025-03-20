@@ -72,6 +72,17 @@ export const fetchCurrentWeather = async (lat: number, lon: number): Promise<Wea
         throw new Error('Failed to fetch current weather');
     }
 };
+export const fetchUVIndex = async (lat: number, lon: number): Promise<number> => {
+    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+    const url = `http://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+        return response.data.value; // UV Index value
+    } catch (error) {
+        throw new Error('Failed to fetch UV Index');
+    }
+};
 
 // Fetch 5-Day Forecast using Lat/Lon
 export const fetchWeatherForecast = async (lat: number, lon: number): Promise<WeatherForecast> => {
