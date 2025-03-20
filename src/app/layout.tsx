@@ -7,6 +7,7 @@ import TopInfoBar from "@/components/shared/TopInfoBar";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/provider/AuthProvider";
 import Navbar from "@/components/shared/Navbar";
+import FloatingChatbot from "@/components/chatbot/floating-chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
         </AuthProvider>
         {children}
         <Footer></Footer>
+        <FloatingChatbot></FloatingChatbot>
       </body>
     </html>
   );
