@@ -1,4 +1,4 @@
-import { WeatherData } from '@/types/type';
+
 import axios from 'axios';
 
 // Interface for Geocoding Response
@@ -16,7 +16,7 @@ interface ReverseGeocodingResponse {
 }
 
 
-// Interface fo 
+// Interface f 
 interface ForecastItem {
     dt: number;
     main: { temp: number };
