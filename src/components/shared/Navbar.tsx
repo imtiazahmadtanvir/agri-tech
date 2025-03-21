@@ -1,14 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // ✅ usePathname Import
+import { usePathname } from "next/navigation";
 import MobileNav from "@/components/shared/MobileNav";
 import { useSession, signOut } from "next-auth/react";
 import Container from "./max-w-container/Container";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  const pathname = usePathname(); // ✅ Get current route
+  const pathname = usePathname();
 
   if (pathname.startsWith("/dashboard")) return null;
 
