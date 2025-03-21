@@ -1,66 +1,110 @@
 "use client";
 import Image from "next/image";
-import Container from "./max-w-container/Container";
 import Link from "next/link";
-import CommonButton from "./common-button/CommonButton";
-import { useState } from "react";
-import { IoMdClose } from "react-icons/io";
+import { usePathname } from "next/navigation"; // ✅ usePathname Import
+import MobileNav from "@/components/shared/MobileNav";
+import { useSession, signOut } from "next-auth/react";
+import Container from "./max-w-container/Container";
 
 const Navbar = () => {
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
-  };
+  const { data: session, status } = useSession();
+  const pathname = usePathname(); // ✅ Get current route
+
+  if (pathname.startsWith("/dashboard")) return null;
+
   const links = (
     <>
       <li>
-        <Link href={"/"}>Home</Link>
+        <Link
+          href="/"
+          className="text-[#0D401C] hover:text-[#F8C32C] transition-colors"
+        >
+          Home
+        </Link>
       </li>
       <li>
-        <Link href={"/services"}>Services</Link>
+        <Link
+          href="/services"
+          className="text-[#0D401C] hover:text-[#F8C32C] transition-colors"
+        >
+          Services
+        </Link>
       </li>
       <li>
-        <Link href={"/contact"}>Contact</Link>
+        <Link
+          href="/contact"
+          className="text-[#0D401C] hover:text-[#F8C32C] transition-colors"
+        >
+          Contact
+        </Link>
       </li>
     </>
   );
+
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/login" });
+  };
+
+  const displayName =
+    session?.user?.firstName && session?.user?.lastName
+      ? `${session.user.firstName} ${session.user.lastName}`
+      : session?.user?.name || "User";
+
   return (
-    <nav className="z-50 relative ">
-      <Container className="px-5 my-5 bg-white">
-        <div className="flex bg-white  justify-between items-center">
-          {/* logo */}
+    <nav className="z-50 relative bg-white shadow-md">
+      <Container className="px-5 py-4">
+        <div className="flex justify-between items-center">
           <div>
-            <Image src="/logo.png" alt="logo" width={150} height={50} />
+            <Image src="/logo.png" alt="Logo" width={150} height={50} />
           </div>
-          {/* nav links */}
-          <ul className="md:flex hidden gap-5">{links}</ul>
-          <button onClick={toggleMenu} className="md:hidden">
-            <Image height={45} width={45} alt="menu" src={"/icons/menu.svg"} />
-          </button>
-          {/* button   */}
-          <div className="hidden lg:block">
-            <CommonButton>Get In Touch!</CommonButton>
+          <ul className="md:flex hidden gap-6">{links}</ul>
+          <MobileNav links={links} />
+          <div className="flex items-center gap-4">
+            {status === "loading" ? (
+              <span>Loading...</span>
+            ) : session ? (
+              <>
+                <div className="flex items-center gap-2">
+                  {session?.user?.image && (
+                    <Image
+                      src={session.user.image}
+                      alt="Profile"
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                  )}
+                  <span className="text-[#0D401C]">
+                    Welcome, {displayName} ({session?.user?.role})
+                  </span>
+                </div>
+
+                <button
+                  onClick={handleLogout}
+                  className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </Container>
       <div className="w-full">
         <Image
-          src={"/shapes/navMask.svg"}
+          src="/shapes/navMask.svg"
           style={{ width: "100%" }}
-          alt=""
+          alt="Decorative navigation mask"
           width={1920}
           height={9}
         />
-      </div>
-      <div
-        className={`md:hidden  gap-6 py-20 w-56 px-10 bottom-0 top-0 fixed z-50 text-white h-screen bg-[#0D401C] transition-transform duration-500 ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div onClick={toggleMenu} className="absolute right-5 top-4">
-          <IoMdClose className="text-[#F8C32C]" size={24} />
-        </div>
-        <ul className="flex flex-col"> {links}</ul>
       </div>
     </nav>
   );

@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/shared/Footer";
-import Navbar from "@/components/shared/Navbar";
+
 import TopInfoBar from "@/components/shared/TopInfoBar";
+import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/provider/AuthProvider";
+import Navbar from "@/components/shared/Navbar";
+import FloatingChatbot from "@/components/chatbot/floating-chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,12 +35,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster position="top-right" reverseOrder={false} />
         <TopInfoBar />
-        <Navbar />
-
+        <AuthProvider>
+          <Navbar />
+        </AuthProvider>
         {children}
-
         <Footer></Footer>
+        <FloatingChatbot></FloatingChatbot>
       </body>
     </html>
   );
