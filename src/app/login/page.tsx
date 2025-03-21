@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 // import { AuthLayout } from "../auth-layout"; // Ensure this exists or remove
 
 export default function LoginPage() {
-  const router = useRouter();
+  const router= useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
