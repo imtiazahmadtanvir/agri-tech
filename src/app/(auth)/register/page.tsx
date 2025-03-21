@@ -41,7 +41,7 @@ const Register = () => {
   };
 
   return (
-    <section className="max-w-md mx-auto p-6 bg-white border rounded-lg shadow-lg">
+    <section className="max-w-md mx-auto p-6 bg-white border rounded-lg shadow-lg my-20">
       <h2 className="text-2xl font-bold mb-4 text-center">Create an Account</h2>
 
       <form onSubmit={handleSubmit}>
@@ -112,7 +112,7 @@ const Register = () => {
           {loading ? "Signing up..." : "Sign up"}
         </button>
 
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center mb-4">
           Already have an account?{" "}
           <Link href="/login" className="text-blue-500">
             Login
