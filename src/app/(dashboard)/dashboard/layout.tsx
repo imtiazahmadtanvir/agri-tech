@@ -73,7 +73,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </header>
 
         {/* Page Content */}
-        <main className="p-6 bg-[#F5F6F7]">{children}</main>
+        <main className="p-6  bg-[#F5F6F7]">{children}</main>
       </div>
     </div>
   );
