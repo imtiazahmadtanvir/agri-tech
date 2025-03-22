@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/dbConnect'; // Import your MongoDB connection function
+import dbConnect, { collectionNameObj } from '@/lib/dbConnect'; // Import your MongoDB connection function
+
 // Define the GET API
 export const GET = async () => {
     try {
         // Step 1: Connect to the MongoDB database and access the products collection
-        const productsCollection = await dbConnect('products'); // Access the 'products' collection
+        const productsCollection = await dbConnect(collectionNameObj.productsCollection); // Access the 'products' collection
 
         // Step 2: Fetch all products from the database
         const products = await productsCollection.find({}).toArray();

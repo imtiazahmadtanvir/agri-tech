@@ -52,7 +52,7 @@ export const authOptions: NextAuthOptions = {
 
                 const { email, password } = credentials;
                 const user = await loginUser({ email, password });
-                console.log("Authorize user:", user);
+
 
                 if (user) {
                     return {
@@ -84,7 +84,6 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async signIn({ user, account }) {
-            console.log("Account provider:", account);
             if (account?.provider === "google" || account?.provider === "github") {
                 const { providerAccountId, provider } = account;
                 const { email, name, image } = user;

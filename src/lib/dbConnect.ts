@@ -2,7 +2,7 @@ import { MongoClient, ServerApiVersion, Collection } from 'mongodb';
 
 export const collectionNameObj = {
     userCollection: 'users',
-    productsCollection: 'products',
+    productsCollection: "products"
 } as const;
 
 const uri = `${process.env.MONGODB_URI}` as string;
