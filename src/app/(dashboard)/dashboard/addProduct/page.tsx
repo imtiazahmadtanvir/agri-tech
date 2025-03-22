@@ -1,6 +1,7 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
+import Image from "next/image";
+import { imageUpload } from "@/utils/imageUrl";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -14,10 +15,12 @@ export default function AddProduct() {
   const [location, setLocation] = useState("");
   const [availabilityDate, setAvailabilityDate] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
+  const [error, setError] = useState<string | null>(null); // Error state
 
   interface Product {
     productName: string;
-    productPhoto: File | null;
+    productPhoto: string;
     description: string;
     price: string;
     unit: string;
@@ -28,6 +31,7 @@ export default function AddProduct() {
     availabilityDate: string;
   }
 
+  // Handle image selection and preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setProductPhoto(file);
@@ -43,23 +47,49 @@ export default function AddProduct() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const productData: Product = {
-      productName,
-      productPhoto,
-      description,
-      price,
-      unit,
-      quantity,
-      category,
-      isOrganic,
-      location,
-      availabilityDate,
-    };
-    console.log("Product Added:", productData);
+    setIsSubmitting(true);
+    setError(null);
 
-    setImagePreview(null);
+    try {
+      let imageUrl = "";
+      if (productPhoto) {
+        imageUrl = await imageUpload(productPhoto);
+      }
+
+      const productData: Product = {
+        productName,
+        productPhoto: imageUrl,
+        description,
+        price,
+        unit,
+        quantity,
+        category,
+        isOrganic,
+        location,
+        availabilityDate,
+      };
+      console.log("Product Added:", productData);
+
+      // Reset form after successful submission
+      setProductName("");
+      setProductPhoto(null);
+      setImagePreview(null);
+      setDescription("");
+      setPrice("");
+      setUnit("");
+      setQuantity("");
+      setCategory("");
+      setIsOrganic(false);
+      setLocation("");
+      setAvailabilityDate("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -68,6 +98,7 @@ export default function AddProduct() {
         <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           Add Your Farm Product
         </h1>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Product Name */}
           <div>
@@ -85,6 +116,7 @@ export default function AddProduct() {
               onChange={(e) => setProductName(e.target.value)}
               placeholder="Enter product name"
               className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              required
             />
           </div>
 
@@ -104,7 +136,6 @@ export default function AddProduct() {
               onChange={handleImageChange}
               className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-green-500 file:text-white hover:file:bg-green-600"
             />
-            {/* Image Preview */}
             {imagePreview && (
               <div className="mt-4">
                 <Image
@@ -113,7 +144,7 @@ export default function AddProduct() {
                   src={imagePreview}
                   alt="Product Preview"
                   className="max-w-full h-auto rounded-md border border-gray-300"
-                  style={{ maxHeight: "200px" }} // Limit height for better layout
+                  style={{ maxHeight: "200px" }}
                 />
               </div>
             )}
@@ -156,6 +187,7 @@ export default function AddProduct() {
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="e.g., 2.50"
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                required
               />
             </div>
             <div>
@@ -171,6 +203,7 @@ export default function AddProduct() {
                 value={unit}
                 onChange={(e) => setUnit(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                required
               >
                 <option value="">Select unit</option>
                 <option value="kg">Per Kilogram</option>
@@ -200,6 +233,7 @@ export default function AddProduct() {
                 onChange={(e) => setQuantity(e.target.value)}
                 placeholder="Enter quantity"
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                required
               />
             </div>
             <div>
@@ -215,6 +249,7 @@ export default function AddProduct() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                required
               >
                 <option value="">Select category</option>
                 <option value="vegetables">Vegetables</option>
@@ -260,6 +295,7 @@ export default function AddProduct() {
               onChange={(e) => setLocation(e.target.value)}
               placeholder="e.g., Austin, TX"
               className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              required
             />
           </div>
 
@@ -284,9 +320,14 @@ export default function AddProduct() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-colors duration-200"
+            disabled={isSubmitting}
+            className={`w-full py-2 rounded-md text-white transition-colors duration-200 ${
+              isSubmitting
+                ? "bg-green-400 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700"
+            }`}
           >
-            Add Product
+            {isSubmitting ? "Adding Product..." : "Add Product"}
           </button>
         </form>
       </div>
