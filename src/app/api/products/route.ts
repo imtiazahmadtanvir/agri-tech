@@ -25,10 +25,12 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         const body = await req.json();
         const user = await getServerSession(authOptions)
         console.log(user);
-        // const productsCollection = await dbConnect(collectionNameObj.productsCollection);
-        // const result = await productsCollection.insertOne(body);
+        body.username = user?.user.name;
+        body.email = user?.user.email;
+        const productsCollection = await dbConnect(collectionNameObj.productsCollection);
+        const result = await productsCollection.insertOne(body);
         return NextResponse.json({
-            success: true, message: "Product added successfully",
+            success: true, message: "Product added successfully", data: result
         }, { status: 201 })
     } catch (error) {
         console.error("Error adding product:", error);

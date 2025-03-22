@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { imageUpload } from "@/utils/imageUrl";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -72,11 +73,14 @@ export default function AddProduct() {
         location,
         availabilityDate,
       };
+      console.log(process.env.NEXT_PUBLIC_URL);
       const response = await axios.post(
-        `${process.env.NEXTAUTH_URL}/api/products`,
+        `${process.env.NEXT_PUBLIC_URL}/api/products`,
         productData
       );
-
+      if (response.data.success) {
+        toast.success(response.data.message);
+      }
       setProductName("");
       setProductPhoto(null);
       setImagePreview(null);
@@ -89,6 +93,7 @@ export default function AddProduct() {
       setLocation("");
       setAvailabilityDate("");
     } catch (err) {
+      toast.error("Something went wrong");
       setError(err instanceof Error ? err.message : "An error occurred.");
     } finally {
       setIsSubmitting(false);
