@@ -36,20 +36,21 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 Users
               </Link>
             </li>
-            <li>
-              <Link
-                href="/dashboard/settings"
-                className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
-              >
-                Settings
-              </Link>
-            </li>
+
             <li>
               <Link
                 href="/dashboard/weather"
                 className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
               >
                 Weather
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/dashboard/settings"
+                className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
+              >
+                Settings
               </Link>
             </li>
           </ul>
