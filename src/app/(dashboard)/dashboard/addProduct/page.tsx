@@ -15,8 +15,8 @@ export default function AddProduct() {
   const [location, setLocation] = useState("");
   const [availabilityDate, setAvailabilityDate] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false); // Loading state
-  const [error, setError] = useState<string | null>(null); // Error state
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   interface Product {
     productName: string;
@@ -71,7 +71,7 @@ export default function AddProduct() {
         location,
         availabilityDate,
       };
-      console.log("Product Added:", productData);
+      const response = await axios;
 
       setProductName("");
       setProductPhoto(null);
