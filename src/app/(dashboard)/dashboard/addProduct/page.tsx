@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { imageUpload } from "@/utils/imageUrl";
+import axios from "axios";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -71,7 +72,10 @@ export default function AddProduct() {
         location,
         availabilityDate,
       };
-      const response = await axios;
+      const response = await axios.post(
+        `${process.env.NEXTAUTH_URL}/api/products`,
+        productData
+      );
 
       setProductName("");
       setProductPhoto(null);

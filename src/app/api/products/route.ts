@@ -19,19 +19,16 @@ export const GET = async (req: NextRequest) => {
         result: " pls login first"
     })
 }
-// export const POST = async (req: NextRequest) => {
-//     const body = await req.json();
-//     const productsCollection = await dbConnect(collectionNameObj.productsCollection)
-//     const result = await productsCollection.insertOne(body)
-//     return NextResponse.json(result)
-// }
+
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
     try {
         const body = await req.json();
-        const productsCollection = await dbConnect(collectionNameObj.productsCollection);
-        const result = await productsCollection.insertOne(body);
+        const user = await getServerSession(authOptions)
+        console.log(user);
+        // const productsCollection = await dbConnect(collectionNameObj.productsCollection);
+        // const result = await productsCollection.insertOne(body);
         return NextResponse.json({
-            success: true, message: "Product added successfully", data: result
+            success: true, message: "Product added successfully",
         }, { status: 201 })
     } catch (error) {
         console.error("Error adding product:", error);
