@@ -73,7 +73,6 @@ export default function AddProduct() {
       };
       console.log("Product Added:", productData);
 
-      // Reset form after successful submission
       setProductName("");
       setProductPhoto(null);
       setImagePreview(null);
