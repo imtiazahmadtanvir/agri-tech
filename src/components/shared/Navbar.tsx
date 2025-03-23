@@ -90,7 +90,6 @@ const navItems: NavItem[] = [
       { label: "Cooperative Groups", href: "/community/groups", icon: "👥" },
     ],
   },
-  { label: "Profile", href: "/profile", icon: "👤" },
 ];
 
 const DropdownMenu = ({ item }: { item: NavItem }) => {
