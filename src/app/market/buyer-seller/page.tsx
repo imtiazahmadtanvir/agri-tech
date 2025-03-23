@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { MarketplaceItem } from "@/types/type";
+import { MarketplaceItemForBuy } from "@/types/type";
 import MarketplaceList from "@/components/market/MarketplaceList";
 import FormForBuySell from "@/components/market/FormForBuySell";
 
 const SeedEquipmentMarketplace = () => {
-  const [items, setItems] = useState<MarketplaceItem[]>([]);
+  const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
   const [showPostForm, setShowPostForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +28,7 @@ const SeedEquipmentMarketplace = () => {
     fetchItems();
   }, []);
 
-  const handleAddItem = (newItem: MarketplaceItem) => {
+  const handleAddItem = (newItem: MarketplaceItemForBuy) => {
     setItems((prevItems) => [...prevItems, newItem]);
     setShowPostForm(false);
   };

@@ -1,9 +1,9 @@
 import ProductCard from "./ProductCard";
 import Filters from "./Filters";
-import { MarketplaceItem } from "@/types/type";
+import { MarketplaceItemForBuy } from "@/types/type";
 
 interface MarketplaceListProps {
-  items: MarketplaceItem[];
+  items: MarketplaceItemForBuy[];
   onToggleForm: () => void;
 }
 

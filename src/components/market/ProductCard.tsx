@@ -1,9 +1,9 @@
 "use client";
-import { MarketplaceItem } from "@/types/type";
+import { MarketplaceItemForBuy } from "@/types/type";
 import Image from "next/image";
 import toast from "react-hot-toast";
 
-const ProductCard = ({ item }: { item: MarketplaceItem }) => {
+const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
   return (
     <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-200">
       {item.image && (
