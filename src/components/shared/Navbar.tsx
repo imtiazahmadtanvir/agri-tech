@@ -24,7 +24,6 @@ interface SubItem {
 // Navigation data
 const navItems: NavItem[] = [
   { label: "Home", href: "/", icon: "🏡" },
-  { label: "Dashboard", href: "/dashboard", icon: "📊" },
   {
     label: "Resources",
     icon: "▼",

@@ -10,7 +10,7 @@ interface MarketplaceItem {
   image: string;
   description: string;
   price: string;
-  unit: string; // e.g., per kg, per dozen
+  unit: string;
   category: "crops" | "livestock" | "other";
   isOrganic: boolean;
   seller: {
