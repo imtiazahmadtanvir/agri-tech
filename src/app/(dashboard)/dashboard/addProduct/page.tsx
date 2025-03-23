@@ -19,6 +19,7 @@ export default function AddProduct() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [contactNumber, setContactNumber] = useState("");
 
   interface Product {
     productName: string;
@@ -30,6 +31,7 @@ export default function AddProduct() {
     category: string;
     isOrganic: boolean;
     location: string;
+    contactNumber: string;
     availabilityDate: string;
   }
 
@@ -71,6 +73,7 @@ export default function AddProduct() {
         category,
         isOrganic,
         location,
+        contactNumber,
         availabilityDate,
       };
       console.log(process.env.NEXT_PUBLIC_URL);
@@ -91,6 +94,7 @@ export default function AddProduct() {
       setCategory("");
       setIsOrganic(false);
       setLocation("");
+      setContactNumber("");
       setAvailabilityDate("");
     } catch (err) {
       toast.error("Something went wrong");
@@ -127,7 +131,25 @@ export default function AddProduct() {
               required
             />
           </div>
-
+          <div>
+            <label
+              htmlFor="contactNumber"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Contact Number
+            </label>
+            <input
+              type="tel"
+              id="contactNumber"
+              name="contactNumber"
+              value={contactNumber}
+              onChange={(e) => setContactNumber(e.target.value)}
+              placeholder="e.g., +1-123-456-7890"
+              pattern="[0-9+-\s]*"
+              className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              required
+            />
+          </div>
           {/* Product Photo */}
           <div>
             <label
