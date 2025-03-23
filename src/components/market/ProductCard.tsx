@@ -35,9 +35,7 @@ const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
         </p>
         <p className="text-gray-500">Contact: {item.email}</p>
       </div>
-      <p className="text-gray-400 text-sm mt-1">
-        Listed: {new Date(item.availabilityDate).toLocaleDateString()}
-      </p>
+      <p className="text-gray-400 text-sm mt-1"></p>
       <button
         onClick={() =>
           toast.success(`Contact ${item.username} at ${item.email}`)

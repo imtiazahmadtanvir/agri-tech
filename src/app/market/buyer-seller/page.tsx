@@ -2,8 +2,6 @@
 import { useState, useEffect } from "react";
 import { MarketplaceItemForBuy } from "@/types/type";
 import MarketplaceList from "@/components/market/MarketplaceList";
-import FormForBuySell from "@/components/market/FormForBuySell";
-
 const SeedEquipmentMarketplace = () => {
   const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
   const [showPostForm, setShowPostForm] = useState(false);
@@ -19,7 +17,7 @@ const SeedEquipmentMarketplace = () => {
         const result = await response.json();
 
         if (result.success) {
-          setItems(result.data); // Correctly access the 'data' array
+          setItems(result.data);
         } else {
           setError("Failed to load items.");
         }
@@ -63,11 +61,7 @@ const SeedEquipmentMarketplace = () => {
         <h1 className="text-3xl font-bold text-[#0D401C] mb-6 text-center">
           Buy and Seller Marketplace 🛒
         </h1>
-        {showPostForm ? (
-          <FormForBuySell onAddItem={handleAddItem} onCancel={toggleForm} />
-        ) : (
-          <MarketplaceList items={items} onToggleForm={toggleForm} />
-        )}
+        <MarketplaceList items={items} />
       </div>
     </div>
   );

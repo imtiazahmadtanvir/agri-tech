@@ -4,24 +4,16 @@ import { MarketplaceItemForBuy } from "@/types/type";
 
 interface MarketplaceListProps {
   items: MarketplaceItemForBuy[];
-  onToggleForm: () => void;
 }
 
-const MarketplaceList = ({ items, onToggleForm }: MarketplaceListProps) => {
+const MarketplaceList = ({ items }: MarketplaceListProps) => {
   console.log(items);
   return (
     <>
       <p className="text-[#0D401C] text-center mb-8">
         Browse seeds and equipment from trusted sellers.
       </p>
-      <div className="flex justify-center mb-6">
-        <button
-          onClick={onToggleForm}
-          className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-colors duration-300"
-        >
-          Post an Ad
-        </button>
-      </div>
+
       <Filters useCase="seed-equipment" />
       {items.length === 0 ? (
         <p className="text-[#0D401C] text-center">No items available yet.</p>

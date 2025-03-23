@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface FiltersProps {
   useCase: "seed-equipment" | "buyer-seller";
 }
@@ -26,6 +28,14 @@ const Filters = ({ useCase }: FiltersProps) => {
           </option>
         ))}
       </select>
+      <div>
+        <Link
+          className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-colors duration-300"
+          href={"/market/buyer-seller/form"}
+        >
+          Post an ad
+        </Link>
+      </div>
       <select className="border border-gray-300 rounded-md p-2 text-[#0D401C]">
         <option value="">Sort By</option>
         <option value="price-low">Price: Low to High</option>
