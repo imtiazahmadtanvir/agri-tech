@@ -246,15 +246,6 @@ const Navbar = () => {
           <AuthSection />
         </div>
       </Container>
-      <div className="w-full">
-        <Image
-          src="/shapes/navMask.svg"
-          style={{ width: "100%" }}
-          alt="Decorative navigation mask"
-          width={1920}
-          height={9}
-        />
-      </div>
     </nav>
   );
 };

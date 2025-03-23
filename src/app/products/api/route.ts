@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import dbConnect, { collectionNameObj } from '@/lib/dbConnect'; // Import your MongoDB connection function
+import { ObjectId } from 'mongodb';
 
 // Define the GET API
 export const GET = async () => {
@@ -130,7 +131,6 @@ export const DELETE = async (request: Request) => {
 
         return NextResponse.json(
             { error: "An internal server error occurred" },
-            { status: 500 }
-        );
-    }
+            { status: 500 });
+    }
 };
