@@ -144,9 +144,9 @@ const NavItems = ({ isMobile = false }: { isMobile?: boolean }) => (
   </ul>
 );
 
-// AuthSection component
 const AuthSection = () => {
   const { data: session, status } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/login" });
@@ -157,15 +157,21 @@ const AuthSection = () => {
       ? `${session.user.firstName} ${session.user.lastName}`
       : session?.user?.name || "User";
 
+  // Loading state
   if (status === "loading") {
     return <span className="text-[#0D401C]">Loading...</span>;
   }
 
+  // Authenticated state
   if (session) {
     return (
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          {session.user?.image && (
+      <div className="relative">
+        {/* Profile Photo (clickable) */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="focus:outline-none"
+        >
+          {session.user?.image ? (
             <Image
               src={session.user.image}
               alt="Profile"
@@ -173,17 +179,37 @@ const AuthSection = () => {
               height={32}
               className="rounded-full"
             />
+          ) : (
+            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-[#0D401C]">
+              {displayName[0]} {/* Initial if no image */}
+            </div>
           )}
-          <span className="text-[#0D401C]">
-            {displayName} ({session.user?.role})
-          </span>
-        </div>
-        <button
-          onClick={handleLogout}
-          className="bg-[#0D401C] text-white px-4 py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-all duration-300 font-semibold"
-        >
-          Logout
         </button>
+
+        {isOpen && (
+          <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10 border border-gray-200">
+            <div className="px-4 py-2 text-[#0D401C] flex items-center gap-2 border-b border-gray-200">
+              {session.user?.image && (
+                <Image
+                  src={session.user.image}
+                  alt="Profile"
+                  width={24}
+                  height={24}
+                  className="rounded-full"
+                />
+              )}
+              <span>
+                {displayName} ({session.user?.role})
+              </span>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="w-full text-left px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     );
   }
