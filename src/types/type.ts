@@ -63,18 +63,17 @@ export interface MarketplaceItem {
     stock: number;
 }
 export interface MarketplaceItemForBuy {
-    id: string;
-    name: string;
-    image: string;
+    availabilityDate: string;
+    category: string;
     description: string;
-    price: string;
-    unit: string;
-    category: "crops" | "livestock" | "other";
+    email: string;
     isOrganic: boolean;
-    seller: {
-        name: string;
-        contact: string;
-        location: string;
-    };
-    quantity: number;
+    location: string;
+    price: string;
+    productName: string;
+    productPhoto: string;
+    quantity: string;
+    unit: string;
+    username: string;
+    listed: string;
 }

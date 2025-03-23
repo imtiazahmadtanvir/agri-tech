@@ -8,6 +8,7 @@ interface MarketplaceListProps {
 }
 
 const MarketplaceList = ({ items, onToggleForm }: MarketplaceListProps) => {
+  console.log(items);
   return (
     <>
       <p className="text-[#0D401C] text-center mb-8">
@@ -27,7 +28,7 @@ const MarketplaceList = ({ items, onToggleForm }: MarketplaceListProps) => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((item) => (
-            <ProductCard key={item.id} item={item} />
+            <ProductCard key={item._id} item={item} />
           ))}
         </div>
       )}

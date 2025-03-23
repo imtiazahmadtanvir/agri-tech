@@ -30,6 +30,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         console.log(user);
         body.username = user?.user.name;
         body.email = user?.user.email;
+        body.listed = new Date().toISOString()
         const productsCollection = await dbConnect(collectionNameObj.productsCollection);
         const result = await productsCollection.insertOne(body);
         return NextResponse.json({
