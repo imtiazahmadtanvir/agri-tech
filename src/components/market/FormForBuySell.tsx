@@ -83,7 +83,7 @@ export default function AddProduct({ onCancel, onAddItem }: PostAdFormProps) {
       };
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/api/products`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
         productData
       );
       if (response.data.success) {

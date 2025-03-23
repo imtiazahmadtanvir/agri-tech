@@ -63,6 +63,7 @@ export interface MarketplaceItem {
     stock: number;
 }
 export interface MarketplaceItemForBuy {
+    _id: string;
     availabilityDate: string;
     category: string;
     description: string;
