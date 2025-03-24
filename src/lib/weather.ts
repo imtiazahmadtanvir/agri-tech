@@ -92,7 +92,7 @@ export const fetchWeatherForecast = async (lat: number, lon: number): Promise<We
     try {
         const response = await axios.get(url);
         return response.data;
-    } catch (error) {
+    } catch {
         throw new Error('Failed to fetch weather forecast');
     }
 };

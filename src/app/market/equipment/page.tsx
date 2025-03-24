@@ -19,10 +19,9 @@ const SeedEquipmentMarketplace = () => {
         );
         setItems(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError("Failed to load items. Please try again later.");
         setLoading(false);
-        console.error("Error fetching items:", err);
       }
     };
     fetchItems();
