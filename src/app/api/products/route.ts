@@ -2,9 +2,7 @@ import dbConnect, { collectionNameObj } from "@/lib/dbConnect"
 import type { NextRequest } from 'next/server';
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
-import { authOptions } from "../auth/[...nextauth]/route"
-
-
+import { authOptions } from "@/lib/auth";
 export const GET = async (req: NextRequest) => {
     try {
         const productsCollection = await dbConnect(collectionNameObj.productsCollection);
