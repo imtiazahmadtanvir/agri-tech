@@ -14,7 +14,7 @@ const MarketplaceList = ({ items }: MarketplaceListProps) => {
         Browse seeds and equipment from trusted sellers.
       </p>
 
-      <Filters useCase="seed-equipment" />
+      <Filters useCase="buyer-seller" />
       {items.length === 0 ? (
         <p className="text-[#0D401C] text-center">No items available yet.</p>
       ) : (

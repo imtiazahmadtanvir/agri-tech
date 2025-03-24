@@ -40,13 +40,8 @@ const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
       </div>
 
       <Link href={`/products/${item._id}`}>
-        <button
-          onClick={() =>
-            toast.success(`Contact ${item.username} at ${item.email}`)
-          }
-          className="mt-4 w-full bg-[#0D401C] text-white py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-colors duration-300"
-        >
-          Contact Seller
+        <button className="mt-4 w-full bg-[#0D401C] text-white py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-colors duration-300">
+          View
         </button>
       </Link>
     </div>

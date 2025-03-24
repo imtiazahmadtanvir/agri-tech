@@ -11,11 +11,21 @@ const Filters = ({ useCase }: FiltersProps) => {
           { value: "", label: "All Categories" },
           { value: "seeds", label: "Seeds" },
           { value: "equipment", label: "Equipment" },
+          { value: "fertilizers", label: "Fertilizers" },
+          { value: "pesticides", label: "Pesticides" },
+          { value: "tools", label: "Tools & Machinery" },
         ]
       : [
           { value: "", label: "All Categories" },
           { value: "crops", label: "Crops" },
+          { value: "fruits", label: "Fruits" },
+          { value: "vegetables", label: "Vegetables" },
           { value: "livestock", label: "Livestock" },
+          { value: "dairy", label: "Dairy Products" },
+          { value: "poultry", label: "Poultry" },
+          { value: "fishery", label: "Fish & Aquaculture" },
+          { value: "organic", label: "Organic Produce" },
+          { value: "herbs", label: "Herbs & Medicinal Plants" },
           { value: "other", label: "Other" },
         ];
 

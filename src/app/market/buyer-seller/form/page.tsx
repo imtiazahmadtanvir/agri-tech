@@ -5,10 +5,7 @@ import { imageUpload } from "@/utils/imageUrl";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-interface PostAdFormProps {
-  onCancel: () => void;
-}
-export default function AddProduct({ onCancel }: PostAdFormProps) {
+export default function AddProduct() {
   const [productName, setProductName] = useState("");
   const [productPhoto, setProductPhoto] = useState<File | null>(null);
   const [description, setDescription] = useState("");
@@ -289,6 +286,15 @@ export default function AddProduct({ onCancel }: PostAdFormProps) {
                 <option value="dairy">Dairy</option>
                 <option value="honey">Honey</option>
                 <option value="grains">Grains</option>
+                <option value="poultry">Poultry</option>
+                <option value="livestock">Livestock</option>
+                <option value="fishery">Fish & Aquaculture</option>
+                <option value="organic-products">Organic Products</option>
+                <option value="spices">Spices</option>
+                <option value="flowers">Flowers & Plants</option>
+                <option value="herbs">Herbs</option>
+
+                <option value="other">Other</option>
               </select>
             </div>
           </div>
@@ -360,13 +366,6 @@ export default function AddProduct({ onCancel }: PostAdFormProps) {
             }`}
           >
             {isSubmitting ? "Adding Product..." : "Add Product"}
-          </button>
-          <button
-            type="button"
-            onClick={onCancel}
-            className="w-full bg-gray-300 text-[#0D401C] py-2 rounded-md hover:bg-gray-400 transition-colors duration-300"
-          >
-            Cancel
           </button>
         </form>
       </div>
