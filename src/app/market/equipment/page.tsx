@@ -3,20 +3,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { MarketplaceItem } from "@/types/type";
 import PostAdForm from "@/components/market/PostAdForm";
-import MarketplaceList from "@/components/market/MarketplaceList";
+import MarketplaceForEq from "@/components/market/MarketplasceForEq";
 
 const SeedEquipmentMarketplace = () => {
   const [items, setItems] = useState<MarketplaceItem[]>([]);
   const [showPostForm, setShowPostForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_URL}/api/products`
-        );
+        const response = await axios.get(`/api/products`);
         setItems(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
       } catch {
@@ -59,7 +56,7 @@ const SeedEquipmentMarketplace = () => {
         {showPostForm ? (
           <PostAdForm onAddItem={handleAddItem} onCancel={toggleForm} />
         ) : (
-          <MarketplaceList items={items} onToggleForm={toggleForm} />
+          <MarketplaceForEq items={items} />
         )}
       </div>
     </div>

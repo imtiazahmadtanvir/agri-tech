@@ -1,11 +1,11 @@
 import ProductCard from "./ProductCard";
-import { MarketplaceItemForBuy } from "@/types/type";
+import { MarketplaceItem } from "@/types/type";
 
 interface MarketplaceListProps {
-  items: MarketplaceItemForBuy[];
+  items: MarketplaceItem[];
 }
 
-const MarketplaceList = ({ items }: MarketplaceListProps) => {
+const MarketplaceForEq = ({ items }: MarketplaceListProps) => {
   console.log("Items in MarketplaceList:", items);
 
   return (
@@ -23,4 +23,4 @@ const MarketplaceList = ({ items }: MarketplaceListProps) => {
   );
 };
 
-export default MarketplaceList;
+export default MarketplaceForEq;
