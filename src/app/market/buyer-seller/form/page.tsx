@@ -9,7 +9,7 @@ export default function AddProduct() {
   const [productName, setProductName] = useState("");
   const [productPhoto, setProductPhoto] = useState<File | null>(null);
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState<number | "">(""); // Allow empty string for input
+  const [price, setPrice] = useState<number | "">("");
   const [unit, setUnit] = useState("");
   const [quantity, setQuantity] = useState("");
   const [category, setCategory] = useState("");
