@@ -4,6 +4,7 @@ import Image from "next/image";
 import { imageUpload } from "@/utils/imageUrl";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function AddProduct() {
   const [productName, setProductName] = useState("");
@@ -15,24 +16,22 @@ export default function AddProduct() {
   const [category, setCategory] = useState("");
   const [isOrganic, setIsOrganic] = useState(false);
   const [location, setLocation] = useState("");
-  const [availabilityDate, setAvailabilityDate] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [contactNumber, setContactNumber] = useState("");
-
+  const router = useRouter();
   interface Product {
     productName: string;
     productPhoto: string;
     description: string;
-    price: number; // Changed to number
+    price: number;
     unit: string;
     quantity: string;
     category: string;
     isOrganic: boolean;
     location: string;
     contactNumber: string;
-    availabilityDate: string;
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,20 +72,16 @@ export default function AddProduct() {
         productName,
         productPhoto: imageUrl,
         description,
-        price: Number(price), // Convert to number
+        price: Number(price),
         unit,
         quantity,
         category,
         isOrganic,
         location,
         contactNumber,
-        availabilityDate,
       };
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
-        productData
-      );
+      const response = await axios.post(`/api/products`, productData);
       if (response.data.success) {
         toast.success(response.data.message);
       }
@@ -94,14 +89,14 @@ export default function AddProduct() {
       setProductPhoto(null);
       setImagePreview(null);
       setDescription("");
-      setPrice(""); // Reset to empty string
+      setPrice("");
       setUnit("");
       setQuantity("");
       setCategory("");
       setIsOrganic(false);
       setLocation("");
       setContactNumber("");
-      setAvailabilityDate("");
+      router.push("/market/buyer-seller");
     } catch (err) {
       toast.error("Something went wrong");
       setError(err instanceof Error ? err.message : "An error occurred.");
