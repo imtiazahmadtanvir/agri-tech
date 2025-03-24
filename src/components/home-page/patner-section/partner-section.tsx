@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client"
+"use client";
 
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
@@ -21,7 +21,10 @@ interface Logo {
 }
 
 // Debounce function to limit resize event firing
-function debounce<T extends (...args: any[]) => void>(func: T, wait: number): T {
+function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  wait: number
+): T {
   let timeout: NodeJS.Timeout;
   return function executedFunction(...args: Parameters<T>) {
     const later = () => {
@@ -42,7 +45,6 @@ export default function PatnerSection() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Optimized screen size detection with debounce
   const updateScreenSize = useCallback(
     debounce(() => {
       const width = window.innerWidth;
@@ -67,12 +69,36 @@ export default function PatnerSection() {
   }, [updateScreenSize]);
 
   const logos: Logo[] = [
-    { name: "Wide Open Agriculture", src: "/PartnerLogo/client1.webp", alt: "Wide Open Agriculture logo" },
-    { name: "Sollio Agriculture", src: "/PartnerLogo/client2.webp", alt: "Sollio Agriculture logo" },
-    { name: "Syngenta", src: "/PartnerLogo/client3.webp", alt: "Syngenta logo" },
-    { name: "Strachan Valley Farm", src: "/PartnerLogo/client4.webp", alt: "Strachan Valley Farm logo" },
-    { name: "New Holland Agriculture", src: "/PartnerLogo/client5.webp", alt: "New Holland Agriculture logo" },
-    { name: "Stonyfield Organic", src: "/PartnerLogo/client6.webp", alt: "Stonyfield Organic logo" },
+    {
+      name: "Wide Open Agriculture",
+      src: "/PartnerLogo/client1.webp",
+      alt: "Wide Open Agriculture logo",
+    },
+    {
+      name: "Sollio Agriculture",
+      src: "/PartnerLogo/client2.webp",
+      alt: "Sollio Agriculture logo",
+    },
+    {
+      name: "Syngenta",
+      src: "/PartnerLogo/client3.webp",
+      alt: "Syngenta logo",
+    },
+    {
+      name: "Strachan Valley Farm",
+      src: "/PartnerLogo/client4.webp",
+      alt: "Strachan Valley Farm logo",
+    },
+    {
+      name: "New Holland Agriculture",
+      src: "/PartnerLogo/client5.webp",
+      alt: "New Holland Agriculture logo",
+    },
+    {
+      name: "Stonyfield Organic",
+      src: "/PartnerLogo/client6.webp",
+      alt: "Stonyfield Organic logo",
+    },
   ];
 
   // Determine appropriate sizes attribute based on screen size
@@ -90,9 +116,17 @@ export default function PatnerSection() {
           Agriculture Partners
         </h2>
 
-        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8 lg:gap-10" role="list" aria-label="Agriculture partner logos">
+        <div
+          className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8 lg:gap-10"
+          role="list"
+          aria-label="Agriculture partner logos"
+        >
           {logos.map((logo, index) => (
-            <div key={logo.name} className="flex items-center justify-center p-2 sm:p-3 md:p-4 transition-all duration-300 hover:opacity-80 focus-within:ring-2 focus-within:ring-green-600 rounded-md" role="listitem">
+            <div
+              key={logo.name}
+              className="flex items-center justify-center p-2 sm:p-3 md:p-4 transition-all duration-300 hover:opacity-80 focus-within:ring-2 focus-within:ring-green-600 rounded-md"
+              role="listitem"
+            >
               <div className="relative w-full h-12 xs:h-14 sm:h-16 md:h-18 lg:h-20 xl:h-24">
                 {isLoading ? (
                   <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />
@@ -106,8 +140,12 @@ export default function PatnerSection() {
                     sizes={getSizes()}
                     className="transition-opacity duration-300 opacity-0"
                     onLoad={(e) => {
-                      (e.target as HTMLImageElement).classList.remove("opacity-0");
-                      (e.target as HTMLImageElement).classList.add("opacity-100");
+                      (e.target as HTMLImageElement).classList.remove(
+                        "opacity-0"
+                      );
+                      (e.target as HTMLImageElement).classList.add(
+                        "opacity-100"
+                      );
                     }}
                     placeholder="blur"
                     blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
