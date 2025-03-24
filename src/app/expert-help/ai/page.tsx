@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, ChangeEvent, FormEvent } from "react";
 
 export default function Home() {
-  const [prompt, setPrompt] = useState<string>("");
+  const [prompt] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
   const [response, setResponse] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -62,7 +62,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl shadow-md p-6 w-full max-w-2xl">
         <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
-          AI
+          Picture Intelligence
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
