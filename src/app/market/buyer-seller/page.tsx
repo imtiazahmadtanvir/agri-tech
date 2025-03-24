@@ -4,7 +4,6 @@ import { MarketplaceItemForBuy } from "@/types/type";
 import MarketplaceList from "@/components/market/MarketplaceList";
 const SeedEquipmentMarketplace = () => {
   const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
-  const [showPostForm, setShowPostForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,14 +30,6 @@ const SeedEquipmentMarketplace = () => {
 
     fetchItems();
   }, []);
-
-  const handleAddItem = (newItem: MarketplaceItemForBuy) => {
-    setItems((prevItems) => [...prevItems, newItem]);
-    setShowPostForm(false);
-  };
-
-  const toggleForm = () => setShowPostForm((prev) => !prev);
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
