@@ -9,7 +9,7 @@ const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-200">
+    <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-200 flex flex-col">
       {item.productPhoto && (
         <Image
           src={item.productPhoto}
@@ -19,23 +19,25 @@ const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
           className="w-full h-48 object-cover rounded-md mb-4"
         />
       )}
-      <h2 className="text-xl font-semibold text-[#0D401C]">
-        {item.productName}
-      </h2>
-      <p className="text-gray-600 mt-1 truncate">{item.description}</p>
-      <p className="text-[#F8C32C] font-bold mt-2">${item.price}</p>
-      <p className="text-gray-500 mt-1">
-        Stock: {item.quantity} {item.unit}
-      </p>
-      <p className="text-gray-500 mt-1">Category: {item.category}</p>
-      {item.isOrganic && <p className="text-gray-500 mt-1">Organic: Yes</p>}
-      <div className="mt-2">
-        <p className="text-gray-500">
-          Seller: {item.username} ({item.location})
+      <div className="grow">
+        <h2 className="text-xl font-semibold text-[#0D401C]">
+          {item.productName}
+        </h2>
+        <p className="text-[#F8C32C] font-bold mt-2">${item.price}</p>
+        <p className="text-gray-500 mt-1">
+          Stock: {item.quantity} {item.unit}
         </p>
-        <p className="text-gray-500">Contact: {item.email}</p>
+        <p className="text-gray-500 mt-1">Category: {item.category}</p>
+        <p className="text-gray-500 mt-1">
+          Organic: {item.isOrganic ? "Yes" : "No"}
+        </p>
+
+        <div className="mt-2">
+          <p className="text-gray-500">Seller: {item.username}</p>
+          <p className="text-gray-500">Contact: {item.email}</p>
+        </div>
+        <p className="text-gray-400 text-sm mt-1"></p>
       </div>
-      <p className="text-gray-400 text-sm mt-1"></p>
       <button
         onClick={() =>
           toast.success(`Contact ${item.username} at ${item.email}`)
