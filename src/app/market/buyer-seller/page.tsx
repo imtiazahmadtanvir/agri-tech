@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { MarketplaceItemForBuy } from "@/types/type";
 import MarketplaceList from "@/components/market/MarketplaceList";
-import Filters from "@/components/market/Filters"; // Adjust path
-
+import Filters from "@/components/market/Filters";
 const SeedEquipmentMarketplace = () => {
   const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
   const [loading, setLoading] = useState(true);
@@ -14,20 +14,20 @@ const SeedEquipmentMarketplace = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
-        if (category) url.searchParams.append("category", category);
-        if (sortBy) {
-          url.searchParams.append("sortBy", sortBy);
-          url.searchParams.append("sortOrder", sortOrder);
-        }
-
-        const response = await fetch(url.toString(), {
-          credentials: "include",
+        const { data } = await axios.get(`/api/products`, {
+          params: {
+            category,
+            sortBy,
+            sortOrder,
+          },
+          withCredentials: true,
         });
-        const result = await response.json();
-
-        if (result.success) {
+        if (data.success) {
+          setItems(data.data);
         } else {
           setError("Failed to load items.");
         }
