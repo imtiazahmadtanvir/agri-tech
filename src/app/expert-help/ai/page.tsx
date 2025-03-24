@@ -29,7 +29,7 @@ export default function Home() {
       } else {
         setResponse(`Error: ${data.error || "Unknown error"}`);
       }
-    } catch (error) {
+    } catch {
       setResponse("Something went wrong! Please try again.");
     } finally {
       setLoading(false);
@@ -62,12 +62,12 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl shadow-md p-6 w-full max-w-2xl">
         <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
-          Agri-Tech AI
+          AI
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Prompt Input */}
-          <div>
+          {/* <div>
             <label
               htmlFor="prompt"
               className="block text-sm font-medium text-gray-700 mb-1"
@@ -82,7 +82,7 @@ export default function Home() {
               rows={4}
               className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none text-gray-800 placeholder-gray-400"
             />
-          </div>
+          </div> */}
 
           {/* Image Upload */}
           <div>
