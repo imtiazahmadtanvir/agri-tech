@@ -8,7 +8,7 @@ export const middleware = async (req: NextRequest) => {
         return NextResponse.next();
     }
 
-    // Save the original URL before redirecting to login
+
     const loginUrl = new URL("/login", req.url);
     loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
     return NextResponse.redirect(loginUrl);
