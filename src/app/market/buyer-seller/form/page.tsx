@@ -345,24 +345,6 @@ export default function AddProduct() {
             />
           </div>
 
-          {/* Availability Date */}
-          <div>
-            <label
-              htmlFor="availabilityDate"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Available From
-            </label>
-            <input
-              type="date"
-              id="availabilityDate"
-              name="availabilityDate"
-              value={availabilityDate}
-              onChange={(e) => setAvailabilityDate(e.target.value)}
-              className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
-            />
-          </div>
-
           {/* Submit Button */}
           <button
             type="submit"
