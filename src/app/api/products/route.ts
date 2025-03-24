@@ -8,7 +8,6 @@ import { authOptions } from "../auth/[...nextauth]/route"
 export const GET = async (req: NextRequest) => {
     try {
         const session = await getServerSession(authOptions)
-
         if (session) {
             const email = session.user?.email
             const productsCollection = await dbConnect(collectionNameObj.productsCollection)
