@@ -39,7 +39,7 @@ export const fetchCoordinates = async (city: string): Promise<GeocodingResponse>
             throw new Error('City not found');
         }
         return response.data[0];
-    } catch (error) {
+    } catch {
         throw new Error('Failed to fetch coordinates');
     }
 };
@@ -55,7 +55,7 @@ export const fetchCityFromCoordinates = async (lat: number, lon: number): Promis
             throw new Error('Location not found');
         }
         return response.data[0];
-    } catch (error) {
+    } catch {
         throw new Error('Failed to fetch city name');
     }
 };
@@ -68,7 +68,7 @@ export const fetchCurrentWeather = async (lat: number, lon: number) => {
     try {
         const response = await axios.get(url);
         return response.data;
-    } catch (error) {
+    } catch {
         throw new Error('Failed to fetch current weather');
     }
 };
@@ -79,7 +79,7 @@ export const fetchUVIndex = async (lat: number, lon: number): Promise<number> =>
     try {
         const response = await axios.get(url);
         return response.data.value; // UV Index value
-    } catch (error) {
+    } catch {
         throw new Error('Failed to fetch UV Index');
     }
 };

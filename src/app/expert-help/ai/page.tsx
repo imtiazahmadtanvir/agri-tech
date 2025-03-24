@@ -29,7 +29,7 @@ export default function Home() {
       } else {
         setResponse(`Error: ${data.error || "Unknown error"}`);
       }
-    } catch (error) {
+    } catch {
       setResponse("Something went wrong! Please try again.");
     } finally {
       setLoading(false);
