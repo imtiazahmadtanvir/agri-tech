@@ -30,10 +30,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </li>
             <li>
               <Link
-                href="/dashboard/users"
+                href="/dashboard/addProduct"
                 className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
               >
-                Users
+                Add Product
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href="/dashboard/weather"
+                className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
+              >
+                Weather
               </Link>
             </li>
             <li>
@@ -42,14 +51,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
               >
                 Settings
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/dashboard/weather"
-                className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
-              >
-                Weather
               </Link>
             </li>
           </ul>
@@ -72,7 +73,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </header>
 
         {/* Page Content */}
-        <main className="p-6 bg-[#F5F6F7]">{children}</main>
+        <main className="p-6  bg-[#F5F6F7]">{children}</main>
       </div>
     </div>
   );
