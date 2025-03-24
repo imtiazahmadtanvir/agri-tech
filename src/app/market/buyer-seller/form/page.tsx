@@ -9,7 +9,7 @@ export default function AddProduct() {
   const [productName, setProductName] = useState("");
   const [productPhoto, setProductPhoto] = useState<File | null>(null);
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState<number | "">(""); // Allow empty string for input
   const [unit, setUnit] = useState("");
   const [quantity, setQuantity] = useState("");
   const [category, setCategory] = useState("");
@@ -25,7 +25,7 @@ export default function AddProduct() {
     productName: string;
     productPhoto: string;
     description: string;
-    price: string;
+    price: number; // Changed to number
     unit: string;
     quantity: string;
     category: string;
@@ -56,6 +56,13 @@ export default function AddProduct() {
     setIsSubmitting(true);
     setError(null);
 
+    // Ensure price is a number before submission
+    if (price === "") {
+      setError("Price is required.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       let imageUrl = "";
       if (productPhoto) {
@@ -66,7 +73,7 @@ export default function AddProduct() {
         productName,
         productPhoto: imageUrl,
         description,
-        price,
+        price: Number(price), // Convert to number
         unit,
         quantity,
         category,
@@ -87,7 +94,7 @@ export default function AddProduct() {
       setProductPhoto(null);
       setImagePreview(null);
       setDescription("");
-      setPrice("");
+      setPrice(""); // Reset to empty string
       setUnit("");
       setQuantity("");
       setCategory("");
@@ -213,7 +220,9 @@ export default function AddProduct() {
                 step="0.01"
                 min="0"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) =>
+                  setPrice(e.target.value === "" ? "" : Number(e.target.value))
+                }
                 placeholder="e.g., 2.50"
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 required
@@ -293,7 +302,6 @@ export default function AddProduct() {
                 <option value="spices">Spices</option>
                 <option value="flowers">Flowers & Plants</option>
                 <option value="herbs">Herbs</option>
-
                 <option value="other">Other</option>
               </select>
             </div>
