@@ -31,22 +31,8 @@ const SeedEquipmentMarketplace = () => {
         const result = await response.json();
 
         if (result.success) {
-          const mappedItems = result.data.map((item: any) => ({
-            id: item._id || item.id,
-            productName: item.productName,
-            productPhoto: item.productPhoto,
-            description: item.description,
-            price: item.price,
-            unit: item.unit,
-            quantity: item.quantity,
-            category: item.category,
-            isOrganic: item.isOrganic,
-            location: item.location,
-            contactNumber: item.contactNumber,
-            availabilityDate: item.availabilityDate,
-          }));
-          setItems(mappedItems);
-          console.log("Fetched items:", mappedItems); // Debug items
+          setItems(result.data);
+          console.log("Fetched items:", result.data);
         } else {
           setError("Failed to load items.");
         }
@@ -62,7 +48,6 @@ const SeedEquipmentMarketplace = () => {
   }, [category, sortBy, sortOrder]);
 
   const handleCategoryChange = (newCategory: string) => {
-    console.log("New category selected:", newCategory); // Debug state change
     setCategory(newCategory);
   };
 
@@ -70,10 +55,8 @@ const SeedEquipmentMarketplace = () => {
     newSortBy: string,
     newSortOrder: "asc" | "desc"
   ) => {
-    console.log("New sort selected:", newSortBy, newSortOrder); // Debug state change
     setSortBy(newSortBy);
     setSortOrder(newSortOrder);
-    // Map to UI-compatible sortByValue
     if (newSortBy === "price" && newSortOrder === "asc") {
       setSortByValue("price-low");
     } else if (newSortBy === "price" && newSortOrder === "desc") {

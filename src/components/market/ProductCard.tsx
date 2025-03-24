@@ -2,9 +2,9 @@
 import { MarketplaceItemForBuy } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
-import toast from "react-hot-toast";
 
 const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
+  console.log(item);
   if (!item) {
     return <div>Product data is missing</div>;
   }
