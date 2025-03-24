@@ -26,7 +26,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     try {
         const body = await req.json();
         const user = await getServerSession(authOptions)
-        console.log(user);
         body.username = user?.user.name;
         body.email = user?.user.email;
         body.listed = new Date().toISOString()

@@ -109,7 +109,7 @@ export default function AddProduct() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white shadow-lg rounded-lg p-6 max-w-2xl w-full">
         <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          Add Your Farm Product
+          Add Your Product
         </h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">

@@ -1,5 +1,5 @@
+"use client";
 import ProductCard from "./ProductCard";
-import Filters from "./Filters";
 import { MarketplaceItemForBuy } from "@/types/type";
 
 interface MarketplaceListProps {
@@ -7,14 +7,10 @@ interface MarketplaceListProps {
 }
 
 const MarketplaceList = ({ items }: MarketplaceListProps) => {
-  console.log(items);
+  console.log("Items in MarketplaceList:", items);
+
   return (
     <>
-      <p className="text-[#0D401C] text-center mb-8">
-        Browse seeds and equipment from trusted sellers.
-      </p>
-
-      <Filters useCase="buyer-seller" />
       {items.length === 0 ? (
         <p className="text-[#0D401C] text-center">No items available yet.</p>
       ) : (
