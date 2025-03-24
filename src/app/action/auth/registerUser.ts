@@ -40,8 +40,8 @@ export const registerUser = async (payload: Payload) => {
             acknowledged: result.acknowledged,
             insertedId: result.insertedId.toString(),
         };
-    } catch (error) {
-        console.error("Error during user registration:", error);
+    } catch {
+
         return { success: false, message: "Error during registration. Please try again later." };
     }
 };

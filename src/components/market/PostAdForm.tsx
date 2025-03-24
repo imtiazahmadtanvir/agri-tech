@@ -63,9 +63,8 @@ const PostAdForm = ({ onAddItem, onCancel }: PostAdFormProps) => {
       onAddItem(response.data);
       toast.success("Ad posted successfully!");
       resetForm();
-    } catch (error) {
+    } catch {
       toast.error("Failed to post ad. Please try again.");
-      console.error("Error posting ad:", error);
     } finally {
       setIsSubmitting(false);
     }

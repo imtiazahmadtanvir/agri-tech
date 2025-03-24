@@ -39,8 +39,7 @@ export default function WeatherPage() {
       console.log(uv);
       const dailyForecast = groupByDay(forecastData.list);
       setForecast(dailyForecast);
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
+    } catch {
       setCity(defaultWeatherData.displayCity);
       setWeather(defaultWeatherData.currentWeather);
       setForecast(defaultWeatherData.forecast);
@@ -49,16 +48,10 @@ export default function WeatherPage() {
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          fetchWeatherData(latitude, longitude);
-        },
-        (error) => {
-          console.error("Error getting location:", error.message);
-          setCity("");
-        }
-      );
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        fetchWeatherData(latitude, longitude);
+      });
     } else {
       console.log("Geolocation is not supported by this browser.");
       setCity("");
