@@ -46,13 +46,13 @@ export const GET = async (req: NextRequest) => {
             { success: true, message: "Fetched products successfully", data: result },
             { status: 200 }
         );
-    } catch (error) {
-        console.error("Error fetching products:", error);
+    } catch {
+
         return NextResponse.json(
             {
                 success: false,
                 message: "Failed to fetch products",
-                error: error instanceof Error ? error.message : "Unknown error",
+                error: "Unknown error",
             },
             { status: 500 }
         );
@@ -71,10 +71,10 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         return NextResponse.json({
             success: true, message: "Product added successfully", data: result
         }, { status: 201 })
-    } catch (error) {
-        console.error("Error adding product:", error);
+    } catch {
+
         return NextResponse.json({
-            success: false, message: "Failed to add product", error: (error as Error)
+            success: false, message: "Failed to add product", error: "error from"
         }, { status: 500 })
     }
 
