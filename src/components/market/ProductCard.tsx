@@ -1,6 +1,7 @@
 "use client";
 import { MarketplaceItemForBuy } from "@/types/type";
 import Image from "next/image";
+import Link from "next/link";
 import toast from "react-hot-toast";
 
 const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
@@ -34,18 +35,20 @@ const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
 
         <div className="mt-2">
           <p className="text-gray-500">Seller: {item.username}</p>
-          <p className="text-gray-500">Contact: {item.email}</p>
         </div>
         <p className="text-gray-400 text-sm mt-1"></p>
       </div>
-      <button
-        onClick={() =>
-          toast.success(`Contact ${item.username} at ${item.email}`)
-        }
-        className="mt-4 w-full bg-[#0D401C] text-white py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-colors duration-300"
-      >
-        Contact Seller
-      </button>
+
+      <Link href={`/products/${item._id}`}>
+        <button
+          onClick={() =>
+            toast.success(`Contact ${item.username} at ${item.email}`)
+          }
+          className="mt-4 w-full bg-[#0D401C] text-white py-2 rounded-md hover:bg-[#F8C32C] hover:text-[#0D401C] transition-colors duration-300"
+        >
+          Contact Seller
+        </button>
+      </Link>
     </div>
   );
 };
