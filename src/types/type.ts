@@ -47,3 +47,34 @@ export type WeatherData = {
         sys: { pod: string };
     }[];
 };
+export interface MarketplaceItem {
+    id: string;
+    name: string;
+    image: string;
+    description: string;
+    price: string;
+    category: "seeds" | "equipment";
+    condition?: "new" | "used";
+    seller: {
+        name: string;
+        contact: string;
+        location: string;
+    };
+    stock: number;
+}
+export interface MarketplaceItemForBuy {
+    _id: string;
+    availabilityDate: string;
+    category: string;
+    description: string;
+    email: string;
+    isOrganic: boolean;
+    location: string;
+    price: string;
+    productName: string;
+    productPhoto: string;
+    quantity: string;
+    unit: string;
+    username: string;
+    listed: string;
+}

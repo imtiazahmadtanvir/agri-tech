@@ -24,7 +24,6 @@ interface SubItem {
 // Navigation data
 const navItems: NavItem[] = [
   { label: "Home", href: "/", icon: "🏡" },
-  { label: "Dashboard", href: "/dashboard", icon: "📊" },
   {
     label: "Resources",
     icon: "▼",
@@ -157,16 +156,13 @@ const AuthSection = () => {
       ? `${session.user.firstName} ${session.user.lastName}`
       : session?.user?.name || "User";
 
-  // Loading state
   if (status === "loading") {
     return <span className="text-[#0D401C]">Loading...</span>;
   }
 
-  // Authenticated state
   if (session) {
     return (
       <div className="relative">
-        {/* Profile Photo (clickable) */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="focus:outline-none"
@@ -186,6 +182,7 @@ const AuthSection = () => {
           )}
         </button>
 
+        {/* Dropdown with Dashboard and Logout */}
         {isOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10 border border-gray-200">
             <div className="px-4 py-2 text-[#0D401C] flex items-center gap-2 border-b border-gray-200">
@@ -202,6 +199,13 @@ const AuthSection = () => {
                 {displayName} ({session.user?.role})
               </span>
             </div>
+            <Link
+              href="/dashboard"
+              className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
+              onClick={() => setIsOpen(false)} // Close dropdown on click
+            >
+              Dashboard 📊
+            </Link>
             <button
               onClick={handleLogout}
               className="w-full text-left px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
@@ -214,6 +218,7 @@ const AuthSection = () => {
     );
   }
 
+  // Unauthenticated state
   return (
     <Link
       href="/login"
@@ -241,15 +246,6 @@ const Navbar = () => {
           <AuthSection />
         </div>
       </Container>
-      <div className="w-full">
-        <Image
-          src="/shapes/navMask.svg"
-          style={{ width: "100%" }}
-          alt="Decorative navigation mask"
-          width={1920}
-          height={9}
-        />
-      </div>
     </nav>
   );
 };
