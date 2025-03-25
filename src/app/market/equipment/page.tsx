@@ -12,7 +12,7 @@ const SeedEquipmentMarketplace = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get(`/api/equipment`);
+        const response = await axios.get(`/api/agri-supply`);
         setItems(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
       } catch {
