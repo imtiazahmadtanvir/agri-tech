@@ -8,7 +8,6 @@ const ProductCard = ({ item }: { item: MarketplaceItemForBuy }) => {
   if (!item) {
     return <div>Product data is missing</div>;
   }
-
   return (
     <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-200 flex flex-col">
       {item.productPhoto && (

@@ -2,18 +2,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { MarketplaceItem } from "@/types/type";
-import PostAdForm from "@/components/market/PostAdForm";
 import MarketplaceForEq from "@/components/market/MarketplasceForEq";
 
 const SeedEquipmentMarketplace = () => {
   const [items, setItems] = useState<MarketplaceItem[]>([]);
-  const [showPostForm, setShowPostForm] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get(`/api/products`);
+        const response = await axios.get(`/api/equipment`);
         setItems(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
       } catch {
@@ -23,14 +22,6 @@ const SeedEquipmentMarketplace = () => {
     };
     fetchItems();
   }, []);
-
-  const handleAddItem = (newItem: MarketplaceItem) => {
-    setItems((prevItems) => [...prevItems, newItem]);
-    setShowPostForm(false);
-  };
-
-  const toggleForm = () => setShowPostForm((prev) => !prev);
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -53,11 +44,7 @@ const SeedEquipmentMarketplace = () => {
         <h1 className="text-3xl font-bold text-[#0D401C] mb-6 text-center">
           Seed & Equipment Marketplace 🛒
         </h1>
-        {showPostForm ? (
-          <PostAdForm onAddItem={handleAddItem} onCancel={toggleForm} />
-        ) : (
-          <MarketplaceForEq items={items} />
-        )}
+        <MarketplaceForEq items={items} />
       </div>
     </div>
   );

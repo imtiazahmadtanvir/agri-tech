@@ -48,7 +48,6 @@ const PostAdForm = ({ onAddItem, onCancel }: PostAdFormProps) => {
       }
 
       const newItem: MarketplaceItem = {
-        id: Date.now().toString(),
         name,
         image: imageUrl,
         description,

@@ -48,7 +48,7 @@ export type WeatherData = {
     }[];
 };
 export interface MarketplaceItem {
-    _id: string;
+    _id?: string;
     name: string;
     image: string;
     description: string;
@@ -63,7 +63,7 @@ export interface MarketplaceItem {
     stock: number;
 }
 export interface MarketplaceItemForBuy {
-    _id: string;
+    _id?: string;
     availabilityDate: string;
     category: string;
     description: string;
