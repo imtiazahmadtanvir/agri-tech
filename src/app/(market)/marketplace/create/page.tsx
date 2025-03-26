@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
 
-export default function Create() {
+export default function CreateListing() {
   return <div>Create</div>;
 }
