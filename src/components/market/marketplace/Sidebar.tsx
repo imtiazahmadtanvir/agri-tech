@@ -79,14 +79,15 @@ export default function Sidebar() {
         </Link>
 
         {/* Create Listing Button */}
-        <button
+        <Link
+          href={"/marketplace/create"}
           onClick={() => setActiveSection("create")}
           className={`w-full py-2 px-3 text-center border rounded-md flex items-center justify-center gap-2 hover:bg-green-700 hover:text-white ${
             activeSection === "create" ? "bg-green-700 text-white" : "bg-white"
           }`}
         >
           <IoAdd /> Create Listing
-        </button>
+        </Link>
       </div>
 
       {/* Location Selector */}
