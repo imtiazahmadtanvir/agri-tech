@@ -1,8 +1,10 @@
+"use client";
 import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
-import React from "react";
+import React, { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 export default function Marketplace() {
+  const [items, setItems] = useState();
   const categories = [
     "Crops",
     "Fruits",
