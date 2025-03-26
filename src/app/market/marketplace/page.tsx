@@ -8,6 +8,12 @@ import { IoMdAdd } from "react-icons/io";
 
 export default function AgricultureMarketplace() {
   const [items, setItems] = useState([]);
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(10000);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<string>("");
+
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
