@@ -6,7 +6,7 @@ import React from "react";
 function layout({ children }: { children: React.ReactNode }) {
   return (
     <MarketplaceProvider>
-      <ContainerSmall className="flex">
+      <ContainerSmall className="flex gap-4">
         <Sidebar />
         <div className="w-3/4">{children}</div>
       </ContainerSmall>
