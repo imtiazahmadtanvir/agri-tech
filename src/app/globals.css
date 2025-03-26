@@ -114,7 +114,52 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.range-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Match container height */
+  background: transparent;
+  /* Hide default track */
+  pointer-events: none;
+  /* Disable clicks on track */
+}
+
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #4CAF50;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  /* Enable clicks on thumb */
+  position: relative;
+  z-index: 2;
+  /* Ensure thumbs are above everything */
+}
+
+.range-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #4CAF50;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Optional: Style the track for Firefox */
+.range-input::-moz-range-track {
+  background: transparent;
 }

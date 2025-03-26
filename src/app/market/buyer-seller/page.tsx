@@ -1,106 +1,38 @@
-"use client";
-import { useState, useEffect } from "react";
-import { MarketplaceItemForBuy } from "@/types/type";
-import MarketplaceList from "@/components/market/MarketplaceList";
-import Filters from "@/components/market/Filters";
+import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
+import React from "react";
+import { IoSearch } from "react-icons/io5";
 
-const SeedEquipmentMarketplace = () => {
-  const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [sortByValue, setSortByValue] = useState<string>("");
-
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
-        if (category) url.searchParams.append("category", category);
-        if (sortBy) {
-          url.searchParams.append("sortBy", sortBy);
-          url.searchParams.append("sortOrder", sortOrder);
-        }
-
-        console.log("Fetching URL:", url.toString());
-
-        const response = await fetch(url.toString(), {
-          credentials: "include",
-        });
-        const result = await response.json();
-
-        if (result.success) {
-          setItems(result.data);
-          console.log("Fetched items:", result.data);
-        } else {
-          setError("Failed to load items.");
-        }
-      } catch (err) {
-        setError("Failed to load items. Please try again later.");
-        console.error("Error fetching items:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchItems();
-  }, [category, sortBy, sortOrder]);
-
-  const handleCategoryChange = (newCategory: string) => {
-    setCategory(newCategory);
-  };
-
-  const handleSortChange = (
-    newSortBy: string,
-    newSortOrder: "asc" | "desc"
-  ) => {
-    setSortBy(newSortBy);
-    setSortOrder(newSortOrder);
-    if (newSortBy === "price" && newSortOrder === "asc") {
-      setSortByValue("price-low");
-    } else if (newSortBy === "price" && newSortOrder === "desc") {
-      setSortByValue("price-high");
-    } else if (newSortBy === "listed" && newSortOrder === "desc") {
-      setSortByValue("date");
-    } else {
-      setSortByValue("");
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <p className="text-[#0D401C]">Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <p className="text-[#0D401C]">{error}</p>
-      </div>
-    );
-  }
-
+export default function SupplyMarket() {
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-[#0D401C] mb-6 text-center">
-          Buy and Sell Marketplace 🛒
-        </h1>
-        <Filters
-          useCase="buyer-seller"
-          category={category}
-          sortBy={sortByValue}
-          onCategoryChange={handleCategoryChange}
-          onSortChange={handleSortChange}
-        />
-        <MarketplaceList items={items} />
+    <ContainerSmall className="flex">
+      <aside>
+        <div>
+          <h3>Filter by price</h3>
+          <input max={1000} min={0} type="range" name="" id="" />
+        </div>
+      </aside>
+      <div className="w-full">
+        <section className="flex justify-between items-center">
+          <div>
+            <select className="border px-2.5 py-3" name="sort" id="">
+              <option value="">Date: Newest on Top</option>
+              <option value="">Date: Oldest on Top</option>
+              <option value="">Price: High to Low</option>
+              <option value="">Price: Low to High</option>
+            </select>
+          </div>
+          <div className="max-w-[300px] relative">
+            <input
+              type="search"
+              className="border px-4 rounded-full w-full py-2"
+              placeholder="Search..."
+            />
+            <div className="absolute right-1.5 top-1.5 flex justify-center items-center size-8 bg-[#FFC800] rounded-full">
+              <IoSearch size={25} />
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
+    </ContainerSmall>
   );
-};
-
-export default SeedEquipmentMarketplace;
+}

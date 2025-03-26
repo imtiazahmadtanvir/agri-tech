@@ -3,8 +3,8 @@ import Link from "next/link";
 
 interface FiltersProps {
   useCase: "seed-equipment" | "buyer-seller";
-  category: string;
-  sortBy: string;
+  category?: string;
+  sortBy?: string;
   onCategoryChange: (category: string) => void;
   onSortChange: (sortBy: string, sortOrder: "asc" | "desc") => void;
 }
@@ -41,7 +41,7 @@ const Filters = ({
         ];
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onCategoryChange(e.target.value); // Updates parent state
+    onCategoryChange(e.target.value);
   };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -65,7 +65,7 @@ const Filters = ({
   return (
     <div className="mb-6 flex justify-between items-center gap-4">
       <select
-        value={category} // Controlled by parent’s category state
+        value={category}
         onChange={handleCategoryChange}
         className="border border-gray-300 rounded-md p-2 text-[#0D401C] focus:ring-2 focus:ring-[#0D401C] focus:outline-none"
       >
