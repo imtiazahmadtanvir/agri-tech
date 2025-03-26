@@ -38,14 +38,9 @@ const navItems: NavItem[] = [
     subItems: [
       { label: "Price Tracking", href: "/market/prices", icon: "💰" },
       {
-        label: "Seed & Equipment Marketplace",
-        href: "/market/equipment",
+        label: "Marketplace",
+        href: "/market/marketplace",
         icon: "🛒",
-      },
-      {
-        label: "Buyer-Seller Marketplace",
-        href: "/market/buyer-seller",
-        icon: "🤝",
       },
       { label: "Demand Forecasting", href: "/market/forecasting", icon: "📈" },
     ],
