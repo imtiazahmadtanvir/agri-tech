@@ -49,7 +49,7 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          href="/inbox"
+          href="/marketplace/inbox"
           onClick={() => setActiveSection("inbox")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
             activeSection === "inbox" ? "bg-green-700 text-white" : "bg-white"
@@ -59,7 +59,7 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          href="/buying"
+          href="/marketplace/buying"
           onClick={() => setActiveSection("buying")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
             activeSection === "buying" ? "bg-green-700 text-white" : "bg-white"
@@ -69,7 +69,7 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          href="/selling"
+          href="/marketplace/selling"
           onClick={() => setActiveSection("selling")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
             activeSection === "selling" ? "bg-green-700 text-white" : "bg-white"
