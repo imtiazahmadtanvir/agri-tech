@@ -39,7 +39,7 @@ const navItems: NavItem[] = [
       { label: "Price Tracking", href: "/market/prices", icon: "💰" },
       {
         label: "Marketplace",
-        href: "/market/marketplace",
+        href: "/marketplace",
         icon: "🛒",
       },
       { label: "Demand Forecasting", href: "/market/forecasting", icon: "📈" },

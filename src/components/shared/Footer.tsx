@@ -12,6 +12,7 @@ import {
   Mail,
   Phone,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 // Define TypeScript interfaces
 interface SocialLinkProps {
@@ -96,7 +97,11 @@ export default function Footer() {
     { href: "#", text: "Legal Information" },
     { href: "#", text: "Return and Refund Policy" },
   ];
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
 
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
   return (
     <footer className="relative bg-[#0a4a1c] text-white">
       {/* Grass pattern at top */}
@@ -248,7 +253,7 @@ export default function Footer() {
         {/* Footer bottom */}
         <div className="border-t border-white/20 pt-4 mt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-300">
           <p>
-            Copyright © {new Date().getFullYear()} Agri-Tech. All Rights
+            Copyright © {currentYear || "loading..."} Agri-Tech. All Rights
             Reserved.
           </p>
 

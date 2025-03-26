@@ -1,5 +1,6 @@
 "use client";
 import { useMarketPlace } from "@/context/MarketplaceContext";
+import Link from "next/link";
 import React from "react";
 import { IoAdd, IoLeaf, IoColorPalette, IoLeafOutline } from "react-icons/io5";
 import { PiFarmBold } from "react-icons/pi";
@@ -11,8 +12,6 @@ export default function Sidebar() {
     maxPrice,
     setMinPrice,
     minPrice,
-    selectedCategories,
-    setSelectedCategories,
   } = useMarketPlace();
 
   const marketplaceCategories = [
@@ -29,7 +28,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-1/4 my-4 h-screen p-6 shadow-md rounded-lg bg-green-50">
+    <aside className="w-1/4 my-4 p-6 shadow-md rounded-lg bg-green-50">
       {/* Marketplace Section */}
       <h3 className="text-xl font-bold mb-4 text-green-700">
         Agriculture Marketplace
@@ -37,17 +36,47 @@ export default function Sidebar() {
 
       {/* Navigation Buttons */}
       <div className="space-y-2">
-        {["products", "inbox", "buying", "selling"].map((section) => (
-          <button
-            key={section}
-            onClick={() => setActiveSection(section)}
-            className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-              activeSection === section ? "bg-green-700 text-white" : "bg-white"
-            }`}
-          >
-            {section.charAt(0).toUpperCase() + section.slice(1)}
-          </button>
-        ))}
+        <Link
+          href="/marketplace"
+          onClick={() => setActiveSection("products")}
+          className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
+            activeSection === "products"
+              ? "bg-green-700 text-white"
+              : "bg-white"
+          }`}
+        >
+          Products
+        </Link>
+
+        <Link
+          href="/inbox"
+          onClick={() => setActiveSection("inbox")}
+          className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
+            activeSection === "inbox" ? "bg-green-700 text-white" : "bg-white"
+          }`}
+        >
+          Inbox
+        </Link>
+
+        <Link
+          href="/buying"
+          onClick={() => setActiveSection("buying")}
+          className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
+            activeSection === "buying" ? "bg-green-700 text-white" : "bg-white"
+          }`}
+        >
+          Buying
+        </Link>
+
+        <Link
+          href="/selling"
+          onClick={() => setActiveSection("selling")}
+          className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
+            activeSection === "selling" ? "bg-green-700 text-white" : "bg-white"
+          }`}
+        >
+          Selling
+        </Link>
 
         {/* Create Listing Button */}
         <button
@@ -110,7 +139,6 @@ export default function Sidebar() {
           {marketplaceCategories.map(({ name, icon }) => (
             <button
               key={name}
-              onClick={() => setSelectedCategories(name)}
               className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
             >
               {icon}
