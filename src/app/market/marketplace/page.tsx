@@ -13,7 +13,18 @@ export default function AgricultureMarketplace() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>("");
-
+  const categories = [
+    "Crops",
+    "Fruits",
+    "Vegetables",
+    "Livestock",
+    "Dairy Products",
+    "Poultry",
+    "Fish & Aquaculture",
+    "Organic Produce",
+    "Herbs & Medicinal Plants",
+    "Other",
+  ];
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
