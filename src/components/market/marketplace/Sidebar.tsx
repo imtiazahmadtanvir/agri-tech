@@ -28,7 +28,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-1/4 my-4 p-6 shadow-md rounded-lg bg-green-50">
+    <aside className="w-1/4 my-4 p-3 shadow-md rounded-lg bg-green-50">
       {/* Marketplace Section */}
       <h3 className="text-xl font-bold mb-4 text-green-700">
         Agriculture Marketplace
@@ -91,68 +91,68 @@ export default function Sidebar() {
       </div>
 
       {/* Location Selector */}
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold text-gray-700">Location</h3>
-        <button className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100">
-          Select Location
-        </button>
-      </div>
+      <div className="h-[50vh] overflow-y-scroll scrollbar-hidden">
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold text-gray-700">Location</h3>
+          <button className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100">
+            Select Location
+          </button>
+        </div>
 
-      {/* Price Filters */}
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold text-gray-700">Filters</h3>
-        <div className="flex gap-2 mt-2">
+        {/* Price Filters */}
+        <div className="mt-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-semibold text-gray-700">Filters</h3>
+            <button className="">Clear </button>
+          </div>
+          <div className="flex gap-2 mt-2">
+            <input
+              value={minPrice}
+              max={maxPrice}
+              onChange={(e) => setMinPrice(Math.max(0, Number(e.target.value)))}
+              className="w-1/2 border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              type="number"
+              placeholder="Min Price"
+            />
+            <input
+              value={maxPrice}
+              min={minPrice}
+              max={10000}
+              onChange={(e) =>
+                setMaxPrice(Math.min(10000, Number(e.target.value)))
+              }
+              className="w-1/2 border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              type="number"
+              placeholder="Max Price"
+            />
+          </div>
+
           <input
-            value={minPrice}
-            max={maxPrice}
-            onChange={(e) => setMinPrice(Math.max(0, Number(e.target.value)))}
-            className="w-1/2 border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-            type="number"
-            placeholder="Min Price"
-          />
-          <input
-            value={maxPrice}
-            min={minPrice}
             max={10000}
-            onChange={(e) =>
-              setMaxPrice(Math.min(10000, Number(e.target.value)))
-            }
-            className="w-1/2 border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-            type="number"
-            placeholder="Max Price"
+            min={0}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(Number(e.target.value))}
+            className="w-full mt-2 accent-yellow-400 active:accent-amber-700"
+            type="range"
           />
         </div>
 
-        <input
-          max={10000}
-          min={0}
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(Number(e.target.value))}
-          className="w-full mt-2 accent-yellow-400 active:accent-amber-700"
-          type="range"
-        />
-      </div>
-
-      {/* Categories */}
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold text-gray-700">Categories</h3>
-        <div className="space-y-2 mt-2">
-          {marketplaceCategories.map(({ name, icon }) => (
-            <button
-              key={name}
-              className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
-            >
-              {icon}
-              {name}
-            </button>
-          ))}
+        {/* Categories */}
+        <div className="mt-4">
+          <h3 className="text-lg font-semibold text-gray-700">Categories</h3>
+          <div className="space-y-2 mt-2">
+            {marketplaceCategories.map(({ name, icon }) => (
+              <button
+                key={name}
+                className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
+              >
+                {icon}
+                {name}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Clear Filters */}
-      <button className="w-full mt-4 py-2 border rounded-md bg-red-100 hover:bg-red-200">
-        Clear Filter
-      </button>
     </aside>
   );
 }
