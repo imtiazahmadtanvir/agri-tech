@@ -7,6 +7,8 @@ import { GiFarmer, GiFruitTree, GiCow } from "react-icons/gi";
 import { IoMdAdd } from "react-icons/io";
 
 export default function AgricultureMarketplace() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [items, setItems] = useState([]);
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(10000);
@@ -14,15 +16,7 @@ export default function AgricultureMarketplace() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>("");
 
-  const [hydrated, setHydrated] = useState(false);
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
-
-  if (!hydrated) {
-    return null;
-  }
+  useEffect(() => {}, []);
 
   const categories = [
     { name: "Crops", icon: <FaSeedling /> },
