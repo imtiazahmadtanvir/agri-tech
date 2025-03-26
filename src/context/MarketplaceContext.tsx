@@ -3,11 +3,11 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 interface MarketplaceContextType {
   minPrice: number;
   maxPrice: number;
-  selectedCategories: string[];
+  selectedCategories: string;
   activeSection: string;
   setMinPrice: (value: number) => void;
   setMaxPrice: (value: number) => void;
-  setSelectedCategories: (categories: string[]) => void;
+  setSelectedCategories: (categories: string) => void;
   setActiveSection: (section: string) => void;
 }
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(

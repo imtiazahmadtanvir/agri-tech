@@ -1,8 +1,8 @@
 "use client";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import React from "react";
-import { IoAdd } from "react-icons/io5";
-
+import { IoAdd, IoLeaf, IoColorPalette, IoLeafOutline } from "react-icons/io5";
+import { PiFarmBold } from "react-icons/pi";
 export default function Sidebar() {
   const {
     setActiveSection,
@@ -11,67 +11,74 @@ export default function Sidebar() {
     maxPrice,
     setMinPrice,
     minPrice,
+    selectedCategories,
+    setSelectedCategories,
   } = useMarketPlace();
+
+  const marketplaceCategories = [
+    { name: "Harvested Products", icon: <PiFarmBold /> },
+    { name: "Fertilizers & Pesticides", icon: <IoLeafOutline /> },
+    { name: "Agricultural Machinery", icon: <IoColorPalette /> },
+    { name: "Farming Tools", icon: <IoLeaf /> },
+    { name: "Livestock", icon: <PiFarmBold /> },
+    { name: "Animal Feed", icon: <IoLeafOutline /> },
+    { name: "Seeds & Plants", icon: <IoLeafOutline /> },
+    { name: "Irrigation & Watering Systems", icon: <IoColorPalette /> },
+    { name: "Storage & Packaging", icon: <IoLeaf /> },
+    { name: "Greenhouse Equipment", icon: <PiFarmBold /> },
+  ];
+
   return (
-    <aside className="w-1/4 my-4 p-6 shadow-md rounded-lg bg-green-50">
-      <h3 className="text-xl font-bold mb-2 text-green-700 ">
+    <aside className="w-1/4 my-4 h-screen p-6 shadow-md rounded-lg bg-green-50">
+      {/* Marketplace Section */}
+      <h3 className="text-xl font-bold mb-4 text-green-700">
         Agriculture Marketplace
       </h3>
+
+      {/* Navigation Buttons */}
       <div className="space-y-2">
-        <button
-          onClick={() => setActiveSection("products")}
-          className={`w-full py-2 hover:bg-green-700 hover:text-white px-3 text-left border rounded-md flex items-center ${
-            activeSection === "products"
-              ? "bg-green-700 text-white"
-              : "bg-white"
-          }`}
-        >
-          All products
-        </button>
-        <button
-          onClick={() => setActiveSection("inbox")}
-          className={`w-full py-2 hover:bg-green-700 hover:text-white px-3 text-left border rounded-md flex items-center ${
-            activeSection === "inbox" ? "bg-green-700 text-white" : "bg-white"
-          }`}
-        >
-          Inbox
-        </button>
-        <button
-          onClick={() => setActiveSection("buying")}
-          className={`w-full py-2 hover:bg-green-700 hover:text-white px-3 text-left border rounded-md flex items-center ${
-            activeSection === "buying" ? "bg-green-700 text-white" : "bg-white"
-          }`}
-        >
-          Buying
-        </button>
-        <button
-          onClick={() => setActiveSection("selling")}
-          className={`w-full py-2 hover:bg-green-700 hover:text-white px-3 text-left border rounded-md flex items-center ${
-            activeSection === "selling" ? "bg-green-700 text-white" : "bg-white"
-          }`}
-        >
-          Selling
-        </button>
+        {["products", "inbox", "buying", "selling"].map((section) => (
+          <button
+            key={section}
+            onClick={() => setActiveSection(section)}
+            className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
+              activeSection === section ? "bg-green-700 text-white" : "bg-white"
+            }`}
+          >
+            {section.charAt(0).toUpperCase() + section.slice(1)}
+          </button>
+        ))}
+
+        {/* Create Listing Button */}
         <button
           onClick={() => setActiveSection("create")}
-          className={`w-full py-2 hover:bg-green-700 hover:text-white px-3 text-center border rounded-md flex items-center ${
+          className={`w-full py-2 px-3 text-center border rounded-md flex items-center justify-center gap-2 hover:bg-green-700 hover:text-white ${
             activeSection === "create" ? "bg-green-700 text-white" : "bg-white"
           }`}
         >
           <IoAdd /> Create Listing
         </button>
       </div>
-      <h3>Location</h3>
-      <button>Select Location</button>
-      <div>
-        <h3>Filters</h3>
-        <div className="flex gap-2">
+
+      {/* Location Selector */}
+      <div className="mt-4">
+        <h3 className="text-lg font-semibold text-gray-700">Location</h3>
+        <button className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100">
+          Select Location
+        </button>
+      </div>
+
+      {/* Price Filters */}
+      <div className="mt-4">
+        <h3 className="text-lg font-semibold text-gray-700">Filters</h3>
+        <div className="flex gap-2 mt-2">
           <input
             value={minPrice}
             max={maxPrice}
             onChange={(e) => setMinPrice(Math.max(0, Number(e.target.value)))}
             className="w-1/2 border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
             type="number"
+            placeholder="Min Price"
           />
           <input
             value={maxPrice}
@@ -82,25 +89,41 @@ export default function Sidebar() {
             }
             className="w-1/2 border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
             type="number"
+            placeholder="Max Price"
           />
         </div>
-        <p></p>
+
         <input
           max={10000}
           min={0}
           value={maxPrice}
           onChange={(e) => setMaxPrice(Number(e.target.value))}
-          className="w-full accent-yellow-400 active:accent-amber-700"
+          className="w-full mt-2 accent-yellow-400 active:accent-amber-700"
           type="range"
-          name=""
-          id=""
         />
       </div>
-      {/* categories */}
-      <div>
-        <h4>Categories</h4>
+
+      {/* Categories */}
+      <div className="mt-4">
+        <h3 className="text-lg font-semibold text-gray-700">Categories</h3>
+        <div className="space-y-2 mt-2">
+          {marketplaceCategories.map(({ name, icon }) => (
+            <button
+              key={name}
+              onClick={() => setSelectedCategories(name)}
+              className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
+            >
+              {icon}
+              {name}
+            </button>
+          ))}
+        </div>
       </div>
-      <button>Clear Filter</button>
+
+      {/* Clear Filters */}
+      <button className="w-full mt-4 py-2 border rounded-md bg-red-100 hover:bg-red-200">
+        Clear Filter
+      </button>
     </aside>
   );
 }
