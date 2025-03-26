@@ -1,5 +1,15 @@
+import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
+import MarketplaceProvider from "@/context/MarketplaceContext";
 import React from "react";
 
-export default function MarketplaceLayout() {
-  return <div></div>;
+function layout({ children }: { children: React.ReactNode }) {
+  return (
+    <MarketplaceProvider>
+      <ContainerSmall>
+        <div>{children}</div>
+      </ContainerSmall>
+    </MarketplaceProvider>
+  );
 }
+
+export default layout;
