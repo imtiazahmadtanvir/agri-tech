@@ -67,21 +67,36 @@ export default function AgricultureMarketplace() {
           <div className="flex items-center gap-2 mb-2">
             <input
               placeholder="Min"
+              onChange={(e) => setMinPrice(Math.max(0, Number(e.target.value)))}
+              min={0}
+              max={maxPrice}
+              value={minPrice}
               className="w-1/2 border p-2 rounded-md"
               type="number"
             />
             <input
               placeholder="Max"
+              min={minPrice}
+              onChange={(e) =>
+                setMaxPrice(Math.min(10000, Number(e.target.value)))
+              }
+              max={10000}
+              value={maxPrice}
               className="w-1/2 border p-2 rounded-md"
               type="number"
             />
           </div>
           <input
-            max={1000}
+            max={10000}
             min={0}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(Number(e.target.value))}
             type="range"
             className="w-full accent-green-500"
           />
+          <p className="text-sm text-gray-600 mt-1">
+            ${minPrice} - ${maxPrice}
+          </p>
         </div>
 
         <div className="mt-6">
@@ -104,6 +119,7 @@ export default function AgricultureMarketplace() {
 
       {/* Main Content */}
       <div className="w-3/4">
+        10000
         <section className="flex justify-between items-center mb-4">
           <select className="border px-3 py-2 rounded-md">
             <option>Date: Newest on Top</option>
