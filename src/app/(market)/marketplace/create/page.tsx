@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
+import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 const marketplaceCategories = [
   { name: "Harvested Products" },
@@ -17,29 +18,45 @@ const marketplaceCategories = [
 ];
 export default function CreateListing() {
   const [previews, setPreviews] = useState<string[]>([]);
+  // for file
   const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];
     if (newFiles.length === 0) return;
     const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
     setPreviews((prev) => [...prev, ...newPreviews]);
   };
+  // for delete photo
+  const handelRemovePhoto = (index: number) => {
+    setPreviews((prev) => {
+      URL.revokeObjectURL(prev[index]);
+      return prev.filter((_, i) => i !== index);
+    });
+  };
   return (
-    <div className="my-4">
+    <div className="my-4 p-4 rounded-md border">
       <form className="grid grid-cols-2">
         {/* photo */}
-
+        <div>
+          <h3>Item for sale</h3>
+        </div>
         <div className="col-span-2 gap-3 flex flex-wrap">
           {previews.map((preview, index) => (
-            <div
-              key={index}
-              className="relative w-32 h-32 overflow-hidden rounded-md border"
-            >
-              <Image
-                className="object-cover"
-                layout="fill"
-                alt={`Preview ${index + 1}`}
-                src={preview}
-              />
+            <div key={index} className="relative">
+              <div className="relative w-32 h-32 overflow-hidden rounded-md border">
+                <Image
+                  className="object-cover"
+                  layout="fill"
+                  alt={`Preview ${index + 1}`}
+                  src={preview}
+                />
+              </div>
+              <button
+                onClick={() => handelRemovePhoto(index)}
+                className="absolute top-0 text-red-500 cursor-pointer right-0"
+                type="button"
+              >
+                <IoMdCloseCircle size={25} />
+              </button>
             </div>
           ))}
           {/* file input */}
