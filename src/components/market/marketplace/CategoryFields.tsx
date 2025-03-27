@@ -1,12 +1,14 @@
 import { FormData } from "@/types/type";
 import React from "react";
-
 interface CategoryFieldsProps {
   formData: FormData;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void;
   handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
 export default function CategoryFields({
   formData,
   handleChange,
@@ -55,14 +57,17 @@ export default function CategoryFields({
             <label className="block text-sm font-medium text-gray-700">
               Quality Grade
             </label>
-            <input
-              type="text"
-              name="qualityGrade"
+            <select
+              name="quality"
               value={formData.qualityGrade || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Grade A"
-            />
+            >
+              <option value="">Select Quality</option>
+              <option value="A">Grade A</option>
+              <option value="B">Grade B</option>
+              <option value="C">Grade C</option>
+            </select>
           </div>
         </div>
       );

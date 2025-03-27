@@ -270,8 +270,8 @@ export default function CreateListing() {
             <h3>Additional Details</h3>
             <CategoryFields
               formData={formData}
-              handleChange={handelFileChange}
-              handleCheckboxChange={handelFileChange}
+              handleChange={handleChange}
+              handleCheckboxChange={handleCheckboxChange}
             />
           </div>
         )}
