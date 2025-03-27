@@ -40,7 +40,11 @@ export default function CreateListing() {
           <h3 className="text-2xl font-semibold ">Item for sale</h3>
           <p>Photos {previews.length}/4- You can add up to 4 photos</p>
         </div>
-        <div className="col-span-2 gap-3 flex flex-wrap">
+        <div
+          className={`col-span-2 gap-3  ${
+            previews.length < 1 ? "h-32" : "flex flex-wrap"
+          }`}
+        >
           {previews.map((preview, index) => (
             <div key={index} className="relative">
               <div className="relative w-32 h-32 overflow-hidden rounded-md border">
@@ -71,10 +75,15 @@ export default function CreateListing() {
               onChange={handelFileChange}
             />
             <label
-              className="size-32 border flex flex-col items-center justify-center"
+              className={`${
+                previews.length < 1 ? "w-full h-32" : "size-32"
+              } border flex flex-col items-center justify-center rounded-md`}
               htmlFor="file"
             >
-              <MdOutlineAddPhotoAlternate size={30} />
+              <MdOutlineAddPhotoAlternate
+                size={30}
+                className="text-green-400"
+              />
               Add photo
             </label>
           </div>
