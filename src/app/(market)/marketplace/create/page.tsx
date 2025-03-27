@@ -33,21 +33,21 @@ export default function CreateListing() {
     });
   };
   return (
-    <div className="my-4 p-4 rounded-md border">
+    <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
+      <div className="">
+        <h3 className="text-2xl font-semibold ">Item for sale</h3>
+        <p>Photos {previews.length}/4- You can add up to 4 photos</p>
+      </div>
       <form className="grid grid-cols-2 gap-4">
         {/* photo */}
-        <div className="mb-4">
-          <h3 className="text-2xl font-semibold ">Item for sale</h3>
-          <p>Photos {previews.length}/4- You can add up to 4 photos</p>
-        </div>
         <div
-          className={`col-span-2 gap-3  ${
-            previews.length < 1 ? "h-32" : "flex flex-wrap"
+          className={`col-span-2 gap-3   ${
+            previews.length < 1 ? "" : "grid grid-cols-4"
           }`}
         >
           {previews.map((preview, index) => (
             <div key={index} className="relative">
-              <div className="relative w-44 h-32 overflow-hidden rounded-md border">
+              <div className="relative w-full h-32 overflow-hidden rounded-md border">
                 <Image
                   className="object-cover"
                   layout="fill"
@@ -76,8 +76,8 @@ export default function CreateListing() {
             />
             <label
               className={`${
-                previews.length < 1 ? "w-full h-32" : "size-32"
-              } border flex flex-col items-center justify-center rounded-md`}
+                previews.length < 1 ? "w-full h-32" : "h-32"
+              } border flex flex-col items-center bg-white cursor-pointer justify-center rounded-md`}
               htmlFor="file"
             >
               <MdOutlineAddPhotoAlternate
