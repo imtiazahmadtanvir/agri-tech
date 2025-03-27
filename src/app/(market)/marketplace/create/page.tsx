@@ -95,7 +95,7 @@ export default function CreateListing() {
           <input
             type="text"
             name="name"
-            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="mt-1  block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
         <div>
@@ -134,7 +134,7 @@ export default function CreateListing() {
             Price
           </label>
           <input
-            className="border p-2 rounded-md w-full"
+            className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
             type="number"
             name="price"
           />
@@ -148,7 +148,7 @@ export default function CreateListing() {
             Quantity
           </label>
           <input
-            className="border p-2 rounded-md w-full"
+            className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
             type="number"
             name="quantity"
           />
