@@ -102,7 +102,7 @@ export interface FormData {
     model?: string;
     condition?: string;
     yearOfManufacture?: string;
-    horsepower?: number;
+    horsepower?: number | string;
     toolType?: string;
     material?: string;
     dimensions?: string;
@@ -120,7 +120,7 @@ export interface FormData {
     plantingSeason?: string;
     systemType?: string;
     coverageArea?: string;
-    flowRate?: string;
+    flowRate?: string | number;
     itemType?: string;
     storageCapacity?: string
 }

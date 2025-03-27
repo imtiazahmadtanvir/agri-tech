@@ -30,7 +30,7 @@ export default function CategoryFields({
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center justify-center">
             <input
               type="checkbox"
               name="organicStatus"
@@ -38,7 +38,9 @@ export default function CategoryFields({
               onChange={handleCheckboxChange}
               className="mr-2 accent-green-500"
             />
-            <label className="text-sm font-medium text-gray-700">Organic</label>
+            <label className="text-sm font-medium block text-gray-700 ">
+              Organic
+            </label>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -372,10 +374,10 @@ export default function CategoryFields({
           {/* Age */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Age(year)
+              Age
             </label>
             <input
-              type="number"
+              type=""
               name="age"
               value={formData.age || ""}
               onChange={handleChange}
@@ -476,14 +478,21 @@ export default function CategoryFields({
             <label className="block text-sm font-medium text-gray-700">
               Seed/Plant Type
             </label>
-            <input
-              type="text"
+            <select
               name="seedPlantType"
               value={formData.seedPlantType || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Hybrid Corn"
-            />
+            >
+              <option value="">Select Type</option>
+              <option value="Hybrid Corn">Hybrid Corn</option>
+              <option value="Wheat">Wheat</option>
+              <option value="Rice">Rice</option>
+              <option value="Soybean">Soybean</option>
+              <option value="Cotton">Cotton</option>
+              <option value="Tomato">Tomato</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
