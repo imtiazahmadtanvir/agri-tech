@@ -17,20 +17,7 @@ export default function CategoryFields({
   switch (formData.category) {
     case "Harvested Products":
       return (
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Crop Type
-            </label>
-            <input
-              type="text"
-              name="cropType"
-              value={formData.cropType || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Wheat, Tomatoes"
-            />
-          </div>
+        <div className="grid  grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Harvest Date
@@ -58,7 +45,7 @@ export default function CategoryFields({
               Quality Grade
             </label>
             <select
-              name="quality"
+              name="qualityGrade"
               value={formData.qualityGrade || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -71,5 +58,528 @@ export default function CategoryFields({
           </div>
         </div>
       );
+    // Other cases remain unchanged
+    case "Fertilizers & Pesticides":
+      return (
+        <div className="grid grid-cols-2 gap-4">
+          {/* Chemical Composition */}
+          <div>
+            <label
+              htmlFor="chemicalComposition"
+              className="block text-sm font-semibold text-gray-700"
+            >
+              Chemical Composition
+            </label>
+            <input
+              type="text"
+              name="chemicalComposition"
+              id="chemicalComposition"
+              value={formData.chemicalComposition || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., NPK 20-20-20"
+              aria-label="Chemical Composition"
+            />
+          </div>
+
+          {/* Volume */}
+          <div>
+            <label
+              htmlFor="volume"
+              className="block text-sm font-semibold text-gray-700"
+            >
+              Volume(kg)
+            </label>
+            <input
+              type="number"
+              name="volume"
+              id="volume"
+              value={formData.volume || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 50 kg"
+              aria-label="Volume"
+            />
+          </div>
+
+          {/* Application Method */}
+          <div>
+            <label
+              htmlFor="applicationMethod"
+              className="block text-sm font-semibold text-gray-700"
+            >
+              Application Method
+            </label>
+            <select
+              name="applicationMethod"
+              id="applicationMethod"
+              value={formData.applicationMethod || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              aria-label="Application Method"
+            >
+              <option value="">Select an Method</option>
+              <option value="Spray">Spray</option>
+              <option value="Fertigation">Fertigation</option>
+              <option value="Soil Application">Soil Application</option>
+              <option value="Foliar Application">Foliar Application</option>
+              <option value="Drip Irrigation">Drip Irrigation</option>
+              <option value="Granular Application">Granular Application</option>
+              <option value="Broadcasting">Broadcasting</option>
+              <option value="Injection">Injection</option>
+              <option value="Top Dressing">Top Dressing</option>
+              <option value="Root Dipping">Root Dipping</option>
+              <option value="Seed Treatment">Seed Treatment</option>
+              <option value="Aerial Application">Aerial Application</option>
+              <option value="Systemic Application">Systemic Application</option>
+            </select>
+          </div>
+
+          {/* Safety Certifications */}
+          <div>
+            <label
+              htmlFor="safetyCertifications"
+              className="block text-sm font-semibold text-gray-700"
+            >
+              Safety Certifications
+            </label>
+            <select
+              name="safetyCertifications"
+              id="safetyCertifications"
+              value={formData.safetyCertifications || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              aria-label="Safety Certifications"
+            >
+              <option value="">Select Certification</option>
+              <option value="EPA-approved">EPA-approved</option>
+              <option value="FDA-approved">FDA-approved</option>
+              <option value="OSHA-compliant">OSHA-compliant</option>
+              <option value="CE-marked">CE-marked</option>
+              <option value="ISO-certified">ISO-certified</option>
+              <option value="Eco-friendly">Eco-friendly</option>
+              <option value="Non-toxic">Non-toxic</option>
+              <option value="Pesticide-free">Pesticide-free</option>
+            </select>
+          </div>
+        </div>
+      );
+    case "Agricultural Machinery":
+      return (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Brand
+            </label>
+            <input
+              type="text"
+              name="brand"
+              value={formData.brand || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., John Deere"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Model
+            </label>
+            <input
+              type="text"
+              name="model"
+              value={formData.model || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., X500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Condition
+            </label>
+            <select
+              name="condition"
+              value={formData.condition || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select condition</option>
+              <option value="New">New</option>
+              <option value="Used">Used</option>
+              <option value="Refurbished">Refurbished</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Year of Manufacture
+            </label>
+            <input
+              type="text"
+              name="yearOfManufacture"
+              value={formData.yearOfManufacture || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 2020"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Horsepower
+            </label>
+            <input
+              type="text"
+              name="horsepower"
+              value={formData.horsepower || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 50 HP"
+            />
+          </div>
+        </>
+      );
+    case "Farming Tools":
+      return (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Tool Type
+            </label>
+            <input
+              type="text"
+              name="toolType"
+              value={formData.toolType || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Shovel"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Material
+            </label>
+            <input
+              type="text"
+              name="material"
+              value={formData.material || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Steel"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Condition
+            </label>
+            <select
+              name="condition"
+              value={formData.condition || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select condition</option>
+              <option value="New">New</option>
+              <option value="Used">Used</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Dimensions
+            </label>
+            <input
+              type="text"
+              name="dimensions"
+              value={formData.dimensions || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 24-inch blade"
+            />
+          </div>
+        </>
+      );
+    case "Livestock":
+      return (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Animal Type
+            </label>
+            <input
+              type="text"
+              name="animalType"
+              value={formData.animalType || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Cow"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Breed
+            </label>
+            <input
+              type="text"
+              name="breed"
+              value={formData.breed || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Holstein"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Age
+            </label>
+            <input
+              type="text"
+              name="age"
+              value={formData.age || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 2 years"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Health Status
+            </label>
+            <input
+              type="text"
+              name="healthStatus"
+              value={formData.healthStatus || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Fully vaccinated"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Gender
+            </label>
+            <select
+              name="gender"
+              value={formData.gender || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+        </>
+      );
+    case "Animal Feed":
+      return (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Feed Type
+            </label>
+            <input
+              type="text"
+              name="feedType"
+              value={formData.feedType || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Hay"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Nutritional Content
+            </label>
+            <input
+              type="text"
+              name="nutritionalContent"
+              value={formData.nutritionalContent || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 20% protein"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Weight
+            </label>
+            <input
+              type="text"
+              name="weight"
+              value={formData.weight || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 50 kg"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Target Animal
+            </label>
+            <input
+              type="text"
+              name="targetAnimal"
+              value={formData.targetAnimal || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Cattle"
+            />
+          </div>
+        </>
+      );
+    case "Seeds & Plants":
+      return (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Seed/Plant Type
+            </label>
+            <input
+              type="text"
+              name="seedPlantType"
+              value={formData.seedPlantType || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Hybrid Corn"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Germination Rate
+            </label>
+            <input
+              type="text"
+              name="germinationRate"
+              value={formData.germinationRate || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 95%"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Planting Season
+            </label>
+            <input
+              type="text"
+              name="plantingSeason"
+              value={formData.plantingSeason || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Spring"
+            />
+          </div>
+        </>
+      );
+    case "Irrigation & Watering Systems":
+      return (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              System Type
+            </label>
+            <input
+              type="text"
+              name="systemType"
+              value={formData.systemType || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Drip Irrigation"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Coverage Area
+            </label>
+            <input
+              type="text"
+              name="coverageArea"
+              value={formData.coverageArea || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 1 acre"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Flow Rate
+            </label>
+            <input
+              type="text"
+              name="flowRate"
+              value={formData.flowRate || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 10 L/min"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Condition
+            </label>
+            <select
+              name="condition"
+              value={formData.condition || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select condition</option>
+              <option value="New">New</option>
+              <option value="Used">Used</option>
+            </select>
+          </div>
+        </>
+      );
+    case "Storage & Packaging":
+      return (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Item Type
+            </label>
+            <input
+              type="text"
+              name="itemType"
+              value={formData.itemType || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Silo"
+            />
+          </div>
+        </>
+      );
+    case "Greenhouse Equipment":
+      return (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Item Type
+            </label>
+            <input
+              type="text"
+              name="itemType"
+              value={formData.itemType || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Ventilation Fan"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Condition
+            </label>
+            <select
+              name="condition"
+              value={formData.condition || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select condition</option>
+              <option value="New">New</option>
+              <option value="Used">Used</option>
+            </select>
+          </div>
+        </>
+      );
+    default:
+      return null;
   }
 }

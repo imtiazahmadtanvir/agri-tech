@@ -266,7 +266,7 @@ export default function CreateListing() {
           </div>
         </div>
         {formData.category && (
-          <div>
+          <div className="col-span-2">
             <h3>Additional Details</h3>
             <CategoryFields
               formData={formData}
