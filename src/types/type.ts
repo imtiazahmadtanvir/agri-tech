@@ -78,3 +78,48 @@ export interface MarketplaceItemForBuy {
     username: string;
     listed: string;
 }
+export interface FormData {
+    productName: string;
+    category: string;
+    description: string;
+    price: number;
+    quantity: number;
+    unit?: string;
+    location: string;
+    contactInfo: string;
+    photos: File[] | null;
+    availabilityDate: string;
+    // Category-specific fields
+    cropType?: string;
+    harvestDate?: string;
+    organicStatus?: boolean;
+    qualityGrade?: string;
+    chemicalComposition?: string;
+    volume?: string;
+    applicationMethod?: string;
+    safetyCertifications?: string;
+    brand?: string;
+    model?: string;
+    condition?: string;
+    yearOfManufacture?: string;
+    horsepower?: string;
+    toolType?: string;
+    material?: string;
+    dimensions?: string;
+    animalType?: string;
+    breed?: string;
+    age?: string;
+    healthStatus?: string;
+    gender?: string;
+    feedType?: string;
+    nutritionalContent?: string;
+    weight?: string;
+    targetAnimal?: string;
+    seedPlantType?: string;
+    germinationRate?: string;
+    plantingSeason?: string;
+    systemType?: string;
+    coverageArea?: string;
+    flowRate?: string;
+    itemType?: string;
+}

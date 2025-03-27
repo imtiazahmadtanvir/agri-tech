@@ -1,5 +1,5 @@
 "use client";
-
+import { FormData } from "@/types/type";
 import Image from "next/image";
 import React, { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -18,6 +18,25 @@ const marketplaceCategories = [
 ];
 export default function CreateListing() {
   const [previews, setPreviews] = useState<string[]>([]);
+  const [formData, setFormData] = useState<FormData>({
+    productName: "",
+    category: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+    location: "",
+    availabilityDate: "",
+    contactInfo: "",
+    photos: [],
+  });
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value, type } = e.target;
+    console.log(name);
+  };
   // for file
   const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];
@@ -94,7 +113,9 @@ export default function CreateListing() {
           </label>
           <input
             type="text"
-            name="name"
+            name="productName"
+            value={formData.productName}
+            onChange={handleChange}
             className="mt-1  block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
@@ -105,7 +126,9 @@ export default function CreateListing() {
           <select
             className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             name="category"
-            id=""
+            required
+            value={formData.category}
+            onChange={handleChange}
           >
             <option value="">Select a category</option>
             {marketplaceCategories.map((cat) => (
@@ -119,23 +142,33 @@ export default function CreateListing() {
             Description
           </label>
           <textarea
+            value={formData.description}
+            onChange={handleChange}
             className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             rows={4}
             name="description"
-            id=""
+            required
           ></textarea>
         </div>
         <div className="col-span-2 grid-cols-3 grid gap-4">
+          {/* unit */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Location
+              Unit
             </label>
-            <input
-              type="text"
-              name="location"
-              className=" block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Springfield Farm, IL"
-            />
+            <select
+              name="unit"
+              value={formData.unit}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select unit</option>
+              <option value="kg">kg</option>
+              <option value="ton">ton</option>
+              <option value="piece">piece</option>
+              <option value="litre">litre</option>
+              <option value="dozen">dozen</option>
+            </select>
           </div>
           {/* price */}
           <div>
@@ -149,6 +182,9 @@ export default function CreateListing() {
               className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
               type="number"
               name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
             />
           </div>
           {/* quantity */}
@@ -163,31 +199,57 @@ export default function CreateListing() {
               className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
               type="number"
               name="quantity"
+              required
+              value={formData.quantity}
+              onChange={handleChange}
             />
           </div>
         </div>
-        {/* contact */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Contact Information
-          </label>
-          <input
-            type="number"
-            name="contactInfo"
-            className="mt-1 block w-full border rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            placeholder="e.g., 555-123-4567"
-          />
-        </div>
-        {/*  */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Availability Date
-          </label>
-          <input
-            type="date"
-            name="availabilityDate"
-            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
+        <div className="col-span-2 grid grid-cols-3 gap-4">
+          {/* location */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Location
+            </label>
+            <input
+              type="text"
+              name="location"
+              className=" block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Springfield Farm, IL"
+              required
+              value={formData.location}
+              onChange={handleChange}
+            />
+          </div>
+          {/* contact */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Contact Info
+            </label>
+            <input
+              type="number"
+              name="contactInfo"
+              className="mt-1 block w-full border rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 555-123-4567"
+              required
+              value={formData.contactInfo}
+              onChange={handleChange}
+            />
+          </div>
+          {/* availability  */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Availability Date
+            </label>
+            <input
+              type="date"
+              name="availabilityDate"
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
+              value={formData.availabilityDate}
+              onChange={handleChange}
+            />
+          </div>
         </div>
       </form>
     </div>
