@@ -24,9 +24,10 @@ export default function CreateListing() {
     setPreviews((prev) => [...prev, ...newPreviews]);
   };
   return (
-    <div>
+    <div className="my-4">
       <form className="grid grid-cols-2">
         {/* photo */}
+
         <div className="col-span-2 gap-3 flex flex-wrap">
           {previews.map((preview, index) => (
             <div
@@ -41,7 +42,8 @@ export default function CreateListing() {
               />
             </div>
           ))}
-          <div className="">
+          {/* file input */}
+          <div className={`${previews.length > 4 ? "hidden" : ""}`}>
             <input
               multiple
               accept="image/*"
