@@ -166,7 +166,7 @@ export default function CategoryFields({
       );
     case "Agricultural Machinery":
       return (
-        <>
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Brand
@@ -214,7 +214,7 @@ export default function CategoryFields({
               Year of Manufacture
             </label>
             <input
-              type="text"
+              type="date"
               name="yearOfManufacture"
               value={formData.yearOfManufacture || ""}
               onChange={handleChange}
@@ -235,37 +235,62 @@ export default function CategoryFields({
               placeholder="e.g., 50 HP"
             />
           </div>
-        </>
+        </div>
       );
     case "Farming Tools":
       return (
-        <>
+        <div className="grid grid-cols-2 gap-4">
+          {/* Tool Type */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Tool Type
             </label>
-            <input
-              type="text"
+            <select
               name="toolType"
               value={formData.toolType || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Shovel"
-            />
+            >
+              <option value="">Select Tool Type</option>
+              <option value="Shovel">Shovel</option>
+              <option value="Hoe">Hoe</option>
+              <option value="Rake">Rake</option>
+              <option value="Spade">Spade</option>
+              <option value="Plow">Plow</option>
+              <option value="Pruning Shears">Pruning Shears</option>
+              <option value="Trowel">Trowel</option>
+              <option value="Sickle">Sickle</option>
+              <option value="Sprayer">Sprayer</option>
+              <option value="Seeder">Seeder</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
+
+          {/* Material */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Material
             </label>
-            <input
-              type="text"
+            <select
               name="material"
               value={formData.material || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Steel"
-            />
+            >
+              <option value="">Select Material</option>
+              <option value="Steel">Steel</option>
+              <option value="Iron">Iron</option>
+              <option value="Aluminum">Aluminum</option>
+              <option value="Plastic">Plastic</option>
+              <option value="Wood">Wood</option>
+              <option value="Fiberglass">Fiberglass</option>
+              <option value="Rubber">Rubber</option>
+              <option value="Carbon Fiber">Carbon Fiber</option>
+              <option value="Carbon Fiber">Other</option>
+            </select>
           </div>
+
+          {/* Condition */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Condition
@@ -281,9 +306,11 @@ export default function CategoryFields({
               <option value="Used">Used</option>
             </select>
           </div>
+
+          {/* Dimensions */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Dimensions
+              Dimensions (cm)
             </label>
             <input
               type="text"
@@ -294,7 +321,7 @@ export default function CategoryFields({
               placeholder="e.g., 24-inch blade"
             />
           </div>
-        </>
+        </div>
       );
     case "Livestock":
       return (
