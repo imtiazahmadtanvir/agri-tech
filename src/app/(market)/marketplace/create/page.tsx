@@ -1,23 +1,47 @@
 "use client";
 
-import React from "react";
-
+import React, { useState } from "react";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+const marketplaceCategories = [
+  { name: "Harvested Products" },
+  { name: "Fertilizers & Pesticides" },
+  { name: "Agricultural Machinery" },
+  { name: "Farming Tools" },
+  { name: "Livestock" },
+  { name: "Animal Feed" },
+  { name: "Seeds & Plants" },
+  { name: "Irrigation & Watering Systems" },
+  { name: "Storage & Packaging" },
+  { name: "Greenhouse Equipment" },
+];
 export default function CreateListing() {
-  const marketplaceCategories = [
-    { name: "Harvested Products" },
-    { name: "Fertilizers & Pesticides" },
-    { name: "Agricultural Machinery" },
-    { name: "Farming Tools" },
-    { name: "Livestock" },
-    { name: "Animal Feed" },
-    { name: "Seeds & Plants" },
-    { name: "Irrigation & Watering Systems" },
-    { name: "Storage & Packaging" },
-    { name: "Greenhouse Equipment" },
-  ];
+  const [previews, setPreviews] = useState<string[]>([]);
+  const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newFiles = e.target.files ? Array.from(e.target.files) : [];
+    if (newFiles.length === 0) return;
+    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+    setPreviews((prev) => [...prev, ...newPreviews]);
+  };
   return (
     <div>
       <form className="grid grid-cols-2">
+        {/* photo */}
+        <div className="col-span-2">
+          <div>
+            <input
+              multiple
+              accept="image/*"
+              className="hidden"
+              id="file"
+              type="file"
+              onChange={handelFileChange}
+            />
+            <label htmlFor="file">
+              <MdOutlineAddPhotoAlternate size={30} />
+              Add photo
+            </label>
+          </div>
+        </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Product Name *
@@ -54,6 +78,57 @@ export default function CreateListing() {
             name="description"
             id=""
           ></textarea>
+        </div>
+        {/* price */}
+        <div>
+          <label
+            className="block text-sm font-medium text-gray-700"
+            htmlFor="price"
+          >
+            Price
+          </label>
+          <input
+            className="border p-2 rounded-md w-full"
+            type="number"
+            name="price"
+          />
+        </div>
+        {/* quantity */}
+        <div>
+          <label
+            className="block text-sm font-medium text-gray-700"
+            htmlFor="quantity"
+          >
+            Quantity
+          </label>
+          <input
+            className="border p-2 rounded-md w-full"
+            type="number"
+            name="quantity"
+          />
+        </div>
+        {/* contact */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Contact Information
+          </label>
+          <input
+            type="text"
+            name="contactInfo"
+            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="e.g., 555-123-4567"
+          />
+        </div>
+        {/*  */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Availability Date
+          </label>
+          <input
+            type="date"
+            name="availabilityDate"
+            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
         </div>
       </form>
     </div>
