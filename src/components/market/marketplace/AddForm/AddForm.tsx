@@ -130,7 +130,7 @@ export default function AddProductForm() {
       });
 
       if (response.data.success) {
-        router.push("/market/buyer-seller"); // Redirect to marketplace
+        router.push("/market/buyer-seller");
       } else {
         setError(response.data.message || "Failed to submit listing.");
       }

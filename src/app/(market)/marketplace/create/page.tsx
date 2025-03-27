@@ -125,33 +125,46 @@ export default function CreateListing() {
             id=""
           ></textarea>
         </div>
-        {/* price */}
-        <div>
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="price"
-          >
-            Price
-          </label>
-          <input
-            className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
-            type="number"
-            name="price"
-          />
-        </div>
-        {/* quantity */}
-        <div>
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="quantity"
-          >
-            Quantity
-          </label>
-          <input
-            className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
-            type="number"
-            name="quantity"
-          />
+        <div className="col-span-2 grid-cols-3 grid gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Location
+            </label>
+            <input
+              type="text"
+              name="location"
+              className=" block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., Springfield Farm, IL"
+            />
+          </div>
+          {/* price */}
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="price"
+            >
+              Price
+            </label>
+            <input
+              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
+              type="number"
+              name="price"
+            />
+          </div>
+          {/* quantity */}
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="quantity"
+            >
+              Quantity
+            </label>
+            <input
+              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
+              type="number"
+              name="quantity"
+            />
+          </div>
         </div>
         {/* contact */}
         <div>
@@ -159,9 +172,9 @@ export default function CreateListing() {
             Contact Information
           </label>
           <input
-            type="text"
+            type="number"
             name="contactInfo"
-            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="mt-1 block w-full border rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="e.g., 555-123-4567"
           />
         </div>
