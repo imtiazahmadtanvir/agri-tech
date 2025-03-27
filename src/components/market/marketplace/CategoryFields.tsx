@@ -406,20 +406,25 @@ export default function CategoryFields({
       );
     case "Animal Feed":
       return (
-        <>
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Feed Type
             </label>
-            <input
-              type="text"
+            <select
               name="feedType"
               value={formData.feedType || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Hay"
-            />
+            >
+              <option value="">Select Feed Type</option>
+              <option value="Hay">Hay</option>
+              <option value="Grain">Grain</option>
+              <option value="Silage">Silage</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Nutritional Content
@@ -435,10 +440,10 @@ export default function CategoryFields({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Weight
+              Weight(kg)
             </label>
             <input
-              type="text"
+              type="number"
               name="weight"
               value={formData.weight || ""}
               onChange={handleChange}
@@ -459,11 +464,11 @@ export default function CategoryFields({
               placeholder="e.g., Cattle"
             />
           </div>
-        </>
+        </div>
       );
     case "Seeds & Plants":
       return (
-        <>
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Seed/Plant Type
@@ -479,19 +484,6 @@ export default function CategoryFields({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Germination Rate
-            </label>
-            <input
-              type="text"
-              name="germinationRate"
-              value={formData.germinationRate || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 95%"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
               Planting Season
             </label>
             <input
@@ -503,7 +495,7 @@ export default function CategoryFields({
               placeholder="e.g., Spring"
             />
           </div>
-        </>
+        </div>
       );
     case "Irrigation & Watering Systems":
       return (
