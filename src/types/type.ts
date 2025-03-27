@@ -95,14 +95,14 @@ export interface FormData {
     organicStatus?: boolean;
     qualityGrade?: string;
     chemicalComposition?: string;
-    volume?: string;
+    volume?: number;
     applicationMethod?: string;
     safetyCertifications?: string;
     brand?: string;
     model?: string;
     condition?: string;
     yearOfManufacture?: string;
-    horsepower?: string;
+    horsepower?: number;
     toolType?: string;
     material?: string;
     dimensions?: string;

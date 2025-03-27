@@ -120,7 +120,7 @@ export default function CategoryFields({
             >
               <option value="">Select an Method</option>
               <option value="Spray">Spray</option>
-              <option value="Fertigation">Fertigation</option>
+              <option value="Festination">Festination</option>
               <option value="Soil Application">Soil Application</option>
               <option value="Foliar Application">Foliar Application</option>
               <option value="Drip Irrigation">Drip Irrigation</option>
@@ -132,6 +132,7 @@ export default function CategoryFields({
               <option value="Seed Treatment">Seed Treatment</option>
               <option value="Aerial Application">Aerial Application</option>
               <option value="Systemic Application">Systemic Application</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
@@ -144,6 +145,7 @@ export default function CategoryFields({
               Safety Certifications
             </label>
             <select
+              required
               name="safetyCertifications"
               id="safetyCertifications"
               value={formData.safetyCertifications || ""}
@@ -160,6 +162,7 @@ export default function CategoryFields({
               <option value="Eco-friendly">Eco-friendly</option>
               <option value="Non-toxic">Non-toxic</option>
               <option value="Pesticide-free">Pesticide-free</option>
+              <option value="Other">Other</option>
             </select>
           </div>
         </div>
@@ -224,10 +227,10 @@ export default function CategoryFields({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Horsepower
+              Horsepower (HP)
             </label>
             <input
-              type="text"
+              type="number"
               name="horsepower"
               value={formData.horsepower || ""}
               onChange={handleChange}
