@@ -1,4 +1,5 @@
 "use client";
+import CategoryFields from "@/components/market/marketplace/CategoryFields";
 import { FormData } from "@/types/type";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -46,6 +47,10 @@ export default function CreateListing() {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];
     if (newFiles.length === 0) return;
     const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+    setFormData((prev) => ({
+      ...prev,
+      photos: [...(prev.photos || []), ...newFiles],
+    }));
     setPreviews((prev) => [...prev, ...newPreviews]);
   };
   // for delete photo
@@ -54,6 +59,11 @@ export default function CreateListing() {
       URL.revokeObjectURL(prev[index]);
       return prev.filter((_, i) => i !== index);
     });
+  };
+  // for check box
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: checked }));
   };
   return (
     <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
@@ -255,6 +265,22 @@ export default function CreateListing() {
             />
           </div>
         </div>
+        {formData.category && (
+          <div>
+            <h3>Additional Details</h3>
+            <CategoryFields
+              formData={formData}
+              handleChange={handelFileChange}
+              handleCheckboxChange={handelFileChange}
+            />
+          </div>
+        )}
+        <button
+          type="submit"
+          className="col-span-2 w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+        >
+          Submit Listing
+        </button>
       </form>
     </div>
   );
