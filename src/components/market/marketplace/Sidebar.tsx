@@ -91,7 +91,7 @@ export default function Sidebar() {
       </div>
 
       {/* Location Selector */}
-      <div className="h-[50vh] overflow-y-scroll scrollbar-hidden">
+      <div className="">
         <div className="mt-4">
           <h3 className="text-lg font-semibold text-gray-700">Location</h3>
           <button className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100">

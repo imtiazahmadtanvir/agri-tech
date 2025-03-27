@@ -8,7 +8,9 @@ function layout({ children }: { children: React.ReactNode }) {
     <MarketplaceProvider>
       <ContainerSmall className="flex gap-4">
         <Sidebar />
-        <div className="w-3/4">{children}</div>
+        <div className="w-3/4 scrollbar-hidden h-screen overflow-y-scroll">
+          {children}
+        </div>
       </ContainerSmall>
     </MarketplaceProvider>
   );
