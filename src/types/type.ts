@@ -122,4 +122,5 @@ export interface FormData {
     coverageArea?: string;
     flowRate?: string;
     itemType?: string;
+    storageCapacity?: string
 }

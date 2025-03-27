@@ -572,38 +572,69 @@ export default function CategoryFields({
       );
     case "Storage & Packaging":
       return (
-        <>
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Item Type
             </label>
-            <input
-              type="text"
+            <select
               name="itemType"
               value={formData.itemType || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Silo"
+            >
+              <option value="">Select Item Type</option>
+              <option value="Silo">Silo</option>
+              <option value="Bin">Bin</option>
+              <option value="Bag">Bag</option>
+              <option value="Container">Container</option>
+              <option value="Pallet">Pallet</option>
+              <option value="Drum">Drum</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Storage Capacity
+            </label>
+            <input
+              type="text"
+              name="storageCapacity"
+              value={formData.storageCapacity || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 500 kg or 1000 liters"
             />
           </div>
-        </>
+        </div>
       );
+
     case "Greenhouse Equipment":
       return (
-        <>
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Item Type
             </label>
-            <input
-              type="text"
+            <select
               name="itemType"
               value={formData.itemType || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Ventilation Fan"
-            />
+            >
+              <option value="">Select Item Type</option>
+              <option value="Ventilation Fan">Ventilation Fan</option>
+              <option value="Cooling Pad">Cooling Pad</option>
+              <option value="Drip Irrigation System">
+                Drip Irrigation System
+              </option>
+              <option value="Water Tank">Water Tank</option>
+              <option value="Sprinkler">Sprinkler</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Condition
@@ -619,7 +650,7 @@ export default function CategoryFields({
               <option value="Used">Used</option>
             </select>
           </div>
-        </>
+        </div>
       );
     default:
       return null;
