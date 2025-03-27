@@ -22,8 +22,8 @@ export default function CreateListing() {
     productName: "",
     category: "",
     description: "",
-    price: 0,
-    quantity: 0,
+    price: "",
+    quantity: "",
     location: "",
     availabilityDate: "",
     contactInfo: "",
@@ -35,8 +35,12 @@ export default function CreateListing() {
     >
   ) => {
     const { name, value, type } = e.target;
-    console.log(name);
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "number" && value !== "" ? Number(value) : value,
+    }));
   };
+  console.log(formData);
   // for file
   const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];

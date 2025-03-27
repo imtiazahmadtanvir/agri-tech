@@ -82,8 +82,8 @@ export interface FormData {
     productName: string;
     category: string;
     description: string;
-    price: number;
-    quantity: number;
+    price: number | "";
+    quantity: number | "";
     unit?: string;
     location: string;
     contactInfo: string;
