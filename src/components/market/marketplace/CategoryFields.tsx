@@ -325,20 +325,33 @@ export default function CategoryFields({
       );
     case "Livestock":
       return (
-        <>
+        <div className="grid grid-cols-2 gap-4">
+          {/* Animal Type */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Animal Type
             </label>
-            <input
-              type="text"
+            <select
               name="animalType"
               value={formData.animalType || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Cow"
-            />
+            >
+              <option value="">Select Animal Type</option>
+              <option value="Cow">Cow</option>
+              <option value="Buffalo">Buffalo</option>
+              <option value="Goat">Goat</option>
+              <option value="Sheep">Sheep</option>
+              <option value="Chicken">Chicken</option>
+              <option value="Duck">Duck</option>
+              <option value="Turkey">Turkey</option>
+              <option value="Horse">Horse</option>
+              <option value="Camel">Camel</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
+
+          {/* Breed */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Breed
@@ -352,12 +365,14 @@ export default function CategoryFields({
               placeholder="e.g., Holstein"
             />
           </div>
+
+          {/* Age */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Age
+              Age(year)
             </label>
             <input
-              type="text"
+              type="number"
               name="age"
               value={formData.age || ""}
               onChange={handleChange}
@@ -365,35 +380,29 @@ export default function CategoryFields({
               placeholder="e.g., 2 years"
             />
           </div>
+
+          {/* Health Status */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Health Status
             </label>
-            <input
-              type="text"
+            <select
               name="healthStatus"
               value={formData.healthStatus || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Fully vaccinated"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Gender
-            </label>
-            <select
-              name="gender"
-              value={formData.gender || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="">Select gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option value="">Select Health Status</option>
+              <option value="Healthy">Healthy</option>
+              <option value="Vaccinated">Vaccinated</option>
+              <option value="Sick">Sick</option>
+              <option value="Under Treatment">Under Treatment</option>
+              <option value="Pregnant">Pregnant</option>
+              <option value="Lactating">Lactating</option>
+              <option value="Not Vaccinated">Not Vaccinated</option>
             </select>
           </div>
-        </>
+        </div>
       );
     case "Animal Feed":
       return (
