@@ -276,7 +276,15 @@ export default function Footer() {
         className="absolute right-0 bottom-0 w-1/3 h-full opacity-10 pointer-events-none"
         aria-hidden="true"
       >
-        <div className="w-full h-full bg-[url('/placeholder.svg?height=400&width=400')] bg-no-repeat bg-right-bottom"></div>
+        <div className="relative w-full h-full">
+          <Image
+            src="/placeholder.svg"
+            width={400}
+            height={400}
+            alt="Placeholder"
+            className="object-cover"
+          />
+        </div>
       </div>
     </footer>
   );
