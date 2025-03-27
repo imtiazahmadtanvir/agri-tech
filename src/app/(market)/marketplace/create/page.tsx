@@ -36,8 +36,9 @@ export default function CreateListing() {
     <div className="my-4 p-4 rounded-md border">
       <form className="grid grid-cols-2">
         {/* photo */}
-        <div>
-          <h3>Item for sale</h3>
+        <div className="mb-4">
+          <h3 className="text-2xl font-semibold ">Item for sale</h3>
+          <p>Photos {previews.length}/4- You can add up to 4 photos</p>
         </div>
         <div className="col-span-2 gap-3 flex flex-wrap">
           {previews.map((preview, index) => (
@@ -60,7 +61,7 @@ export default function CreateListing() {
             </div>
           ))}
           {/* file input */}
-          <div className={`${previews.length > 4 ? "hidden" : ""}`}>
+          <div className={`${previews.length >= 4 ? "hidden" : ""}`}>
             <input
               multiple
               accept="image/*"
