@@ -499,26 +499,40 @@ export default function CategoryFields({
       );
     case "Irrigation & Watering Systems":
       return (
-        <>
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              System Type
+              Irrigation & Watering System Type
             </label>
-            <input
-              type="text"
+            <select
               name="systemType"
               value={formData.systemType || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Drip Irrigation"
-            />
+            >
+              <option value="">Select System Type</option>
+              <option value="Drip Irrigation">Drip Irrigation</option>
+              <option value="Sprinkler System">Sprinkler System</option>
+              <option value="Surface Irrigation">Surface Irrigation</option>
+              <option value="Subsurface Irrigation">
+                Subsurface Irrigation
+              </option>
+              <option value="Flood Irrigation">Flood Irrigation</option>
+              <option value="Center Pivot Irrigation">
+                Center Pivot Irrigation
+              </option>
+              <option value="Furrow Irrigation">Furrow Irrigation</option>
+              <option value="Hand Watering">Hand Watering</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Coverage Area
+              Coverage Area(acre)
             </label>
             <input
-              type="text"
+              type="number"
+              required
               name="coverageArea"
               value={formData.coverageArea || ""}
               onChange={handleChange}
@@ -528,10 +542,10 @@ export default function CategoryFields({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Flow Rate
+              Flow Rate (L/min)
             </label>
             <input
-              type="text"
+              type="number"
               name="flowRate"
               value={formData.flowRate || ""}
               onChange={handleChange}
@@ -554,7 +568,7 @@ export default function CategoryFields({
               <option value="Used">Used</option>
             </select>
           </div>
-        </>
+        </div>
       );
     case "Storage & Packaging":
       return (
