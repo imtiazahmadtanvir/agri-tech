@@ -102,6 +102,7 @@ export default function Footer() {
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
   }, []);
+
   return (
     <footer className="relative bg-[#0a4a1c] text-white">
       {/* Grass pattern at top */}
@@ -113,14 +114,6 @@ export default function Footer() {
           <div className="flex items-center">
             <div className="mr-2">
               <div className="bg-yellow mx-auto rounded-sm">
-                {/* <div className="w-6 h-6 relative">
-                  <div
-                    className="absolute inset-0 bg-green-700 rounded-sm"
-                    style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}
-                    aria-hidden="true"
-                  ></div>
-                  <div className="absolute inset-0 flex items-center justify-center text-yellow-400 font-bold">AT</div>
-                </div> */}
                 <Image
                   src="/Web-logo/footer.png" // Ensure this file exists in the public folder
                   width={40}
@@ -214,13 +207,12 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-yellow-400">
               Subscribe Newsletter
             </h3>
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4">
               <div className="relative">
                 <label htmlFor="email-input" className="sr-only">
                   Email address
                 </label>
                 <input
-                  id="email-input"
                   type="email"
                   placeholder="Email address*"
                   className="w-full bg-white/10 border border-white/20 rounded-md py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -246,8 +238,8 @@ export default function Footer() {
         {/* Footer bottom */}
         <div className="border-t border-white/20 pt-4 mt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-300">
           <p>
-            Copyright © {currentYear || "loading..."} Agri-Tech. All Rights
-            Reserved.
+            Copyright © {currentYear ?? new Date().getFullYear()} Agri-Tech. All
+            Rights Reserved.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mt-4 sm:mt-0">
