@@ -34,7 +34,7 @@ export default function CreateListing() {
   };
   return (
     <div className="my-4 p-4 rounded-md border">
-      <form className="grid grid-cols-2">
+      <form className="grid grid-cols-2 gap-4">
         {/* photo */}
         <div className="mb-4">
           <h3 className="text-2xl font-semibold ">Item for sale</h3>
@@ -47,7 +47,7 @@ export default function CreateListing() {
         >
           {previews.map((preview, index) => (
             <div key={index} className="relative">
-              <div className="relative w-32 h-32 overflow-hidden rounded-md border">
+              <div className="relative w-44 h-32 overflow-hidden rounded-md border">
                 <Image
                   className="object-cover"
                   layout="fill"
