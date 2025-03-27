@@ -105,14 +105,7 @@ export default function Footer() {
   return (
     <footer className="relative bg-[#0a4a1c] text-white">
       {/* Grass pattern at top */}
-      <div
-        className="w-full h-4 bg-repeat-x bg-top"
-        style={{
-          backgroundImage: "url('/placeholder.svg?height=16&width=100')",
-          backgroundSize: "auto 16px",
-        }}
-        aria-hidden="true"
-      ></div>
+      <div className="w-full h-4 bg-repeat-x bg-top" aria-hidden="true"></div>
 
       <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Top section with logo and tagline */}
@@ -272,20 +265,6 @@ export default function Footer() {
       </div>
 
       {/* Background farm image */}
-      <div
-        className="absolute right-0 bottom-0 w-1/3 h-full opacity-10 pointer-events-none"
-        aria-hidden="true"
-      >
-        <div className="relative w-full h-full">
-          <Image
-            src="/placeholder.svg"
-            width={400}
-            height={400}
-            alt="Placeholder"
-            className="object-cover"
-          />
-        </div>
-      </div>
     </footer>
   );
 }
