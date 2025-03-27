@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState } from "react";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 const marketplaceCategories = [
@@ -26,8 +27,21 @@ export default function CreateListing() {
     <div>
       <form className="grid grid-cols-2">
         {/* photo */}
-        <div className="col-span-2">
-          <div>
+        <div className="col-span-2 gap-3 flex flex-wrap">
+          {previews.map((preview, index) => (
+            <div
+              key={index}
+              className="relative w-32 h-32 overflow-hidden rounded-md border"
+            >
+              <Image
+                className="object-cover"
+                layout="fill"
+                alt={`Preview ${index + 1}`}
+                src={preview}
+              />
+            </div>
+          ))}
+          <div className="">
             <input
               multiple
               accept="image/*"
@@ -36,7 +50,10 @@ export default function CreateListing() {
               type="file"
               onChange={handelFileChange}
             />
-            <label htmlFor="file">
+            <label
+              className="size-32 border flex flex-col items-center justify-center"
+              htmlFor="file"
+            >
               <MdOutlineAddPhotoAlternate size={30} />
               Add photo
             </label>
