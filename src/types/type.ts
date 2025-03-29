@@ -48,7 +48,7 @@ export type WeatherData = {
     }[];
 };
 export interface MarketplaceItem {
-    _id: string;
+    _id?: string;
     name: string;
     image: string;
     description: string;
@@ -63,7 +63,7 @@ export interface MarketplaceItem {
     stock: number;
 }
 export interface MarketplaceItemForBuy {
-    _id: string;
+    _id?: string;
     availabilityDate: string;
     category: string;
     description: string;
@@ -77,4 +77,53 @@ export interface MarketplaceItemForBuy {
     unit: string;
     username: string;
     listed: string;
+}
+export interface FormData {
+    productName: string;
+    category: string;
+    description: string;
+    price: number | "";
+    quantity: number | "";
+    unit?: string;
+    location: string;
+    contactInfo: string;
+    photos: File[]
+    availabilityDate: string;
+    // Category-specific fields
+    cropType?: string;
+    harvestDate?: string;
+    organicStatus?: boolean;
+    qualityGrade?: string;
+    chemicalComposition?: string;
+    volume?: number;
+    applicationMethod?: string;
+    safetyCertifications?: string;
+    brand?: string;
+    model?: string;
+    condition?: string;
+    yearOfManufacture?: string;
+    horsepower?: number | string;
+    toolType?: string;
+    material?: string;
+    dimensions?: string;
+    animalType?: string;
+    breed?: string;
+    age?: string;
+    healthStatus?: string;
+    gender?: string;
+    feedType?: string;
+    nutritionalContent?: string;
+    weight?: string;
+    targetAnimal?: string;
+    seedPlantType?: string;
+    germinationRate?: string;
+    plantingSeason?: string;
+    systemType?: string;
+    coverageArea?: string;
+    flowRate?: string | number;
+    itemType?: string;
+    storageCapacity?: string;
+    isNegotiable?: boolean;
+    expiryData?: string;
+    type?: string
 }

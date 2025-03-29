@@ -132,7 +132,7 @@ export default function PatnerSection() {
                   <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />
                 ) : (
                   <Image
-                    src={logo.src || "/placeholder.svg"}
+                    src={logo.src}
                     alt={logo.alt}
                     fill
                     priority={index < 3}
