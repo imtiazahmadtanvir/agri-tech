@@ -2,17 +2,11 @@
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import Link from "next/link";
 import React from "react";
-import { IoAdd, IoColorPalette, IoLeafOutline } from "react-icons/io5";
-import { PiFarmBold } from "react-icons/pi";
+import { IoAdd } from "react-icons/io5";
+
 export default function Sidebar() {
-  const {
-    setActiveSection,
-    activeSection,
-    setMaxPrice,
-    maxPrice,
-    setMinPrice,
-    minPrice,
-  } = useMarketPlace();
+  const { pathname, setMaxPrice, maxPrice, setMinPrice, minPrice } =
+    useMarketPlace();
 
   const marketplaceCategories = [
     { name: "crops", emoji: "🌾" },
@@ -36,11 +30,8 @@ export default function Sidebar() {
       <div className="space-y-2">
         <Link
           href="/marketplace"
-          onClick={() => setActiveSection("products")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            activeSection === "products"
-              ? "bg-green-700 text-white"
-              : "bg-white"
+            pathname === "/marketplace" ? "bg-green-700 text-white" : "bg-white"
           }`}
         >
           Products
@@ -48,9 +39,10 @@ export default function Sidebar() {
 
         <Link
           href="/marketplace/inbox"
-          onClick={() => setActiveSection("inbox")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            activeSection === "inbox" ? "bg-green-700 text-white" : "bg-white"
+            pathname === "/marketplace/inbox"
+              ? "bg-green-700 text-white"
+              : "bg-white"
           }`}
         >
           Inbox
@@ -58,9 +50,10 @@ export default function Sidebar() {
 
         <Link
           href="/marketplace/buying"
-          onClick={() => setActiveSection("buying")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            activeSection === "buying" ? "bg-green-700 text-white" : "bg-white"
+            pathname === "/marketplace/buying"
+              ? "bg-green-700 text-white"
+              : "bg-white"
           }`}
         >
           Buying
@@ -68,9 +61,10 @@ export default function Sidebar() {
 
         <Link
           href="/marketplace/selling"
-          onClick={() => setActiveSection("selling")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            activeSection === "selling" ? "bg-green-700 text-white" : "bg-white"
+            pathname === "/marketplace/selling"
+              ? "bg-green-700 text-white"
+              : "bg-white"
           }`}
         >
           Selling
@@ -79,9 +73,10 @@ export default function Sidebar() {
         {/* Create Listing Button */}
         <Link
           href={"/marketplace/create"}
-          onClick={() => setActiveSection("create")}
           className={`w-full py-2 px-3 text-center border rounded-md flex items-center justify-center gap-2 hover:bg-green-700 hover:text-white ${
-            activeSection === "create" ? "bg-green-700 text-white" : "bg-white"
+            pathname === "/marketplace/create"
+              ? "bg-green-700 text-white"
+              : "bg-white"
           }`}
         >
           <IoAdd /> Create Listing
@@ -142,7 +137,7 @@ export default function Sidebar() {
             {marketplaceCategories.map(({ name, emoji }) => (
               <button
                 key={name}
-                className="w-full py-2 px-3 text-left border rounded-md capitalize bg-white hover:bg-green-100 flex items-center gap-2"
+                className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
               >
                 {emoji}
                 {name}

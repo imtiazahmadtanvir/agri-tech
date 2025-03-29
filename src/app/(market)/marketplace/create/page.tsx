@@ -27,12 +27,16 @@ export default function CreateListing() {
     price: "",
     quantity: "",
     location: "",
-    availabilityDate: "",
     contactInfo: "",
     photos: [],
     unit: "",
     isNegotiable: false,
+    userEmail: data?.user?.email ?? "",
+    userName: data?.user?.name ?? "",
   });
+  const isFormValid = Object.values(formData).every(
+    (value) => String(value).trim() !== ""
+  );
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -44,7 +48,7 @@ export default function CreateListing() {
       [name]: type === "number" && value !== "" ? Number(value) : value,
     }));
   };
-
+  console.log(formData);
   // for file
   const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];
@@ -72,13 +76,16 @@ export default function CreateListing() {
     const { name, checked } = e.target;
     setFormData((prev) => ({ ...prev, [name]: checked }));
   };
+  const handelSubmit = () => {
+    console.log("submit", formData);
+  };
   return (
     <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
       <div className="">
         <h3 className="text-2xl font-semibold ">Item for sale</h3>
         <p>Photos {previews.length}/4- You can add up to 4 photos</p>
       </div>
-      <form className="grid grid-cols-2 gap-4">
+      <form onSubmit={handelSubmit} className="grid grid-cols-2 gap-4">
         {/* photo */}
         <div
           className={`col-span-2 gap-3   ${
@@ -147,7 +154,7 @@ export default function CreateListing() {
             Category *
           </label>
           <select
-            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
             name="category"
             required
             value={formData.category}
@@ -181,6 +188,7 @@ export default function CreateListing() {
               Unit
             </label>
             <select
+              required
               name="unit"
               value={formData.unit}
               onChange={handleChange}
@@ -243,7 +251,7 @@ export default function CreateListing() {
               className="w-4 h-4"
             />
             <label htmlFor="isNegotiable" className="text-sm text-gray-700">
-              Price Negotiable
+              Negotiable
             </label>
           </div>
           <div>
@@ -289,10 +297,11 @@ export default function CreateListing() {
         </div>
         <PhoneNumberInput />
         <button
+          disabled={!isFormValid}
           type="submit"
-          className="col-span-2 w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+          className="col-span-2 w-fit flex justify-end py-2 px-10 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
         >
-          Submit Listing
+          Post Listing
         </button>
       </form>
     </div>

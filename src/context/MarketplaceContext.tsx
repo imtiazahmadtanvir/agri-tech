@@ -1,14 +1,14 @@
 "use client";
+import { usePathname } from "next/navigation";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 interface MarketplaceContextType {
   minPrice: number;
   maxPrice: number;
+  pathname: string;
   selectedCategories: string;
-  activeSection: string;
   setMinPrice: (value: number) => void;
   setMaxPrice: (value: number) => void;
   setSelectedCategories: (categories: string) => void;
-  setActiveSection: (section: string) => void;
 }
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(
   undefined
@@ -18,10 +18,11 @@ export default function MarketplaceProvider({
 }: {
   children: ReactNode;
 }) {
+  const pathname = usePathname();
+
   const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState<number>(1000);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [activeSection, setActiveSection] = useState<string>("products");
+  const [selectedCategories, setSelectedCategories] = useState<string>("");
 
   return (
     <MarketplaceContext.Provider
@@ -29,10 +30,9 @@ export default function MarketplaceProvider({
         minPrice,
         maxPrice,
         selectedCategories,
-        activeSection,
+        pathname,
         setMaxPrice,
         setMinPrice,
-        setActiveSection,
         setSelectedCategories,
       }}
     >

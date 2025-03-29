@@ -65,7 +65,7 @@ export default function CategoryFields({
               <option value="Processed">Processed</option>
             </select>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex ">
             <input
               type="checkbox"
               name="organicStatus"
