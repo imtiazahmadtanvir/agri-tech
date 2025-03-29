@@ -15,9 +15,28 @@ export default function CategoryFields({
   handleCheckboxChange,
 }: CategoryFieldsProps) {
   switch (formData.category) {
-    case "Harvested Products":
+    case "crops":
       return (
         <div className="grid  grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Crops Type
+            </label>
+            <select
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              name="cropType"
+              value={formData.cropType || ""}
+              onChange={handleChange}
+            >
+              <option value="">Select Crop Type</option>
+              <option value="grains">Grains & Cereals 🌾</option>
+              <option value="vegetables">Vegetables 🥦</option>
+              <option value="fruits">Fruits 🍎</option>
+              <option value="legumes">Legumes & Pulses 🌱</option>
+              <option value="nuts">Nuts & Oilseeds 🥜</option>
+              <option value="spices">Spices & Herbs 🌿</option>
+            </select>
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Harvest Date
@@ -29,6 +48,22 @@ export default function CategoryFields({
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Condition
+            </label>
+            <select
+              name="condition"
+              value={formData.condition || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select condition</option>
+              <option value="Fresh">Fresh</option>
+              <option value="Processed">Processed</option>
+            </select>
           </div>
           <div className="flex items-center justify-center">
             <input
@@ -42,26 +77,10 @@ export default function CategoryFields({
               Organic
             </label>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Quality Grade
-            </label>
-            <select
-              name="qualityGrade"
-              value={formData.qualityGrade || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select Quality</option>
-              <option value="A">Grade A</option>
-              <option value="B">Grade B</option>
-              <option value="C">Grade C</option>
-            </select>
-          </div>
         </div>
       );
     // Other cases remain unchanged
-    case "Fertilizers & Pesticides":
+    case "fertilizers":
       return (
         <div className="grid grid-cols-2 gap-4">
           {/* Chemical Composition */}
@@ -328,7 +347,7 @@ export default function CategoryFields({
           </div>
         </div>
       );
-    case "Livestock":
+    case "livestock":
       return (
         <div className="grid grid-cols-2 gap-4">
           {/* Animal Type */}
@@ -343,16 +362,16 @@ export default function CategoryFields({
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Animal Type</option>
-              <option value="Cow">Cow</option>
-              <option value="Buffalo">Buffalo</option>
-              <option value="Goat">Goat</option>
-              <option value="Sheep">Sheep</option>
-              <option value="Chicken">Chicken</option>
-              <option value="Duck">Duck</option>
-              <option value="Turkey">Turkey</option>
-              <option value="Horse">Horse</option>
-              <option value="Camel">Camel</option>
-              <option value="Other">Other</option>
+              <option value="Cow">Cattle 🐄</option>
+              <option value="Buffalo">Buffalo 🐃</option>
+              <option value="Goat">Goat 🐐</option>
+              <option value="Sheep">Sheep 🐏</option>
+              <option value="Chicken">Chicken 🐔</option>
+              <option value="Duck">Duck 🦆</option>
+              <option value="Turkey">Turkey 🦃</option>
+              <option value="Horse">Horse 🐎</option>
+              <option value="Camel">Camel 🐪</option>
+              <option value="Other">Other ❓</option>
             </select>
           </div>
 
@@ -374,7 +393,7 @@ export default function CategoryFields({
           {/* Age */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Age
+              Age(month)
             </label>
             <input
               type=""
@@ -382,7 +401,7 @@ export default function CategoryFields({
               value={formData.age || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 2 years"
+              placeholder="e.g., 2 ,month"
             />
           </div>
 

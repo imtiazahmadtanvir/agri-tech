@@ -31,6 +31,8 @@ export default function CreateListing() {
     availabilityDate: "",
     contactInfo: "",
     photos: [],
+    unit: "",
+    isNegotiable: false,
   });
   const handleChange = (
     e: React.ChangeEvent<
@@ -133,6 +135,8 @@ export default function CreateListing() {
           </label>
           <input
             type="text"
+            required
+            placeholder="product name"
             name="productName"
             value={formData.productName}
             onChange={handleChange}
@@ -257,23 +261,16 @@ export default function CreateListing() {
         </div>
         <div className="col-span-2 grid grid-cols-3 gap-4">
           {/* location */}
-
+          {formData.category && (
+            <div className="col-span-3">
+              <CategoryFields
+                formData={formData}
+                handleChange={handleChange}
+                handleCheckboxChange={handleCheckboxChange}
+              />
+            </div>
+          )}
           {/* contact */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Contact Info
-            </label>
-            <input
-              type="number"
-              name="contactInfo"
-              className="mt-1 block w-full border rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 555-123-4567"
-              required
-              value={formData.contactInfo}
-              onChange={handleChange}
-            />
-          </div>
-          {/* availability  */}
         </div>
         <div className="col-span-2">
           <h3>Contact details</h3>
