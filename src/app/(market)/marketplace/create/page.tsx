@@ -170,6 +170,7 @@ export default function CreateListing() {
             onChange={handleChange}
             className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             rows={4}
+            placeholder="more details about the product"
             name="description"
             required
           ></textarea>
@@ -207,6 +208,7 @@ export default function CreateListing() {
               type="number"
               name="quantity"
               required
+              placeholder="Enter quantity"
               value={formData.quantity}
               onChange={handleChange}
             />
@@ -225,6 +227,7 @@ export default function CreateListing() {
               className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
               type="number"
               name="price"
+              placeholder="Pick a good price"
               value={formData.price}
               onChange={handleChange}
               required
