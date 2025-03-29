@@ -2,7 +2,7 @@
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import Link from "next/link";
 import React from "react";
-import { IoAdd, IoLeaf, IoColorPalette, IoLeafOutline } from "react-icons/io5";
+import { IoAdd, IoColorPalette, IoLeafOutline } from "react-icons/io5";
 import { PiFarmBold } from "react-icons/pi";
 export default function Sidebar() {
   const {
@@ -15,16 +15,14 @@ export default function Sidebar() {
   } = useMarketPlace();
 
   const marketplaceCategories = [
-    { name: "Harvested Products", icon: <PiFarmBold /> },
-    { name: "Fertilizers & Pesticides", icon: <IoLeafOutline /> },
-    { name: "Agricultural Machinery", icon: <IoColorPalette /> },
-    { name: "Farming Tools", icon: <IoLeaf /> },
-    { name: "Livestock", icon: <PiFarmBold /> },
-    { name: "Animal Feed", icon: <IoLeafOutline /> },
-    { name: "Seeds & Plants", icon: <IoLeafOutline /> },
-    { name: "Irrigation & Watering Systems", icon: <IoColorPalette /> },
-    { name: "Storage & Packaging", icon: <IoLeaf /> },
-    { name: "Greenhouse Equipment", icon: <PiFarmBold /> },
+    { name: "crops", emoji: "🌾" },
+    { name: "livestock", emoji: "🐄" },
+    { name: "Seeds & Plants", emoji: "🌱" },
+    { name: "fertilizers", emoji: "💧" },
+    { name: "equipment", emoji: "🛠️" },
+    { name: "pesticides", emoji: "🌿" },
+    { name: "Animal Feed", emoji: "🐾" },
+    { name: "fisheries", emoji: "🐟" },
   ];
 
   return (
@@ -141,12 +139,12 @@ export default function Sidebar() {
         <div className="mt-4">
           <h3 className="text-lg font-semibold text-gray-700">Categories</h3>
           <div className="space-y-2 mt-2">
-            {marketplaceCategories.map(({ name, icon }) => (
+            {marketplaceCategories.map(({ name, emoji }) => (
               <button
                 key={name}
-                className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
+                className="w-full py-2 px-3 text-left border rounded-md capitalize bg-white hover:bg-green-100 flex items-center gap-2"
               >
-                {icon}
+                {emoji}
                 {name}
               </button>
             ))}
