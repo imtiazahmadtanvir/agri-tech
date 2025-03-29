@@ -14,7 +14,7 @@ const marketplaceCategories = [
   { name: "fertilizers" },
   { name: "equipment" },
   { name: "pesticides" },
-  { name: "animal-feed" },
+  { name: "Animal Feed" },
   { name: "fisheries" },
 ];
 export default function CreateListing() {

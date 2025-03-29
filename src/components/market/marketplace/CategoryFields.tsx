@@ -79,7 +79,6 @@ export default function CategoryFields({
           </div>
         </div>
       );
-    // Other cases remain unchanged
     case "fertilizers":
       return (
         <div className="grid grid-cols-3 gap-4">
@@ -210,92 +209,6 @@ export default function CategoryFields({
           </div>
         </div>
       );
-    case "Farming Tools":
-      return (
-        <div className="grid grid-cols-2 gap-4">
-          {/* Tool Type */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Tool Type
-            </label>
-            <select
-              name="toolType"
-              value={formData.toolType || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select Tool Type</option>
-              <option value="Shovel">Shovel</option>
-              <option value="Hoe">Hoe</option>
-              <option value="Rake">Rake</option>
-              <option value="Spade">Spade</option>
-              <option value="Plow">Plow</option>
-              <option value="Pruning Shears">Pruning Shears</option>
-              <option value="Trowel">Trowel</option>
-              <option value="Sickle">Sickle</option>
-              <option value="Sprayer">Sprayer</option>
-              <option value="Seeder">Seeder</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          {/* Material */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Material
-            </label>
-            <select
-              name="material"
-              value={formData.material || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select Material</option>
-              <option value="Steel">Steel</option>
-              <option value="Iron">Iron</option>
-              <option value="Aluminum">Aluminum</option>
-              <option value="Plastic">Plastic</option>
-              <option value="Wood">Wood</option>
-              <option value="Fiberglass">Fiberglass</option>
-              <option value="Rubber">Rubber</option>
-              <option value="Carbon Fiber">Carbon Fiber</option>
-              <option value="Carbon Fiber">Other</option>
-            </select>
-          </div>
-
-          {/* Condition */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Condition
-            </label>
-            <select
-              name="condition"
-              value={formData.condition || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select condition</option>
-              <option value="New">New</option>
-              <option value="Used">Used</option>
-            </select>
-          </div>
-
-          {/* Dimensions */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Dimensions (cm)
-            </label>
-            <input
-              type="text"
-              name="dimensions"
-              value={formData.dimensions || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 24-inch blade"
-            />
-          </div>
-        </div>
-      );
     case "livestock":
       return (
         <div className="grid grid-cols-2 gap-4">
@@ -379,22 +292,25 @@ export default function CategoryFields({
       );
     case "Animal Feed":
       return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Feed Type
             </label>
             <select
-              name="feedType"
-              value={formData.feedType || ""}
+              name="type"
+              value={formData.type || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="">Select Feed Type</option>
-              <option value="Hay">Hay</option>
-              <option value="Grain">Grain</option>
-              <option value="Silage">Silage</option>
-              <option value="Other">Other</option>
+              <option value="">Select Animal Feed Type</option>
+              <option value="Poultry">🐔 Poultry Feed</option>
+              <option value="Cattle">🐄 Cattle Feed</option>
+              <option value="Fish">🐟 Fish Feed</option>
+              <option value="Goat">🐐 Goat Feed</option>
+              <option value="Sheep">🐏 Sheep Feed</option>
+              <option value="Horse">🐎 Horse Feed</option>
+              <option value="Other">❓ Other</option>
             </select>
           </div>
 
@@ -413,28 +329,15 @@ export default function CategoryFields({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Weight(kg)
+              Expire date
             </label>
             <input
-              type="number"
-              name="weight"
-              value={formData.weight || ""}
+              value={formData.expiryData || ""}
+              type="date"
               onChange={handleChange}
+              name="expiryData"
+              placeholder="brand name"
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 50 kg"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Target Animal
-            </label>
-            <input
-              type="text"
-              name="targetAnimal"
-              value={formData.targetAnimal || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Cattle"
             />
           </div>
         </div>
@@ -477,144 +380,79 @@ export default function CategoryFields({
           </div>
         </div>
       );
-    case "Irrigation & Watering Systems":
+    case "pesticides":
       return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Irrigation & Watering System Type
+              Pesticides Type
             </label>
             <select
-              name="systemType"
-              value={formData.systemType || ""}
+              name="pesticideType"
+              value={formData.type || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="">Select System Type</option>
-              <option value="Drip Irrigation">Drip Irrigation</option>
-              <option value="Sprinkler System">Sprinkler System</option>
-              <option value="Surface Irrigation">Surface Irrigation</option>
-              <option value="Subsurface Irrigation">
-                Subsurface Irrigation
-              </option>
-              <option value="Flood Irrigation">Flood Irrigation</option>
-              <option value="Center Pivot Irrigation">
-                Center Pivot Irrigation
-              </option>
-              <option value="Furrow Irrigation">Furrow Irrigation</option>
-              <option value="Hand Watering">Hand Watering</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Coverage Area(acre)
-            </label>
-            <input
-              type="number"
-              required
-              name="coverageArea"
-              value={formData.coverageArea || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 1 acre"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Flow Rate (L/min)
-            </label>
-            <input
-              type="number"
-              name="flowRate"
-              value={formData.flowRate || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 10 L/min"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Condition
-            </label>
-            <select
-              name="condition"
-              value={formData.condition || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select condition</option>
-              <option value="New">New</option>
-              <option value="Used">Used</option>
-            </select>
-          </div>
-        </div>
-      );
-    case "Storage & Packaging":
-      return (
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Item Type
-            </label>
-            <select
-              name="itemType"
-              value={formData.itemType || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select Item Type</option>
-              <option value="Silo">Silo</option>
-              <option value="Bin">Bin</option>
-              <option value="Bag">Bag</option>
-              <option value="Container">Container</option>
-              <option value="Pallet">Pallet</option>
-              <option value="Drum">Drum</option>
-              <option value="Other">Other</option>
+              <option value="">Select Type</option>
+              <option value="Insecticide">🦟 Insecticide</option>
+              <option value="Fungicide">🍄 Fungicide</option>
+              <option value="Herbicide">🌾 Herbicide</option>
+              <option value="Rodenticide">🐭 Rodenticide</option>
+              <option value="Bactericide">🦠 Bactericide</option>
+              <option value="Fungus Control">🧴 Fungus Control</option>
+              <option value="Nematicide">🐛 Nematicide</option>
+              <option value="Other">❓ Other</option>
             </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Storage Capacity
+              Brand
             </label>
             <input
+              value={formData.brand}
               type="text"
-              name="storageCapacity"
-              value={formData.storageCapacity || ""}
               onChange={handleChange}
+              name="brand"
+              placeholder="brand name"
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 500 kg or 1000 liters"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Expire date
+            </label>
+            <input
+              value={formData.expiryData || ""}
+              type="date"
+              onChange={handleChange}
+              name="expiryData"
+              placeholder="brand name"
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
         </div>
       );
-
-    case "Greenhouse Equipment":
+    case "fisheries":
       return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Item Type
-            </label>
+            <label htmlFor="">Fisheries Type</label>
             <select
-              name="itemType"
-              value={formData.itemType || ""}
+              name="type"
+              value={formData.type || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="">Select Item Type</option>
-              <option value="Ventilation Fan">Ventilation Fan</option>
-              <option value="Cooling Pad">Cooling Pad</option>
-              <option value="Drip Irrigation System">
-                Drip Irrigation System
-              </option>
-              <option value="Water Tank">Water Tank</option>
-              <option value="Sprinkler">Sprinkler</option>
-              <option value="Other">Other</option>
+              <option value="">Select Type</option>
+              <option value="Freshwater Fish">🐟 Freshwater Fish</option>
+              <option value="Saltwater Fish">🌊 Saltwater Fish</option>
+              <option value="Aquaculture">🌱 Aquaculture</option>
+              <option value="Shellfish">🦪 Shellfish</option>
+              <option value="Crustaceans">🦐 Crustaceans</option>
+              <option value="Other">❓ Other</option>
             </select>
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Condition
@@ -626,9 +464,22 @@ export default function CategoryFields({
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select condition</option>
-              <option value="New">New</option>
-              <option value="Used">Used</option>
+              <option value="Fresh">Fresh</option>
+              <option value="Processed">Processed</option>
             </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Age(month)
+            </label>
+            <input
+              type=""
+              name="age"
+              value={formData.age || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="e.g., 2 ,month"
+            />
           </div>
         </div>
       );

@@ -125,5 +125,5 @@ export interface FormData {
     storageCapacity?: string;
     isNegotiable?: boolean;
     expiryData?: string;
-    type: string
+    type?: string
 }
