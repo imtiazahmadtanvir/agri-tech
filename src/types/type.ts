@@ -123,4 +123,5 @@ export interface FormData {
     flowRate?: string | number;
     itemType?: string;
     storageCapacity?: string
+    isNegotiable?: boolean
 }

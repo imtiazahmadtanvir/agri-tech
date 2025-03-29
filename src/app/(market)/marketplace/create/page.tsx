@@ -6,16 +6,14 @@ import React, { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 const marketplaceCategories = [
-  { name: "Harvested Products" },
-  { name: "Fertilizers & Pesticides" },
-  { name: "Agricultural Machinery" },
-  { name: "Farming Tools" },
-  { name: "Livestock" },
-  { name: "Animal Feed" },
-  { name: "Seeds & Plants" },
-  { name: "Irrigation & Watering Systems" },
-  { name: "Storage & Packaging" },
-  { name: "Greenhouse Equipment" },
+  { name: "crops" },
+  { name: "livestock" },
+  { name: "seeds" },
+  { name: "fertilizers" },
+  { name: "equipment" },
+  { name: "pesticides" },
+  { name: "animal-feed" },
+  { name: "fisheries" },
 ];
 export default function CreateListing() {
   const [previews, setPreviews] = useState<string[]>([]);
@@ -123,7 +121,7 @@ export default function CreateListing() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Product Name *
+            Title
           </label>
           <input
             type="text"
@@ -164,7 +162,7 @@ export default function CreateListing() {
             required
           ></textarea>
         </div>
-        <div className="col-span-2 grid-cols-3 grid gap-4">
+        <div className="col-span-2 grid-cols-2 grid gap-4">
           {/* unit */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -184,23 +182,6 @@ export default function CreateListing() {
               <option value="dozen">dozen</option>
             </select>
           </div>
-          {/* price */}
-          <div>
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="price"
-            >
-              Price
-            </label>
-            <input
-              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-              required
-            />
-          </div>
           {/* quantity */}
           <div>
             <label
@@ -219,8 +200,38 @@ export default function CreateListing() {
             />
           </div>
         </div>
-        <div className="col-span-2 grid grid-cols-3 gap-4">
-          {/* location */}
+        <div className="col-span-2 grid grid-cols-3 gap-4 ">
+          {/* price */}
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="price"
+            >
+              Price($)
+            </label>
+            <input
+              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {/* Price Negotiation Checkbox */}
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="isNegotiable"
+              name="isNegotiable"
+              checked={formData.isNegotiable}
+              onChange={handleCheckboxChange}
+              className="w-4 h-4"
+            />
+            <label htmlFor="isNegotiable" className="text-sm text-gray-700">
+              Price Negotiable
+            </label>
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Location
@@ -235,6 +246,10 @@ export default function CreateListing() {
               onChange={handleChange}
             />
           </div>
+        </div>
+        <div className="col-span-2 grid grid-cols-3 gap-4">
+          {/* location */}
+
           {/* contact */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -251,30 +266,8 @@ export default function CreateListing() {
             />
           </div>
           {/* availability  */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Availability Date
-            </label>
-            <input
-              type="date"
-              name="availabilityDate"
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              required
-              value={formData.availabilityDate}
-              onChange={handleChange}
-            />
-          </div>
         </div>
-        {formData.category && (
-          <div className="col-span-2">
-            <h3>Additional Details</h3>
-            <CategoryFields
-              formData={formData}
-              handleChange={handleChange}
-              handleCheckboxChange={handleCheckboxChange}
-            />
-          </div>
-        )}
+
         <button
           type="submit"
           className="col-span-2 w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
