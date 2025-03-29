@@ -122,6 +122,8 @@ export interface FormData {
     coverageArea?: string;
     flowRate?: string | number;
     itemType?: string;
-    storageCapacity?: string
-    isNegotiable?: boolean
+    storageCapacity?: string;
+    isNegotiable?: boolean;
+    expiryData?: string;
+    type: string
 }

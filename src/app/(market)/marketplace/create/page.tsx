@@ -10,7 +10,7 @@ import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 const marketplaceCategories = [
   { name: "crops" },
   { name: "livestock" },
-  { name: "seeds" },
+  { name: "Seeds & Plants" },
   { name: "fertilizers" },
   { name: "equipment" },
   { name: "pesticides" },

@@ -82,14 +82,34 @@ export default function CategoryFields({
     // Other cases remain unchanged
     case "fertilizers":
       return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
+          {/* type */}
+          <div>
+            <label
+              htmlFor="chemicalComposition"
+              className="block text-sm font-semibold text-gray-700"
+            >
+              Fertilizers Type
+            </label>
+            <select
+              name="type"
+              value={formData.type || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select Type</option>
+              <option value="Organic">Organic</option>
+              <option value="Chemical">Chemical</option>
+              <option value="Compost">Compost</option>
+            </select>
+          </div>
           {/* Chemical Composition */}
           <div>
             <label
               htmlFor="chemicalComposition"
               className="block text-sm font-semibold text-gray-700"
             >
-              Chemical Composition
+              Brand
             </label>
             <input
               type="text"
@@ -103,94 +123,49 @@ export default function CategoryFields({
             />
           </div>
 
-          {/* Volume */}
-          <div>
-            <label
-              htmlFor="volume"
-              className="block text-sm font-semibold text-gray-700"
-            >
-              Volume(kg)
-            </label>
-            <input
-              type="number"
-              name="volume"
-              id="volume"
-              value={formData.volume || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 50 kg"
-              aria-label="Volume"
-            />
-          </div>
-
-          {/* Application Method */}
-          <div>
-            <label
-              htmlFor="applicationMethod"
-              className="block text-sm font-semibold text-gray-700"
-            >
-              Application Method
-            </label>
-            <select
-              name="applicationMethod"
-              id="applicationMethod"
-              value={formData.applicationMethod || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              aria-label="Application Method"
-            >
-              <option value="">Select an Method</option>
-              <option value="Spray">Spray</option>
-              <option value="Festination">Festination</option>
-              <option value="Soil Application">Soil Application</option>
-              <option value="Foliar Application">Foliar Application</option>
-              <option value="Drip Irrigation">Drip Irrigation</option>
-              <option value="Granular Application">Granular Application</option>
-              <option value="Broadcasting">Broadcasting</option>
-              <option value="Injection">Injection</option>
-              <option value="Top Dressing">Top Dressing</option>
-              <option value="Root Dipping">Root Dipping</option>
-              <option value="Seed Treatment">Seed Treatment</option>
-              <option value="Aerial Application">Aerial Application</option>
-              <option value="Systemic Application">Systemic Application</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
           {/* Safety Certifications */}
           <div>
             <label
               htmlFor="safetyCertifications"
               className="block text-sm font-semibold text-gray-700"
             >
-              Safety Certifications
+              Expiry Date
             </label>
-            <select
-              required
-              name="safetyCertifications"
-              id="safetyCertifications"
-              value={formData.safetyCertifications || ""}
+            <input
+              name="expiryData"
+              value={formData.expiryData || ""}
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              aria-label="Safety Certifications"
-            >
-              <option value="">Select Certification</option>
-              <option value="EPA-approved">EPA-approved</option>
-              <option value="FDA-approved">FDA-approved</option>
-              <option value="OSHA-compliant">OSHA-compliant</option>
-              <option value="CE-marked">CE-marked</option>
-              <option value="ISO-certified">ISO-certified</option>
-              <option value="Eco-friendly">Eco-friendly</option>
-              <option value="Non-toxic">Non-toxic</option>
-              <option value="Pesticide-free">Pesticide-free</option>
-              <option value="Other">Other</option>
-            </select>
+              type="date"
+            />
           </div>
         </div>
       );
-    case "Agricultural Machinery":
+    case "equipment":
       return (
         <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Equipment Type
+            </label>
+            <select
+              name="equipmentType"
+              value={formData.type || ""}
+              onChange={handleChange}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select Equipment Type</option>
+              <option value="Tractor">🚜 Tractor</option>
+              <option value="Plow">⛏️ Plow</option>
+              <option value="Harvester">🌾 Harvester</option>
+              <option value="Seeder">🌱 Seeder</option>
+              <option value="Sprayer">💧 Sprayer</option>
+              <option value="Cultivator">🌿 Cultivator</option>
+              <option value="Irrigation System">💦 Irrigation System</option>
+              <option value="Mower">🌾 Mower</option>
+              <option value="Other">❓ Other</option>
+            </select>
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Brand
@@ -202,19 +177,6 @@ export default function CategoryFields({
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., John Deere"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Model
-            </label>
-            <input
-              type="text"
-              name="model"
-              value={formData.model || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., X500"
             />
           </div>
           <div>
@@ -244,19 +206,6 @@ export default function CategoryFields({
               onChange={handleChange}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., 2020"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Horsepower (HP)
-            </label>
-            <input
-              type="number"
-              name="horsepower"
-              value={formData.horsepower || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 50 HP"
             />
           </div>
         </div>
@@ -504,13 +453,13 @@ export default function CategoryFields({
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
-              <option value="Hybrid Corn">Hybrid Corn</option>
-              <option value="Wheat">Wheat</option>
-              <option value="Rice">Rice</option>
-              <option value="Soybean">Soybean</option>
-              <option value="Cotton">Cotton</option>
-              <option value="Tomato">Tomato</option>
-              <option value="Other">Other</option>
+              <option value="Corn">🌽 Corn</option>
+              <option value="Wheat">🌾 Wheat</option>
+              <option value="Rice">🍚 Rice</option>
+              <option value="Soybean">🌱 Soybean</option>
+              <option value="Cotton">🌿 Cotton</option>
+              <option value="Tomato">🍅 Tomato</option>
+              <option value="Other">❓ Other</option>
             </select>
           </div>
           <div>
