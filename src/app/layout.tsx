@@ -35,16 +35,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster position="top-right" reverseOrder={false} />
-        <TopInfoBar />
-        <div className="sticky top-0">
-          <AuthProvider>
+        <AuthProvider>
+          <Toaster position="top-right" reverseOrder={false} />
+          <TopInfoBar />
+          <div className="sticky top-0">
             <Navbar />
-          </AuthProvider>
-        </div>
-        {children}
-        <Footer></Footer>
-        <FloatingChatbot></FloatingChatbot>
+          </div>
+          {children}
+          <Footer></Footer>
+          <FloatingChatbot></FloatingChatbot>
+        </AuthProvider>
       </body>
     </html>
   );

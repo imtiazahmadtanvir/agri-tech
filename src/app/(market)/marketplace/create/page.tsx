@@ -1,6 +1,8 @@
 "use client";
 import CategoryFields from "@/components/market/marketplace/CategoryFields";
+import PhoneNumberInput from "@/components/market/marketplace/PhoneNumberInput";
 import { FormData } from "@/types/type";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -16,6 +18,8 @@ const marketplaceCategories = [
   { name: "fisheries" },
 ];
 export default function CreateListing() {
+  const { data } = useSession();
+  console.log(data);
   const [previews, setPreviews] = useState<string[]>([]);
   const [formData, setFormData] = useState<FormData>({
     productName: "",
@@ -57,6 +61,10 @@ export default function CreateListing() {
       URL.revokeObjectURL(prev[index]);
       return prev.filter((_, i) => i !== index);
     });
+    setFormData((prev) => ({
+      ...prev,
+      photos: prev.photos?.filter((_, i) => i !== index),
+    }));
   };
   // for check box
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +89,7 @@ export default function CreateListing() {
               <div className="relative w-full h-32 overflow-hidden rounded-md border">
                 <Image
                   className="object-cover"
-                  layout="fill"
+                  fill
                   alt={`Preview ${index + 1}`}
                   src={preview}
                 />
@@ -267,7 +275,20 @@ export default function CreateListing() {
           </div>
           {/* availability  */}
         </div>
-
+        <div className="col-span-2">
+          <h3>Contact details</h3>
+          <div className="flex gap-12">
+            <div>
+              <p>Name</p>
+              <h3>{data?.user?.name}</h3>
+            </div>
+            <div>
+              <p>Email</p>
+              <h3>{data?.user?.email}</h3>
+            </div>
+          </div>
+        </div>
+        <PhoneNumberInput />
         <button
           type="submit"
           className="col-span-2 w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
