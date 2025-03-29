@@ -19,7 +19,6 @@ const marketplaceCategories = [
 ];
 export default function CreateListing() {
   const { data } = useSession();
-  console.log(data);
   const [previews, setPreviews] = useState<string[]>([]);
   const [formData, setFormData] = useState<FormData>({
     productName: "",
@@ -45,7 +44,7 @@ export default function CreateListing() {
       [name]: type === "number" && value !== "" ? Number(value) : value,
     }));
   };
-  console.log(formData);
+
   // for file
   const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];
