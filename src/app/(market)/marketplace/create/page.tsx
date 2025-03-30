@@ -1,7 +1,7 @@
 "use client";
 import CategoryFields from "@/components/market/marketplace/CategoryFields";
 import PhoneNumberInput from "@/components/market/marketplace/PhoneNumberInput";
-import { FormData } from "@/types/type";
+import type { FormData } from "@/types/type";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -78,7 +78,9 @@ export default function CreateListing() {
     try {
       const submissionData = new FormData();
       for (const [key, value] of Object.entries(formData)) {
-        submissionData.append(key, String(value));
+        if (value !== undefined && value !== null) {
+          submissionData.append(key, String(value));
+        }
       }
       photos.forEach((photo, index) => {
         submissionData.append(`photos[${index}]`, photo);
@@ -311,13 +313,9 @@ export default function CreateListing() {
           {selectedCategory && (
             <div className="col-span-3">
               <CategoryFields
-                formData={watch()}
-                handleChange={(e) =>
-                  setValue(e.target.name as keyof FormData, e.target.value)
-                }
-                handleCheckboxChange={(e) =>
-                  setValue(e.target.name as keyof FormData, e.target.checked)
-                }
+                register={register}
+                errors={errors}
+                watch={watch}
               />
             </div>
           )}

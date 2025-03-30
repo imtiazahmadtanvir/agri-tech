@@ -1,32 +1,31 @@
 import { FormData } from "@/types/type";
 import React from "react";
+import { UseFormRegister, FieldErrors, UseFormWatch } from "react-hook-form";
+
 interface CategoryFieldsProps {
-  formData: FormData;
-  handleChange: (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => void;
-  handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<FormData>;
+  errors: FieldErrors<FormData>;
+  watch: UseFormWatch<FormData>;
 }
+
 export default function CategoryFields({
-  formData,
-  handleChange,
-  handleCheckboxChange,
+  register,
+  errors,
+  watch,
 }: CategoryFieldsProps) {
-  switch (formData.category) {
+  const category = watch("category");
+
+  switch (category) {
     case "crops":
       return (
-        <div className="grid  grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Crops Type
             </label>
             <select
+              {...register("cropType", { required: "Crop type is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              name="cropType"
-              value={formData.cropType || ""}
-              onChange={handleChange}
             >
               <option value="">Select Crop Type</option>
               <option value="grains">Grains & Cereals 🌾</option>
@@ -36,6 +35,9 @@ export default function CategoryFields({
               <option value="nuts">Nuts & Oilseeds 🥜</option>
               <option value="spices">Spices & Herbs 🌿</option>
             </select>
+            {errors.cropType && (
+              <p className="text-red-500 text-sm">{errors.cropType.message}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -43,57 +45,52 @@ export default function CategoryFields({
             </label>
             <input
               type="date"
-              name="harvestDate"
-              value={formData.harvestDate || ""}
-              onChange={handleChange}
+              {...register("harvestDate", {
+                required: "Harvest date is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+            {errors.harvestDate && (
+              <p className="text-red-500 text-sm">
+                {errors.harvestDate.message}
+              </p>
+            )}
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Condition
             </label>
             <select
-              name="condition"
-              value={formData.condition || ""}
-              onChange={handleChange}
+              {...register("condition", { required: "Condition is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select condition</option>
               <option value="Fresh">Fresh</option>
               <option value="Processed">Processed</option>
             </select>
+            {errors.condition && (
+              <p className="text-red-500 text-sm">{errors.condition.message}</p>
+            )}
           </div>
-          <div className="flex ">
+          <div className="flex items-center">
             <input
               type="checkbox"
-              name="organicStatus"
-              checked={formData.organicStatus || false}
-              onChange={handleCheckboxChange}
+              {...register("organicStatus")}
               className="mr-2 accent-green-500"
             />
-            <label className="text-sm font-medium block text-gray-700 ">
-              Organic
-            </label>
+            <label className="text-sm font-medium text-gray-700">Organic</label>
           </div>
         </div>
       );
     case "fertilizers":
       return (
         <div className="grid grid-cols-3 gap-4">
-          {/* type */}
           <div>
-            <label
-              htmlFor="chemicalComposition"
-              className="block text-sm font-semibold text-gray-700"
-            >
+            <label className="block text-sm font-semibold text-gray-700">
               Fertilizers Type
             </label>
             <select
-              name="type"
-              value={formData.type || ""}
-              onChange={handleChange}
+              {...register("type", { required: "Fertilizer type is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
@@ -101,42 +98,44 @@ export default function CategoryFields({
               <option value="Chemical">Chemical</option>
               <option value="Compost">Compost</option>
             </select>
+            {errors.type && (
+              <p className="text-red-500 text-sm">{errors.type.message}</p>
+            )}
           </div>
-          {/* Chemical Composition */}
           <div>
-            <label
-              htmlFor="chemicalComposition"
-              className="block text-sm font-semibold text-gray-700"
-            >
+            <label className="block text-sm font-semibold text-gray-700">
               Brand
             </label>
             <input
               type="text"
-              name="chemicalComposition"
-              id="chemicalComposition"
-              value={formData.chemicalComposition || ""}
-              onChange={handleChange}
+              {...register("chemicalComposition", {
+                required: "Brand is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., NPK 20-20-20"
-              aria-label="Chemical Composition"
             />
+            {errors.chemicalComposition && (
+              <p className="text-red-500 text-sm">
+                {errors.chemicalComposition.message}
+              </p>
+            )}
           </div>
-
-          {/* Safety Certifications */}
           <div>
-            <label
-              htmlFor="safetyCertifications"
-              className="block text-sm font-semibold text-gray-700"
-            >
+            <label className="block text-sm font-semibold text-gray-700">
               Expiry Date
             </label>
             <input
-              name="expiryData"
-              value={formData.expiryData || ""}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               type="date"
+              {...register("expiryData", {
+                required: "Expiry date is required",
+              })}
+              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+            {errors.expiryData && (
+              <p className="text-red-500 text-sm">
+                {errors.expiryData.message}
+              </p>
+            )}
           </div>
         </div>
       );
@@ -148,9 +147,9 @@ export default function CategoryFields({
               Equipment Type
             </label>
             <select
-              name="equipmentType"
-              value={formData.type || ""}
-              onChange={handleChange}
+              {...register("equipmentType", {
+                required: "Equipment type is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Equipment Type</option>
@@ -164,6 +163,11 @@ export default function CategoryFields({
               <option value="Mower">🌾 Mower</option>
               <option value="Other">❓ Other</option>
             </select>
+            {errors.equipmentType && (
+              <p className="text-red-500 text-sm">
+                {errors.equipmentType.message}
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -171,21 +175,20 @@ export default function CategoryFields({
             </label>
             <input
               type="text"
-              name="brand"
-              value={formData.brand || ""}
-              onChange={handleChange}
+              {...register("brand", { required: "Brand is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., John Deere"
             />
+            {errors.brand && (
+              <p className="text-red-500 text-sm">{errors.brand.message}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Condition
             </label>
             <select
-              name="condition"
-              value={formData.condition || ""}
-              onChange={handleChange}
+              {...register("condition", { required: "Condition is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select condition</option>
@@ -193,6 +196,9 @@ export default function CategoryFields({
               <option value="Used">Used</option>
               <option value="Refurbished">Refurbished</option>
             </select>
+            {errors.condition && (
+              <p className="text-red-500 text-sm">{errors.condition.message}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -200,27 +206,30 @@ export default function CategoryFields({
             </label>
             <input
               type="date"
-              name="yearOfManufacture"
-              value={formData.yearOfManufacture || ""}
-              onChange={handleChange}
+              {...register("yearOfManufacture", {
+                required: "Year of manufacture is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 2020"
             />
+            {errors.yearOfManufacture && (
+              <p className="text-red-500 text-sm">
+                {errors.yearOfManufacture.message}
+              </p>
+            )}
           </div>
         </div>
       );
     case "livestock":
       return (
         <div className="grid grid-cols-2 gap-4">
-          {/* Animal Type */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Animal Type
             </label>
             <select
-              name="animalType"
-              value={formData.animalType || ""}
-              onChange={handleChange}
+              {...register("animalType", {
+                required: "Animal type is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Animal Type</option>
@@ -235,47 +244,51 @@ export default function CategoryFields({
               <option value="Camel">Camel 🐪</option>
               <option value="Other">Other ❓</option>
             </select>
+            {errors.animalType && (
+              <p className="text-red-500 text-sm">
+                {errors.animalType.message}
+              </p>
+            )}
           </div>
-
-          {/* Breed */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Breed
             </label>
             <input
               type="text"
-              name="breed"
-              value={formData.breed || ""}
-              onChange={handleChange}
+              {...register("breed", { required: "Breed is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., Holstein"
             />
+            {errors.breed && (
+              <p className="text-red-500 text-sm">{errors.breed.message}</p>
+            )}
           </div>
-
-          {/* Age */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Age(month)
+              Age (month)
             </label>
             <input
-              type=""
-              name="age"
-              value={formData.age || ""}
-              onChange={handleChange}
+              type="number"
+              {...register("age", {
+                required: "Age is required",
+                valueAsNumber: true,
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 2 ,month"
+              placeholder="e.g., 2"
             />
+            {errors.age && (
+              <p className="text-red-500 text-sm">{errors.age.message}</p>
+            )}
           </div>
-
-          {/* Health Status */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Health Status
             </label>
             <select
-              name="healthStatus"
-              value={formData.healthStatus || ""}
-              onChange={handleChange}
+              {...register("healthStatus", {
+                required: "Health status is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Health Status</option>
@@ -287,6 +300,11 @@ export default function CategoryFields({
               <option value="Lactating">Lactating</option>
               <option value="Not Vaccinated">Not Vaccinated</option>
             </select>
+            {errors.healthStatus && (
+              <p className="text-red-500 text-sm">
+                {errors.healthStatus.message}
+              </p>
+            )}
           </div>
         </div>
       );
@@ -298,9 +316,7 @@ export default function CategoryFields({
               Feed Type
             </label>
             <select
-              name="type"
-              value={formData.type || ""}
-              onChange={handleChange}
+              {...register("type", { required: "Feed type is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Animal Feed Type</option>
@@ -312,33 +328,44 @@ export default function CategoryFields({
               <option value="Horse">🐎 Horse Feed</option>
               <option value="Other">❓ Other</option>
             </select>
+            {errors.type && (
+              <p className="text-red-500 text-sm">{errors.type.message}</p>
+            )}
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Nutritional Content
             </label>
             <input
               type="text"
-              name="nutritionalContent"
-              value={formData.nutritionalContent || ""}
-              onChange={handleChange}
+              {...register("nutritionalContent", {
+                required: "Nutritional content is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., 20% protein"
             />
+            {errors.nutritionalContent && (
+              <p className="text-red-500 text-sm">
+                {errors.nutritionalContent.message}
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Expire date
+              Expiry Date
             </label>
             <input
-              value={formData.expiryData || ""}
               type="date"
-              onChange={handleChange}
-              name="expiryData"
-              placeholder="brand name"
+              {...register("expiryData", {
+                required: "Expiry date is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+            {errors.expiryData && (
+              <p className="text-red-500 text-sm">
+                {errors.expiryData.message}
+              </p>
+            )}
           </div>
         </div>
       );
@@ -350,9 +377,9 @@ export default function CategoryFields({
               Seed/Plant Type
             </label>
             <select
-              name="seedPlantType"
-              value={formData.seedPlantType || ""}
-              onChange={handleChange}
+              {...register("seedPlantType", {
+                required: "Seed/Plant type is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
@@ -364,6 +391,11 @@ export default function CategoryFields({
               <option value="Tomato">🍅 Tomato</option>
               <option value="Other">❓ Other</option>
             </select>
+            {errors.seedPlantType && (
+              <p className="text-red-500 text-sm">
+                {errors.seedPlantType.message}
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -371,12 +403,17 @@ export default function CategoryFields({
             </label>
             <input
               type="text"
-              name="plantingSeason"
-              value={formData.plantingSeason || ""}
-              onChange={handleChange}
+              {...register("plantingSeason", {
+                required: "Planting season is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., Spring"
             />
+            {errors.plantingSeason && (
+              <p className="text-red-500 text-sm">
+                {errors.plantingSeason.message}
+              </p>
+            )}
           </div>
         </div>
       );
@@ -388,9 +425,9 @@ export default function CategoryFields({
               Pesticides Type
             </label>
             <select
-              name="pesticideType"
-              value={formData.type || ""}
-              onChange={handleChange}
+              {...register("type", {
+                required: "Pesticide type is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
@@ -403,33 +440,40 @@ export default function CategoryFields({
               <option value="Nematicide">🐛 Nematicide</option>
               <option value="Other">❓ Other</option>
             </select>
+            {errors.type && (
+              <p className="text-red-500 text-sm">{errors.type.message}</p>
+            )}
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Brand
             </label>
             <input
-              value={formData.brand}
               type="text"
-              onChange={handleChange}
-              name="brand"
-              placeholder="brand name"
+              {...register("brand", { required: "Brand is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="brand name"
             />
+            {errors.brand && (
+              <p className="text-red-500 text-sm">{errors.brand.message}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Expire date
+              Expiry Date
             </label>
             <input
-              value={formData.expiryData || ""}
               type="date"
-              onChange={handleChange}
-              name="expiryData"
-              placeholder="brand name"
+              {...register("expiryData", {
+                required: "Expiry date is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+            {errors.expiryData && (
+              <p className="text-red-500 text-sm">
+                {errors.expiryData.message}
+              </p>
+            )}
           </div>
         </div>
       );
@@ -437,11 +481,11 @@ export default function CategoryFields({
       return (
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <label htmlFor="">Fisheries Type</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Fisheries Type
+            </label>
             <select
-              name="type"
-              value={formData.type || ""}
-              onChange={handleChange}
+              {...register("type", { required: "Fisheries type is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
@@ -452,34 +496,42 @@ export default function CategoryFields({
               <option value="Crustaceans">🦐 Crustaceans</option>
               <option value="Other">❓ Other</option>
             </select>
+            {errors.type && (
+              <p className="text-red-500 text-sm">{errors.type.message}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Condition
             </label>
             <select
-              name="condition"
-              value={formData.condition || ""}
-              onChange={handleChange}
+              {...register("condition", { required: "Condition is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select condition</option>
               <option value="Fresh">Fresh</option>
               <option value="Processed">Processed</option>
             </select>
+            {errors.condition && (
+              <p className="text-red-500 text-sm">{errors.condition.message}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Age(month)
+              Age (month)
             </label>
             <input
-              type=""
-              name="age"
-              value={formData.age || ""}
-              onChange={handleChange}
+              type="number"
+              {...register("age", {
+                required: "Age is required",
+                valueAsNumber: true,
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., 2 ,month"
+              placeholder="e.g., 2"
             />
+            {errors.age && (
+              <p className="text-red-500 text-sm">{errors.age.message}</p>
+            )}
           </div>
         </div>
       );
