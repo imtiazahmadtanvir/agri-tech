@@ -4,7 +4,7 @@ import PhoneNumberInput from "@/components/market/marketplace/PhoneNumberInput";
 import { FormData } from "@/types/type";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 const marketplaceCategories = [
@@ -27,13 +27,21 @@ export default function CreateListing() {
     price: "",
     quantity: "",
     location: "",
-    contactInfo: "",
     photos: [],
     unit: "",
     isNegotiable: false,
-    userEmail: data?.user?.email ?? "",
-    userName: data?.user?.name ?? "",
+    userEmail: "",
+    userName: "",
   });
+  useEffect(() => {
+    if (data?.user) {
+      setFormData((prev) => ({
+        ...prev,
+        userEmail: data.user.email || "",
+        userName: data.user.name || "",
+      }));
+    }
+  }, [data]);
   const isFormValid = Object.values(formData).every(
     (value) => String(value).trim() !== ""
   );
@@ -76,9 +84,11 @@ export default function CreateListing() {
     const { name, checked } = e.target;
     setFormData((prev) => ({ ...prev, [name]: checked }));
   };
-  const handelSubmit = () => {
+  const handelSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
     console.log("submit", formData);
   };
+  console.log(formData);
   return (
     <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
       <div className="">
@@ -93,10 +103,10 @@ export default function CreateListing() {
           }`}
         >
           {previews.map((preview, index) => (
-            <div key={index} className="relative">
-              <div className="relative w-full h-32 overflow-hidden rounded-md border">
+            <div key={index} className="relative ">
+              <div className=" w-full h-32 overflow-hidden rounded-md ">
                 <Image
-                  className="object-cover"
+                  className="object-cover rounded-md border"
                   fill
                   alt={`Preview ${index + 1}`}
                   src={preview}
@@ -299,7 +309,7 @@ export default function CreateListing() {
         <button
           disabled={!isFormValid}
           type="submit"
-          className="col-span-2 w-fit flex justify-end py-2 px-10 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+          className="col-span-2 w-fit flex justify-end py-2 px-10 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
         >
           Post Listing
         </button>

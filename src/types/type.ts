@@ -88,7 +88,7 @@ export interface FormData {
     quantity: number | "";
     unit?: string;
     location: string;
-    contactInfo?: string;
+    contactInfo?: [];
     photos: File[]
     // Category-specific fields
     cropType?: string;
