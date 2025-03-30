@@ -5,8 +5,11 @@ import { FormData } from "@/types/type";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import axios from "axios";
+
 const marketplaceCategories = [
   { name: "crops" },
   { name: "livestock" },
@@ -17,94 +20,119 @@ const marketplaceCategories = [
   { name: "Animal Feed" },
   { name: "fisheries" },
 ];
+
 export default function CreateListing() {
   const { data } = useSession();
   const [previews, setPreviews] = useState<string[]>([]);
-  const [formData, setFormData] = useState<FormData>({
-    productName: "",
-    category: "",
-    description: "",
-    price: "",
-    quantity: "",
-    location: "",
-    photos: [],
-    unit: "",
-    isNegotiable: false,
-    userEmail: "",
-    userName: "",
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      productName: "",
+      category: "",
+      description: "",
+      price: 0,
+      quantity: 0,
+      location: "",
+      unit: "",
+      isNegotiable: false,
+      userEmail: "",
+      userName: "",
+    },
   });
+
   useEffect(() => {
     if (data?.user) {
-      setFormData((prev) => ({
-        ...prev,
-        userEmail: data.user.email || "",
-        userName: data.user.name || "",
-      }));
+      setValue("userEmail", data.user.email || "");
+      setValue("userName", data.user.name || "");
     }
-  }, [data]);
-  const isFormValid = Object.values(formData).every(
-    (value) => String(value).trim() !== ""
-  );
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value, type } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "number" && value !== "" ? Number(value) : value,
-    }));
-  };
-  console.log(formData);
-  // for file
+  }, [data, setValue]);
+
   const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];
     if (newFiles.length === 0) return;
     const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
-    setFormData((prev) => ({
-      ...prev,
-      photos: [...(prev.photos || []), ...newFiles],
-    }));
+    setPhotos((prev) => [...prev, ...newFiles]);
     setPreviews((prev) => [...prev, ...newPreviews]);
   };
-  // for delete photo
+
   const handelRemovePhoto = (index: number) => {
     setPreviews((prev) => {
       URL.revokeObjectURL(prev[index]);
       return prev.filter((_, i) => i !== index);
     });
-    setFormData((prev) => ({
-      ...prev,
-      photos: prev.photos?.filter((_, i) => i !== index),
-    }));
+    setPhotos((prev) => prev.filter((_, i) => i !== index));
   };
-  // for check box
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: checked }));
+
+  const onSubmit: SubmitHandler<FormData> = async (formData) => {
+    setIsSubmitting(true);
+
+    try {
+      const submissionData = new FormData();
+      for (const [key, value] of Object.entries(formData)) {
+        submissionData.append(key, String(value));
+      }
+      photos.forEach((photo, index) => {
+        submissionData.append(`photos[${index}]`, photo);
+      });
+
+      const response = await axios.post("/api/listings", submissionData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Listing created successfully:", response.data);
+      reset({
+        productName: "",
+        category: "",
+        description: "",
+        price: 0,
+        quantity: 0,
+        location: "",
+        unit: "",
+        isNegotiable: false,
+        userEmail: data?.user?.email || "",
+        userName: data?.user?.name || "",
+      });
+      setPhotos([]);
+      setPreviews([]);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
-  const handelSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    console.log("submit", formData);
-  };
-  console.log(formData);
+
+  const selectedCategory = watch("category");
+
   return (
     <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
       <div className="">
-        <h3 className="text-2xl font-semibold ">Item for sale</h3>
-        <p>Photos {previews.length}/4- You can add up to 4 photos</p>
+        <h3 className="text-2xl font-semibold">Item for sale</h3>
+        <p>Photos {previews.length}/4 - You can add up to 4 photos</p>
       </div>
-      <form onSubmit={handelSubmit} className="grid grid-cols-2 gap-4">
-        {/* photo */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-2 gap-4"
+      >
+        {/* Photo Upload */}
         <div
-          className={`col-span-2 gap-3   ${
+          className={`col-span-2 gap-3 ${
             previews.length < 1 ? "" : "grid grid-cols-4"
           }`}
         >
           {previews.map((preview, index) => (
-            <div key={index} className="relative ">
-              <div className=" w-full h-32 overflow-hidden rounded-md ">
+            <div key={index} className="relative">
+              <div className="w-full h-32 overflow-hidden rounded-md">
                 <Image
                   className="object-cover rounded-md border"
                   fill
@@ -121,7 +149,6 @@ export default function CreateListing() {
               </button>
             </div>
           ))}
-          {/* file input */}
           <div className={`${previews.length >= 4 ? "hidden" : ""}`}>
             <input
               multiple
@@ -145,63 +172,66 @@ export default function CreateListing() {
             </label>
           </div>
         </div>
+
+        {/* Form Fields */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Title
           </label>
           <input
+            {...register("productName", {
+              required: "Product name is required",
+            })}
             type="text"
-            required
             placeholder="product name"
-            name="productName"
-            value={formData.productName}
-            onChange={handleChange}
-            className="mt-1  block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+          {errors.productName && (
+            <p className="text-red-500 text-sm">{errors.productName.message}</p>
+          )}
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Category *
           </label>
           <select
+            {...register("category", { required: "Category is required" })}
             className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
-            name="category"
-            required
-            value={formData.category}
-            onChange={handleChange}
           >
             <option value="">Select a category</option>
             {marketplaceCategories.map((cat) => (
-              <option key={cat.name}>{cat.name}</option>
+              <option key={cat.name} value={cat.name}>
+                {cat.name}
+              </option>
             ))}
           </select>
+          {errors.category && (
+            <p className="text-red-500 text-sm">{errors.category.message}</p>
+          )}
         </div>
-        {/* description */}
         <div className="col-span-2 w-full">
           <label className="block text-sm font-medium text-gray-700">
             Description
           </label>
           <textarea
-            value={formData.description}
-            onChange={handleChange}
+            {...register("description", {
+              required: "Description is required",
+            })}
             className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             rows={4}
             placeholder="more details about the product"
-            name="description"
-            required
-          ></textarea>
+          />
+          {errors.description && (
+            <p className="text-red-500 text-sm">{errors.description.message}</p>
+          )}
         </div>
         <div className="col-span-2 grid-cols-2 grid gap-4">
-          {/* unit */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Unit
             </label>
             <select
-              required
-              name="unit"
-              value={formData.unit}
-              onChange={handleChange}
+              {...register("unit", { required: "Unit is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select unit</option>
@@ -211,53 +241,51 @@ export default function CreateListing() {
               <option value="litre">litre</option>
               <option value="dozen">dozen</option>
             </select>
+            {errors.unit && (
+              <p className="text-red-500 text-sm">{errors.unit.message}</p>
+            )}
           </div>
-          {/* quantity */}
           <div>
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="quantity"
-            >
+            <label className="block text-sm font-medium text-gray-700">
               Quantity
             </label>
             <input
-              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
+              {...register("quantity", {
+                required: "Quantity is required",
+                valueAsNumber: true,
+              })}
               type="number"
-              name="quantity"
-              required
               placeholder="Enter quantity"
-              value={formData.quantity}
-              onChange={handleChange}
+              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
             />
+            {errors.quantity && (
+              <p className="text-red-500 text-sm">{errors.quantity.message}</p>
+            )}
           </div>
         </div>
-        <div className="col-span-2 grid grid-cols-3 gap-4 ">
-          {/* price */}
+        <div className="col-span-2 grid grid-cols-3 gap-4">
           <div>
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="price"
-            >
+            <label className="block text-sm font-medium text-gray-700">
               Price($)
             </label>
             <input
-              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
+              {...register("price", {
+                required: "Price is required",
+                valueAsNumber: true,
+              })}
               type="number"
-              name="price"
               placeholder="Pick a good price"
-              value={formData.price}
-              onChange={handleChange}
-              required
+              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
             />
+            {errors.price && (
+              <p className="text-red-500 text-sm">{errors.price.message}</p>
+            )}
           </div>
-          {/* Price Negotiation Checkbox */}
           <div className="flex items-center space-x-2">
             <input
+              {...register("isNegotiable")}
               type="checkbox"
               id="isNegotiable"
-              name="isNegotiable"
-              checked={formData.isNegotiable}
-              onChange={handleCheckboxChange}
               className="w-4 h-4"
             />
             <label htmlFor="isNegotiable" className="text-sm text-gray-700">
@@ -269,28 +297,30 @@ export default function CreateListing() {
               Location
             </label>
             <input
+              {...register("location", { required: "Location is required" })}
               type="text"
-              name="location"
-              className=" block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., Springfield Farm, IL"
-              required
-              value={formData.location}
-              onChange={handleChange}
+              className="block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+            {errors.location && (
+              <p className="text-red-500 text-sm">{errors.location.message}</p>
+            )}
           </div>
         </div>
         <div className="col-span-2 grid grid-cols-3 gap-4">
-          {/* location */}
-          {formData.category && (
+          {selectedCategory && (
             <div className="col-span-3">
               <CategoryFields
-                formData={formData}
-                handleChange={handleChange}
-                handleCheckboxChange={handleCheckboxChange}
+                formData={watch()}
+                handleChange={(e) =>
+                  setValue(e.target.name as keyof FormData, e.target.value)
+                }
+                handleCheckboxChange={(e) =>
+                  setValue(e.target.name as keyof FormData, e.target.checked)
+                }
               />
             </div>
           )}
-          {/* contact */}
         </div>
         <div className="col-span-2">
           <h3>Contact details</h3>
@@ -307,11 +337,11 @@ export default function CreateListing() {
         </div>
         <PhoneNumberInput />
         <button
-          disabled={!isFormValid}
+          disabled={isSubmitting}
           type="submit"
           className="col-span-2 w-fit flex justify-end py-2 px-10 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
         >
-          Post Listing
+          {isSubmitting ? "Posting..." : "Post Listing"}
         </button>
       </form>
     </div>
