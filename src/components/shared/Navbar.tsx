@@ -95,7 +95,7 @@ const DropdownMenu = ({ item }: { item: NavItem }) => {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <button className="text-[#0D401C] hover:text-[#F8C32C] transition-colors flex items-center gap-1">
+      <button className="text-white md:text-[#0D401C] hover:text-[#F8C32C] transition-colors flex items-center gap-1">
         {item.label} <span>{item.icon}</span>
       </button>
       {isOpen && item.subItems && (
@@ -128,7 +128,7 @@ const NavItems = ({ isMobile = false }: { isMobile?: boolean }) => (
         <li key={item.href}>
           <Link
             href={item.href!}
-            className="text-[#0D401C] hover:text-[#F8C32C] transition-colors flex items-center gap-1"
+            className="text-white md:text-[#0D401C] hover:text-[#F8C32C] transition-colors flex items-center gap-1"
           >
             {item.icon} {item.label}
           </Link>
