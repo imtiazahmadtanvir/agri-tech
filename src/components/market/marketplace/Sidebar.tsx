@@ -3,7 +3,7 @@ import LocationModal from "@/components/modal/LocationModal";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import Link from "next/link";
 import React, { useState } from "react";
-import { IoAdd } from "react-icons/io5";
+import { IoAdd, IoLocationSharp } from "react-icons/io5";
 
 export default function Sidebar() {
   const { pathname, setMaxPrice, maxPrice, setMinPrice, minPrice } =
@@ -88,13 +88,19 @@ export default function Sidebar() {
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
           >
-            <p>Location selection content goes here...</p>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg"
-            >
-              Close
-            </button>
+            <p className="text-center py-4 border-b">Change location</p>
+            <div className="px-4 py-3.5">
+              <label className="flex items-center" htmlFor="location">
+                <IoLocationSharp /> Location
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 rounded-md py-3"
+                placeholder="Enter your city"
+                name=""
+                id="location"
+              />
+            </div>
           </LocationModal>
         </div>
 
