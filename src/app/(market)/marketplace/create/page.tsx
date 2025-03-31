@@ -117,7 +117,7 @@ export default function CreateListing() {
         >
           {previews.map((preview, index) => (
             <div key={index} className="relative">
-              <div className="w-full h-32 overflow-hidden rounded-md">
+              <div className="relative w-full h-32 overflow-hidden image-container rounded-md">
                 <Image
                   className="object-cover rounded-md border"
                   fill
@@ -127,7 +127,7 @@ export default function CreateListing() {
               </div>
               <button
                 onClick={() => handelRemovePhoto(index)}
-                className="absolute top-0 text-red-500 cursor-pointer right-0"
+                className="absolute top-0 text-red-300 cursor-pointer right-0"
                 type="button"
               >
                 <IoMdCloseCircle size={25} />

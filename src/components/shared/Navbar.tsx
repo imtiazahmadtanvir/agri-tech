@@ -230,8 +230,11 @@ const Navbar = () => {
   if (pathname.startsWith("/dashboard")) return null;
 
   return (
-    <nav className="z-50 relative bg-white shadow-md">
-      <Container className="px-5 py-4">
+    <nav
+      className="z-50 top-0  sticky
+     bg-white shadow-md"
+    >
+      <Container className="px-5 relative py-4">
         <div className="flex justify-between items-center">
           <div>
             <Image src="/logo.png" alt="Logo" width={150} height={50} />

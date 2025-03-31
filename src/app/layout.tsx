@@ -38,9 +38,7 @@ export default function RootLayout({
         <AuthProvider>
           <Toaster position="top-right" reverseOrder={false} />
           <TopInfoBar />
-          <div className="sticky top-0">
-            <Navbar />
-          </div>
+          <Navbar />
           {children}
           <Footer></Footer>
           <FloatingChatbot></FloatingChatbot>
