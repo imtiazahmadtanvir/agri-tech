@@ -90,6 +90,7 @@ export interface FormData {
     location: string;
     contactInfo?: [];
     photos: File[]
+    phoneNumber: number | string
     // Category-specific fields
     cropType?: string;
     harvestDate?: string;

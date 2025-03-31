@@ -1,10 +1,11 @@
 "use client";
 import CategoryFields from "@/components/market/marketplace/CategoryFields";
-import PhoneNumberInput from "@/components/market/marketplace/PhoneNumberInput";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import type { FormData } from "@/types/type";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
@@ -28,7 +29,7 @@ export default function CreateListing() {
   const [previews, setPreviews] = useState<string[]>([]);
   const [photos, setPhotos] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [phoneNumber, setPhoneNumber] = useState<string>();
   const {
     register,
     handleSubmit,
@@ -69,7 +70,7 @@ export default function CreateListing() {
 
     try {
       const photoUrls = await uploadPhotos(photos);
-      const listingData = { ...formData, photos: photoUrls };
+      const listingData = { ...formData, photos: photoUrls, phoneNumber };
       console.log(listingData);
       const { data } = await axios.post("/api/listings", listingData);
       console.log(data);
@@ -85,11 +86,10 @@ export default function CreateListing() {
         location: "",
         unit: "",
         isNegotiable: false,
-        userEmail: data?.user?.email || "",
-        userName: data?.user?.name || "",
       });
       setPhotos([]);
       setPreviews([]);
+      setPhoneNumber("");
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
@@ -98,7 +98,6 @@ export default function CreateListing() {
   };
 
   const selectedCategory = watch("category");
-
   return (
     <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
       <div className="">
@@ -319,11 +318,25 @@ export default function CreateListing() {
             </div>
           </div>
         </div>
-        <PhoneNumberInput />
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Phone Number
+          </label>
+          <PhoneInput
+            international
+            defaultCountry="BD"
+            value={phoneNumber}
+            onChange={setPhoneNumber}
+            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+          {errors.phoneNumber && (
+            <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>
+          )}
+        </div>
         <button
           disabled={isSubmitting}
           type="submit"
-          className="col-span-2 w-fit flex justify-end py-2 px-10 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
+          className="col-span-2 w-fit flex justify-self-end py-2 px-10 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
         >
           {isSubmitting ? "Posting..." : "Post Listing"}
         </button>
