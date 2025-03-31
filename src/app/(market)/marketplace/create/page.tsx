@@ -117,7 +117,7 @@ export default function CreateListing() {
         >
           {previews.map((preview, index) => (
             <div key={index} className="relative">
-              <div className="relative w-full h-32 overflow-hidden image-container rounded-md">
+              <div className="relative w-full h-40 rounded-md">
                 <Image
                   className="object-cover rounded-md border"
                   fill
@@ -134,28 +134,31 @@ export default function CreateListing() {
               </button>
             </div>
           ))}
-          <div className={`${previews.length >= 4 ? "hidden" : ""}`}>
-            <input
-              multiple
-              accept="image/*"
-              className="hidden"
-              id="file"
-              type="file"
-              onChange={handelFileChange}
-            />
-            <label
-              className={`${
-                previews.length < 1 ? "w-full h-32" : "h-32"
-              } border flex flex-col items-center bg-white cursor-pointer justify-center rounded-md`}
-              htmlFor="file"
-            >
-              <MdOutlineAddPhotoAlternate
-                size={30}
-                className="text-green-400"
+
+          {previews.length < 4 && (
+            <div>
+              <input
+                multiple
+                accept="image/*"
+                className="hidden"
+                id="file"
+                type="file"
+                onChange={handelFileChange}
               />
-              Add photo
-            </label>
-          </div>
+              <label
+                className={`${
+                  previews.length < 1 ? "w-full h-40" : "h-40"
+                } border flex flex-col items-center bg-white cursor-pointer justify-center rounded-md`}
+                htmlFor="file"
+              >
+                <MdOutlineAddPhotoAlternate
+                  size={30}
+                  className="text-green-400"
+                />
+                Add photo
+              </label>
+            </div>
+          )}
         </div>
 
         {/* Form Fields */}
