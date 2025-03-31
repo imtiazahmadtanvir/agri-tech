@@ -33,7 +33,6 @@ export default function CreateListing() {
     handleSubmit,
     reset,
     watch,
-    setValue,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -45,17 +44,8 @@ export default function CreateListing() {
       location: "",
       unit: "",
       isNegotiable: false,
-      userEmail: "",
-      userName: "",
     },
   });
-
-  useEffect(() => {
-    if (data?.user) {
-      setValue("userEmail", data.user.email || "");
-      setValue("userName", data.user.name || "");
-    }
-  }, [data, setValue]);
 
   const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];
@@ -78,23 +68,24 @@ export default function CreateListing() {
 
     try {
       const photoUrls = await uploadPhotos(photos);
-      console.log(photoUrls);
       const listingData = { ...formData, photos: photoUrls };
       console.log(listingData);
-      reset({
-        productName: "",
-        category: "",
-        description: "",
-        price: "",
-        quantity: "",
-        location: "",
-        unit: "",
-        isNegotiable: false,
-        userEmail: data?.user?.email || "",
-        userName: data?.user?.name || "",
-      });
-      setPhotos([]);
-      setPreviews([]);
+      const { data } = await axios.post("/api/listings", listingData);
+      console.log(data);
+      // reset({
+      //   productName: "",
+      //   category: "",
+      //   description: "",
+      //   price: "",
+      //   quantity: "",
+      //   location: "",
+      //   unit: "",
+      //   isNegotiable: false,
+      //   userEmail: data?.user?.email || "",
+      //   userName: data?.user?.name || "",
+      // });
+      // setPhotos([]);
+      // setPreviews([]);
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {

@@ -8,7 +8,6 @@ export const uploadPhotos = async (photos: File[]): Promise<string[]> => {
         throw new Error('API key is missing. Please set the NEXT_PUBLIC_IMGBB_API_KEY environment variable.');
     }
 
-
     try {
         const uploadPromise = photos.map(async (photo) => {
             const formData = new FormData();
