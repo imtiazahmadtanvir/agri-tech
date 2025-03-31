@@ -34,7 +34,7 @@ export default function Sidebar() {
             pathname === "/marketplace" ? "bg-green-700 text-white" : "bg-white"
           }`}
         >
-          Products
+          All Products
         </Link>
 
         <Link
@@ -49,17 +49,6 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          href="/marketplace/buying"
-          className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            pathname === "/marketplace/buying"
-              ? "bg-green-700 text-white"
-              : "bg-white"
-          }`}
-        >
-          Buying
-        </Link>
-
-        <Link
           href="/marketplace/selling"
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
             pathname === "/marketplace/selling"
@@ -67,7 +56,7 @@ export default function Sidebar() {
               : "bg-white"
           }`}
         >
-          Selling
+          My Listing
         </Link>
 
         {/* Create Listing Button */}
@@ -119,15 +108,6 @@ export default function Sidebar() {
               placeholder="Max Price"
             />
           </div>
-
-          <input
-            max={10000}
-            min={0}
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
-            className="w-full mt-2 accent-yellow-400 active:accent-amber-700"
-            type="range"
-          />
         </div>
 
         {/* Categories */}
