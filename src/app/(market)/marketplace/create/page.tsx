@@ -79,7 +79,6 @@ export default function CreateListing() {
       }
       if (photos.length === 0) {
         setPhotoError("At least one photo is required to post a listing.");
-        toast.error("Please upload at least one photo.");
         setIsSubmitting(false);
         return;
       }
@@ -103,6 +102,7 @@ export default function CreateListing() {
       setPhotos([]);
       setPreviews([]);
       setPhoneNumber("");
+      setPhotoError("");
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
@@ -116,6 +116,7 @@ export default function CreateListing() {
       <div className="">
         <h3 className="text-2xl font-semibold">Item for sale</h3>
         <p>Photos {previews.length}/4 - You can add up to 4 photos</p>
+        {photoError && <p className="text-red-500 text-sm">{photoError}</p>}
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
