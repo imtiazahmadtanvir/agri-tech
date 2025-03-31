@@ -32,6 +32,7 @@ export default function CreateListing() {
   const [phoneNumber, setPhoneNumber] = useState<string>();
   console.log(phoneNumber?.length);
   const [phoneNumberE, setPhoneNumberE] = useState("");
+  const [photoError, setPhotoError] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -73,6 +74,12 @@ export default function CreateListing() {
     try {
       if (!phoneNumber || (phoneNumber?.length ?? 0) < 14) {
         setPhoneNumberE("please fill the phone number");
+        setIsSubmitting(false);
+        return;
+      }
+      if (photos.length === 0) {
+        setPhotoError("At least one photo is required to post a listing.");
+        toast.error("Please upload at least one photo.");
         setIsSubmitting(false);
         return;
       }
