@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import axios from "axios";
+import { uploadPhotos } from "@/utils/imageUpload";
 
 const marketplaceCategories = [
   { name: "crops" },
@@ -76,23 +77,10 @@ export default function CreateListing() {
     setIsSubmitting(true);
 
     try {
-      const submissionData = new FormData();
-      for (const [key, value] of Object.entries(formData)) {
-        if (value !== undefined && value !== null) {
-          submissionData.append(key, String(value));
-        }
-      }
-      photos.forEach((photo, index) => {
-        submissionData.append(`photos[${index}]`, photo);
-      });
-
-      const response = await axios.post("/api/listings", submissionData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log("Listing created successfully:", response.data);
+      const photoUrls = await uploadPhotos(photos);
+      console.log(photoUrls);
+      const listingData = { ...formData, photos: photoUrls };
+      console.log(listingData);
       reset({
         productName: "",
         category: "",
