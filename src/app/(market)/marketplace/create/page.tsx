@@ -30,6 +30,8 @@ export default function CreateListing() {
   const [photos, setPhotos] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
+  console.log(phoneNumber?.length);
+  const [phoneNumberE, setPhoneNumberE] = useState("");
   const {
     register,
     handleSubmit,
@@ -67,11 +69,15 @@ export default function CreateListing() {
 
   const onSubmit: SubmitHandler<FormData> = async (formData) => {
     setIsSubmitting(true);
-
+    setPhoneNumberE("");
     try {
+      if (!phoneNumber || (phoneNumber?.length ?? 0) < 14) {
+        setPhoneNumberE("please fill the phone number");
+        setIsSubmitting(false);
+        return;
+      }
       const photoUrls = await uploadPhotos(photos);
       const listingData = { ...formData, photos: photoUrls, phoneNumber };
-      console.log(listingData);
       const { data } = await axios.post("/api/listings", listingData);
       console.log(data);
       if (data.success) {
@@ -329,8 +335,8 @@ export default function CreateListing() {
             onChange={setPhoneNumber}
             className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
-          {errors.phoneNumber && (
-            <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>
+          {phoneNumberE && (
+            <p className="text-red-500 text-sm">{phoneNumberE}</p>
           )}
         </div>
         <button
