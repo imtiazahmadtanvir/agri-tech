@@ -147,7 +147,7 @@ export default function CategoryFields({
               Equipment Type
             </label>
             <select
-              {...register("equipmentType", {
+              {...register("type", {
                 required: "Equipment type is required",
               })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -163,10 +163,8 @@ export default function CategoryFields({
               <option value="Mower">🌾 Mower</option>
               <option value="Other">❓ Other</option>
             </select>
-            {errors.equipmentType && (
-              <p className="text-red-500 text-sm">
-                {errors.equipmentType.message}
-              </p>
+            {errors.type && (
+              <p className="text-red-500 text-sm">{errors.type.message}</p>
             )}
           </div>
           <div>
