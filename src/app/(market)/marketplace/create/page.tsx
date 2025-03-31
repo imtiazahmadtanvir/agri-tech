@@ -10,6 +10,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import axios from "axios";
 import { uploadPhotos } from "@/utils/imageUpload";
+import toast from "react-hot-toast";
 
 const marketplaceCategories = [
   { name: "crops" },
@@ -72,20 +73,23 @@ export default function CreateListing() {
       console.log(listingData);
       const { data } = await axios.post("/api/listings", listingData);
       console.log(data);
-      // reset({
-      //   productName: "",
-      //   category: "",
-      //   description: "",
-      //   price: "",
-      //   quantity: "",
-      //   location: "",
-      //   unit: "",
-      //   isNegotiable: false,
-      //   userEmail: data?.user?.email || "",
-      //   userName: data?.user?.name || "",
-      // });
-      // setPhotos([]);
-      // setPreviews([]);
+      if (data.success) {
+        toast.success(data.message);
+      }
+      reset({
+        productName: "",
+        category: "",
+        description: "",
+        price: "",
+        quantity: "",
+        location: "",
+        unit: "",
+        isNegotiable: false,
+        userEmail: data?.user?.email || "",
+        userName: data?.user?.name || "",
+      });
+      setPhotos([]);
+      setPreviews([]);
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
