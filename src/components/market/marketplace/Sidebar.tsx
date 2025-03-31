@@ -1,12 +1,14 @@
 "use client";
+import LocationModal from "@/components/modal/LocationModal";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { IoAdd } from "react-icons/io5";
 
 export default function Sidebar() {
   const { pathname, setMaxPrice, maxPrice, setMinPrice, minPrice } =
     useMarketPlace();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const marketplaceCategories = [
     { name: "crops", emoji: "🌾" },
@@ -76,9 +78,24 @@ export default function Sidebar() {
       <div className="">
         <div className="mt-4">
           <h3 className="text-lg font-semibold text-gray-700">Location</h3>
-          <button className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100"
+          >
             Select Location
           </button>
+          <LocationModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          >
+            <p>Location selection content goes here...</p>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg"
+            >
+              Close
+            </button>
+          </LocationModal>
         </div>
 
         {/* Price Filters */}
