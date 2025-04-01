@@ -8,8 +8,6 @@ import { NextAuthOptions } from "next-auth";
 declare module "next-auth/jwt" {
     interface JWT {
         role?: string;
-        firstName?: string;
-        lastName?: string;
         isOAuth?: boolean;
         image?: string | null;
     }
@@ -35,9 +33,8 @@ export const authOptions: NextAuthOptions = {
                         id: user._id,
                         name: user.name,
                         email: user.email,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
                         role: user.role,
+                        isProfileComplete: user.isProfileComplete || false,
                     };
                 }
                 return null;
@@ -123,15 +120,6 @@ export const authOptions: NextAuthOptions = {
                 session.user.email = token.email ?? null;
                 session.user.image = token.image ?? null;
                 session.user.role = token.role || "farmer";
-
-                if (token.isOAuth) {
-                    delete session.user.firstName;
-                    delete session.user.lastName;
-                } else {
-
-                    session.user.firstName = token.firstName || "";
-                    session.user.lastName = token.lastName || "";
-                }
             }
             return session;
         },
