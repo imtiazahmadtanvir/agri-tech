@@ -24,7 +24,7 @@ export default function CategoryFields({
               Crops Type
             </label>
             <select
-              {...register("cropType", { required: "Crop type is required" })}
+              {...register("type", { required: "Crop type is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Crop Type</option>
@@ -35,8 +35,8 @@ export default function CategoryFields({
               <option value="nuts">Nuts & Oilseeds 🥜</option>
               <option value="spices">Spices & Herbs 🌿</option>
             </select>
-            {errors.cropType && (
-              <p className="text-red-500 text-sm">{errors.cropType.message}</p>
+            {errors.type && (
+              <p className="text-red-500 text-sm">{errors.type.message}</p>
             )}
           </div>
           <div>
@@ -90,7 +90,9 @@ export default function CategoryFields({
               Fertilizers Type
             </label>
             <select
-              {...register("type", { required: "Fertilizer type is required" })}
+              {...register("type", {
+                required: "Fertilizer type is required",
+              })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
@@ -225,7 +227,7 @@ export default function CategoryFields({
               Animal Type
             </label>
             <select
-              {...register("animalType", {
+              {...register("type", {
                 required: "Animal type is required",
               })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -242,10 +244,8 @@ export default function CategoryFields({
               <option value="Camel">Camel 🐪</option>
               <option value="Other">Other ❓</option>
             </select>
-            {errors.animalType && (
-              <p className="text-red-500 text-sm">
-                {errors.animalType.message}
-              </p>
+            {errors.type && (
+              <p className="text-red-500 text-sm">{errors.type.message}</p>
             )}
           </div>
           <div>
@@ -317,7 +317,7 @@ export default function CategoryFields({
               {...register("type", { required: "Feed type is required" })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="">Select Animal Feed Type</option>
+              <option value="">Select Feed Type</option>
               <option value="Poultry">🐔 Poultry Feed</option>
               <option value="Cattle">🐄 Cattle Feed</option>
               <option value="Fish">🐟 Fish Feed</option>
@@ -375,7 +375,7 @@ export default function CategoryFields({
               Seed/Plant Type
             </label>
             <select
-              {...register("seedPlantType", {
+              {...register("type", {
                 required: "Seed/Plant type is required",
               })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -389,10 +389,8 @@ export default function CategoryFields({
               <option value="Tomato">🍅 Tomato</option>
               <option value="Other">❓ Other</option>
             </select>
-            {errors.seedPlantType && (
-              <p className="text-red-500 text-sm">
-                {errors.seedPlantType.message}
-              </p>
+            {errors.type && (
+              <p className="text-red-500 text-sm">{errors.type.message}</p>
             )}
           </div>
           <div>

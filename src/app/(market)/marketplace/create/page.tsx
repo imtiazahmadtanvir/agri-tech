@@ -30,7 +30,6 @@ export default function CreateListing() {
   const [photos, setPhotos] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
-  console.log(phoneNumber?.length);
   const [phoneNumberE, setPhoneNumberE] = useState("");
   const [photoError, setPhotoError] = useState<string>("");
   const {
@@ -85,7 +84,6 @@ export default function CreateListing() {
       const photoUrls = await uploadPhotos(photos);
       const listingData = { ...formData, photos: photoUrls, phoneNumber };
       const { data } = await axios.post("/api/listings", listingData);
-      console.log(data);
       if (data.success) {
         toast.success(data.message);
       }

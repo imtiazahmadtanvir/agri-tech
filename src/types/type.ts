@@ -93,6 +93,9 @@ export interface FormData {
     phoneNumber: number | string
     // Category-specific fields
     cropType?: string;
+    fertilizerType?: string;
+    equipmentType?: string;
+    pesticideType?: string;
     harvestDate?: string;
     organicStatus?: boolean;
     qualityGrade?: string;
