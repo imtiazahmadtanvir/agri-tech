@@ -18,9 +18,13 @@ function MarketplaceMain() {
       setLoading(true);
       try {
         const response = await axios.get("/api/listings");
-        console.log(response.data.data);
+        setItems(response.data.data);
+        setError(null);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching listings:", error);
+        setError("Failed to fetch listings. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
     fetchListings();
