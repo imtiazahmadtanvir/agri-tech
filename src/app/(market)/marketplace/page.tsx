@@ -1,6 +1,7 @@
 "use client";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import { MarketplaceItemForBuy } from "@/types/type";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
@@ -11,9 +12,19 @@ function MarketplaceMain() {
   const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("");
-  console.log(maxPrice);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchListings = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get("/api/listings");
+        console.log(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchListings();
+  }, []);
   return (
     <>
       <div className="my-4 flex justify-between">
