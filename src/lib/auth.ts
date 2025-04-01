@@ -11,7 +11,7 @@ declare module "next-auth/jwt" {
         isOAuth?: boolean;
         image?: string | null;
         isProfileComplete?: boolean;
-        name?: string | null; // Add name to JWT
+        name?: string | null;
     }
 }
 
@@ -106,7 +106,7 @@ export const authOptions: NextAuthOptions = {
                     user.role = existingUser.role || "farmer";
                     user.image = existingUser.image || image;
                     user.isProfileComplete = existingUser.isProfileComplete || false;
-                    user.name = existingUser.name || name; // Ensure name is set
+                    user.name = existingUser.name || name;
                 }
             }
             return true;

@@ -5,10 +5,11 @@ import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 interface ProfileData {
     name: string;
     email: string;
+    phoneNumber: string;
     village: string;
     district: string;
     state: string;
-    farmSize: string;
+    landSize: string;
     crops: string[];
 }
 
@@ -24,7 +25,8 @@ export async function updateUserProfile(data: ProfileData) {
             {
                 $set: {
                     location: { village: data.village, district: data.district, state: data.state },
-                    farmSize: parseFloat(data.farmSize),
+                    farmSize: parseFloat(data.landSize),
+                    name: data.name,
                     crops: data.crops,
                     isProfileComplete: true,
                 },

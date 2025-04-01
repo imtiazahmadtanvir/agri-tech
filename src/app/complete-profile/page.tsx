@@ -16,8 +16,9 @@ export default function CompleteProfile() {
     name: "",
     village: "",
     district: "",
+    phoneNumber: "",
     state: "",
-    farmSize: "",
+    landSize: "",
     crops: [] as string[],
   });
   const [loading, setLoading] = useState(false);
@@ -126,14 +127,14 @@ export default function CompleteProfile() {
         </div>
         <div className="mb-4">
           <label className="block font-semibold text-gray-700">
-            Farm Size (acres)
+            land Size (acres)
           </label>
           <input
             type="number"
             name="farmSize"
             placeholder="e.g., 5"
             className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            value={formData.farmSize}
+            value={formData.landSize}
             onChange={handleChange}
             min="0"
             step="0.1"
