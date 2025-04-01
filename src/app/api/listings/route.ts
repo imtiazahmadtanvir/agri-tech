@@ -28,7 +28,7 @@ export const POST = async (req: NextRequest) => {
             body.userImage = user?.user.image;
             const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
             const result = await listingsCollection.insertOne(body)
-            return NextResponse.json({ success: true, message: 'Listing posted successfully!', data: result }, { status: 200 })
+            return NextResponse.json({ success: true, message: 'Listing posted successfully!', data: result }, { status: 201 })
         }
         return NextResponse.json({ message: 'User not found in the database' }, { status: 404 })
     } catch (error) {
