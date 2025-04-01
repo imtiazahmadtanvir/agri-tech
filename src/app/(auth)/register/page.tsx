@@ -26,11 +26,11 @@ const Register = () => {
     setLoading(true);
 
     // Validate Gmail-only email
-    if (!formData.email.includes("@gmail.com")) {
-      toast.error("Please use a Gmail address");
-      setLoading(false);
-      return;
-    }
+    // if (!formData.email.includes("@gmail.com")) {
+    //   toast.error("Please use a Gmail address");
+    //   setLoading(false);
+    //   return;
+    // }
     if (formData.password.length < 8) {
       toast.error("Password must be at least 8 characters");
       setLoading(false);
@@ -89,9 +89,9 @@ const Register = () => {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute top-10 right-3 text-gray-500"
+            className="absolute top-9 right-3 text-gray-500"
           >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+            {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
           </button>
         </div>
 

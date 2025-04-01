@@ -10,9 +10,7 @@ interface Payload {
 }
 
 export const registerUser = async (payload: Payload) => {
-    const { email, password, role } = payload;
-    console.log(payload);
-
+    const { email, password, } = payload;
     try {
         // Connect to the database
         const userCollection = await dbConnect(collectionNameObj.userCollection);
@@ -27,7 +25,7 @@ export const registerUser = async (payload: Payload) => {
         const result = await userCollection.insertOne({
             ...payload,
             password: hashedPassword,
-            role: role || "farmer",
+            role: "farmer",
             isProfileComplete: false,
         });
 
