@@ -4,17 +4,9 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 export const GET = async (req: NextRequest,) => {
     try {
-        const user = await getServerSession(authOptions)
-        if (!user) {
-            return NextResponse.json({ message: "Unauthorize:Please login" }, { status: 401 })
-        }
-        const useCollection = await dbConnect(collectionNameObj.userCollection);
-        const isSignIn = await useCollection.findOne({ email: user?.user.email });
-        if (isSignIn) {
-            const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
-            const result = await listingsCollection.find({}).toArray()
-            return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result }, { status: 200 })
-        }
+        const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
+        const result = await listingsCollection.find({}).toArray()
+        return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result }, { status: 200 })
     } catch (error) {
         console.error("error fetching listing", error)
         return NextResponse.json({ message: "An error occurred while fetching the listing." }, { status: 500 })
