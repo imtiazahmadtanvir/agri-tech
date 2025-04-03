@@ -66,23 +66,32 @@ export default function CompleteProfile() {
   if (status === "loading") return <div>Loading...</div>;
 
   return (
-    <section className="max-w-md mx-auto p-6 bg-white border rounded-lg shadow-lg my-20">
+    <section className="max-w-4xl mx-auto p-6 bg-white border  shadow-lg my-20">
       <h2 className="text-2xl font-bold mb-6 text-center text-green-700">
-        🌾 Complete Your Farm Profile
+        🌾 Complete Your Account Creation
       </h2>
-      <p className="text-center text-gray-600 mb-4">
-        Please provide your farm details to continue.
-      </p>
 
-      <form onSubmit={handleSubmit}>
+      <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block font-semibold text-gray-700">Name</label>
+          <label className="block font-semibold text-gray-700">Full Name</label>
           <input
             type="text"
             name="name"
             placeholder="e.g., John Doe"
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
             value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block font-semibold text-gray-700">Contact</label>
+          <input
+            type="number"
+            name="phoneNumber"
+            placeholder="your phone number"
+            className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
+            value={formData.state}
             onChange={handleChange}
             required
           />
@@ -95,36 +104,26 @@ export default function CompleteProfile() {
             type="text"
             name="village"
             placeholder="e.g., Rampur"
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
             value={formData.village}
             onChange={handleChange}
             required
           />
         </div>
+
         <div className="mb-4">
           <label className="block font-semibold text-gray-700">District</label>
           <input
             type="text"
             name="district"
-            placeholder="e.g., Patna"
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="dhaka"
+            className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
             value={formData.district}
             onChange={handleChange}
             required
           />
         </div>
-        <div className="mb-4">
-          <label className="block font-semibold text-gray-700">State</label>
-          <input
-            type="text"
-            name="state"
-            placeholder="e.g., Bihar"
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            value={formData.state}
-            onChange={handleChange}
-            required
-          />
-        </div>
+
         <div className="mb-4">
           <label className="block font-semibold text-gray-700">
             land Size (acres)
@@ -133,7 +132,7 @@ export default function CompleteProfile() {
             type="number"
             name="farmSize"
             placeholder="e.g., 5"
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
             value={formData.landSize}
             onChange={handleChange}
             min="0"
@@ -162,10 +161,10 @@ export default function CompleteProfile() {
         </div>
         <button
           type="submit"
-          className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition disabled:bg-green-400"
+          className=" px-5 w-fit col-span-2 bg-green-600 text-white py-2  hover:bg-green-700 transition disabled:bg-green-400"
           disabled={loading || formData.crops.length === 0}
         >
-          {loading ? "Submitting..." : "Save Profile"}
+          {loading ? "finishing..." : "Finish"}
         </button>
       </form>
     </section>
