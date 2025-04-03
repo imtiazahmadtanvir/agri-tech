@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
@@ -24,13 +24,13 @@ export default function CompleteProfile() {
   const [loading, setLoading] = useState(false);
   console.log(session?.user.isProfileComplete);
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    } else if (session?.user.isProfileComplete) {
-      router.push(intendedUrl);
-    }
-  }, [session, status, router, intendedUrl]);
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     router.push("/login");
+  //   } else if (session?.user.isProfileComplete) {
+  //     router.push(intendedUrl);
+  //   }
+  // }, [session, status, router, intendedUrl]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

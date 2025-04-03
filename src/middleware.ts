@@ -1,6 +1,7 @@
-import axios from "axios";
+
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { isComplete } from "./utils/isCompete";
 
 export default async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
@@ -11,18 +12,13 @@ export default async function middleware(req: NextRequest) {
     }
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     if (!token) {
-        const loginUrl = new URL("/login", req.url);
+        const loginUrl = new URL("/api/auth/signout", req.url);
         loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
         return NextResponse.redirect(loginUrl);
     }
-    const { data } = await axios.get(`${process.env.NEXTAUTH_URL}/api/isUserComplete`, {
-        params: {
-            email: token.email,
-        },
-    });
-    console.log(data);
+    const isProfileComplete = isComplete(token.email);
 
-    if (!data.isProfileComplete) {
+    if (!isProfileComplete) {
         console.log("Redirecting to complete-profile...");
         const completeProfileUrl = new URL("/complete-profile", req.url);
         completeProfileUrl.searchParams.set("redirect", req.nextUrl.pathname);
