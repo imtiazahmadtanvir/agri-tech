@@ -133,6 +133,7 @@ export const authOptions: NextAuthOptions = {
             return token;
         },
         async session({ session, token }) {
+
             if (session.user) {
                 session.user.id = token.id as string;
                 session.user.name = token.name ?? null;
@@ -148,6 +149,7 @@ export const authOptions: NextAuthOptions = {
                     }
                 }
             }
+
             return session;
         },
     },
