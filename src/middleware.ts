@@ -16,7 +16,8 @@ export default async function middleware(req: NextRequest) {
         loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
         return NextResponse.redirect(loginUrl);
     }
-    const isProfileComplete = isComplete(token.email);
+    const isProfileComplete = await isComplete(token.email);
+
 
     if (!isProfileComplete) {
         console.log("Redirecting to complete-profile...");
@@ -29,5 +30,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/dashboard/:path*", "/profile/:path*"],
+    matcher: ["/dashboard/:path*", "/profile/:path*", "/"],
 };

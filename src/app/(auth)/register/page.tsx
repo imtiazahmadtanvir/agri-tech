@@ -31,21 +31,25 @@ const Register = () => {
     //   setLoading(false);
     //   return;
     // }
-
     if (formData.password.length < 8) {
       toast.error("Password must be at least 8 characters");
       setLoading(false);
       return;
     }
-    // console.log(data);
-    // if (data.success) {
-    //   toast.success("Registration successful! Please log in.");
 
-    // } else {
-    //   toast.error(data.message || "Something went wrong.");
-    // }
+    const data = await registerUser({
+      email: formData.email,
+      password: formData.password,
+    });
+    console.log(data);
 
-    router.push("/complete-profile");
+    if (data.success) {
+      toast.success("Registration successful! Please log in.");
+      router.push("/login");
+    } else {
+      toast.error(data.message || "Something went wrong.");
+    }
+
     setLoading(false);
   };
 

@@ -5,7 +5,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { updateUserProfile } from "../action/auth/updateUserProfile";
-
+const marketplaceCategories = [
+  { name: "crops" },
+  { name: "livestock" },
+  { name: "Seeds & Plants" },
+  { name: "fertilizers" },
+  { name: "equipment" },
+  { name: "pesticides" },
+  { name: "Animal Feed" },
+  { name: "fisheries" },
+];
 export default function CompleteProfile() {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -73,7 +82,21 @@ export default function CompleteProfile() {
 
       <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block font-semibold text-gray-700">Full Name</label>
+          <label className="block font-semibold text-gray-700">
+            First Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            placeholder="e.g., John Doe"
+            className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block font-semibold text-gray-700">Last Name</label>
           <input
             type="text"
             name="name"
@@ -140,24 +163,27 @@ export default function CompleteProfile() {
             required
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-3 col-span-2">
           <label className="block font-semibold text-gray-700 mb-2">
-            Main Crops (Select all that apply)
+            Categories
           </label>
-          <div className="space-y-2">
-            {["Wheat", "Rice", "Maize", "Tomato", "Potato"].map((crop) => (
-              <label key={crop} className="flex items-center">
+          <div className="space-y-2 grid-cols-3 grid">
+            {marketplaceCategories.map((crop) => (
+              <label key={crop.name} className="flex items-center">
                 <input
                   type="checkbox"
-                  value={crop}
-                  checked={formData.crops.includes(crop)}
+                  value={crop.name}
+                  checked={formData.crops.includes(crop.name)}
                   onChange={handleCropChange}
                   className="mr-2 accent-green-500"
                 />
-                {crop}
+                <p className="capitalize">{crop.name}</p>
               </label>
             ))}
           </div>
+        </div>
+        <div>
+          <input type="checkbox" name="" id="" />
         </div>
         <button
           type="submit"

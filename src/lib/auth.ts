@@ -82,6 +82,7 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async signIn({ user, account }) {
+
             if (account?.provider === "google" || account?.provider === "github") {
                 const { providerAccountId, provider } = account;
                 const { email, name, image } = user;
@@ -109,31 +110,35 @@ export const authOptions: NextAuthOptions = {
             }
             return true;
         },
+        async redirect({ url, baseUrl, }) {
+            // Allows relative callback URLs
+            if (url.startsWith("/")) return `${baseUrl}${url}`
+
+            else if (new URL(url).origin === baseUrl) return url
+            return baseUrl
+        },
         async jwt({ token, user, account }) {
+
             if (user) {
                 token.id = user.id;
                 token.name = user.name;
                 token.email = user.email;
                 token.role = user.role || "farmer";
                 token.image = user.image ?? null;
-                if (account?.provider === "google" || account?.provider === "github") {
-                    token.isOAuth = true;
-                } else if (account?.provider === "credentials") {
-                    token.isOAuth = false;
-                }
+                token.isOAuth = account?.provider === "google" || account?.provider === "github";
+
                 const userCollection = await dbConnect(collectionNameObj.userCollection);
                 const dbUser = await userCollection.findOne({ email: user.email });
                 if (dbUser) {
                     token.role = dbUser.role || "farmer";
                     token.image = dbUser.image ?? user.image ?? null;
-                    token.isProfileComplete = dbUser.isProfileComplete
+                    token.isProfileComplete = dbUser.isProfileComplete;
                     token.name = dbUser.name || user.name;
                 }
             }
             return token;
         },
         async session({ session, token }) {
-
             if (session.user) {
                 session.user.id = token.id as string;
                 session.user.name = token.name ?? null;

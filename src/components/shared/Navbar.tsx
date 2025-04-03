@@ -237,7 +237,10 @@ const Navbar = () => {
       <Container className="px-5 relative py-4">
         <div className="flex justify-between items-center">
           <div>
-            <Image src="/logo.png" alt="Logo" width={150} height={50} />
+            <Link href={"/"} className="flex items-center">
+              {" "}
+              <Image src="/logo.png" alt="Logo" width={150} height={50} />
+            </Link>
           </div>
           <NavItems />
           <MobileNav links={<NavItems isMobile />} />
