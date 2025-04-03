@@ -22,6 +22,7 @@ export default function CompleteProfile() {
     crops: [] as string[],
   });
   const [loading, setLoading] = useState(false);
+  console.log(session?.user.isProfileComplete);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -50,7 +51,6 @@ export default function CompleteProfile() {
     setLoading(true);
 
     const data = await updateUserProfile({
-      email: session?.user.email || "",
       ...formData,
     });
 
@@ -91,7 +91,7 @@ export default function CompleteProfile() {
             name="phoneNumber"
             placeholder="your phone number"
             className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
-            value={formData.state}
+            value={formData.phoneNumber}
             onChange={handleChange}
             required
           />
@@ -103,7 +103,7 @@ export default function CompleteProfile() {
           <input
             type="text"
             name="village"
-            placeholder="e.g., Rampur"
+            placeholder="e.g., Bokultoli"
             className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
             value={formData.village}
             onChange={handleChange}
@@ -130,7 +130,7 @@ export default function CompleteProfile() {
           </label>
           <input
             type="number"
-            name="farmSize"
+            name="landSize"
             placeholder="e.g., 5"
             className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
             value={formData.landSize}
@@ -161,7 +161,7 @@ export default function CompleteProfile() {
         </div>
         <button
           type="submit"
-          className=" px-5 w-fit col-span-2 bg-green-600 text-white py-2  hover:bg-green-700 transition disabled:bg-green-400"
+          className=" text-center px-6 w-fit col-span-2 bg-green-600 text-white py-2  hover:bg-green-700 transition disabled:bg-green-400"
           disabled={loading || formData.crops.length === 0}
         >
           {loading ? "finishing..." : "Finish"}

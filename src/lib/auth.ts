@@ -101,11 +101,9 @@ export const authOptions: NextAuthOptions = {
                     await userCollection.insertOne(payload);
                     user.role = "farmer";
                     user.image = image;
-                    user.isProfileComplete = false;
                 } else {
                     user.role = existingUser.role || "farmer";
                     user.image = existingUser.image || image;
-                    user.isProfileComplete = existingUser.isProfileComplete || false;
                     user.name = existingUser.name || name;
                 }
             }
@@ -118,20 +116,17 @@ export const authOptions: NextAuthOptions = {
                 token.email = user.email;
                 token.role = user.role || "farmer";
                 token.image = user.image ?? null;
-                token.isProfileComplete = user.isProfileComplete ?? false;
-
                 if (account?.provider === "google" || account?.provider === "github") {
                     token.isOAuth = true;
                 } else if (account?.provider === "credentials") {
                     token.isOAuth = false;
                 }
-
                 const userCollection = await dbConnect(collectionNameObj.userCollection);
                 const dbUser = await userCollection.findOne({ email: user.email });
                 if (dbUser) {
                     token.role = dbUser.role || "farmer";
                     token.image = dbUser.image ?? user.image ?? null;
-                    token.isProfileComplete = dbUser.isProfileComplete || false;
+                    token.isProfileComplete = dbUser.isProfileComplete
                     token.name = dbUser.name || user.name;
                 }
             }
@@ -143,8 +138,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.name = token.name ?? null;
                 session.user.email = token.email ?? null;
                 session.user.image = token.image ?? null;
-                session.user.role = token.role || "farmer";
-                session.user.isProfileComplete = token.isProfileComplete ?? false;
+                session.user.role = token.role;
 
                 if (!token.isOAuth) {
                     const userCollection = await dbConnect(collectionNameObj.userCollection);

@@ -17,15 +17,13 @@ export default async function middleware(req: NextRequest) {
     }
 
     // Check if profile is complete
-    const isProfileComplete = token.isProfileComplete ?? false;
-    console.log("Is Profile Complete:", isProfileComplete);
 
-    if (!isProfileComplete) {
-        console.log("Redirecting to complete-profile...");
-        const completeProfileUrl = new URL("/complete-profile", req.url);
-        completeProfileUrl.searchParams.set("redirect", req.nextUrl.pathname);
-        return NextResponse.redirect(completeProfileUrl);
-    }
+    // if (!isProfileComplete) {
+    //     console.log("Redirecting to complete-profile...");
+    //     const completeProfileUrl = new URL("/complete-profile", req.url);
+    //     completeProfileUrl.searchParams.set("redirect", req.nextUrl.pathname);
+    //     return NextResponse.redirect(completeProfileUrl);
+    // }
 
     return NextResponse.next();
 }

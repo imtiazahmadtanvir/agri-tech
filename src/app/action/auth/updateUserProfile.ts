@@ -1,10 +1,11 @@
 "use server";
 
+import { authOptions } from "@/lib/auth";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
+import { getServerSession } from "next-auth";
 
 interface ProfileData {
     name: string;
-    email: string;
     phoneNumber: string;
     village: string;
     district: string;
@@ -15,13 +16,14 @@ interface ProfileData {
 
 export async function updateUserProfile(data: ProfileData) {
     try {
+        const userData = await getServerSession(authOptions)
         if (data.crops.length === 0) {
             return { success: false, message: "Please select at least one crop" };
         }
 
         const userCollection = await dbConnect(collectionNameObj.userCollection);
         const updateResult = await userCollection.updateOne(
-            { email: data.email },
+            { email: userData?.user.email },
             {
                 $set: {
                     location: { village: data.village, district: data.district, state: data.state },
