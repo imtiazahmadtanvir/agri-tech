@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
@@ -18,11 +18,13 @@ const marketplaceCategories = [
 export default function CompleteProfile() {
   const router = useRouter();
   const { data: session, status } = useSession();
+
   const searchParams = useSearchParams();
   const intendedUrl = searchParams.get("redirect") || "/dashboard";
 
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     village: "",
     district: "",
     phoneNumber: "",
@@ -31,7 +33,6 @@ export default function CompleteProfile() {
     crops: [] as string[],
   });
   const [loading, setLoading] = useState(false);
-  console.log(session?.user.isProfileComplete);
 
   // useEffect(() => {
   //   if (status === "unauthenticated") {
@@ -40,7 +41,15 @@ export default function CompleteProfile() {
   //     router.push(intendedUrl);
   //   }
   // }, [session, status, router, intendedUrl]);
+  useEffect(() => {
+    if (!session?.user.name) return;
+    const nameParts = session.user.name.split(" ");
+    console.log(nameParts);
+    const lastName = nameParts[nameParts.length - 1];
 
+    const firstName = nameParts.slice(0, -1).join(" ");
+    setFormData((prev) => ({ ...prev, lastName, firstName }));
+  }, [session?.user.name]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -88,9 +97,10 @@ export default function CompleteProfile() {
           <input
             type="text"
             name="name"
+            readOnly={formData.firstName.length > 0}
             placeholder="e.g., John Doe"
             className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
-            value={formData.name}
+            value={formData.firstName}
             onChange={handleChange}
             required
           />
@@ -100,9 +110,10 @@ export default function CompleteProfile() {
           <input
             type="text"
             name="name"
+            readOnly={formData.lastName.length > 0}
             placeholder="e.g., John Doe"
             className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
-            value={formData.name}
+            value={formData.lastName}
             onChange={handleChange}
             required
           />

@@ -1,6 +1,6 @@
-import { authOptions } from "@/lib/auth";
+
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
-import { getServerSession } from "next-auth";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {

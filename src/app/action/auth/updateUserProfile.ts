@@ -5,7 +5,8 @@ import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { getServerSession } from "next-auth";
 
 interface ProfileData {
-    name: string;
+    firstName: string;
+    lastName: string;
     phoneNumber: string;
     village: string;
     district: string;
@@ -28,7 +29,9 @@ export async function updateUserProfile(data: ProfileData) {
                 $set: {
                     location: { village: data.village, district: data.district, state: data.state },
                     farmSize: parseFloat(data.landSize),
-                    name: data.name,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    phoneNumber: data.phoneNumber,
                     crops: data.crops,
                     isProfileComplete: true,
                 },
