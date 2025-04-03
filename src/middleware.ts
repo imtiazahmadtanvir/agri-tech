@@ -2,7 +2,12 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(req: NextRequest) {
-    console.error("Middleware called for:", req.nextUrl.pathname); // Debugging      
+    const { pathname } = req.nextUrl;
+    console.error("Middleware called for:", pathname);
+
+    if (["/login", "/register", "/complete-profile"].includes(pathname)) {
+        return NextResponse.next();
+    }
 
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     if (!token) {
@@ -11,20 +16,20 @@ export default async function middleware(req: NextRequest) {
         return NextResponse.redirect(loginUrl);
     }
 
-    // Check if profile is complete     
+    // Check if profile is complete
     const isProfileComplete = token.isProfileComplete ?? false;
-    console.log("Is Profile Complete:", isProfileComplete); // Debugging
+    console.log("Is Profile Complete:", isProfileComplete);
 
-    // If profile is incomplete, redirect to complete-profile     
     if (!isProfileComplete) {
-        console.log("Redirecting to complete-profile..."); // Debugging
+        console.log("Redirecting to complete-profile...");
         const completeProfileUrl = new URL("/complete-profile", req.url);
         completeProfileUrl.searchParams.set("redirect", req.nextUrl.pathname);
         return NextResponse.redirect(completeProfileUrl);
     }
 
-    // Proceed if everything is good     
     return NextResponse.next();
 }
 
-export const config = { matcher: ["/dashboard/:path*", "/profile/:path*"], };
+export const config = {
+    matcher: ["/dashboard/:path*", "/profile/:path*"],
+};
