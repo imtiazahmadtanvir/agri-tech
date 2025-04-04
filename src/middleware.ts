@@ -7,12 +7,14 @@ export default async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
     console.error("Middleware called for:", pathname);
 
-    if (["/login", "/register", "/complete-profile"].includes(pathname)) {
+    if (["/login", "/register", "/complete-profile",].includes(pathname)) {
         return NextResponse.next();
     }
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    console.log(token, "token in middleware");
     if (!token) {
-        const loginUrl = new URL("/api/auth/signout", req.url);
+        console.log("No token found, redirecting to login...");
+        const loginUrl = new URL("/login", req.url);
         loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
         return NextResponse.redirect(loginUrl);
     }
@@ -30,5 +32,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/dashboard/:path*", "/profile/:path*", "/"],
+    matcher: ["/dashboard/:path*", "/profile/:path*", "/marketplace/:path*"],
 };
