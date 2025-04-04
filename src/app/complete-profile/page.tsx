@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { updateUserProfile } from "../action/auth/updateUserProfile";
+import useIsComplete from "@/Hook/useIsComplete";
 const marketplaceCategories = [
   { name: "crops" },
   { name: "livestock" },
@@ -18,10 +19,14 @@ const marketplaceCategories = [
 export default function CompleteProfile() {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const { isComplete } = useIsComplete();
 
   const searchParams = useSearchParams();
   const intendedUrl = searchParams.get("redirect") || "/dashboard";
-
+  console.log(isComplete);
+  if (isComplete) {
+    router.push(intendedUrl);
+  }
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -34,13 +39,13 @@ export default function CompleteProfile() {
   });
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (status === "unauthenticated") {
-  //     router.push("/login");
-  //   } else if (session?.user.isProfileComplete) {
-  //     router.push(intendedUrl);
-  //   }
-  // }, [session, status, router, intendedUrl]);
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    } else if (session?.user.isProfileComplete) {
+      router.push(intendedUrl);
+    }
+  }, [session, status, router, intendedUrl]);
   useEffect(() => {
     if (!session?.user.name) return;
     const nameParts = session.user.name.split(" ");

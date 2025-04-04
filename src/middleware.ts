@@ -5,21 +5,19 @@ import { isComplete } from "./utils/isCompete";
 
 export default async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
-    console.error("Middleware called for:", pathname);
+
 
     if (["/login", "/register", "/complete-profile",].includes(pathname)) {
         return NextResponse.next();
     }
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-    console.log(token, "token in middleware");
+
     if (!token) {
-        console.log("No token found, redirecting to login...");
         const loginUrl = new URL("/login", req.url);
         loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
         return NextResponse.redirect(loginUrl);
     }
     const isProfileComplete = await isComplete(token.email);
-
 
     if (!isProfileComplete) {
         console.log("Redirecting to complete-profile...");
