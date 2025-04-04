@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
@@ -19,13 +19,14 @@ const marketplaceCategories = [
 export default function CompleteProfile() {
   const router = useRouter();
   const { data: session, status } = useSession();
+  console.log(session);
   const { isComplete } = useIsComplete();
 
   const searchParams = useSearchParams();
   const intendedUrl = searchParams.get("redirect") || "/dashboard";
   console.log(isComplete);
   if (isComplete) {
-    router.push(intendedUrl);
+    router.push("/");
   }
   const [formData, setFormData] = useState({
     firstName: "",
@@ -101,8 +102,7 @@ export default function CompleteProfile() {
           </label>
           <input
             type="text"
-            name="name"
-            readOnly={formData.firstName.length > 0}
+            name="firstName"
             placeholder="e.g., John Doe"
             className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
             value={formData.firstName}
@@ -114,8 +114,7 @@ export default function CompleteProfile() {
           <label className="block font-semibold text-gray-700">Last Name</label>
           <input
             type="text"
-            name="name"
-            readOnly={formData.lastName.length > 0}
+            name="lastName"
             placeholder="e.g., John Doe"
             className="w-full p-1.5 border  focus:outline-none focus:ring-2 focus:ring-green-500"
             value={formData.lastName}

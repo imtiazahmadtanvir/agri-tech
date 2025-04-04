@@ -4,13 +4,17 @@ import dbConnect from "@/lib/dbConnect";
 import bcrypt from 'bcryptjs';
 
 interface Payload {
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
     role?: string;
 }
 
 export const registerUser = async (payload: Payload) => {
-    const { email, password, } = payload;
+    const { email, password, role } = payload;
+    console.log(payload);
+
     try {
         // Connect to the database
         const userCollection = await dbConnect(collectionNameObj.userCollection);
@@ -20,13 +24,15 @@ export const registerUser = async (payload: Payload) => {
         if (existentUser) {
             return { success: false, message: "User already exists!" };
         }
+
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert the user into the database with role
         const result = await userCollection.insertOne({
             ...payload,
             password: hashedPassword,
-            role: "farmer",
-            isProfileComplete: false,
+            role: role || "farmer",
         });
 
         return {

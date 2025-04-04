@@ -11,6 +11,8 @@ import SocialLoginBtn from "@/components/shared/common-button/SocialLoginBtn";
 const Register = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -25,29 +27,14 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Validate Gmail-only email
-    // if (!formData.email.includes("@gmail.com")) {
-    //   toast.error("Please use a Gmail address");
-    //   setLoading(false);
-    //   return;
-    // }
-    if (formData.password.length < 8) {
-      toast.error("Password must be at least 8 characters");
-      setLoading(false);
-      return;
-    }
-
-    const data = await registerUser({
-      email: formData.email,
-      password: formData.password,
-    });
+    const data = await registerUser(formData);
     console.log(data);
 
     if (data.success) {
-      toast.success("Registration successful! Please log in.");
+      toast.success("Registration successful!");
       router.push("/login");
     } else {
-      toast.error(data.message || "Something went wrong.");
+      toast.error("Something went wrong.");
     }
 
     setLoading(false);
@@ -55,20 +42,42 @@ const Register = () => {
 
   return (
     <section className="max-w-md mx-auto p-6 bg-white border rounded-lg shadow-lg my-20">
-      <h2 className="text-2xl font-bold mb-6 text-center text-green-700">
-        🌾 Create an Account
-      </h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Create an Account</h2>
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block font-semibold text-gray-700">
-            Gmail Address
-          </label>
+          <label className="block font-semibold">First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="John"
+            className="w-full p-2 border rounded"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block font-semibold">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Doe"
+            className="w-full p-2 border rounded"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block font-semibold">Email</label>
           <input
             type="email"
             name="email"
-            placeholder="john.doe@gmail.com"
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="john.doe@example.com"
+            className="w-full p-2 border rounded"
             value={formData.email}
             onChange={handleChange}
             required
@@ -76,12 +85,12 @@ const Register = () => {
         </div>
 
         <div className="mb-4 relative">
-          <label className="block font-semibold text-gray-700">Password</label>
+          <label className="block font-semibold">Password</label>
           <input
             type={showPassword ? "text" : "password"}
             name="password"
             placeholder="********"
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 pr-10"
+            className="w-full p-2 border rounded pr-10"
             value={formData.password}
             onChange={handleChange}
             required
@@ -89,30 +98,27 @@ const Register = () => {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute top-9 right-3 text-gray-500"
+            className="absolute top-10 right-3"
           >
-            {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
 
         <button
           type="submit"
-          className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition disabled:bg-green-400"
+          className="w-full bg-black text-white py-2 rounded"
           disabled={loading}
         >
-          {loading ? "Signing up..." : "Sign Up"}
+          {loading ? "Signing up..." : "Sign up"}
         </button>
 
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center mb-4">
           Already have an account?{" "}
-          <Link href="/login" className="text-blue-500 hover:underline">
+          <Link href="/login" className="text-blue-500">
             Login
           </Link>
         </p>
-
-        <div className="mt-4">
-          <SocialLoginBtn />
-        </div>
+        <SocialLoginBtn />
       </form>
     </section>
   );
