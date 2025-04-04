@@ -143,7 +143,7 @@ const AuthSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: "/login" });
+    await signOut();
   };
 
   const displayName =
@@ -172,7 +172,7 @@ const AuthSection = () => {
             />
           ) : (
             <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-[#0D401C]">
-              {displayName[0]} {/* Initial if no image */}
+              {displayName[0]}
             </div>
           )}
         </button>
@@ -180,20 +180,12 @@ const AuthSection = () => {
         {/* Dropdown with Dashboard and Logout */}
         {isOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10 border border-gray-200">
-            <div className="px-4 py-2 text-[#0D401C] flex items-center gap-2 border-b border-gray-200">
-              {session.user?.image && (
-                <Image
-                  src={session.user.image}
-                  alt="Profile"
-                  width={24}
-                  height={24}
-                  className="rounded-full"
-                />
-              )}
-              <span>
-                {displayName} ({session.user?.role})
-              </span>
-            </div>
+            <Link
+              className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
+              href="/profile"
+            >
+              My Profile
+            </Link>
             <Link
               href="/dashboard"
               className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
@@ -227,17 +219,26 @@ const AuthSection = () => {
 const Navbar = () => {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/dashboard")) return null;
+  const isDashboardPage = pathname.startsWith("/dashboard");
 
   return (
     <nav
-      className="z-50 top-0  sticky
-     bg-white shadow-md"
+      className={`${
+        isDashboardPage ? " border-b" : "shadow-md"
+      } z-50 top-0  sticky
+     bg-white `}
     >
-      <Container className="px-5 relative py-4">
+      <Container
+        className={`px-5 relative  ${isDashboardPage ? "py-2" : "py-4"}`}
+      >
         <div className="flex justify-between items-center">
-          <div>
-            <Link href={"/"} className="flex items-center">
+          <div
+            className={`${isDashboardPage ? "hidden" : ""} flex items-center`}
+          >
+            <Link
+              href={"/"}
+              className={`${isDashboardPage ? "hidden" : ""} flex items-center`}
+            >
               {" "}
               <Image src="/logo.png" alt="Logo" width={150} height={50} />
             </Link>

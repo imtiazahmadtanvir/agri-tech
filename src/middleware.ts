@@ -1,7 +1,7 @@
 
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { isComplete } from "./utils/isCompete";
+
 
 export default async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
@@ -17,14 +17,7 @@ export default async function middleware(req: NextRequest) {
         loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
         return NextResponse.redirect(loginUrl);
     }
-    const isProfileComplete = await isComplete(token.email);
 
-    if (!isProfileComplete) {
-        console.log("Redirecting to complete-profile...");
-        const completeProfileUrl = new URL("/complete-profile", req.url);
-        completeProfileUrl.searchParams.set("redirect", req.nextUrl.pathname);
-        return NextResponse.redirect(completeProfileUrl);
-    }
 
     return NextResponse.next();
 }
