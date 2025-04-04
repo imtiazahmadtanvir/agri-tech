@@ -29,14 +29,11 @@ export const authOptions: NextAuthOptions = {
                 const { email, password } = credentials;
                 const user = await loginUser({ email, password });
 
-
                 if (user) {
                     return {
                         id: user._id,
                         name: user.name,
                         email: user.email,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
                         role: user.role,
                     };
                 }
