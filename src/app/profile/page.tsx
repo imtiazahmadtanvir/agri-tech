@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css"; // Add this to import the styles
+import "react-phone-number-input/style.css";
 
 const marketplaceCategories = [
   { name: "crops" },
@@ -35,7 +35,6 @@ export default function ProfilePage() {
   } = useForm<Inputs>();
 
   useEffect(() => {
-    // Registering phone number field
     register("phoneNumber", { required: "Phone number is required" });
   }, [register]);
 
