@@ -44,7 +44,7 @@ type UserApiResponse = {
 export default function ProfilePage() {
   const { data, error, loading } =
     useFetch<UserApiResponse>("/api/userDetails");
-
+  console.log(data);
   const {
     register,
     handleSubmit,

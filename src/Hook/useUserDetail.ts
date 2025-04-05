@@ -1,8 +1,27 @@
-import { useState } from "react"
 import useFetch from "./useFetch"
 
+interface UserDetailsResponse {
+    data: {
+        email: string;
+        firstName: string;
+        lastName: string;
+        phoneNumber: string;
+        village: string;
+        district: string;
+        state: string;
+        landSize: string;
+        crops: string[];
+
+    };
+}
+
 const useUserDetail = () => {
-    const [userDetail, setUserDetail] = useState(null)
-    const { data, error, loading } = useFetch('/api/userDetails')
+
+    const { data, error, loading } = useFetch<UserDetailsResponse>('/api/userDetails')
+    return {
+        userDetail: data?.data,
+        loading,
+        error: error,
+    }
 }
 export default useUserDetail
