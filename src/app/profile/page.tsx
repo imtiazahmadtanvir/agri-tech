@@ -1,4 +1,5 @@
 "use client";
+import useFetch from "@/Hook/useFetch";
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
@@ -25,14 +26,47 @@ type Inputs = {
   categories: string[];
 };
 
+type User = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  village: string;
+  district: string;
+  landSize: number;
+  categories: string[];
+};
+
+type UserApiResponse = {
+  data: User;
+};
+
 export default function ProfilePage() {
+  const { data, error, loading } =
+    useFetch<UserApiResponse>("/api/userDetails");
+
   const {
     register,
     handleSubmit,
     setValue,
     trigger,
     formState: { errors },
+    reset,
   } = useForm<Inputs>();
+
+  useEffect(() => {
+    if (data?.data) {
+      reset({
+        firstName: data.data.firstName,
+        lastName: data.data.lastName,
+        phoneNumber: data.data.phoneNumber,
+        village: data.data.village,
+        district: data.data.district,
+        landSize: data.data.landSize,
+        categories: data.data.categories,
+      });
+      setValue("phoneNumber", data.data.phoneNumber);
+    }
+  }, [data, reset, setValue]);
 
   useEffect(() => {
     register("phoneNumber", { required: "Phone number is required" });
@@ -41,6 +75,16 @@ export default function ProfilePage() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log("Form Data:", data);
   };
+
+  // Loading spinner or message
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  // Handle error
+  if (error) {
+    return <div>Error fetching data.</div>;
+  }
 
   return (
     <section className="max-w-4xl mx-auto p-6 bg-white border shadow-lg my-20">
@@ -86,7 +130,7 @@ export default function ProfilePage() {
           <PhoneInput
             international
             defaultCountry="BD"
-            value=""
+            value={data?.data?.phoneNumber} // Control the value with the state
             onChange={(value) => {
               setValue("phoneNumber", value || "");
               trigger("phoneNumber");
