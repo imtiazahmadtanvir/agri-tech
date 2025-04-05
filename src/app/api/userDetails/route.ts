@@ -22,3 +22,36 @@ export const GET = async (req: NextRequest) => {
 
     }
 }
+export const PUT = async (req: NextRequest) => {
+    try {
+        const data = await req.json();
+        const session = await getServerSession(authOptions);
+        if (!session?.user.email) {
+            return NextResponse.json({ message: "Unauthorize:Please login" }, { status: 401 });
+        }
+        const userCollection = await dbConnect(collectionNameObj.userCollection)
+        const user = await userCollection.findOne({ email: session.user.email });
+        if (!user) {
+            return NextResponse.json({ message: "User not found in the database" }, { status: 404 });
+        }
+        const updatedUser = await userCollection.updateOne({ email: session.user.email }, {
+            $set: {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                phoneNumber: data.phoneNumber,
+                village: data.village,
+                district: data.district,
+                landSize: parseFloat(data.landSize,),
+                categories: data.categories,
+
+            }
+        });
+        if (updatedUser.modifiedCount === 0) {
+            return NextResponse.json({ message: "Failed to update user details" }, { status: 500 });
+        }
+    } catch (error) {
+        console.error("error updating user details", error)
+        return NextResponse.json({ message: "An error occurred while updating the user details." }, { status: 500 })
+
+    }
+}

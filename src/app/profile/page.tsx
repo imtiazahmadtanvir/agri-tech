@@ -71,7 +71,7 @@ export default function ProfilePage() {
   useEffect(() => {
     register("phoneNumber", { required: "Phone number is required" });
   }, [register]);
-
+  console.log(data);
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log("Form Data:", data);
   };
@@ -128,9 +128,8 @@ export default function ProfilePage() {
         <div className="mb-4">
           <label className="block font-semibold text-gray-700">Contact</label>
           <PhoneInput
-            international
             defaultCountry="BD"
-            value={data?.data?.phoneNumber} // Control the value with the state
+            value={data?.data?.phoneNumber}
             onChange={(value) => {
               setValue("phoneNumber", value || "");
               trigger("phoneNumber");
