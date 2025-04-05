@@ -1,5 +1,6 @@
 "use client";
 import useFetch from "@/Hook/useFetch";
+import axios from "axios";
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
@@ -71,9 +72,15 @@ export default function ProfilePage() {
   useEffect(() => {
     register("phoneNumber", { required: "Phone number is required" });
   }, [register]);
-  console.log(data);
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log("Form Data:", data);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    // console.log("Form Data:", data);
+    try {
+      const response = await axios.put("/api/userDetails", data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error updating user details:", error);
+    }
   };
 
   // Loading spinner or message

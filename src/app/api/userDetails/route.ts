@@ -25,6 +25,7 @@ export const GET = async (req: NextRequest) => {
 export const PUT = async (req: NextRequest) => {
     try {
         const data = await req.json();
+        console.log(data);
         const session = await getServerSession(authOptions);
         if (!session?.user.email) {
             return NextResponse.json({ message: "Unauthorize:Please login" }, { status: 401 });
@@ -45,10 +46,11 @@ export const PUT = async (req: NextRequest) => {
                 categories: data.categories,
 
             }
-        });
-        if (updatedUser.modifiedCount === 0) {
+        }, { upsert: true });
+        if (!updatedUser) {
             return NextResponse.json({ message: "Failed to update user details" }, { status: 500 });
         }
+        return NextResponse.json({ success: true, message: 'User details updated successfully!' }, { status: 200 });
     } catch (error) {
         console.error("error updating user details", error)
         return NextResponse.json({ message: "An error occurred while updating the user details." }, { status: 500 })
