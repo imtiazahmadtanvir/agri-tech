@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css"; // Add this to import the styles
+
 const marketplaceCategories = [
   { name: "crops" },
   { name: "livestock" },
@@ -32,7 +33,9 @@ export default function ProfilePage() {
     trigger,
     formState: { errors },
   } = useForm<Inputs>();
+
   useEffect(() => {
+    // Registering phone number field
     register("phoneNumber", { required: "Phone number is required" });
   }, [register]);
 
@@ -79,16 +82,17 @@ export default function ProfilePage() {
         </div>
 
         {/* Phone Number */}
-        {/* Phone Number */}
         <div className="mb-4">
           <label className="block font-semibold text-gray-700">Contact</label>
           <PhoneInput
-            country={"bd"}
+            international
+            defaultCountry="BD"
+            value=""
             onChange={(value) => {
-              setValue("phoneNumber", value);
+              setValue("phoneNumber", value || "");
               trigger("phoneNumber");
             }}
-            inputClass="w-full !p-1.5 !border !border-gray-300 focus:!outline-none focus:!ring-2 focus:!ring-green-500"
+            className="w-full p-1.5 border focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {errors.phoneNumber && (
             <span className="text-red-500">{errors.phoneNumber.message}</span>
