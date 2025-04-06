@@ -17,7 +17,7 @@ export function timeStamp(timeStamp: string) {
     const [datePart, timePart] = formattedDate.split(", ");
     const [day, month] = datePart.split(" ");
     const [hour, minute] = timePart.split(":");
-    const amPm = timePart.includes("AM") ? "AM" : "PM";
+    const amPm = timePart.includes("AM") ? "AM" : "";
 
     return `${day} ${month} ${hour}:${minute} ${amPm}`;
 }

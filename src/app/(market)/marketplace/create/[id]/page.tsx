@@ -33,6 +33,7 @@ export default async function ProductDetails({
       <div className="flex gap-4">
         <div className="w-2/3">
           <ImageSlider data={res?.data?.photos} />
+          <div></div>
         </div>
         <div className="w-1/3 scroll-mt-4 sticky top-0 h-fit border rounded-sm">
           <div className="py-3 border-b px-3">
