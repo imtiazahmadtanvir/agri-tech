@@ -44,7 +44,6 @@ type UserApiResponse = {
 export default function ProfilePage() {
   const { data, error, loading } =
     useFetch<UserApiResponse>("/api/userDetails");
-  console.log(data);
   const {
     register,
     handleSubmit,
@@ -74,7 +73,6 @@ export default function ProfilePage() {
   }, [register]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // console.log("Form Data:", data);
     try {
       const response = await axios.put("/api/userDetails", data);
       console.log(response.data);
