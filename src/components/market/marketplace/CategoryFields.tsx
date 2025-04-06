@@ -154,15 +154,18 @@ export default function CategoryFields({
               })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
-              <option value="">Select Equipment Type</option>
-              <option value="Tractor">🚜 Tractor</option>
-              <option value="Plow">⛏️ Plow</option>
-              <option value="Harvester">🌾 Harvester</option>
-              <option value="Seeder">🌱 Seeder</option>
-              <option value="Sprayer">💧 Sprayer</option>
-              <option value="Cultivator">🌿 Cultivator</option>
-              <option value="Irrigation System">💦 Irrigation System</option>
-              <option value="Mower">🌾 Mower</option>
+              <option value="">Select Equipment Category</option>
+              <option value="Soil Preparation">🌿 Soil Preparation</option>
+              <option value="Planting & Seeding">🌱 Planting & Seeding</option>
+              <option value="Irrigation">💧 Irrigation</option>
+              <option value="Crop Protection">🌾 Crop Protection</option>
+              <option value="Harvesting">🌾 Harvesting</option>
+              <option value="Post-Harvest Handling">
+                📦 Post-Harvest Handling
+              </option>
+              <option value="Transport & Handling">
+                🚚 Transport & Handling
+              </option>
               <option value="Other">❓ Other</option>
             </select>
             {errors.type && (

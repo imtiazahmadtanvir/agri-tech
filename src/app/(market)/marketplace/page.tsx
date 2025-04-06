@@ -21,6 +21,7 @@ function MarketplaceMain() {
     data: items,
     error,
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: ["marketplaceItems"],
     queryFn: fetchItems,
@@ -60,20 +61,19 @@ function MarketplaceMain() {
             <p className="text-gray-500">No listings found.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             {items?.map((item) => (
               <div className="border p-3 rounded-md" key={item._id}>
-                <div>
+                <div className="w-full h-56 relative">
                   <Image
-                    width={300}
-                    height={200}
+                    className="object-cover rounded-md border"
+                    fill
                     src={
                       typeof item.photos[0] === "string"
                         ? item.photos[0]
                         : URL.createObjectURL(item.photos[0])
                     }
                     alt={item.productName}
-                    className="w-full h-48 object-cover rounded-md"
                   />
                 </div>
                 <div>
@@ -81,9 +81,7 @@ function MarketplaceMain() {
                     {item.productName}
                   </h3>
 
-                  <p className="text-gray-800 font-bold mt-1">
-                    Price: {item.price} $
-                  </p>
+                  <p className="text-gray-800 font-bold mt-1">{item.price} $</p>
                   <p className="text-gray-500 text-sm">{item.location}</p>
                   <p>{timeAgeCalculator(item?.listed || "")}</p>
                 </div>
