@@ -1,33 +1,28 @@
-import { useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
+const fetchData = async <T>(url: string): Promise<T> => {
+    const response = await axios.get<T>(url);
+    return response.data;
+};
 
 const useFetch = <T>(url: string) => {
-    const [data, setData] = useState<T | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const {
+        data,
+        isLoading,
+        isError,
+        error,
+    } = useQuery<T, Error>({
+        queryKey: ["fetch", url],
+        queryFn: () => fetchData<T>(url),
+        enabled: !!url,
+    });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get(url);
-                setData(response.data);
-            } catch (err) {
-
-                if (err instanceof AxiosError) {
-                    setError(err.message);
-                } else {
-                    setError("An unknown error occurred");
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [url]);
-
-    return { data, loading, error };
+    return {
+        data,
+        loading: isLoading,
+        error: isError ? error?.message : null,
+    };
 };
 
 export default useFetch;

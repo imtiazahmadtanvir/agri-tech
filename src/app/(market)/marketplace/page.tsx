@@ -52,9 +52,9 @@ function MarketplaceMain() {
           </div>
         ) : error ? (
           <div className="flex justify-center items-center">
-            <p>{error}</p>
+            <p>{error.message}</p>
           </div>
-        ) : items.length === 0 ? (
+        ) : items?.length === 0 ? (
           <div className="flex justify-center items-center h-full">
             <p className="text-gray-500">No listings found.</p>
           </div>
