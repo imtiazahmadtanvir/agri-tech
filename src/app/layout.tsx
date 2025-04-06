@@ -9,6 +9,7 @@ import AuthProvider from "@/provider/AuthProvider";
 import Navbar from "@/components/shared/Navbar";
 import FloatingChatbot from "@/components/chatbot/floating-chatbot";
 import GlobalContextProvider from "@/context/GlobalContext";
+import QueryProvider from "@/components/react-query/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,16 +37,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <GlobalContextProvider>
-          <AuthProvider>
-            <Toaster position="top-right" reverseOrder={false} />
-            <TopInfoBar />
-            <Navbar />
-            {children}
-            <Footer></Footer>
-            <FloatingChatbot></FloatingChatbot>
-          </AuthProvider>
-        </GlobalContextProvider>
+        <QueryProvider>
+          <GlobalContextProvider>
+            <AuthProvider>
+              <Toaster position="top-right" reverseOrder={false} />
+              <TopInfoBar />
+              <Navbar />
+              {children}
+              <Footer></Footer>
+              <FloatingChatbot></FloatingChatbot>
+            </AuthProvider>
+          </GlobalContextProvider>
+        </QueryProvider>
       </body>
     </html>
   );

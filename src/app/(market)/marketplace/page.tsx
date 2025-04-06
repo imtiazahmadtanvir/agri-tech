@@ -1,34 +1,28 @@
 "use client";
 import { useMarketPlace } from "@/context/MarketplaceContext";
-import { MarketplaceItemForBuy } from "@/types/type";
+import { FormData } from "@/types/type";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 function MarketplaceMain() {
   const { minPrice, maxPrice, selectedCategories } = useMarketPlace();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("");
+  async function fetchItems(): Promise<FormData[]> {
+    const response = await axios.get("/api/listings");
+    return response.data.data;
+  }
+  const {
+    data: items,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ["marketplaceItems"],
+    queryFn: fetchItems,
+  });
   console.log(items);
-  useEffect(() => {
-    const fetchListings = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("/api/listings");
-        setItems(response.data.data);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching listings:", error);
-        setError("Failed to fetch listings. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchListings();
-  }, []);
   return (
     <>
       <div className="my-4 flex justify-between">
@@ -52,7 +46,7 @@ function MarketplaceMain() {
         </div>
       </div>
       <div>
-        {loading ? (
+        {isLoading ? (
           <div className="flex justify-center items-center h-screen">
             <p>Loading...</p>
           </div>
