@@ -1,4 +1,5 @@
 "use client";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import { FormData } from "@/types/type";
 import { timeAgeCalculator } from "@/utils/timeCalculate";
@@ -49,9 +50,7 @@ function MarketplaceMain() {
       </div>
       <div>
         {isLoading ? (
-          <div className="flex justify-center items-center h-screen">
-            <p>Loading...</p>
-          </div>
+          <LoadingSpinner />
         ) : error ? (
           <div className="flex justify-center items-center">
             <p>{error.message}</p>
@@ -85,12 +84,7 @@ function MarketplaceMain() {
                   <p className="text-gray-800 font-bold mt-1">
                     Price: {item.price} $
                   </p>
-                  <p className="text-gray-500 text-sm">
-                    Location: {item.location}
-                  </p>
-                  <p className="text-gray-500 text-sm">
-                    Contact: {item.phoneNumber}
-                  </p>
+                  <p className="text-gray-500 text-sm">{item.location}</p>
                   <p>{timeAgeCalculator(item?.listed || "")}</p>
                 </div>
               </div>
