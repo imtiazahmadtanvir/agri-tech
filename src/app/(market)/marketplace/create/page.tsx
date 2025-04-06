@@ -366,7 +366,7 @@ export default function CreateListing() {
               render={({ field }) => (
                 <PhoneInput
                   defaultCountry="BD"
-                  value={field.value}
+                  value={userDetail?.phoneNumber}
                   onChange={field.onChange}
                   className="w-full p-1.5 border focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
