@@ -27,8 +27,8 @@ export default function ImageSlider({ data }: ImageSliderProps) {
       <Swiper
         style={
           {
-            "--swiper-navigation-color": "#fff",
-            "--swiper-pagination-color": "#fff",
+            "--swiper-navigation-color": "#ffff",
+            "--swiper-pagination-color": "#ffff",
           } as React.CSSProperties
         }
         loop={true}
@@ -39,9 +39,9 @@ export default function ImageSlider({ data }: ImageSliderProps) {
         className="mySwiper2"
       >
         {data.map((item, index) => (
-          <SwiperSlide key={index}>
-            <div className="w-full relative h-96 object-cover">
-              <Image fill alt="" src={item} />
+          <SwiperSlide className="mb-2" key={index}>
+            <div className="w-full relative h-96 object-cover ">
+              <Image className="rounded-sm" fill alt="" src={item} />
             </div>
           </SwiperSlide>
         ))}
@@ -59,7 +59,7 @@ export default function ImageSlider({ data }: ImageSliderProps) {
         {data.map((item, index) => (
           <SwiperSlide key={index}>
             <div className="w-full relative h-20 object-cover">
-              <Image fill alt="" src={item} />
+              <Image fill className="rounded-sm" alt="" src={item} />
             </div>
           </SwiperSlide>
         ))}
