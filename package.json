@@ -34,6 +34,7 @@
     "react-icons": "^5.5.0",
     "react-leaflet": "^5.0.0",
     "react-phone-number-input": "^3.4.12",
+    "react-spinners": "^0.15.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "swiper": "^11.2.5",
