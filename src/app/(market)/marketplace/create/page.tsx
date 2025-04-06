@@ -33,7 +33,7 @@ export default function CreateListing() {
   const [photos, setPhotos] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
-  const [phoneNumberE, setPhoneNumberE] = useState("");
+
   const [photoError, setPhotoError] = useState<string>("");
   const methods = useForm<FormData>({
     defaultValues: {
@@ -54,6 +54,7 @@ export default function CreateListing() {
     reset,
     watch,
     setValue,
+    trigger,
     formState: { errors },
   } = methods;
 
@@ -73,20 +74,17 @@ export default function CreateListing() {
     setPhotos((prev) => prev.filter((_, i) => i !== index));
   };
   useEffect(() => {
+    console.log(userDetail);
     if (userDetail) {
       setValue("location", userDetail.village);
       setValue("userEmail", data?.user?.email || "");
+      setValue("userName", data?.user?.name || "");
     }
   }, [data, userDetail, setValue]);
   const onSubmit: SubmitHandler<FormData> = async (formData) => {
     setIsSubmitting(true);
-    setPhoneNumberE("");
+
     try {
-      if (!phoneNumber || (phoneNumber?.length ?? 0) < 14) {
-        setPhoneNumberE("please fill the phone number");
-        setIsSubmitting(false);
-        return;
-      }
       if (photos.length === 0) {
         setPhotoError("At least one photo is required to post a listing.");
         setIsSubmitting(false);
@@ -352,19 +350,19 @@ export default function CreateListing() {
               </div>
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Phone Number
-            </label>
+          <div className="mb-4">
+            <label className="block font-semibold text-gray-700">Contact</label>
             <PhoneInput
-              international
               defaultCountry="BD"
-              value={phoneNumber}
-              onChange={setPhoneNumber}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              value={userDetail?.phoneNumber}
+              onChange={(value) => {
+                setValue("phoneNumber", value || "");
+                trigger("phoneNumber");
+              }}
+              className="w-full p-1.5 border focus:outline-none focus:ring-2 focus:ring-green-500"
             />
-            {phoneNumberE && (
-              <p className="text-red-500 text-sm">{phoneNumberE}</p>
+            {errors.phoneNumber && (
+              <span className="text-red-500">{errors.phoneNumber.message}</span>
             )}
           </div>
           <button
