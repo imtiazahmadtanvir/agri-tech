@@ -259,11 +259,7 @@ export default function CreateListing() {
                     </p>
                   )}
                 </div>
-                <div
-                  className={`${
-                    selectedCategory === "pesticides" ? "hidden" : ""
-                  } col-span-2 grid-cols-2 grid gap-4`}
-                >
+                <div className={` col-span-2 grid-cols-2 grid gap-4`}>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       Unit
