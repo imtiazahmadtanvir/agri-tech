@@ -1,6 +1,7 @@
 "use client";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import { FormData } from "@/types/type";
+import { timeAgeCalculator } from "@/utils/timeCalculate";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
@@ -90,6 +91,7 @@ function MarketplaceMain() {
                   <p className="text-gray-500 text-sm">
                     Contact: {item.phoneNumber}
                   </p>
+                  <p>{timeAgeCalculator(item?.listed || "")}</p>
                 </div>
               </div>
             ))}

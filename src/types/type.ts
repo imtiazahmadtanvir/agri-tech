@@ -91,6 +91,7 @@ export interface FormData {
     location: string;
     contactInfo?: [];
     photos: File[]
+    listed?: string;
     phoneNumber: number | string
     // Category-specific fields
     cropType?: string;
