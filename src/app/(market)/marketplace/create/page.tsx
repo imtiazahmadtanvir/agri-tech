@@ -6,7 +6,12 @@ import type { FormData } from "@/types/type";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  FormProvider,
+  Controller,
+} from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import axios from "axios";
@@ -44,6 +49,7 @@ export default function CreateListing() {
       quantity: "",
       location: userDetail?.village || "",
       unit: "",
+      phoneNumber: "",
       isNegotiable: false,
     },
   });
@@ -54,7 +60,7 @@ export default function CreateListing() {
     reset,
     watch,
     setValue,
-    trigger,
+    control,
     formState: { errors },
   } = methods;
 
@@ -353,14 +359,18 @@ export default function CreateListing() {
           </div>
           <div className="mb-4">
             <label className="block font-semibold text-gray-700">Contact</label>
-            <PhoneInput
-              defaultCountry="BD"
-              value={userDetail?.phoneNumber}
-              onChange={(value) => {
-                setValue("phoneNumber", value || "");
-                trigger("phoneNumber");
-              }}
-              className="w-full p-1.5 border focus:outline-none focus:ring-2 focus:ring-green-500"
+            <Controller
+              name="phoneNumber"
+              control={control}
+              rules={{ required: "Phone number is required" }} // Optional validation
+              render={({ field }) => (
+                <PhoneInput
+                  defaultCountry="BD"
+                  value={field.value}
+                  onChange={field.onChange}
+                  className="w-full p-1.5 border focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              )}
             />
             {errors.phoneNumber && (
               <span className="text-red-500">{errors.phoneNumber.message}</span>
