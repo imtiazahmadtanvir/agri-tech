@@ -28,7 +28,6 @@ const Register = () => {
     setLoading(true);
 
     const data = await registerUser(formData);
-    console.log(data);
 
     if (data.success) {
       toast.success("Registration successful!");

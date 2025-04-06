@@ -72,7 +72,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     } catch {
 
         return NextResponse.json({
-            success: false, message: "Failed to add product", error: "error from"
+            success: false, message: "Failed to add product", error: "error from post request"
         }, { status: 500 })
     }
 

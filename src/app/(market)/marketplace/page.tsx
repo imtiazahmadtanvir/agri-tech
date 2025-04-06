@@ -1,18 +1,32 @@
 "use client";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { useMarketPlace } from "@/context/MarketplaceContext";
-import { useEffect, useState } from "react";
+import { FormData } from "@/types/type";
+import { timeAgeCalculator } from "@/utils/timeCalculate";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Image from "next/image";
+import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 function MarketplaceMain() {
-  const { minPrice, maxPrice, selectedCategories, activeSection } =
-    useMarketPlace();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
+  const { minPrice, maxPrice, selectedCategories } = useMarketPlace();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("");
-
-  useEffect(() => {}, []);
+  async function fetchItems(): Promise<FormData[]> {
+    const response = await axios.get("/api/listings");
+    return response.data.data;
+  }
+  const {
+    data: items,
+    error,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["marketplaceItems"],
+    queryFn: fetchItems,
+  });
+  console.log(items);
   return (
     <>
       <div className="my-4 flex justify-between">
@@ -34,6 +48,47 @@ function MarketplaceMain() {
             <IoSearch size={20} />
           </div>
         </div>
+      </div>
+      <div>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : error ? (
+          <div className="flex justify-center items-center">
+            <p>{error.message}</p>
+          </div>
+        ) : items?.length === 0 ? (
+          <div className="flex justify-center items-center h-full">
+            <p className="text-gray-500">No listings found.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            {items?.map((item) => (
+              <div className="border p-3 rounded-md" key={item._id}>
+                <div className="w-full h-56 relative">
+                  <Image
+                    className="object-cover rounded-md border"
+                    fill
+                    src={
+                      typeof item.photos[0] === "string"
+                        ? item.photos[0]
+                        : URL.createObjectURL(item.photos[0])
+                    }
+                    alt={item.productName}
+                  />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mt-2">
+                    {item.productName}
+                  </h3>
+
+                  <p className="text-gray-800 font-bold mt-1">{item.price} $</p>
+                  <p className="text-gray-500 text-sm">{item.location}</p>
+                  <p>{timeAgeCalculator(item?.listed || "")}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

@@ -79,6 +79,9 @@ export interface MarketplaceItemForBuy {
     listed: string;
 }
 export interface FormData {
+    _id?: string;
+    userEmail: string;
+    userName: string;
     productName: string;
     category: string;
     description: string;
@@ -86,11 +89,15 @@ export interface FormData {
     quantity: number | "";
     unit?: string;
     location: string;
-    contactInfo: string;
+    contactInfo?: [];
     photos: File[]
-    availabilityDate: string;
+    listed?: string;
+    phoneNumber: number | string
     // Category-specific fields
     cropType?: string;
+    fertilizerType?: string;
+    equipmentType?: string;
+    pesticideType?: string;
     harvestDate?: string;
     organicStatus?: boolean;
     qualityGrade?: string;

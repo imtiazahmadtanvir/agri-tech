@@ -1,18 +1,14 @@
 "use client";
+import LocationModal from "@/components/modal/LocationModal";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import Link from "next/link";
-import React from "react";
-import { IoAdd, IoColorPalette, IoLeafOutline } from "react-icons/io5";
-import { PiFarmBold } from "react-icons/pi";
+import React, { useState } from "react";
+import { IoAdd, IoLocationSharp } from "react-icons/io5";
+
 export default function Sidebar() {
-  const {
-    setActiveSection,
-    activeSection,
-    setMaxPrice,
-    maxPrice,
-    setMinPrice,
-    minPrice,
-  } = useMarketPlace();
+  const { pathname, setMaxPrice, maxPrice, setMinPrice, minPrice } =
+    useMarketPlace();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const marketplaceCategories = [
     { name: "crops", emoji: "🌾" },
@@ -36,52 +32,42 @@ export default function Sidebar() {
       <div className="space-y-2">
         <Link
           href="/marketplace"
-          onClick={() => setActiveSection("products")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            activeSection === "products"
-              ? "bg-green-700 text-white"
-              : "bg-white"
+            pathname === "/marketplace" ? "bg-green-700 text-white" : "bg-white"
           }`}
         >
-          Products
+          All Products
         </Link>
 
         <Link
           href="/marketplace/inbox"
-          onClick={() => setActiveSection("inbox")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            activeSection === "inbox" ? "bg-green-700 text-white" : "bg-white"
+            pathname === "/marketplace/inbox"
+              ? "bg-green-700 text-white"
+              : "bg-white"
           }`}
         >
           Inbox
         </Link>
 
         <Link
-          href="/marketplace/buying"
-          onClick={() => setActiveSection("buying")}
-          className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            activeSection === "buying" ? "bg-green-700 text-white" : "bg-white"
-          }`}
-        >
-          Buying
-        </Link>
-
-        <Link
           href="/marketplace/selling"
-          onClick={() => setActiveSection("selling")}
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            activeSection === "selling" ? "bg-green-700 text-white" : "bg-white"
+            pathname === "/marketplace/selling"
+              ? "bg-green-700 text-white"
+              : "bg-white"
           }`}
         >
-          Selling
+          My Listing
         </Link>
 
         {/* Create Listing Button */}
         <Link
           href={"/marketplace/create"}
-          onClick={() => setActiveSection("create")}
           className={`w-full py-2 px-3 text-center border rounded-md flex items-center justify-center gap-2 hover:bg-green-700 hover:text-white ${
-            activeSection === "create" ? "bg-green-700 text-white" : "bg-white"
+            pathname === "/marketplace/create"
+              ? "bg-green-700 text-white"
+              : "bg-white"
           }`}
         >
           <IoAdd /> Create Listing
@@ -92,9 +78,30 @@ export default function Sidebar() {
       <div className="">
         <div className="mt-4">
           <h3 className="text-lg font-semibold text-gray-700">Location</h3>
-          <button className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100"
+          >
             Select Location
           </button>
+          <LocationModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          >
+            <p className="text-center py-4 border-b">Change location</p>
+            <div className="px-4 py-3.5">
+              <label className="flex items-center" htmlFor="location">
+                <IoLocationSharp /> Location
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 rounded-md py-3"
+                placeholder="Enter your city"
+                name=""
+                id="location"
+              />
+            </div>
+          </LocationModal>
         </div>
 
         {/* Price Filters */}
@@ -124,15 +131,6 @@ export default function Sidebar() {
               placeholder="Max Price"
             />
           </div>
-
-          <input
-            max={10000}
-            min={0}
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
-            className="w-full mt-2 accent-yellow-400 active:accent-amber-700"
-            type="range"
-          />
         </div>
 
         {/* Categories */}
@@ -142,7 +140,7 @@ export default function Sidebar() {
             {marketplaceCategories.map(({ name, emoji }) => (
               <button
                 key={name}
-                className="w-full py-2 px-3 text-left border rounded-md capitalize bg-white hover:bg-green-100 flex items-center gap-2"
+                className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
               >
                 {emoji}
                 {name}
