@@ -102,7 +102,8 @@ export default function CreateListing() {
         description: "",
         price: "",
         quantity: "",
-        location: "",
+        location: userDetail?.village || "",
+        photos: [],
         unit: "",
         isNegotiable: false,
       });
