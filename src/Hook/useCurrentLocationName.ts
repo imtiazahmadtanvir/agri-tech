@@ -19,7 +19,7 @@ const fetchLocationName = async () => {
                 }
 
                 const data = await res.json();
-                resolve(data.address); // return address object
+                resolve(data.address);
             },
             (error) => {
                 reject(error.message);

@@ -3,6 +3,7 @@ import { useMarketPlace } from "@/context/MarketplaceContext";
 import { FormData } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Image from "next/image";
 import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
@@ -59,7 +60,40 @@ function MarketplaceMain() {
             <p className="text-gray-500">No listings found.</p>
           </div>
         ) : (
-          <div>content</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {items?.map((item) => (
+              <div className="border p-3 rounded-md" key={item._id}>
+                <div>
+                  <Image
+                    width={300}
+                    height={200}
+                    src={
+                      typeof item.photos[0] === "string"
+                        ? item.photos[0]
+                        : URL.createObjectURL(item.photos[0])
+                    }
+                    alt={item.productName}
+                    className="w-full h-48 object-cover rounded-md"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mt-2">
+                    {item.productName}
+                  </h3>
+
+                  <p className="text-gray-800 font-bold mt-1">
+                    Price: {item.price} $
+                  </p>
+                  <p className="text-gray-500 text-sm">
+                    Location: {item.location}
+                  </p>
+                  <p className="text-gray-500 text-sm">
+                    Contact: {item.phoneNumber}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </>

@@ -79,6 +79,7 @@ export interface MarketplaceItemForBuy {
     listed: string;
 }
 export interface FormData {
+    _id?: string;
     userEmail: string;
     userName: string;
     productName: string;

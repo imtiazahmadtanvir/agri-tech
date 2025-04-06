@@ -26,6 +26,7 @@ export const POST = async (req: NextRequest) => {
             body.userName = user?.user.name;
             body.userEmail = user?.user.email;
             body.userImage = user?.user.image;
+            body.listed = new Date().toISOString();
             const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
             const result = await listingsCollection.insertOne(body)
             return NextResponse.json({ success: true, message: 'Listing posted successfully!', data: result }, { status: 201 })
@@ -37,7 +38,5 @@ export const POST = async (req: NextRequest) => {
 
     }
 
-
-    return
 
 }
