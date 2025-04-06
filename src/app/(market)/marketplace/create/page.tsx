@@ -362,9 +362,10 @@ export default function CreateListing() {
             <Controller
               name="phoneNumber"
               control={control}
-              rules={{ required: "Phone number is required" }} // Optional validation
+              rules={{ required: "Phone number is required" }}
               render={({ field }) => (
                 <PhoneInput
+                  disabled={userDetail?.phoneNumber ? true : false}
                   defaultCountry="BD"
                   value={userDetail?.phoneNumber}
                   onChange={field.onChange}
