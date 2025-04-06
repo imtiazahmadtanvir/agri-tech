@@ -6,6 +6,7 @@ import { timeAgeCalculator } from "@/utils/timeCalculate";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
@@ -62,29 +63,33 @@ function MarketplaceMain() {
         ) : (
           <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             {items?.map((item) => (
-              <div className="border p-3 rounded-md" key={item._id}>
-                <div className="w-full h-56 relative">
-                  <Image
-                    className="object-cover rounded-md border"
-                    fill
-                    src={
-                      typeof item.photos[0] === "string"
-                        ? item.photos[0]
-                        : URL.createObjectURL(item.photos[0])
-                    }
-                    alt={item.productName}
-                  />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold mt-2">
-                    {item.productName}
-                  </h3>
+              <Link href={`/marketplace/create/${item._id}`} key={item._id}>
+                <div className="border p-3 rounded-md">
+                  <div className="w-full h-56 relative">
+                    <Image
+                      className="object-cover rounded-md border"
+                      fill
+                      src={
+                        typeof item.photos[0] === "string"
+                          ? item.photos[0]
+                          : URL.createObjectURL(item.photos[0])
+                      }
+                      alt={item.productName}
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mt-2">
+                      {item.productName}
+                    </h3>
 
-                  <p className="text-gray-800 font-bold mt-1">{item.price} $</p>
-                  <p className="text-gray-500 text-sm">{item.location}</p>
-                  <p>{timeAgeCalculator(item?.listed || "")}</p>
+                    <p className="text-gray-800 font-bold mt-1">
+                      {item.price} $
+                    </p>
+                    <p className="text-gray-500 text-sm">{item.location}</p>
+                    <p>{timeAgeCalculator(item?.listed || "")}</p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
