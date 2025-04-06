@@ -12,6 +12,7 @@ import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import axios from "axios";
 import { uploadPhotos } from "@/utils/imageUpload";
 import toast from "react-hot-toast";
+import useUserDetail from "@/Hook/useUserDetail";
 
 const marketplaceCategories = [
   { name: "crops" },
@@ -26,6 +27,9 @@ const marketplaceCategories = [
 
 export default function CreateListing() {
   const { data } = useSession();
+  const { userDetail } = useUserDetail();
+  console.log(userDetail);
+  console.log(data);
   const [previews, setPreviews] = useState<string[]>([]);
   const [photos, setPhotos] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);

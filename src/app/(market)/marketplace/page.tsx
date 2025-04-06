@@ -12,7 +12,7 @@ function MarketplaceMain() {
   const [items, setItems] = useState<MarketplaceItemForBuy[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("");
-
+  console.log(items);
   useEffect(() => {
     const fetchListings = async () => {
       setLoading(true);

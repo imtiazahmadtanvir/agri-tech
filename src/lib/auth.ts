@@ -90,7 +90,6 @@ export const authOptions: NextAuthOptions = {
                 token.email = user.email;
                 token.role = user.role || "farmer";
                 token.image = user.image ?? null;
-
                 if (account?.provider === "google" || account?.provider === "github") {
                     token.isOAuth = true;
                 } else if (account?.provider === "credentials") {
