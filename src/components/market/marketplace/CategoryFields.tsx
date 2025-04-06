@@ -459,14 +459,15 @@ export default function CategoryFields({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Expiry Date
+              Volume
             </label>
             <input
-              type="date"
-              {...register("expiryData", {
+              type="text"
+              {...register("volume", {
                 required: "Expiry date is required",
               })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="200ml, 2L"
             />
             {errors.expiryData && (
               <p className="text-red-500 text-sm">
