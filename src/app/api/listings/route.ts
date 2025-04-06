@@ -2,7 +2,7 @@ import { authOptions } from "@/lib/auth";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-export const GET = async (req: NextRequest,) => {
+export const GET = async () => {
     try {
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const result = await listingsCollection.find({}).toArray()
@@ -27,6 +27,7 @@ export const POST = async (req: NextRequest) => {
             body.userEmail = user?.user.email;
             body.userImage = user?.user.image;
             body.listed = new Date().toISOString();
+            body.verifyStatus = false
             const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
             const result = await listingsCollection.insertOne(body)
             return NextResponse.json({ success: true, message: 'Listing posted successfully!', data: result }, { status: 201 })

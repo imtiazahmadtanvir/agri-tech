@@ -21,7 +21,6 @@ function MarketplaceMain() {
     data: items,
     error,
     isLoading,
-    refetch,
   } = useQuery({
     queryKey: ["marketplaceItems"],
     queryFn: fetchItems,
