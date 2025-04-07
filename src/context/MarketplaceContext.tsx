@@ -5,10 +5,12 @@ interface MarketplaceContextType {
   minPrice: number | string;
   maxPrice: number | string;
   pathname: string;
+  location: string;
   selectedCategories: string;
   setMinPrice: (value: number | string) => void;
   setMaxPrice: (value: number | string) => void;
   setSelectedCategories: (categories: string) => void;
+  setLocation: (Location: string) => void;
 }
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(
   undefined
@@ -23,11 +25,14 @@ export default function MarketplaceProvider({
   const [minPrice, setMinPrice] = useState<number | string>("");
   const [maxPrice, setMaxPrice] = useState<number | string>("");
   const [selectedCategories, setSelectedCategories] = useState<string>("");
+  const [location, setLocation] = useState("");
 
   return (
     <MarketplaceContext.Provider
       value={{
         minPrice,
+        location,
+        setLocation,
         maxPrice,
         selectedCategories,
         pathname,

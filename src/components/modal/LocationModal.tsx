@@ -1,14 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { IoLocationSharp } from "react-icons/io5";
+import { IoMdClose } from "react-icons/io";
+import useCurrentLocationName from "@/Hook/useCurrentLocationName";
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
 }
-export default function LocationModal({
-  isOpen,
-  onClose,
-  children,
-}: ModalProps) {
+
+export default function LocationModal({ isOpen, onClose }: ModalProps) {
+  const [mode, setMode] = useState<"all" | "current" | "manual">("all");
+  const [manualLocation, setManualLocation] = useState("");
+
+  const {
+    data: locationData,
+    isLoading,
+    error,
+    refetch,
+  } = useCurrentLocationName();
+
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("overflow-hidden");
@@ -19,17 +29,121 @@ export default function LocationModal({
       document.body.classList.remove("overflow-hidden");
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (mode === "current") {
+      refetch();
+    }
+  }, [mode, refetch]);
+
+  const handleApply = () => {
+    if (mode === "manual") {
+      console.log("Manual Location:", manualLocation);
+    } else if (mode === "current" && locationData) {
+    } else if (mode === "all") {
+      console.log("All Locations selected");
+    }
+    onClose();
+  };
+
   if (!isOpen) return null;
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/20 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-md relative">
+      <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-md relative px-4 py-6">
         <button
-          className="absolute top-2 right-2 text-gray-600"
+          className="absolute top-2 right-2 size-6 rounded-full bg-gray-300 cursor-pointer hover:bg-gray-400 flex items-center justify-center"
           onClick={onClose}
         >
-          ✖
+          <IoMdClose size={20} />
         </button>
-        {children}
+
+        <p className="text-center text-lg font-semibold mb-4">
+          Select Location
+        </p>
+
+        <div className="flex flex-col gap-3">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="locationMode"
+              checked={mode === "all"}
+              onChange={() => setMode("all")}
+            />
+            All Locations
+          </label>
+
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="locationMode"
+              checked={mode === "current"}
+              onChange={() => setMode("current")}
+            />
+            Use Current Location
+          </label>
+
+          {mode === "current" && (
+            <div className="ml-6 text-sm text-gray-600">
+              {isLoading && <p>Fetching current location...</p>}
+              {error && <p className="text-red-500">Error: {String(error)}</p>}
+              {typeof locationData === "object" && locationData && (
+                <p>
+                  {locationData.city ||
+                    locationData.town ||
+                    locationData.village}
+                  , {locationData.state || locationData.country}
+                </p>
+              )}
+            </div>
+          )}
+
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="locationMode"
+              checked={mode === "manual"}
+              onChange={() => setMode("manual")}
+            />
+            Enter Manually
+          </label>
+
+          {mode === "manual" && (
+            <div className="ml-6 mt-2 flex flex-col gap-2">
+              <label
+                htmlFor="manualLocation"
+                className="flex items-center gap-1 text-gray-700"
+              >
+                <IoLocationSharp /> Location
+              </label>
+              <input
+                type="text"
+                id="manualLocation"
+                className="border px-3 py-2 rounded-md w-full"
+                placeholder="Enter your city"
+                value={manualLocation}
+                onChange={(e) => setManualLocation(e.target.value)}
+              />
+              <button
+                className="bg-primary text-white py-2 rounded-md hover:bg-primary/90 transition"
+                onClick={handleApply}
+              >
+                Apply
+              </button>
+            </div>
+          )}
+        </div>
+
+        {mode !== "manual" && (
+          <div className="mt-6 text-center">
+            <button
+              className="bg-primary text-white py-2 px-6 rounded-md hover:bg-primary/90 transition"
+              onClick={handleApply}
+            >
+              Apply
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

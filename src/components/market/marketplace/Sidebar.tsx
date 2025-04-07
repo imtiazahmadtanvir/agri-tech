@@ -108,21 +108,7 @@ export default function Sidebar() {
             <LocationModal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
-            >
-              <p className="text-center py-4 border-b">Change location</p>
-              <div className="px-4 py-3.5">
-                <label className="flex items-center" htmlFor="location">
-                  <IoLocationSharp /> Location
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-4 rounded-md py-3"
-                  placeholder="Enter your city"
-                  name=""
-                  id="location"
-                />
-              </div>
-            </LocationModal>
+            ></LocationModal>
           </div>
           <div className="flex gap-2 mt-2">
             <input
