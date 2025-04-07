@@ -48,7 +48,7 @@ const HeroBanner: React.FC = () => {
   ];
 
   return (
-    <section className="relative">
+    <section className="relative z-30">
       <Swiper
         modules={[Navigation, A11y]}
         spaceBetween={0}

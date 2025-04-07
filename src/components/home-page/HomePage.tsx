@@ -9,7 +9,7 @@ import PatnerSection from "./patner-section/partner-section";
 
 const HomePage = () => {
   return (
-    <section className="relative -z-10">
+    <section className="relative ">
       <HeroBanner />
       <ServicesOverview />
       <AboutUs />
