@@ -16,7 +16,9 @@ function Layout({ children }: { children: React.ReactNode }) {
         <div className={`${activePath ? "hidden " : ""}`}>
           <Sidebar />
         </div>
-        <div className={`${activePath ? "w-full" : "w-3/4"}`}>{children}</div>
+        <div className={`${activePath ? "w-full mx-4" : "w-3/4"}`}>
+          {children}
+        </div>
       </ContainerSmall>
     </MarketplaceProvider>
   );

@@ -19,7 +19,6 @@ interface ImageSliderProps {
 }
 
 export default function ImageSlider({ data }: ImageSliderProps) {
-  console.log(data);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
 
   return (
@@ -48,7 +47,6 @@ export default function ImageSlider({ data }: ImageSliderProps) {
       </Swiper>
       <Swiper
         onSwiper={setThumbsSwiper}
-        loop={true}
         spaceBetween={10}
         slidesPerView={4}
         freeMode={true}

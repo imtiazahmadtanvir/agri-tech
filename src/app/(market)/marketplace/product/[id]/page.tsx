@@ -34,7 +34,7 @@ export default async function ProductDetails({
   } = res?.data;
   console.log(res?.data);
   return (
-    <div className="mt-4">
+    <div className="my-4 p-4 border rounded-sm ">
       <div className="flex justify-between ">
         <div>
           <h3 className="font-semibold text-xl">{productName}</h3>
