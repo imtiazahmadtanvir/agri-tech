@@ -13,7 +13,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <MarketplaceProvider>
       <ContainerSmall className="flex gap-4">
-        <div className={`${activePath ? "hidden " : ""}`}>
+        <div className={`${activePath ? "hidden " : ""} w-1/4`}>
           <Sidebar />
         </div>
         <div className={`${activePath ? "w-full mx-4" : "w-3/4"}`}>

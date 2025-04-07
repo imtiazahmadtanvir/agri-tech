@@ -82,39 +82,39 @@ export default function Sidebar() {
 
       {/* Location Selector */}
       <div className="">
-        <div className="mt-4">
-          <h3 className="text-lg font-semibold text-gray-700">Location</h3>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100"
-          >
-            Select Location
-          </button>
-          <LocationModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          >
-            <p className="text-center py-4 border-b">Change location</p>
-            <div className="px-4 py-3.5">
-              <label className="flex items-center" htmlFor="location">
-                <IoLocationSharp /> Location
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 rounded-md py-3"
-                placeholder="Enter your city"
-                name=""
-                id="location"
-              />
-            </div>
-          </LocationModal>
-        </div>
-
         {/* Price Filters */}
         <div className="mt-4">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold text-gray-700">Filters</h3>
+
             <button className="">Clear </button>
+          </div>
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold text-gray-700">Location</h3>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100"
+            >
+              Select Location
+            </button>
+            <LocationModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            >
+              <p className="text-center py-4 border-b">Change location</p>
+              <div className="px-4 py-3.5">
+                <label className="flex items-center" htmlFor="location">
+                  <IoLocationSharp /> Location
+                </label>
+                <input
+                  type="text"
+                  className="w-full px-4 rounded-md py-3"
+                  placeholder="Enter your city"
+                  name=""
+                  id="location"
+                />
+              </div>
+            </LocationModal>
           </div>
           <div className="flex gap-2 mt-2">
             <input
