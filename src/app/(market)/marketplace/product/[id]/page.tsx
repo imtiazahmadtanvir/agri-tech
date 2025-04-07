@@ -5,12 +5,10 @@ import axios from "axios";
 import Image from "next/image";
 import { IoMdChatboxes } from "react-icons/io";
 import { IoShareSocialSharp } from "react-icons/io5";
-
-export default async function ProductDetails({
-  params,
-}: {
+type PageProps = {
   params: { id: string };
-}) {
+};
+export default async function ProductDetails({ params }: PageProps) {
   const { id } = await params;
 
   const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings/${id}`);
