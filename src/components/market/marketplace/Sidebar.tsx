@@ -9,10 +9,10 @@ export default function Sidebar() {
   const {
     pathname,
     setMaxPrice,
-    maxPrice,
     setMinPrice,
-    minPrice,
     setSelectedCategories,
+    maxPrice,
+    minPrice,
   } = useMarketPlace();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -118,20 +118,24 @@ export default function Sidebar() {
           </div>
           <div className="flex gap-2 mt-2">
             <input
-              value={minPrice}
-              max={maxPrice}
-              onChange={(e) => setMinPrice(Math.max(0, Number(e.target.value)))}
+              onChange={(e) => {
+                const value = Math.max(0, Number(e.target.value));
+                if (value <= Number(maxPrice) || maxPrice === "") {
+                  setMinPrice(value);
+                }
+              }}
               className="w-1/2 border p-2 rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
               type="number"
               placeholder="Min Price"
             />
+
             <input
-              value={maxPrice}
-              min={minPrice}
-              max={10000}
-              onChange={(e) =>
-                setMaxPrice(Math.min(10000, Number(e.target.value)))
-              }
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (value >= Number(minPrice) || minPrice === "") {
+                  setMaxPrice(value);
+                }
+              }}
               className="w-1/2 border p-2 rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
               type="number"
               placeholder="Max Price"
