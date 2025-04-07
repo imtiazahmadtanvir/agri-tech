@@ -6,8 +6,14 @@ import React, { useState } from "react";
 import { IoAdd, IoLocationSharp } from "react-icons/io5";
 
 export default function Sidebar() {
-  const { pathname, setMaxPrice, maxPrice, setMinPrice, minPrice } =
-    useMarketPlace();
+  const {
+    pathname,
+    setMaxPrice,
+    maxPrice,
+    setMinPrice,
+    minPrice,
+    setSelectedCategories,
+  } = useMarketPlace();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const marketplaceCategories = [
@@ -140,6 +146,7 @@ export default function Sidebar() {
             {marketplaceCategories.map(({ name, emoji }) => (
               <button
                 key={name}
+                onClick={() => setSelectedCategories(name)}
                 className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
               >
                 {emoji}

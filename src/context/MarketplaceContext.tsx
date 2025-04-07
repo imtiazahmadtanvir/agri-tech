@@ -2,8 +2,8 @@
 import { usePathname } from "next/navigation";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 interface MarketplaceContextType {
-  minPrice: number;
-  maxPrice: number;
+  minPrice: number | string;
+  maxPrice: number | string;
   pathname: string;
   selectedCategories: string;
   setMinPrice: (value: number) => void;
@@ -20,8 +20,8 @@ export default function MarketplaceProvider({
 }) {
   const pathname = usePathname();
 
-  const [minPrice, setMinPrice] = useState<number>(0);
-  const [maxPrice, setMaxPrice] = useState<number>(1000);
+  const [minPrice, setMinPrice] = useState<number | string>("");
+  const [maxPrice, setMaxPrice] = useState<number | string>("");
   const [selectedCategories, setSelectedCategories] = useState<string>("");
 
   return (

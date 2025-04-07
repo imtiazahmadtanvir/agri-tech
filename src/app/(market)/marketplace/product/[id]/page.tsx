@@ -36,8 +36,8 @@ export default async function ProductDetails({
     type,
     brand,
     volume,
+    nutritionalContent,
   } = res?.data;
-  console.log(res?.data);
   return (
     <div className="my-4 p-4 border rounded-sm ">
       <div className="flex justify-between ">
@@ -76,6 +76,9 @@ export default async function ProductDetails({
               {plantingSeason && <li>Planting Season: {plantingSeason}</li>}
               {type && <li>Organic : {type === "Organic" ? "yes" : "no"}</li>}
               {expiryData && <li> Expiry Date : {expiryData}</li>}
+              {nutritionalContent && (
+                <li>Nutritional : {nutritionalContent}</li>
+              )}
             </ul>
             <h2 className="font-semibold">Description</h2>
             <p>{description}</p>

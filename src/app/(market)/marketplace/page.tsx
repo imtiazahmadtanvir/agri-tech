@@ -13,7 +13,9 @@ import { IoSearch } from "react-icons/io5";
 function MarketplaceMain() {
   const { minPrice, maxPrice, selectedCategories } = useMarketPlace();
   const [searchQuery, setSearchQuery] = useState<string>("");
+  console.log(selectedCategories);
   const [sortBy, setSortBy] = useState<string>("");
+  console.log(maxPrice);
   async function fetchItems(): Promise<FormData[]> {
     const response = await axios.get("/api/listings");
     return response.data.data;
