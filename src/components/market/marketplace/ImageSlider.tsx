@@ -39,7 +39,7 @@ export default function ImageSlider({ data }: ImageSliderProps) {
         className="mySwiper2"
       >
         {data.map((item, index) => (
-          <SwiperSlide className="mb-2" key={index}>
+          <SwiperSlide className="mb-2 rounded-sm" key={index}>
             <div className="w-full relative h-96 object-cover ">
               <Image className="rounded-sm" fill alt="" src={item} />
             </div>

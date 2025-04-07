@@ -13,14 +13,31 @@ export default async function ProductDetails({
   const { id } = await params;
 
   const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings/${id}`);
-  console.log(res);
+  const {
+    productName,
+    listed,
+    location,
+    photos,
+    price,
+    isNegotiable,
+    condition,
+    organicStatus,
+    userName,
+    userImage,
+    breed,
+    age,
+    healthStatus,
+    description,
+    plantingSeason,
+  } = res?.data;
+  console.log(res?.data);
   return (
     <div className="mt-4">
       <div className="flex justify-between ">
         <div>
-          <h3 className="font-semibold text-xl">{res?.data?.productName}</h3>
+          <h3 className="font-semibold text-xl">{productName}</h3>
           <p>
-            {timeStamp(res?.data?.listed)}, <span>{res?.data?.location}</span>{" "}
+            Posted on {timeStamp(listed)}, <span>{location}</span>
           </p>
         </div>
         <div>
@@ -32,12 +49,24 @@ export default async function ProductDetails({
       </div>
       <div className="flex gap-4">
         <div className="w-2/3">
-          <ImageSlider data={res?.data?.photos} />
+          <ImageSlider data={photos} />
           <div>
-            <h3 className="text-2xl font-bold text-green-500">
-              {" "}
-              $ {res?.data?.price}
-            </h3>
+            <div className="flex gap-2 items-center text-sm">
+              <h3 className="text-2xl font-bold text-green-500"> $ {price}</h3>
+              <p className="italic">{isNegotiable ? "Negotiable" : ""}</p>
+            </div>
+            {condition && <p>Condition: {condition}</p>}
+            <ul>
+              {organicStatus && (
+                <li>Organic: {organicStatus ? "Yes" : "No"}</li>
+              )}
+              {breed && <li>Breed : {breed}</li>}
+              {healthStatus && <li>status : {healthStatus}</li>}
+              {age && <li>Age : {age} month</li>}
+              {plantingSeason && <li>Planting Season: {plantingSeason}</li>}
+            </ul>
+            <h2 className="font-semibold">Description</h2>
+            <p>{description}</p>
           </div>
         </div>
         <div className="w-1/3 scroll-mt-4 sticky top-0 h-fit border rounded-sm">
@@ -46,12 +75,12 @@ export default async function ProductDetails({
               width={50}
               height={50}
               className="rounded-full"
-              alt={res?.data?.userName}
-              src={res?.data?.userImage}
+              alt={userName}
+              src={userImage}
             />
             <div className="flex gap-1.5">
               <p>For sale by</p>
-              <h3>{res?.data?.userName}</h3>
+              <h3>{userName}</h3>
             </div>
           </div>
           <div className="py-3 border-b px-3">
