@@ -9,7 +9,7 @@ type PageProps = {
   params: { id: string };
 };
 export default async function ProductDetails({ params }: PageProps) {
-  const { id } = await params;
+  const { id } = params;
 
   const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings/${id}`);
   const {
