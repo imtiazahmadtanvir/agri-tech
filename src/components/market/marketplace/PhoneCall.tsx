@@ -22,7 +22,7 @@ export default function PhoneCall({ phoneNumber }: { phoneNumber?: string }) {
         {phoneNumber ? (
           <div>
             {isPhoneNumberVisible && (
-              <h3 className="font-bold text-xl">Call seller</h3>
+              <h3 className="font-semibold ">Call seller</h3>
             )}
             <h3
               className={`${
