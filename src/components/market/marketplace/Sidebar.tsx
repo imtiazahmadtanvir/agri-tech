@@ -15,7 +15,6 @@ export default function Sidebar() {
     minPrice,
   } = useMarketPlace();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const marketplaceCategories = [
     { name: "crops", emoji: "🌾" },
     { name: "livestock", emoji: "🐄" },

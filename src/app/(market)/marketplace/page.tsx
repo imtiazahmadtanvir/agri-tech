@@ -15,9 +15,16 @@ function MarketplaceMain() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   console.log(selectedCategories);
   const [sortBy, setSortBy] = useState<string>("");
-  console.log(maxPrice);
   async function fetchItems(): Promise<FormData[]> {
-    const response = await axios.get("/api/listings");
+    const response = await axios.get("/api/listings", {
+      params: {
+        minPrice,
+        maxPrice,
+        category: selectedCategories,
+        search: searchQuery,
+        sortBy,
+      },
+    });
     return response.data.data;
   }
   const {
@@ -25,14 +32,25 @@ function MarketplaceMain() {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["marketplaceItems"],
+    queryKey: [
+      "marketplaceItems",
+      maxPrice,
+      minPrice,
+      searchQuery,
+      selectedCategories,
+      sortBy,
+    ],
     queryFn: fetchItems,
   });
   console.log(items);
   return (
     <>
       <div className="my-4 flex justify-between">
-        <select className="border px-3 py-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="border px-3 py-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
           <option value="">Date: Newest on Top</option>
           <option value="date-old">Date: Oldest on Top</option>
           <option value="price-high">Price: High to Low</option>
