@@ -3,6 +3,7 @@ import PhoneCall from "@/components/market/marketplace/PhoneCall";
 import { timeStamp } from "@/utils/timestamp";
 import axios from "axios";
 import Image from "next/image";
+import { IoMdChatboxes } from "react-icons/io";
 import { IoShareSocialSharp } from "react-icons/io5";
 
 export default async function ProductDetails({
@@ -86,6 +87,12 @@ export default async function ProductDetails({
           </div>
           <div className="">
             <PhoneCall phoneNumber={phoneNumber} />
+          </div>
+          <div className="p-3 flex gap-2">
+            <span className="size-7  bg-green-500 rounded-full flex justify-center items-center">
+              <IoMdChatboxes className="text-white " />
+            </span>
+            <span className="font-semibold">Chat Now</span>
           </div>
         </div>
       </div>
