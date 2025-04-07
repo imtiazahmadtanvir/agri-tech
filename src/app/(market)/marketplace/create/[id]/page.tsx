@@ -38,7 +38,7 @@ export default async function ProductDetails({
       <div className="flex justify-between ">
         <div>
           <h3 className="font-semibold text-xl">{productName}</h3>
-          <p>
+          <p className="text-gray-500">
             Posted on {timeStamp(listed)}, <span>{location}</span>
           </p>
         </div>
@@ -81,15 +81,15 @@ export default async function ProductDetails({
               src={userImage}
             />
             <div className="flex gap-1.5">
-              <p>For sale by</p>
-              <h3>{userName}</h3>
+              <p className="text-gray-400">For sale by</p>
+              <h3 className="font-semibold">{userName}</h3>
             </div>
           </div>
           <div className="">
             <PhoneCall phoneNumber={phoneNumber} />
           </div>
           <div className="p-3 flex gap-2">
-            <span className="size-7  bg-green-500 rounded-full flex justify-center items-center">
+            <span className="size-8  bg-green-500 rounded-full flex justify-center items-center">
               <IoMdChatboxes className="text-white " />
             </span>
             <span className="font-semibold">Chat Now</span>
