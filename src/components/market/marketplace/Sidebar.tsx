@@ -22,7 +22,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className=" h-fit  sticky top-0 left-0 my-4 p-3 shadow-md rounded-lg bg-green-50">
+    <aside className=" h-fit sticky top-0  left-0 my-4 p-3 shadow-md rounded-lg bg-green-50">
       {/* Marketplace Section */}
       <h3 className="text-xl font-bold mb-4 text-green-700">
         Agriculture Marketplace
