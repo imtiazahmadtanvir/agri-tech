@@ -9,7 +9,12 @@ type QueryType = {
         $lte?: number;
     };
     category?: string;
+
     productName?: {
+        $regex: string;
+        $options: string;
+    };
+    location?: {
         $regex: string;
         $options: string;
     };
@@ -23,6 +28,7 @@ export const GET = async (req: NextRequest) => {
         const category = searchParams.get("category");
         const search = searchParams.get("search");
         const sortBy = searchParams.get("sortBy");
+        const location = searchParams.get("location");
         const query: QueryType = {};
 
         if (minPrice) query.price = { ...query.price, $gte: Number(minPrice) };
@@ -30,6 +36,9 @@ export const GET = async (req: NextRequest) => {
         if (category) query.category = category;
         if (search) {
             query.productName = { $regex: search, $options: "i" }
+        }
+        if (location && location !== "all location") {
+            query.location = { $regex: location, $options: "i" }
         }
         let sort: [string, SortDirection][] = [];
 

@@ -47,7 +47,7 @@ export default function LocationModal({
     } else if (mode === "current" && locationData) {
       setLocation(locationData?.city || "");
     } else if (mode === "all") {
-      setLocation("All locations");
+      setLocation("all location");
     }
     onClose();
   };

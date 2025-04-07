@@ -11,7 +11,7 @@ import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 function MarketplaceMain() {
-  const { minPrice, maxPrice, selectedCategories } = useMarketPlace();
+  const { minPrice, maxPrice, selectedCategories, location } = useMarketPlace();
   const [searchQuery, setSearchQuery] = useState<string>("");
   console.log(selectedCategories);
   const [sortBy, setSortBy] = useState<string>("");
@@ -23,6 +23,7 @@ function MarketplaceMain() {
         category: selectedCategories,
         search: searchQuery,
         sortBy,
+        location,
       },
     });
     return response.data.data;
