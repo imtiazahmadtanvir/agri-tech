@@ -1,8 +1,8 @@
 import ImageSlider from "@/components/market/marketplace/ImageSlider";
+import PhoneCall from "@/components/market/marketplace/PhoneCall";
 import { timeStamp } from "@/utils/timestamp";
 import axios from "axios";
 import Image from "next/image";
-import { FaPhoneAlt } from "react-icons/fa";
 import { IoShareSocialSharp } from "react-icons/io5";
 
 export default async function ProductDetails({
@@ -29,6 +29,7 @@ export default async function ProductDetails({
     healthStatus,
     description,
     plantingSeason,
+    phoneNumber,
   } = res?.data;
   console.log(res?.data);
   return (
@@ -83,8 +84,8 @@ export default async function ProductDetails({
               <h3>{userName}</h3>
             </div>
           </div>
-          <div className="py-3 border-b px-3">
-            <FaPhoneAlt className="text-green-500" />
+          <div className="">
+            <PhoneCall phoneNumber={phoneNumber} />
           </div>
         </div>
       </div>
