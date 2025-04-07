@@ -3,7 +3,8 @@ import LocationModal from "@/components/modal/LocationModal";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import Link from "next/link";
 import React, { useState } from "react";
-import { IoAdd, IoLocationSharp } from "react-icons/io5";
+import { FaLocationDot } from "react-icons/fa6";
+import { IoAdd } from "react-icons/io5";
 
 export default function Sidebar() {
   const {
@@ -13,8 +14,11 @@ export default function Sidebar() {
     setSelectedCategories,
     maxPrice,
     minPrice,
+    setLocation,
+    location,
   } = useMarketPlace();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const marketplaceCategories = [
     { name: "crops", emoji: "🌾" },
     { name: "livestock", emoji: "🐄" },
@@ -101,11 +105,15 @@ export default function Sidebar() {
             <h3 className="text-lg font-semibold text-gray-700">Location</h3>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-full py-2 mt-2 border rounded-md bg-white hover:bg-green-100"
+              className="w-full flex justify-center gap-1 items-center py-2 mt-2 border rounded-md bg-white hover:bg-green-100"
             >
-              Select Location
+              <span className="text-yellow-500">
+                <FaLocationDot />
+              </span>
+              <span>{location}</span>
             </button>
             <LocationModal
+              setLocation={setLocation}
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
             ></LocationModal>

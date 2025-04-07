@@ -6,9 +6,14 @@ import useCurrentLocationName from "@/Hook/useCurrentLocationName";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setLocation: (Location: string) => void;
 }
 
-export default function LocationModal({ isOpen, onClose }: ModalProps) {
+export default function LocationModal({
+  isOpen,
+  onClose,
+  setLocation,
+}: ModalProps) {
   const [mode, setMode] = useState<"all" | "current" | "manual">("all");
   const [manualLocation, setManualLocation] = useState("");
 
@@ -38,10 +43,11 @@ export default function LocationModal({ isOpen, onClose }: ModalProps) {
 
   const handleApply = () => {
     if (mode === "manual") {
-      console.log("Manual Location:", manualLocation);
+      setLocation(manualLocation);
     } else if (mode === "current" && locationData) {
+      setLocation(locationData?.city || "");
     } else if (mode === "all") {
-      console.log("All Locations selected");
+      setLocation("All locations");
     }
     onClose();
   };
@@ -89,10 +95,10 @@ export default function LocationModal({ isOpen, onClose }: ModalProps) {
               {error && <p className="text-red-500">Error: {String(error)}</p>}
               {typeof locationData === "object" && locationData && (
                 <p>
-                  {locationData.city ||
-                    locationData.town ||
-                    locationData.village}
-                  , {locationData.state || locationData.country}
+                  {locationData?.city ||
+                    locationData?.town ||
+                    locationData?.village}
+                  , {locationData?.state || locationData?.country}
                 </p>
               )}
             </div>
@@ -109,7 +115,7 @@ export default function LocationModal({ isOpen, onClose }: ModalProps) {
           </label>
 
           {mode === "manual" && (
-            <div className="ml-6 mt-2 flex flex-col gap-2">
+            <div className="ml-2  flex flex-col gap-2">
               <label
                 htmlFor="manualLocation"
                 className="flex items-center gap-1 text-gray-700"
@@ -119,22 +125,16 @@ export default function LocationModal({ isOpen, onClose }: ModalProps) {
               <input
                 type="text"
                 id="manualLocation"
-                className="border px-3 py-2 rounded-md w-full"
+                className="border px-2 py-1 rounded-md w-3/4"
                 placeholder="Enter your city"
                 value={manualLocation}
                 onChange={(e) => setManualLocation(e.target.value)}
               />
-              <button
-                className="bg-primary text-white py-2 rounded-md hover:bg-primary/90 transition"
-                onClick={handleApply}
-              >
-                Apply
-              </button>
             </div>
           )}
         </div>
 
-        {mode !== "manual" && (
+        {
           <div className="mt-6 text-center">
             <button
               className="bg-primary text-white py-2 px-6 rounded-md hover:bg-primary/90 transition"
@@ -143,7 +143,7 @@ export default function LocationModal({ isOpen, onClose }: ModalProps) {
               Apply
             </button>
           </div>
-        )}
+        }
       </div>
     </div>
   );
