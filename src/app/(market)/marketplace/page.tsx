@@ -63,9 +63,9 @@ function MarketplaceMain() {
         ) : (
           <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             {items?.map((item) => (
-              <Link href={`/marketplace/create/${item._id}`} key={item._id}>
+              <Link href={`/marketplace/product/${item._id}`} key={item._id}>
                 <div className="border p-3 rounded-md">
-                  <div className="w-full h-56 relative">
+                  <div className="w-full h-56 relative -z-10">
                     <Image
                       className="object-cover rounded-md border"
                       fill

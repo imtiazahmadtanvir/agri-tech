@@ -72,7 +72,7 @@ export default async function ProductDetails({
           </div>
         </div>
         <div className="w-1/3 scroll-mt-4 sticky top-0 h-fit border rounded-sm">
-          <div className="py-3 border-b px-3">
+          <div className="py-3 border-b px-3 -z-10">
             <Image
               width={50}
               height={50}
