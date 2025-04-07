@@ -121,7 +121,7 @@ export default function Sidebar() {
               value={minPrice}
               max={maxPrice}
               onChange={(e) => setMinPrice(Math.max(0, Number(e.target.value)))}
-              className="w-1/2 border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-1/2 border p-2 rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
               type="number"
               placeholder="Min Price"
             />
@@ -132,7 +132,7 @@ export default function Sidebar() {
               onChange={(e) =>
                 setMaxPrice(Math.min(10000, Number(e.target.value)))
               }
-              className="w-1/2 border p-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-1/2 border p-2 rounded-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
               type="number"
               placeholder="Max Price"
             />
