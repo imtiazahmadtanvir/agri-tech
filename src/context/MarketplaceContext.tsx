@@ -1,14 +1,16 @@
 "use client";
+import { usePathname } from "next/navigation";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 interface MarketplaceContextType {
-  minPrice: number;
-  maxPrice: number;
+  minPrice: number | string;
+  maxPrice: number | string;
+  pathname: string;
+  location: string;
   selectedCategories: string;
-  activeSection: string;
-  setMinPrice: (value: number) => void;
-  setMaxPrice: (value: number) => void;
+  setMinPrice: (value: number | string) => void;
+  setMaxPrice: (value: number | string) => void;
   setSelectedCategories: (categories: string) => void;
-  setActiveSection: (section: string) => void;
+  setLocation: (Location: string) => void;
 }
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(
   undefined
@@ -18,21 +20,24 @@ export default function MarketplaceProvider({
 }: {
   children: ReactNode;
 }) {
-  const [minPrice, setMinPrice] = useState<number>(0);
-  const [maxPrice, setMaxPrice] = useState<number>(1000);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [activeSection, setActiveSection] = useState<string>("products");
+  const pathname = usePathname();
+
+  const [minPrice, setMinPrice] = useState<number | string>("");
+  const [maxPrice, setMaxPrice] = useState<number | string>("");
+  const [selectedCategories, setSelectedCategories] = useState<string>("");
+  const [location, setLocation] = useState("all location");
 
   return (
     <MarketplaceContext.Provider
       value={{
         minPrice,
+        location,
+        setLocation,
         maxPrice,
         selectedCategories,
-        activeSection,
+        pathname,
         setMaxPrice,
         setMinPrice,
-        setActiveSection,
         setSelectedCategories,
       }}
     >

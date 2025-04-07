@@ -1,12 +1,20 @@
 "use client";
 import CategoryFields from "@/components/market/marketplace/CategoryFields";
-import PhoneNumberInput from "@/components/market/marketplace/PhoneNumberInput";
-import { FormData } from "@/types/type";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import type { FormData } from "@/types/type";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import axios from "axios";
+import { uploadPhotos } from "@/utils/imageUpload";
+import toast from "react-hot-toast";
+import useUserDetail from "@/Hook/useUserDetail";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+
 const marketplaceCategories = [
   { name: "crops" },
   { name: "livestock" },
@@ -17,285 +25,392 @@ const marketplaceCategories = [
   { name: "Animal Feed" },
   { name: "fisheries" },
 ];
+
 export default function CreateListing() {
   const { data } = useSession();
-  console.log(data);
+  const { userDetail, loading } = useUserDetail();
+
   const [previews, setPreviews] = useState<string[]>([]);
-  const [formData, setFormData] = useState<FormData>({
-    productName: "",
-    category: "",
-    description: "",
-    price: "",
-    quantity: "",
-    location: "",
-    availabilityDate: "",
-    contactInfo: "",
-    photos: [],
-    unit: "",
-    isNegotiable: false,
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [photoError, setPhotoError] = useState<string>("");
+  const methods = useForm<FormData>({
+    defaultValues: {
+      productName: "",
+      category: "",
+      description: "",
+      price: "",
+      quantity: "",
+      location: userDetail?.village || "",
+      unit: "",
+      phoneNumber: "",
+      isNegotiable: false,
+    },
   });
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value, type } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "number" && value !== "" ? Number(value) : value,
-    }));
-  };
-  console.log(formData);
-  // for file
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = methods;
+
   const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = e.target.files ? Array.from(e.target.files) : [];
     if (newFiles.length === 0) return;
     const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
-    setFormData((prev) => ({
-      ...prev,
-      photos: [...(prev.photos || []), ...newFiles],
-    }));
+    setPhotos((prev) => [...prev, ...newFiles]);
     setPreviews((prev) => [...prev, ...newPreviews]);
   };
-  // for delete photo
+
   const handelRemovePhoto = (index: number) => {
     setPreviews((prev) => {
       URL.revokeObjectURL(prev[index]);
       return prev.filter((_, i) => i !== index);
     });
-    setFormData((prev) => ({
-      ...prev,
-      photos: prev.photos?.filter((_, i) => i !== index),
-    }));
+    setPhotos((prev) => prev.filter((_, i) => i !== index));
   };
-  // for check box
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: checked }));
+  useEffect(() => {
+    console.log(userDetail);
+    if (userDetail) {
+      setValue("location", userDetail.village);
+      setValue("userEmail", data?.user?.email || "");
+      setValue("userName", data?.user?.name || "");
+      setValue("phoneNumber", userDetail.phoneNumber || "");
+    }
+  }, [data, userDetail, setValue]);
+
+  const onSubmit: SubmitHandler<FormData> = async (formData) => {
+    setIsSubmitting(true);
+
+    try {
+      if (photos.length === 0) {
+        setPhotoError("At least one photo is required to post a listing.");
+        setIsSubmitting(false);
+        return;
+      }
+      const photoUrls = await uploadPhotos(photos);
+      const listingData = { ...formData, photos: photoUrls };
+      const { data } = await axios.post("/api/listings", listingData);
+      if (data.success) {
+        toast.success(data.message);
+      }
+      reset({
+        productName: "",
+        category: "",
+        description: "",
+        price: "",
+        quantity: "",
+        location: userDetail?.village || "",
+        photos: [],
+        unit: "",
+        isNegotiable: false,
+      });
+      setPhotos([]);
+      setPreviews([]);
+      setPhotoError("");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+    console.log(formData);
   };
+
+  const selectedCategory = watch("category");
+
   return (
-    <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
-      <div className="">
-        <h3 className="text-2xl font-semibold ">Item for sale</h3>
-        <p>Photos {previews.length}/4- You can add up to 4 photos</p>
-      </div>
-      <form className="grid grid-cols-2 gap-4">
-        {/* photo */}
-        <div
-          className={`col-span-2 gap-3   ${
-            previews.length < 1 ? "" : "grid grid-cols-4"
-          }`}
-        >
-          {previews.map((preview, index) => (
-            <div key={index} className="relative">
-              <div className="relative w-full h-32 overflow-hidden rounded-md border">
-                <Image
-                  className="object-cover"
-                  fill
-                  alt={`Preview ${index + 1}`}
-                  src={preview}
-                />
-              </div>
-              <button
-                onClick={() => handelRemovePhoto(index)}
-                className="absolute top-0 text-red-500 cursor-pointer right-0"
-                type="button"
+    <>
+      {loading ? (
+        <>
+          <div className="flex justify-center items-center h-screen">
+            <LoadingSpinner />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
+            <div className="">
+              <h3 className="text-2xl font-semibold">Item for sale</h3>
+              <p>Photos {previews.length}/4 - You can add up to 4 photos</p>
+              {photoError && (
+                <p className="text-red-500 text-sm">{photoError}</p>
+              )}
+            </div>
+            <FormProvider {...methods}>
+              {" "}
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="grid grid-cols-2 gap-4"
               >
-                <IoMdCloseCircle size={25} />
-              </button>
-            </div>
-          ))}
-          {/* file input */}
-          <div className={`${previews.length >= 4 ? "hidden" : ""}`}>
-            <input
-              multiple
-              accept="image/*"
-              className="hidden"
-              id="file"
-              type="file"
-              onChange={handelFileChange}
-            />
-            <label
-              className={`${
-                previews.length < 1 ? "w-full h-32" : "h-32"
-              } border flex flex-col items-center bg-white cursor-pointer justify-center rounded-md`}
-              htmlFor="file"
-            >
-              <MdOutlineAddPhotoAlternate
-                size={30}
-                className="text-green-400"
-              />
-              Add photo
-            </label>
+                {/* Photo Upload */}
+                <div
+                  className={`col-span-2 gap-3 ${
+                    previews.length < 1 ? "" : "grid grid-cols-4"
+                  }`}
+                >
+                  {previews.map((preview, index) => (
+                    <div key={index} className="relative">
+                      <div className="relative w-full h-40 rounded-md">
+                        <Image
+                          className="object-cover rounded-md border"
+                          fill
+                          alt={`Preview ${index + 1}`}
+                          src={preview}
+                        />
+                      </div>
+                      <button
+                        onClick={() => handelRemovePhoto(index)}
+                        className="absolute top-0 text-red-300 cursor-pointer right-0"
+                        type="button"
+                      >
+                        <IoMdCloseCircle size={25} />
+                      </button>
+                    </div>
+                  ))}
+
+                  {previews.length < 4 && (
+                    <div>
+                      <input
+                        multiple
+                        accept="image/*"
+                        className="hidden"
+                        id="file"
+                        type="file"
+                        onChange={handelFileChange}
+                      />
+                      <label
+                        className={`${
+                          previews.length < 1 ? "w-full h-40" : "h-40"
+                        } border flex flex-col items-center bg-white cursor-pointer justify-center rounded-md`}
+                        htmlFor="file"
+                      >
+                        <MdOutlineAddPhotoAlternate
+                          size={30}
+                          className="text-green-400"
+                        />
+                        Add photo
+                      </label>
+                    </div>
+                  )}
+                </div>
+
+                {/* Form Fields */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Title
+                  </label>
+                  <input
+                    {...register("productName", {
+                      required: "Product name is required",
+                    })}
+                    type="text"
+                    placeholder="product name"
+                    className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
+                  {errors.productName && (
+                    <p className="text-red-500 text-sm">
+                      {errors.productName.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Category *
+                  </label>
+                  <select
+                    {...register("category", {
+                      required: "Category is required",
+                    })}
+                    className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
+                  >
+                    <option value="">Select a category</option>
+                    {marketplaceCategories.map((cat) => (
+                      <option key={cat.name} value={cat.name}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.category && (
+                    <p className="text-red-500 text-sm">
+                      {errors.category.message}
+                    </p>
+                  )}
+                </div>
+                <div className="col-span-2 w-full">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Description
+                  </label>
+                  <textarea
+                    {...register("description", {
+                      required: "Description is required",
+                    })}
+                    className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    rows={4}
+                    placeholder="more details about the product"
+                  />
+                  {errors.description && (
+                    <p className="text-red-500 text-sm">
+                      {errors.description.message}
+                    </p>
+                  )}
+                </div>
+                <div className={` col-span-2 grid-cols-2 grid gap-4`}>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Unit
+                    </label>
+                    <select
+                      {...register("unit", { required: "Unit is required" })}
+                      className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      <option value="">Select unit</option>
+                      <option value="kg">kg</option>
+                      <option value="ton">ton</option>
+                      <option value="piece">piece</option>
+                      <option value="litre">litre</option>
+                      <option value="dozen">dozen</option>
+                    </select>
+                    {errors.unit && (
+                      <p className="text-red-500 text-sm">
+                        {errors.unit.message}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Quantity
+                    </label>
+                    <input
+                      {...register("quantity", {
+                        required: "Quantity is required",
+                        valueAsNumber: true,
+                      })}
+                      type="number"
+                      placeholder="Enter quantity"
+                      className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
+                    />
+                    {errors.quantity && (
+                      <p className="text-red-500 text-sm">
+                        {errors.quantity.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-span-2 grid grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Price($)
+                    </label>
+                    <input
+                      {...register("price", {
+                        required: "Price is required",
+                        valueAsNumber: true,
+                      })}
+                      type="number"
+                      step={0.1}
+                      placeholder="Pick a good price"
+                      className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
+                    />
+                    {errors.price && (
+                      <p className="text-red-500 text-sm">
+                        {errors.price.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      {...register("isNegotiable")}
+                      type="checkbox"
+                      id="isNegotiable"
+                      className="w-4 h-4"
+                    />
+                    <label
+                      htmlFor="isNegotiable"
+                      className="text-sm text-gray-700"
+                    >
+                      Negotiable
+                    </label>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Location
+                    </label>
+                    <input
+                      {...register("location", {
+                        required: "Location is required",
+                      })}
+                      type="text"
+                      placeholder="e.g., Springfield Farm, IL"
+                      className="block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                    {errors.location && (
+                      <p className="text-red-500 text-sm">
+                        {errors.location.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="col-span-2 grid grid-cols-3 gap-4">
+                  {selectedCategory && (
+                    <div className="col-span-3">
+                      <CategoryFields
+                        register={register}
+                        errors={errors}
+                        watch={watch}
+                      />
+                    </div>
+                  )}
+                </div>
+                <div className="col-span-2">
+                  <h3>Contact details</h3>
+                  <div className="flex gap-12">
+                    <div>
+                      <p>Name</p>
+                      <h3>{data?.user?.name}</h3>
+                    </div>
+                    <div>
+                      <p>Email</p>
+                      <h3>{data?.user?.email}</h3>
+                    </div>
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <label className="block font-semibold text-gray-700">
+                    Contact
+                  </label>
+                  <PhoneInput
+                    defaultCountry="BD"
+                    value={userDetail?.phoneNumber}
+                    onChange={(value) => {
+                      setValue("phoneNumber", value || "");
+                      trigger("phoneNumber");
+                    }}
+                    className="w-full p-1.5 border focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
+                  {errors.phoneNumber && (
+                    <span className="text-red-500">
+                      {errors.phoneNumber.message}
+                    </span>
+                  )}
+                </div>
+                <button
+                  disabled={isSubmitting}
+                  type="submit"
+                  className="col-span-2 w-fit flex justify-self-end py-2 px-10 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
+                >
+                  {isSubmitting ? "Posting..." : "Post Listing"}
+                </button>
+              </form>
+            </FormProvider>
           </div>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Title
-          </label>
-          <input
-            type="text"
-            required
-            placeholder="product name"
-            name="productName"
-            value={formData.productName}
-            onChange={handleChange}
-            className="mt-1  block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Category *
-          </label>
-          <select
-            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            name="category"
-            required
-            value={formData.category}
-            onChange={handleChange}
-          >
-            <option value="">Select a category</option>
-            {marketplaceCategories.map((cat) => (
-              <option key={cat.name}>{cat.name}</option>
-            ))}
-          </select>
-        </div>
-        {/* description */}
-        <div className="col-span-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">
-            Description
-          </label>
-          <textarea
-            value={formData.description}
-            onChange={handleChange}
-            className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            rows={4}
-            placeholder="more details about the product"
-            name="description"
-            required
-          ></textarea>
-        </div>
-        <div className="col-span-2 grid-cols-2 grid gap-4">
-          {/* unit */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Unit
-            </label>
-            <select
-              name="unit"
-              value={formData.unit}
-              onChange={handleChange}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select unit</option>
-              <option value="kg">kg</option>
-              <option value="ton">ton</option>
-              <option value="piece">piece</option>
-              <option value="litre">litre</option>
-              <option value="dozen">dozen</option>
-            </select>
-          </div>
-          {/* quantity */}
-          <div>
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="quantity"
-            >
-              Quantity
-            </label>
-            <input
-              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
-              type="number"
-              name="quantity"
-              required
-              placeholder="Enter quantity"
-              value={formData.quantity}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <div className="col-span-2 grid grid-cols-3 gap-4 ">
-          {/* price */}
-          <div>
-            <label
-              className="block text-sm font-medium text-gray-700"
-              htmlFor="price"
-            >
-              Price($)
-            </label>
-            <input
-              className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
-              type="number"
-              name="price"
-              placeholder="Pick a good price"
-              value={formData.price}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          {/* Price Negotiation Checkbox */}
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="isNegotiable"
-              name="isNegotiable"
-              checked={formData.isNegotiable}
-              onChange={handleCheckboxChange}
-              className="w-4 h-4"
-            />
-            <label htmlFor="isNegotiable" className="text-sm text-gray-700">
-              Price Negotiable
-            </label>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Location
-            </label>
-            <input
-              type="text"
-              name="location"
-              className=" block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="e.g., Springfield Farm, IL"
-              required
-              value={formData.location}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <div className="col-span-2 grid grid-cols-3 gap-4">
-          {/* location */}
-          {formData.category && (
-            <div className="col-span-3">
-              <CategoryFields
-                formData={formData}
-                handleChange={handleChange}
-                handleCheckboxChange={handleCheckboxChange}
-              />
-            </div>
-          )}
-          {/* contact */}
-        </div>
-        <div className="col-span-2">
-          <h3>Contact details</h3>
-          <div className="flex gap-12">
-            <div>
-              <p>Name</p>
-              <h3>{data?.user?.name}</h3>
-            </div>
-            <div>
-              <p>Email</p>
-              <h3>{data?.user?.email}</h3>
-            </div>
-          </div>
-        </div>
-        <PhoneNumberInput />
-        <button
-          type="submit"
-          className="col-span-2 w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
-        >
-          Submit Listing
-        </button>
-      </form>
-    </div>
+        </>
+      )}
+    </>
   );
 }

@@ -1,19 +1,27 @@
+
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-export const middleware = async (req: NextRequest) => {
-    const token = await getToken({ req });
 
-    if (token) {
+export default async function middleware(req: NextRequest) {
+    const { pathname } = req.nextUrl;
+
+
+    if (["/login", "/register", "/complete-profile",].includes(pathname)) {
         return NextResponse.next();
+    }
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+
+    if (!token) {
+        const loginUrl = new URL("/login", req.url);
+        loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
+        return NextResponse.redirect(loginUrl);
     }
 
 
-    const loginUrl = new URL("/login", req.url);
-    loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
-};
+    return NextResponse.next();
+}
 
 export const config = {
-    matcher: ["/test", "/text/:path*", "/checkout/:path*"],
+    matcher: ["/dashboard/:path*", "/profile/:path*", "/marketplace/:path*"],
 };

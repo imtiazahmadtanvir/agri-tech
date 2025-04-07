@@ -20,13 +20,12 @@ export const loginUser = async (payload: Payload) => {
     if (!isPasswordOk) return null;
 
     revalidatePath("/");
-
+    console.log(user);
     return {
         _id: user._id.toString(),
         name: user.name,
         email: user.email,
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        role: user.role || "user",
+        isProfileComplete: user.isProfileComplete,
+        role: user.role || "farmer",
     };
 };
