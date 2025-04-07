@@ -35,6 +35,7 @@ export default async function ProductDetails({
     yearOfManufacture,
     type,
     brand,
+    volume,
   } = res?.data;
   console.log(res?.data);
   return (
@@ -57,7 +58,7 @@ export default async function ProductDetails({
         <div className="w-2/3">
           <ImageSlider data={photos} />
           <div>
-            <div className="flex gap-2 items-center text-sm">
+            <div className="flex mt-2 gap-2 items-center text-sm">
               <h3 className="text-2xl font-bold text-green-500"> $ {price}</h3>
               <p className="italic">{isNegotiable ? "Negotiable" : ""}</p>
             </div>
@@ -68,7 +69,7 @@ export default async function ProductDetails({
               {organicStatus && (
                 <li>Organic: {organicStatus ? "Yes" : "No"}</li>
               )}
-              {}
+              {volume && <li>Volume : {volume}</li>}
               {breed && <li>Breed : {breed}</li>}
               {healthStatus && <li>status : {healthStatus}</li>}
               {age && <li>Age : {age} month</li>}
