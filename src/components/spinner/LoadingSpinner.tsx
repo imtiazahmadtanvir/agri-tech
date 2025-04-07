@@ -1,9 +1,6 @@
-import React, { useState } from "react";
 import { FadeLoader } from "react-spinners";
 
 const LoadingSpinner = () => {
-  const [loading, setLoading] = useState(true);
-
   return (
     <div
       style={{
@@ -17,7 +14,7 @@ const LoadingSpinner = () => {
         height={15}
         width={5}
         color="#008236"
-        loading={loading}
+        loading={true}
         // speedMultiplier={0.8}
       />
     </div>
