@@ -33,6 +33,7 @@ export default function Sidebar() {
     setMaxPrice("");
     setMinPrice("");
     setSelectedCategories("");
+    setLocation("all location");
   };
   return (
     <aside className=" h-fit sticky top-0  left-0 my-4 p-3 shadow-md rounded-lg bg-green-50">
@@ -105,12 +106,12 @@ export default function Sidebar() {
             <h3 className="text-lg font-semibold text-gray-700">Location</h3>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-full flex justify-center gap-1 items-center py-2 mt-2 border rounded-md bg-white hover:bg-green-100"
+              className="w-full cursor-pointer flex justify-center gap-1 items-center py-2 mt-2 border rounded-md bg-white hover:bg-green-100"
             >
               <span className="text-yellow-500">
                 <FaLocationDot />
               </span>
-              <span>{location}</span>
+              <span className="capitalize">{location}</span>
             </button>
             <LocationModal
               setLocation={setLocation}

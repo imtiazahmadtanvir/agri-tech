@@ -29,6 +29,7 @@ export const GET = async (req: NextRequest) => {
         const search = searchParams.get("search");
         const sortBy = searchParams.get("sortBy");
         const location = searchParams.get("location");
+        console.log(location);
         const query: QueryType = {};
 
         if (minPrice) query.price = { ...query.price, $gte: Number(minPrice) };

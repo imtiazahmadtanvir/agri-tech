@@ -40,10 +40,11 @@ function MarketplaceMain() {
       searchQuery,
       selectedCategories,
       sortBy,
+      location,
     ],
     queryFn: fetchItems,
   });
-  console.log(items);
+
   return (
     <>
       <div className="my-4 flex justify-between">
