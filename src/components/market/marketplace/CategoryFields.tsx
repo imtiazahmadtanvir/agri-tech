@@ -110,16 +110,14 @@ export default function CategoryFields({
             </label>
             <input
               type="text"
-              {...register("chemicalComposition", {
+              {...register("brand", {
                 required: "Brand is required",
               })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., NPK 20-20-20"
             />
-            {errors.chemicalComposition && (
-              <p className="text-red-500 text-sm">
-                {errors.chemicalComposition.message}
-              </p>
+            {errors.brand && (
+              <p className="text-red-500 text-sm">{errors.brand.message}</p>
             )}
           </div>
           <div>
@@ -459,14 +457,15 @@ export default function CategoryFields({
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Expiry Date
+              Volume
             </label>
             <input
-              type="date"
-              {...register("expiryData", {
+              type="text"
+              {...register("volume", {
                 required: "Expiry date is required",
               })}
               className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="200ml, 2L"
             />
             {errors.expiryData && (
               <p className="text-red-500 text-sm">

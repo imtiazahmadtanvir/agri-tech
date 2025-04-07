@@ -1,9 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 
-const fetchLocationName = async () => {
+interface Address {
+    city?: string;
+    town?: string;
+    village?: string;
+    state?: string;
+    country?: string;
+}
+
+const fetchLocationName = async (): Promise<Address> => {
     return new Promise((resolve, reject) => {
         if (!navigator.geolocation) {
             reject("Geolocation is not supported");
+            return;
         }
 
         navigator.geolocation.getCurrentPosition(
@@ -15,11 +24,12 @@ const fetchLocationName = async () => {
                 );
 
                 if (!res.ok) {
-                    throw new Error("Failed to fetch location");
+                    reject("Failed to fetch location");
+                    return;
                 }
 
                 const data = await res.json();
-                resolve(data.address);
+                resolve(data.address as Address);
             },
             (error) => {
                 reject(error.message);
@@ -29,7 +39,7 @@ const fetchLocationName = async () => {
 };
 
 const useCurrentLocationName = () => {
-    return useQuery({
+    return useQuery<Address>({
         queryKey: ["currentLocationName"],
         queryFn: fetchLocationName,
         retry: false,
