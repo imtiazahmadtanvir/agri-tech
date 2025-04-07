@@ -25,7 +25,11 @@ export default function Sidebar() {
     { name: "Animal Feed", emoji: "🐾" },
     { name: "fisheries", emoji: "🐟" },
   ];
-
+  const restFiler = () => {
+    setMaxPrice("");
+    setMinPrice("");
+    setSelectedCategories("");
+  };
   return (
     <aside className=" h-fit sticky top-0  left-0 my-4 p-3 shadow-md rounded-lg bg-green-50">
       {/* Marketplace Section */}
@@ -86,7 +90,12 @@ export default function Sidebar() {
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold text-gray-700">Filters</h3>
 
-            <button className="">Clear </button>
+            <button
+              onClick={restFiler}
+              className="text-blue-500 cursor-pointer"
+            >
+              Clear
+            </button>
           </div>
           <div className="mt-4">
             <h3 className="text-lg font-semibold text-gray-700">Location</h3>

@@ -37,7 +37,6 @@ export const GET = async (req: NextRequest) => {
         else if (sortBy === "date-old") sort = [["listed", 1]];
         else if (sortBy === "price-high") sort = [["price", -1]];
         else if (sortBy === "price-low") sort = [["price", 1]];
-
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const result = await listingsCollection.find(query).sort(sort).toArray()
         return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result }, { status: 200 })

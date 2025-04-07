@@ -6,8 +6,8 @@ interface MarketplaceContextType {
   maxPrice: number | string;
   pathname: string;
   selectedCategories: string;
-  setMinPrice: (value: number) => void;
-  setMaxPrice: (value: number) => void;
+  setMinPrice: (value: number | string) => void;
+  setMaxPrice: (value: number | string) => void;
   setSelectedCategories: (categories: string) => void;
 }
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(
