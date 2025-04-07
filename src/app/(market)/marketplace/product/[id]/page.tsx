@@ -31,6 +31,10 @@ export default async function ProductDetails({
     description,
     plantingSeason,
     phoneNumber,
+    expiryData,
+    yearOfManufacture,
+    type,
+    brand,
   } = res?.data;
   console.log(res?.data);
   return (
@@ -59,13 +63,18 @@ export default async function ProductDetails({
             </div>
             {condition && <p>Condition: {condition}</p>}
             <ul>
+              {brand && <li>Brand : {brand}</li>}
+              {yearOfManufacture && <li>Manufactured : {yearOfManufacture}</li>}
               {organicStatus && (
                 <li>Organic: {organicStatus ? "Yes" : "No"}</li>
               )}
+              {}
               {breed && <li>Breed : {breed}</li>}
               {healthStatus && <li>status : {healthStatus}</li>}
               {age && <li>Age : {age} month</li>}
               {plantingSeason && <li>Planting Season: {plantingSeason}</li>}
+              {type && <li>Organic : {type === "Organic" ? "yes" : "no"}</li>}
+              {expiryData && <li> Expiry Date : {expiryData}</li>}
             </ul>
             <h2 className="font-semibold">Description</h2>
             <p>{description}</p>
