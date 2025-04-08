@@ -6,7 +6,7 @@ import Image from "next/image";
 import { IoMdChatboxes } from "react-icons/io";
 import { IoShareSocialSharp } from "react-icons/io5";
 type PageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 export default async function ProductDetails({ params }: PageProps) {
   const { id } = params;
