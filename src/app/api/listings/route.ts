@@ -29,7 +29,8 @@ export const GET = async (req: NextRequest) => {
         const search = searchParams.get("search");
         const sortBy = searchParams.get("sortBy");
         const location = searchParams.get("location");
-        console.log(location);
+        const page = parseInt(searchParams.get("page") || "1");
+        const limit = parseInt(searchParams.get("limit") || "10");
         const query: QueryType = {};
 
         if (minPrice) query.price = { ...query.price, $gte: Number(minPrice) };
@@ -48,13 +49,9 @@ export const GET = async (req: NextRequest) => {
         else if (sortBy === "price-high") sort = [["price", -1]];
         else if (sortBy === "price-low") sort = [["price", 1]];
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
-        const totalCount = await listingsCollection.countDocuments(query)
-        const result = await listingsCollection.find(query).sort(sort).toArray()
-        return NextResponse.json({
-            success: true, message: 'Listing fetched successfully!', data: result, pagination: {
-                total: totalCount,
-            }
-        }, { status: 200 })
+        const total = await listingsCollection.countDocuments(query)
+        const result = await listingsCollection.find(query).sort(sort).skip((page - 1) * limit).limit(limit).toArray()
+        return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result, total }, { status: 200 })
     } catch (error) {
         console.error("error fetching listing", error)
         return NextResponse.json({ message: "An error occurred while fetching the listing." }, { status: 500 })
