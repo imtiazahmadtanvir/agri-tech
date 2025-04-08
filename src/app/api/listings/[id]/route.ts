@@ -5,7 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
-        const { id } = await params;
+        const resolvedParams = await params;
+        const { id } = resolvedParams
         const listingCollection = await dbConnect(collectionNameObj.listingsCollection);
         const oneList = await listingCollection.findOne({ _id: new ObjectId(id) })
         return NextResponse.json(oneList, { status: 200 })
