@@ -10,12 +10,20 @@ import Link from "next/link";
 import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
+type ListingResponse = {
+  success: boolean;
+  message: string;
+  data: FormData[];
+  pagination: {
+    total: number;
+  };
+};
 function MarketplaceMain() {
   const { minPrice, maxPrice, selectedCategories, location } = useMarketPlace();
   const [searchQuery, setSearchQuery] = useState<string>("");
   console.log(selectedCategories);
   const [sortBy, setSortBy] = useState<string>("");
-  async function fetchItems(): Promise<FormData[]> {
+  async function fetchItems(): Promise<ListingResponse> {
     const response = await axios.get("/api/listings", {
       params: {
         minPrice,
@@ -26,7 +34,7 @@ function MarketplaceMain() {
         location,
       },
     });
-    return response.data.data;
+    return response.data;
   }
   const {
     data: items,
@@ -44,7 +52,9 @@ function MarketplaceMain() {
     ],
     queryFn: fetchItems,
   });
-
+  const { pagination } = items;
+  console.log(pagination);
+  const itemPerPage = 10;
   return (
     <>
       <div className="my-4 flex justify-between">
@@ -78,13 +88,13 @@ function MarketplaceMain() {
           <div className="flex justify-center items-center">
             <p>{error.message}</p>
           </div>
-        ) : items?.length === 0 ? (
+        ) : items?.data?.length === 0 ? (
           <div className="flex justify-center items-center h-full">
             <p className="text-gray-500">No listings found.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-            {items?.map((item) => (
+            {items?.data?.map((item) => (
               <Link href={`/marketplace/product/${item._id}`} key={item._id}>
                 <div className="border p-3 rounded-md">
                   <div className="w-full h-56 relative -z-10">
