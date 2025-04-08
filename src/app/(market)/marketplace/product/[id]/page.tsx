@@ -3,16 +3,16 @@ import PhoneCall from "@/components/market/marketplace/PhoneCall";
 import { timeStamp } from "@/utils/timestamp";
 import axios from "axios";
 import Image from "next/image";
+import React from "react";
 import { IoMdChatboxes } from "react-icons/io";
 import { IoShareSocialSharp } from "react-icons/io5";
+type PageProps = {
+  params: Promise<{ id: string }>;
+};
 
-export default async function ProductDetails({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = await params;
-
+export default async function ProductDetails({ params }: PageProps) {
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
   const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings/${id}`);
   const {
     productName,

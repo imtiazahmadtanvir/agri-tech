@@ -89,7 +89,7 @@ export default function Sidebar() {
       </div>
 
       {/* Location Selector */}
-      <div className="">
+      <div className={`${pathname !== "/marketplace" ? "hidden" : ""}`}>
         {/* Price Filters */}
         <div className="mt-4">
           <div className="flex justify-between items-center">
