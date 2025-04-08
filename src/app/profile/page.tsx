@@ -1,4 +1,5 @@
 "use client";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import useFetch from "@/Hook/useFetch";
 import axios from "axios";
 import React, { useEffect } from "react";
@@ -83,7 +84,7 @@ export default function ProfilePage() {
 
   // Loading spinner or message
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   // Handle error
