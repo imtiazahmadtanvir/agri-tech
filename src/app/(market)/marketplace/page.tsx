@@ -23,6 +23,8 @@ function MarketplaceMain() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   console.log(selectedCategories);
   const [sortBy, setSortBy] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const itemPerPage = 10;
   async function fetchItems(): Promise<ListingResponse> {
     const response = await axios.get("/api/listings", {
       params: {
@@ -32,6 +34,8 @@ function MarketplaceMain() {
         search: searchQuery,
         sortBy,
         location,
+        page,
+        limit: itemPerPage,
       },
     });
     return response.data;
@@ -52,9 +56,10 @@ function MarketplaceMain() {
     ],
     queryFn: fetchItems,
   });
-  const { pagination } = items;
-  console.log(pagination);
-  const itemPerPage = 10;
+  const totalPage = items?.pagination ? Math.ceil(items?.pagination?.total) : 1;
+  const totalItem = items?.pagination.total;
+  console.log(totalItem);
+
   return (
     <>
       <div className="my-4 flex justify-between">
@@ -126,6 +131,8 @@ function MarketplaceMain() {
           </div>
         )}
       </div>
+      {/* pagination control */}
+      {totalPage}
     </>
   );
 }
