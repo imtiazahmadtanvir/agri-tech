@@ -8,8 +8,9 @@ import { IoShareSocialSharp } from "react-icons/io5";
 type PageProps = {
   params: { id: string };
 };
+
 export default async function ProductDetails({ params }: PageProps) {
-  const { id } = params;
+  const { id } = await params;
 
   const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings/${id}`);
   const {
