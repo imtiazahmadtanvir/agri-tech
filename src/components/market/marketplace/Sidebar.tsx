@@ -37,7 +37,6 @@ export default function Sidebar() {
   };
   return (
     <aside className=" h-fit sticky top-0  left-0 my-4 p-3 shadow-md rounded-lg bg-green-50">
-      {/* Marketplace Section */}
       <h3 className="text-xl font-bold mb-4 text-green-700">
         Agriculture Marketplace
       </h3>
@@ -65,9 +64,9 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          href="/marketplace/selling"
+          href="/marketplace/myListing"
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            pathname === "/marketplace/selling"
+            pathname === "/marketplace/myListing"
               ? "bg-green-700 text-white"
               : "bg-white"
           }`}
@@ -89,7 +88,7 @@ export default function Sidebar() {
       </div>
 
       {/* Location Selector */}
-      <div className="">
+      <div className={`${pathname !== "/marketplace" ? "hidden" : ""}`}>
         {/* Price Filters */}
         <div className="mt-4">
           <div className="flex justify-between items-center">

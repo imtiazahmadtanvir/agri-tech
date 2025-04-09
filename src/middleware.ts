@@ -7,7 +7,7 @@ export default async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
 
-    if (["/login", "/register", "/complete-profile",].includes(pathname)) {
+    if (["/login", "/register",].includes(pathname)) {
         return NextResponse.next();
     }
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
