@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import Filters from "@/components/market/marketplace/Filters";
+import PaginationControls from "@/components/PaginationControls/PaginationControls";
 
 interface SearchParams {
   search?: string;
@@ -26,11 +27,9 @@ export default async function MarketplaceMain({
   const sortBy = param.sortBy || "";
   const location = param.location || "";
   const categories = param.category || "";
-
-  // Variable to hold error message
   let errorMessage = "";
   let items: FormData[] = [];
-
+  let itemCount = 10;
   try {
     const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
       params: {
@@ -44,6 +43,7 @@ export default async function MarketplaceMain({
     });
 
     items = res.data.data;
+    itemCount = res.data.total;
   } catch (error) {
     console.error("Error fetching marketplace items:", error);
     errorMessage = "Failed to fetch marketplace items. Please try again later.";
@@ -90,6 +90,7 @@ export default async function MarketplaceMain({
           ))
         )}
       </div>
+      <PaginationControls itemCount={itemCount} />
     </div>
   );
 }
