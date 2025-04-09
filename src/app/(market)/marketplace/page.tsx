@@ -84,7 +84,7 @@ export default async function MarketplaceMain({
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold mt-2">
+                  <h3 className="text-lg font-semibold capitalize mt-2">
                     {item.productName}
                   </h3>
                   <p className="text-green-400 font-bold mt-1">
