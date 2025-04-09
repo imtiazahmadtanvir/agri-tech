@@ -60,7 +60,6 @@ export const authOptions: NextAuthOptions = {
             if (account?.provider === "google" || account?.provider === "github") {
                 const { providerAccountId, provider } = account;
                 const { email, image } = user;
-
                 const nameArr = user?.name?.split(" ") || []
                 const lastName = nameArr[nameArr?.length - 1]
                 const firstName = nameArr.slice(0, -1).concat("").join(" ")
@@ -91,9 +90,7 @@ export const authOptions: NextAuthOptions = {
         },
         async jwt({ token, user, account }) {
             if (user) {
-
                 token.id = user.id;
-                token.name = user.name;
                 token.email = user.email;
                 token.role = user.role || "farmer";
                 token.image = user.image ?? null;
@@ -124,7 +121,6 @@ export const authOptions: NextAuthOptions = {
                 session.user.email = token.email ?? null;
                 session.user.image = token.image ?? null;
                 session.user.role = token.role || "farmer";
-
                 session.user.firstName = token.firstName || "";
                 session.user.lastName = token.lastName || "";
             }
