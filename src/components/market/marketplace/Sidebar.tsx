@@ -39,14 +39,6 @@ export default function Sidebar() {
     setMinPrice("");
     setSelectedCategories("");
     setLocation("all location");
-    const params = new URLSearchParams(searchParams.toString());
-    console.log(params);
-    params.delete("search");
-    params.delete("minPrice");
-    params.delete("maxPrice");
-    params.delete("sortBy");
-    params.delete("category");
-    router.replace(`${path}?${params.toString()}`);
   };
   return (
     <aside className=" h-fit sticky top-0  left-0 my-4 p-3 shadow-md rounded-lg bg-green-50">

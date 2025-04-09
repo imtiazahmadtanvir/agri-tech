@@ -1,4 +1,3 @@
-// app/marketplace/page.tsx or any other route
 import { timeAgeCalculator } from "@/utils/timeCalculate";
 import { FormData } from "@/types/type";
 import Image from "next/image";
@@ -20,7 +19,7 @@ export default async function MarketplaceMain({
 }) {
   const param = await searchParams;
   const search = param.search || "";
-  const minPrice = param.maxPrice || 0;
+  const minPrice = param.minPrice || 0;
   const maxPrice = param.maxPrice || 100000000;
   const sortBy = param.sortBy || "";
   const location = param.location || "";

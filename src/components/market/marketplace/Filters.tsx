@@ -25,8 +25,16 @@ export default function Filters() {
     } else {
       params.delete("sortBy");
     }
-    if (minPrice) params.set("minPrice", minPrice.toString());
-    if (maxPrice) params.set("maxPrice", maxPrice.toString());
+    if (minPrice) {
+      params.set("minPrice", minPrice.toString());
+    } else {
+      params.delete("minPrice");
+    }
+    if (maxPrice) {
+      params.set("maxPrice", maxPrice.toString());
+    } else {
+      params.delete("maxPrice");
+    }
 
     if (location) params.set("location", location);
     if (selectedCategories) {

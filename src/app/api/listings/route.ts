@@ -23,7 +23,6 @@ type QueryType = {
 export const GET = async (req: NextRequest) => {
     try {
         const { searchParams } = new URL(req.url)
-        console.log(searchParams);
         const minPrice = searchParams.get('minPrice');
         const maxPrice = searchParams.get("maxPrice");
         const category = searchParams.get("categories");
@@ -52,7 +51,6 @@ export const GET = async (req: NextRequest) => {
         console.log("list", query);
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const total = await listingsCollection.countDocuments(query)
-        console.log("query", query);
         const result = await listingsCollection.find(query).sort(sort).skip((page - 1) * limit).limit(limit).toArray()
         return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result, total }, { status: 200 })
     } catch (error) {
