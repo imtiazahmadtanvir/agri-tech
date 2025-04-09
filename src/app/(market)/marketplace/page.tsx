@@ -13,6 +13,8 @@ interface SearchParams {
   sortBy?: string;
   location?: string;
   category?: string;
+  page: string;
+  limit: string;
 }
 
 export default async function MarketplaceMain({
@@ -27,6 +29,8 @@ export default async function MarketplaceMain({
   const sortBy = param.sortBy || "";
   const location = param.location || "";
   const categories = param.category || "";
+  const page = param.page || "1";
+  const limit = param.limit || "10";
   let errorMessage = "";
   let items: FormData[] = [];
   let itemCount = 10;
@@ -39,6 +43,8 @@ export default async function MarketplaceMain({
         sortBy,
         location,
         categories,
+        page,
+        limit,
       },
     });
 

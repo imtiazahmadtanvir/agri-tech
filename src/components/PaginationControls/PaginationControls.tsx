@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PaginationControls({
@@ -9,21 +9,22 @@ export default function PaginationControls({
   itemCount: number;
 }) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const [page, setPage] = useState<number>(1);
   const itemPerPage = 5;
   const totalPages = Math.ceil(itemCount / itemPerPage);
   console.log(page);
   useEffect(() => {
-    const param = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams.toString());
     if (page) {
-      param.set("page", page.toString());
+      params.set("page", page.toString());
     }
     if (itemPerPage) {
-      param.set("limit", itemPerPage.toString());
+      params.set("limit", itemPerPage.toString());
     }
-    const newUrl = `${window.location.pathname}?${param.toString()}`;
-    window.history.pushState(null, "", newUrl);
-  }, [searchParams, page]);
+    replace(`${pathname}?${params.toString()}`);
+  }, [searchParams, page, pathname, replace]);
   return (
     <div className="flex justify-center items-center gap-4 mt-6">
       <button
