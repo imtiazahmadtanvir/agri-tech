@@ -70,7 +70,7 @@ export default async function MarketplaceMain({
         ) : (
           items.map((item) => (
             <Link href={`/marketplace/product/${item._id}`} key={item._id}>
-              <div className="border p-3 rounded-md">
+              <div className="border hover:shadow-xl p-3 rounded-md">
                 <div className="w-full h-56 relative -z-10">
                   <Image
                     className="object-cover rounded-md border"
@@ -87,7 +87,9 @@ export default async function MarketplaceMain({
                   <h3 className="text-lg font-semibold mt-2">
                     {item.productName}
                   </h3>
-                  <p className="text-gray-800 font-bold mt-1">{item.price} $</p>
+                  <p className="text-green-400 font-bold mt-1">
+                    {item.price} $
+                  </p>
                   <p className="text-gray-500 text-sm">{item.location}</p>
                   <p>{timeAgeCalculator(item?.listed || "")}</p>
                 </div>
