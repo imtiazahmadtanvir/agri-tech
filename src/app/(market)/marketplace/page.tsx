@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import Filters from "@/components/market/marketplace/Filters";
+
 interface SearchParams {
   search?: string;
   minPrice?: string;
@@ -12,6 +13,7 @@ interface SearchParams {
   location?: string;
   category?: string;
 }
+
 export default async function MarketplaceMain({
   searchParams,
 }: {
@@ -24,25 +26,40 @@ export default async function MarketplaceMain({
   const sortBy = param.sortBy || "";
   const location = param.location || "";
   const categories = param.category || "";
-  const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
-    params: {
-      search,
-      maxPrice,
-      minPrice,
-      sortBy,
-      location,
-      categories,
-    },
-  });
-  const items: FormData[] = res.data.data;
+
+  // Variable to hold error message
+  let errorMessage = "";
+  let items: FormData[] = [];
+
+  try {
+    const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
+      params: {
+        search,
+        maxPrice,
+        minPrice,
+        sortBy,
+        location,
+        categories,
+      },
+    });
+
+    items = res.data.data;
+  } catch (error) {
+    console.error("Error fetching marketplace items:", error);
+    errorMessage = "Failed to fetch marketplace items. Please try again later.";
+  }
 
   return (
     <div className="my-4">
       <div>
         <Filters />
       </div>
+      {errorMessage && (
+        <p className="text-red-500 text-center">{errorMessage}</p>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        {items.length === 0 ? (
+        {items.length === 0 && !errorMessage ? (
           <p className="text-gray-500">No listings found.</p>
         ) : (
           items.map((item) => (

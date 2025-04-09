@@ -2,16 +2,11 @@
 import LocationModal from "@/components/modal/LocationModal";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoAdd } from "react-icons/io5";
 
 export default function Sidebar() {
-  const router = useRouter();
-  const path = usePathname();
-  const searchParams = useSearchParams();
-  console.log(path);
   const {
     pathname,
     setMaxPrice,
@@ -42,7 +37,6 @@ export default function Sidebar() {
   };
   return (
     <aside className=" h-fit sticky top-0  left-0 my-4 p-3 shadow-md rounded-lg bg-green-50">
-      {/* Marketplace Section */}
       <h3 className="text-xl font-bold mb-4 text-green-700">
         Agriculture Marketplace
       </h3>
