@@ -31,6 +31,8 @@ export default function Filters() {
     if (location) params.set("location", location);
     if (selectedCategories) {
       params.set("category", selectedCategories);
+    } else {
+      params.delete("category");
     }
     replace(`${pathname}?${params.toString()}`);
   }, [
