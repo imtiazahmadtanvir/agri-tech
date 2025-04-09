@@ -48,7 +48,6 @@ export const GET = async (req: NextRequest) => {
         else if (sortBy === "date-old") sort = [["listed", 1]];
         else if (sortBy === "price-high") sort = [["price", -1]];
         else if (sortBy === "price-low") sort = [["price", 1]];
-        console.log("list", query);
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const total = await listingsCollection.countDocuments(query)
         const result = await listingsCollection.find(query).sort(sort).skip((page - 1) * limit).limit(limit).toArray()
