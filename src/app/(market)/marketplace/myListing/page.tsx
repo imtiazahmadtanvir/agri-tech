@@ -11,10 +11,17 @@ type Listing = {
   photos: string[];
   listed: string;
 };
-export default async function MyListing() {
-  const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/myListing`, {
-    headers: Object.fromEntries(await headers()),
-  });
+export default async function MyListing({ searchParams }) {
+  const param = await searchParams;
+  const search = param.search || "";
+  console.log(search);
+
+  const res = await axios.get(
+    `${process.env.NEXTAUTH_URL}/api/myListing?search=${search}`,
+    {
+      headers: Object.fromEntries(await headers()),
+    }
+  );
 
   const listings: Listing[] = res.data.data || [];
 
