@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
+import { useDebounce } from "use-debounce";
 
 export default function Filters() {
   const searchParams = useSearchParams();
@@ -13,10 +14,11 @@ export default function Filters() {
   const { minPrice, maxPrice, selectedCategories, location } = useMarketPlace();
   const [sortBy, setSortBy] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [text] = useDebounce(searchQuery, 400);
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
-    if (searchQuery) {
-      params.set("search", searchQuery);
+    if (text) {
+      params.set("search", text);
     } else {
       params.delete("search");
     }
@@ -45,7 +47,7 @@ export default function Filters() {
     replace(`${pathname}?${params.toString()}`);
   }, [
     searchParams,
-    searchQuery,
+    text,
     location,
     maxPrice,
     minPrice,
