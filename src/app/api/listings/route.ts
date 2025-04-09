@@ -23,9 +23,10 @@ type QueryType = {
 export const GET = async (req: NextRequest) => {
     try {
         const { searchParams } = new URL(req.url)
+        console.log(searchParams);
         const minPrice = searchParams.get('minPrice');
         const maxPrice = searchParams.get("maxPrice");
-        const category = searchParams.get("category");
+        const category = searchParams.get("categories");
         const search = searchParams.get("search");
         const sortBy = searchParams.get("sortBy");
         const location = searchParams.get("location");
@@ -48,6 +49,7 @@ export const GET = async (req: NextRequest) => {
         else if (sortBy === "date-old") sort = [["listed", 1]];
         else if (sortBy === "price-high") sort = [["price", -1]];
         else if (sortBy === "price-low") sort = [["price", 1]];
+        console.log("list", query);
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const total = await listingsCollection.countDocuments(query)
         console.log("query", query);

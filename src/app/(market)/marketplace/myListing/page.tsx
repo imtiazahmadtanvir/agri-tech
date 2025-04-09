@@ -11,10 +11,13 @@ type Listing = {
   photos: string[];
   listed: string;
 };
-export default async function MyListing({ searchParams }) {
+export default async function MyListing({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string }>;
+}) {
   const param = await searchParams;
   const search = param.search || "";
-  console.log(search);
 
   const res = await axios.get(
     `${process.env.NEXTAUTH_URL}/api/myListing?search=${search}`,

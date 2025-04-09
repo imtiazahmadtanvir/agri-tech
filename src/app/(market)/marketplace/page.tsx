@@ -3,25 +3,39 @@ import { timeAgeCalculator } from "@/utils/timeCalculate";
 import { FormData } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
-
 import axios from "axios";
-import Search from "@/components/myListing/Search";
 import Filters from "@/components/market/marketplace/Filters";
-
-// Fetch listings directly from your API route
-async function fetchMarketplaceItems(): Promise<FormData[]> {
-  const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
+interface SearchParams {
+  search?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  sortBy?: string;
+  location?: string;
+  category?: string;
+}
+export default async function MarketplaceMain({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const param = await searchParams;
+  const search = param.search || "";
+  const minPrice = param.maxPrice || 0;
+  const maxPrice = param.maxPrice || 100000000;
+  const sortBy = param.sortBy || "";
+  const location = param.location || "";
+  const categories = param.category || "";
+  const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
     params: {
-      search: "",
-      minPrice: 0,
-      maxPrice: 1000000,
+      search,
+      maxPrice,
+      minPrice,
+      sortBy,
+      location,
+      categories,
     },
   });
-  return response.data.data;
-}
-
-export default async function MarketplaceMain() {
-  const items = await fetchMarketplaceItems();
+  const items: FormData[] = res.data.data;
 
   return (
     <div className="my-4">
