@@ -3,8 +3,10 @@ import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (req: Request) => {
     try {
+        const { searchParams } = new URL(req.url)
+        const search = searchParams.get("search") || "";
         const session = await getServerSession(authOptions)
         if (!session) {
             return NextResponse.json({ success: false, message: "Unauthorized access" }, { status: 401 })
@@ -16,7 +18,10 @@ export const GET = async () => {
         }
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const result = await listingsCollection.find({
-            userEmail: session?.user?.email
+            userEmail: session?.user?.email,
+            ...search && {
+                productName: { $regex: search, $options: "i" }
+            }
         }, {
             projection: {
                 _id: 1,
