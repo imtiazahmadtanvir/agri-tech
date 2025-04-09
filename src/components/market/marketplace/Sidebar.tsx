@@ -65,9 +65,9 @@ export default function Sidebar() {
         </Link>
 
         <Link
-          href="/marketplace/selling"
+          href="/marketplace/myListing"
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
-            pathname === "/marketplace/selling"
+            pathname === "/marketplace/myListing"
               ? "bg-green-700 text-white"
               : "bg-white"
           }`}
