@@ -60,7 +60,7 @@ export default function Filters() {
   return (
     <div className="my-4 flex justify-between">
       <select
-        value={sortBy}
+        defaultValue={searchParams.get("sortBy")?.toString()}
         onChange={(e) => setSortBy(e.target.value)}
         className="border px-3 py-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
       >
@@ -72,7 +72,7 @@ export default function Filters() {
       <div className="max-w-[300px] relative">
         <input
           type="search"
-          value={searchQuery}
+          defaultValue={searchParams.get("search")?.toString()}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="border px-4 py-2 w-full rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
           placeholder="Search..."
