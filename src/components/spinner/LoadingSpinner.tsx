@@ -1,3 +1,4 @@
+"use client";
 import { FadeLoader } from "react-spinners";
 
 const LoadingSpinner = () => {
@@ -7,7 +8,7 @@ const LoadingSpinner = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "60vh",
+        height: "80vh",
       }}
     >
       <FadeLoader
@@ -15,7 +16,7 @@ const LoadingSpinner = () => {
         width={5}
         color="#008236"
         loading={true}
-        // speedMultiplier={0.8}
+        speedMultiplier={0.8}
       />
     </div>
   );
