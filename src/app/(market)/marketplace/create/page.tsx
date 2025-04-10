@@ -323,36 +323,40 @@ export default function CreateListing() {
                     </div>
                   )}
                 </div>
-                <div className="col-span-2">
-                  <h3>Contact details</h3>
+                <div className="col-span-2 border-t border-black/40">
+                  <h3 className="pt-2 font-semibold">Contact details</h3>
                   <div className="flex gap-12">
                     <div>
-                      <p>Name</p>
+                      <p className="text-gray-400">Name</p>
                       <h3>{data?.user?.name}</h3>
                     </div>
                     <div>
-                      <p>Email</p>
+                      <p className="text-gray-400">Email</p>
                       <h3>{data?.user?.email}</h3>
                     </div>
                   </div>
                 </div>
                 <div className="mb-4">
                   <label className="block font-semibold text-gray-700">
-                    Contact
+                    Phone Number
                   </label>
-                  <PhoneInput
-                    defaultCountry="BD"
-                    value={userDetail?.phoneNumber}
-                    onChange={(value) => {
-                      setValue("phoneNumber", value || "");
-                      trigger("phoneNumber");
-                    }}
-                    className="w-full p-1.5 border focus:outline-none focus:ring-2 focus:ring-green-500"
-                  />
-                  {errors.phoneNumber && (
-                    <span className="text-red-500">
-                      {errors.phoneNumber.message}
-                    </span>
+                  {userDetail?.phoneNumber && (
+                    <>
+                      <PhoneInput
+                        defaultCountry="BD"
+                        value={userDetail?.phoneNumber}
+                        onChange={(value) => {
+                          setValue("phoneNumber", value || "");
+                          trigger("phoneNumber");
+                        }}
+                        className="w-full p-1.5 border focus:outline-none focus:ring-2 focus:ring-green-500"
+                      />
+                      {errors.phoneNumber && (
+                        <span className="text-red-500">
+                          {errors.phoneNumber.message}
+                        </span>
+                      )}
+                    </>
                   )}
                 </div>
                 <button

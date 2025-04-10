@@ -96,6 +96,9 @@ export interface FormData {
     // Category-specific fields
     cropType?: string;
     fertilizerType?: string;
+    livestockType?: string;
+    plantType?: string;
+    fisheriesType?: string;
     equipmentType?: string;
     pesticideType?: string;
     harvestDate?: string;
