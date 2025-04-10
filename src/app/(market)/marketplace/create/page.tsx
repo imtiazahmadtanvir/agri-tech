@@ -129,9 +129,9 @@ export default function CreateListing() {
         </>
       ) : (
         <>
-          <div className="my-4 p-4 bg-[#F7F9F7] rounded-md border">
+          <div className="my-4 p-4 bg-[#F7F9F7] rounded-[2px] border">
             <div className="">
-              <h3 className="text-2xl font-semibold">Item for sale</h3>
+              <h3 className="text-2xl font-semibold">Fill in the details</h3>
               <p>Photos {previews.length}/4 - You can add up to 4 photos</p>
               {photoError && (
                 <p className="text-red-500 text-sm">{photoError}</p>
@@ -151,9 +151,9 @@ export default function CreateListing() {
                 >
                   {previews.map((preview, index) => (
                     <div key={index} className="relative">
-                      <div className="relative w-full h-40 rounded-md">
+                      <div className="relative w-full h-40 rounded-[2px]">
                         <Image
-                          className="object-cover rounded-md border"
+                          className="object-cover rounded-[2px] border"
                           fill
                           alt={`Preview ${index + 1}`}
                           src={preview}
@@ -182,7 +182,7 @@ export default function CreateListing() {
                       <label
                         className={`${
                           previews.length < 1 ? "w-full h-40" : "h-40"
-                        } border flex flex-col items-center bg-white cursor-pointer justify-center rounded-md`}
+                        } border flex flex-col items-center bg-white cursor-pointer justify-center rounded-[2px]`}
                         htmlFor="file"
                       >
                         <MdOutlineAddPhotoAlternate
@@ -196,7 +196,7 @@ export default function CreateListing() {
                 </div>
 
                 {/* Form Fields */}
-                <div>
+                <fieldset>
                   <label className="block text-sm font-medium text-gray-700">
                     Title
                   </label>
@@ -206,14 +206,15 @@ export default function CreateListing() {
                     })}
                     type="text"
                     placeholder="product name"
-                    className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                   />
                   {errors.productName && (
                     <p className="text-red-500 text-sm">
                       {errors.productName.message}
                     </p>
                   )}
-                </div>
+                </fieldset>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Category *
@@ -222,7 +223,7 @@ export default function CreateListing() {
                     {...register("category", {
                       required: "Category is required",
                     })}
-                    className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
+                    className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
                   >
                     <option value="">Select a category</option>
                     {marketplaceCategories.map((cat) => (
@@ -245,7 +246,7 @@ export default function CreateListing() {
                     {...register("description", {
                       required: "Description is required",
                     })}
-                    className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                     rows={4}
                     placeholder="more details about the product"
                   />
@@ -270,7 +271,7 @@ export default function CreateListing() {
                       type="number"
                       step={0.1}
                       placeholder="Pick a good price"
-                      className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-md w-full"
+                      className="border [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none p-2 rounded-[2px] w-full"
                     />
                     {errors.price && (
                       <p className="text-red-500 text-sm">
@@ -302,7 +303,7 @@ export default function CreateListing() {
                       })}
                       type="text"
                       placeholder="e.g., Springfield Farm, IL"
-                      className="block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                     {errors.location && (
                       <p className="text-red-500 text-sm">
@@ -357,7 +358,7 @@ export default function CreateListing() {
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="col-span-2 w-fit flex justify-self-end py-2 px-10 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
+                  className="col-span-2 w-fit flex justify-self-end py-2 px-10 bg-green-700 text-white rounded-[2px] hover:bg-green-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
                 >
                   {isSubmitting ? "Posting..." : "Post Listing"}
                 </button>
