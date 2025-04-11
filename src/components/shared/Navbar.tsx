@@ -76,7 +76,7 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    label: "Community",
+    label: "Community",href: "/community/forum",
     icon: "▼",
     subItems: [
       { label: "Farmer Forum", href: "/community/forum", icon: "🗣️" },
