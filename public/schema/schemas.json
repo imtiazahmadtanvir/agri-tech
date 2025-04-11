@@ -1,0 +1,163 @@
+[
+    {
+      "id": 1,
+      "name_bn": "কৃষি প্রণোদনা কর্মসূচি",
+      "name_en": "Agricultural Incentive Program",
+      "type": "Subsidy",
+      "image_url": "https://i.ibb.co.com/KcyVgVbb/agriculture-money-shutterstock-1505008040-scaled.jpg",
+      "benefits": [
+        "Free/subsidized seeds, fertilizers, and diesel",
+        "Targeted at small and marginal farmers"
+      ],
+      "application": {
+        "method": "Apply at local Union Agricultural Office",
+        "documents_required": ["Farmer ID", "Land ownership proof"],
+        "deadline": "Varies by season"
+      }
+    },
+    {
+      "id": 2,
+      "name_bn": "প্রধানমন্ত্রীর কৃষি ঋণ সহায়তা",
+      "name_en": "PM Agricultural Loan Assistance",
+      "type": "Loan",
+      "image_url": "https://i.ibb.co.com/xSk2Njjh/photo-1649426710526-861371557a47-mark-https-images-unsplash-com-opengraph-logo-png-mark-w-64-mark-al.jpg",
+      "benefits": [
+        "Low-interest or interest-free crop loans",
+        "Available through various state banks"
+      ],
+      "application": {
+        "method": "Apply via nearest agricultural bank",
+        "documents_required": ["NID", "Land details", "Bank account"],
+        "deadline": "Ongoing"
+      }
+    },
+    {
+      "id": 3,
+      "name_bn": "বীজ বিতরণ কর্মসূচি",
+      "name_en": "Seed Distribution Program",
+      "type": "Resource",
+      "image_url": "https://i.ibb.co.com/x8CL7FrB/seed-2023-08-26-18-07-25.jpg",
+      "benefits": [
+        "Distribution of climate-resilient high-yield seeds",
+        "Low or no cost for eligible farmers"
+      ],
+      "application": {
+        "method": "Contact local agriculture officer",
+        "documents_required": ["Farmer registration"],
+        "deadline": "Varies"
+      }
+    },
+    {
+      "id": 4,
+      "name_bn": "বাংলাদেশ কৃষি ব্যাংক ঋণ সুবিধা",
+      "name_en": "Krishi Bank Loan Facility",
+      "type": "Credit",
+      "image_url": "https://i.ibb.co.com/GvcV43yp/photo-1570555410562-016f19e5948d-mark-https-images-unsplash-com-opengraph-logo-png-mark-w-64-mark-al.jpg",
+      "benefits": [
+        "Easy agricultural loans for short or long term",
+        "Offered by Bangladesh Krishi Bank"
+      ],
+      "application": {
+        "method": "Apply directly at Krishi Bank branches",
+        "documents_required": ["Bank passbook", "NID", "Land record"],
+        "deadline": "Ongoing"
+      }
+    },
+    {
+      "id": 5,
+      "name_bn": "প্রণোদনার ডিজেল ভর্তুকি",
+      "name_en": "Diesel Subsidy Program",
+      "type": "Fuel Subsidy",
+      "image_url": "https://i.ibb.co.com/R42VFq5J/photo-1544005435-7aec408c64b8-mark-https-images-unsplash-com-opengraph-logo-png-mark-w-64-mark-align.jpg",
+      "benefits": [
+        "Tk. 1,000–2,000 per hectare support for diesel irrigation",
+        "Promotes irrigation in dry seasons"
+      ],
+      "application": {
+        "method": "Submit form to union agricultural officer",
+        "documents_required": ["Irrigation land proof", "Bank details"],
+        "deadline": "Announced seasonally"
+      }
+    },
+    {
+      "id": 6,
+      "name_bn": "সেচ সুবিধা উন্নয়ন প্রকল্প",
+      "name_en": "Irrigation Development Project",
+      "type": "Infrastructure",
+      "image_url": "https://i.ibb.co.com/V04pd5gS/premium-photo-1661854008793-8ce54b2e622b-mark-https-images-unsplash-com-opengraph-logo-png-mark-w-64.jpg",
+      "benefits": [
+        "Subsidies for deep tube wells and solar pumps",
+        "Support for irrigation in remote areas"
+      ],
+      "application": {
+        "method": "Through Agricultural Engineering Department",
+        "documents_required": ["Land documents", "Scheme proposal"],
+        "deadline": "Depends on funding cycle"
+      }
+    },
+    {
+      "id": 7,
+      "name_bn": "ডিজিটাল কৃষি সেবা",
+      "name_en": "Digital Agriculture Services",
+      "type": "Technology",
+      "image_url": "https://i.ibb.co.com/rK5c0TT7/GSMA-M4-D-Photo-Ghana-CAF1800-scaled.jpg",
+      "benefits": [
+        "Mobile/SMS-based updates on weather, market price",
+        "Pest control tips and expert help"
+      ],
+      "application": {
+        "method": "No formal application – subscribe via mobile",
+        "documents_required": ["Farmer phone registration"],
+        "deadline": "Ongoing"
+      }
+    },
+    {
+      "id": 8,
+      "name_bn": "শস্য বীমা কর্মসূচি",
+      "name_en": "Crop Insurance Program",
+      "type": "Insurance",
+      "image_url": "https://i.ibb.co.com/KcyVgVbb/agriculture-money-shutterstock-1505008040-scaled.jpg",
+      "benefits": [
+        "Insurance coverage against flood, cyclone, drought",
+        "Pilot in selected districts"
+      ],
+      "application": {
+        "method": "Apply via partner insurance company or NGO",
+        "documents_required": ["Crop info", "NID", "Bank details"],
+        "deadline": "Project-based"
+      }
+    },
+    {
+      "id": 9,
+      "name_bn": "কৃষি যন্ত্রপাতি ভর্তুকি প্রকল্প",
+      "name_en": "Agri Machinery Subsidy Project",
+      "type": "Equipment Subsidy",
+      "image_url": "https://i.ibb.co.com/PZ4GtK5k/photo-1619314383191-3d75d5e26a7f-mark-https-images-unsplash-com-opengraph-logo-png-mark-w-64-mark-al.jpg",
+      "benefits": [
+        "50–70% subsidy on agri machinery like tillers, seeders",
+        "Helps reduce labor cost and time"
+      ],
+      "application": {
+        "method": "Apply through district agriculture offices",
+        "documents_required": ["Farm size certificate", "Quotation"],
+        "deadline": "Open per allocation"
+      }
+    },
+    {
+      "id": 10,
+      "name_bn": "আশ্রয়ন প্রকল্পে কৃষক প্রশিক্ষণ",
+      "name_en": "Farmer Training under Ashrayan",
+      "type": "Training",
+      "image_url": "https://i.ibb.co.com/MxLs19NK/cover-image-Ashrayan-project-jpg.webp",
+      "benefits": [
+        "Free skill development in organic farming, fisheries, livestock",
+        "Targeted to landless/ultra-poor farmers"
+      ],
+      "application": {
+        "method": "Nominated via local Union Parishad or NGO",
+        "documents_required": ["Proof of income", "Photograph"],
+        "deadline": "Batch-wise training schedule"
+      }
+    }
+  ]
+  
