@@ -17,6 +17,7 @@ export default function Home() {
   // Typing animation effect
   useEffect(() => {
     if (response && !isTyping) {
+      const trimmedResponse = response.trimStart(); // Remove leading whitespace/newlines
       setIsTyping(true);
       setDisplayResponse("");
 
@@ -24,8 +25,14 @@ export default function Home() {
       const typingSpeed = 10; // ms per character
 
       const typeNextChar = () => {
-        if (index < response.length) {
-          setDisplayResponse((prev) => prev + response.charAt(index));
+        if (index < trimmedResponse.length) {
+          const nextChar = trimmedResponse.charAt(index);
+          // console.log(`Appending char: "${nextChar}", index: ${index}`); // Debug
+          setDisplayResponse((prev) => {
+            const newValue = prev + nextChar;
+            // console.log(`New displayResponse: "${newValue}"`); // Debug
+            return newValue;
+          });
           index++;
           setTimeout(typeNextChar, typingSpeed);
         } else {
@@ -102,6 +109,8 @@ export default function Home() {
   const clearImage = () => setImage(null);
 
   const formatResponse = (text: string) => {
+    // console.log("formatResponse input:", text); // Debug
+
     // First process bold text with **asterisks**
     const boldProcessed = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
@@ -133,14 +142,16 @@ export default function Home() {
         // Process paragraph
         return `<p class="mb-2 md:mb-3">${p.replace(/\n/g, "<br>")}</p>`;
       })
+      .filter((p) => p.trim()) // Remove empty paragraphs
       .join("");
 
+    // console.log("formatResponse output:", paragraphs); // Debug
     return paragraphs;
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center p-3 sm:p-4 md:p-6">
-      <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 w-full max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl">
+      <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 w-full max-w-full sm:max-w-lg md:max-w-3xl lg:max-w-3xl">
         <div className="flex items-center justify-center mb-4 md:mb-8">
           <Camera className="w-6 h-6 md:w-8 md:h-8 text-green-600 mr-2 md:mr-3" />
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 text-center">
@@ -239,11 +250,12 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading || (!prompt && !image)}
-              className={`w-full sm:w-fit py-2.5 md:py-3.5 px-4 md:px-6 rounded-lg md:rounded-xl font-medium transition-all cursor-pointer shadow-sm text-sm md:text-base ${
-                loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-green-600 to-green-600 hover:from-green-700 hover:to-green-700 text-white"
-              }`}
+              className={`w-full sm:w-fit py-2.5 md:py-3.5 px-4 md:px-6 rounded-lg md:rounded-xl font-medium transition-all shadow-sm text-sm md:text-base
+    ${
+      loading || (!prompt && !image)
+        ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+        : "bg-gradient-to-r from-green-600 to-green-600 hover:from-green-700 hover:to-green-700 text-white cursor-pointer"
+    }`}
             >
               {loading ? (
                 <div className="flex items-center justify-center">
