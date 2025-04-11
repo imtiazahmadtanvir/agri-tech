@@ -42,7 +42,7 @@ export default function Sidebar() {
       </h3>
 
       {/* Navigation Buttons */}
-      <div className="lg:space-y-2 flex lg:flex-col gap-2">
+      <div className="lg:space-y-2 flex lg:flex-col gap-2 ">
         <Link
           href="/marketplace"
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
@@ -77,7 +77,7 @@ export default function Sidebar() {
         {/* Create Listing Button */}
         <Link
           href={"/marketplace/create"}
-          className={`w-full py-2 px-3 text-center border z-50 lg:z-auto fixed lg:static bottom-0 rounded-md flex items-center justify-center gap-2 hover:bg-green-700 hover:text-white ${
+          className={`lg:w-full transform left-1/2 py-2 px-3 text-center border z-50 lg:z-auto fixed lg:static bottom-0 rounded-md flex items-center justify-center lg:gap-2 hover:bg-green-700 hover:text-white ${
             pathname === "/marketplace/create"
               ? "bg-green-700 text-white"
               : "bg-white"
@@ -150,7 +150,7 @@ export default function Sidebar() {
           <h3 className="text-lg font-semibold text-gray-700">Categories</h3>
           <div
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            className="flex gap-2 mt-2 overflow-x-auto  
+            className="flex lg:flex-col gap-2 mt-2 overflow-x-auto  
           scrollbar-thumb-gray-300"
           >
             {marketplaceCategories.map(({ name, emoji }) => (
