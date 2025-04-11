@@ -77,7 +77,7 @@ export default function Sidebar() {
         {/* Create Listing Button */}
         <Link
           href={"/marketplace/create"}
-          className={`lg:w-full transform left-1/2 py-2 px-3 -translate-x-1/2 text-center border z-50 lg:z-auto fixed lg:static bottom-0 rounded-md flex items-center justify-center lg:gap-2 hover:bg-green-700 hover:text-white ${
+          className={`lg:w-full sm:transform left-1/2 py-2 px-3 -translate-x-1/2 text-center border z-50 lg:z-auto lg:translate-x-0 lg:left-auto lg:bottom-auto fixed lg:static bottom-0 rounded-md flex items-center justify-center lg:gap-2 hover:bg-green-700 hover:text-white ${
             pathname === "/marketplace/create"
               ? "bg-green-700 text-white"
               : "bg-white"
