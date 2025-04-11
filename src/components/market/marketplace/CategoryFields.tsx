@@ -24,8 +24,8 @@ export default function CategoryFields({
               Crops Type
             </label>
             <select
-              {...register("type", { required: "Crop type is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              {...register("cropType", { required: "Crop type is required" })}
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Crop Type</option>
               <option value="grains">Grains & Cereals 🌾</option>
@@ -48,7 +48,7 @@ export default function CategoryFields({
               {...register("harvestDate", {
                 required: "Harvest date is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             {errors.harvestDate && (
               <p className="text-red-500 text-sm">
@@ -62,7 +62,7 @@ export default function CategoryFields({
             </label>
             <select
               {...register("condition", { required: "Condition is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select condition</option>
               <option value="Fresh">Fresh</option>
@@ -90,10 +90,10 @@ export default function CategoryFields({
               Fertilizers Type
             </label>
             <select
-              {...register("type", {
+              {...register("fertilizerType", {
                 required: "Fertilizer type is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
               <option value="Organic">Organic</option>
@@ -113,7 +113,7 @@ export default function CategoryFields({
               {...register("brand", {
                 required: "Brand is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., NPK 20-20-20"
             />
             {errors.brand && (
@@ -129,7 +129,7 @@ export default function CategoryFields({
               {...register("expiryData", {
                 required: "Expiry date is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             {errors.expiryData && (
               <p className="text-red-500 text-sm">
@@ -147,10 +147,10 @@ export default function CategoryFields({
               Equipment Type
             </label>
             <select
-              {...register("type", {
+              {...register("equipmentType", {
                 required: "Equipment type is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Equipment Category</option>
               <option value="Soil Preparation">🌿 Soil Preparation</option>
@@ -177,7 +177,7 @@ export default function CategoryFields({
             <input
               type="text"
               {...register("brand", { required: "Brand is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., John Deere"
             />
             {errors.brand && (
@@ -190,7 +190,7 @@ export default function CategoryFields({
             </label>
             <select
               {...register("condition", { required: "Condition is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select condition</option>
               <option value="New">New</option>
@@ -210,7 +210,7 @@ export default function CategoryFields({
               {...register("yearOfManufacture", {
                 required: "Year of manufacture is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             {errors.yearOfManufacture && (
               <p className="text-red-500 text-sm">
@@ -228,10 +228,10 @@ export default function CategoryFields({
               Animal Type
             </label>
             <select
-              {...register("type", {
+              {...register("livestockType", {
                 required: "Animal type is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Animal Type</option>
               <option value="Cow">Cattle 🐄</option>
@@ -256,7 +256,7 @@ export default function CategoryFields({
             <input
               type="text"
               {...register("breed", { required: "Breed is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., Holstein"
             />
             {errors.breed && (
@@ -273,7 +273,7 @@ export default function CategoryFields({
                 required: "Age is required",
                 valueAsNumber: true,
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., 2"
             />
             {errors.age && (
@@ -288,7 +288,7 @@ export default function CategoryFields({
               {...register("healthStatus", {
                 required: "Health status is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Health Status</option>
               <option value="Healthy">Healthy</option>
@@ -315,8 +315,8 @@ export default function CategoryFields({
               Feed Type
             </label>
             <select
-              {...register("type", { required: "Feed type is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              {...register("feedType", { required: "Feed type is required" })}
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Feed Type</option>
               <option value="Poultry">🐔 Poultry Feed</option>
@@ -340,7 +340,7 @@ export default function CategoryFields({
               {...register("nutritionalContent", {
                 required: "Nutritional content is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., 20% protein"
             />
             {errors.nutritionalContent && (
@@ -358,7 +358,7 @@ export default function CategoryFields({
               {...register("expiryData", {
                 required: "Expiry date is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             {errors.expiryData && (
               <p className="text-red-500 text-sm">
@@ -376,10 +376,10 @@ export default function CategoryFields({
               Seed/Plant Type
             </label>
             <select
-              {...register("type", {
+              {...register("plantType", {
                 required: "Seed/Plant type is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
               <option value="Corn">🌽 Corn</option>
@@ -403,7 +403,7 @@ export default function CategoryFields({
               {...register("plantingSeason", {
                 required: "Planting season is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., Spring"
             />
             {errors.plantingSeason && (
@@ -422,10 +422,10 @@ export default function CategoryFields({
               Pesticides Type
             </label>
             <select
-              {...register("type", {
+              {...register("pesticideType", {
                 required: "Pesticide type is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
               <option value="Insecticide">🦟 Insecticide</option>
@@ -448,7 +448,7 @@ export default function CategoryFields({
             <input
               type="text"
               {...register("brand", { required: "Brand is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="brand name"
             />
             {errors.brand && (
@@ -464,7 +464,7 @@ export default function CategoryFields({
               {...register("volume", {
                 required: "Expiry date is required",
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="200ml, 2L"
             />
             {errors.expiryData && (
@@ -483,8 +483,10 @@ export default function CategoryFields({
               Fisheries Type
             </label>
             <select
-              {...register("type", { required: "Fisheries type is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              {...register("fisheriesType", {
+                required: "Fisheries type is required",
+              })}
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select Type</option>
               <option value="Freshwater Fish">🐟 Freshwater Fish</option>
@@ -504,7 +506,7 @@ export default function CategoryFields({
             </label>
             <select
               {...register("condition", { required: "Condition is required" })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Select condition</option>
               <option value="Fresh">Fresh</option>
@@ -524,7 +526,7 @@ export default function CategoryFields({
                 required: "Age is required",
                 valueAsNumber: true,
               })}
-              className="mt-1 block w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mt-1 block w-full border rounded-[2px] p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="e.g., 2"
             />
             {errors.age && (

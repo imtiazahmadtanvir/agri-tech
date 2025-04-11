@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <QueryProvider>
           <GlobalContextProvider>
@@ -43,7 +43,7 @@ export default function RootLayout({
               <Toaster position="top-right" reverseOrder={false} />
               <TopInfoBar />
               <Navbar />
-              {children}
+              <main className="flex-1">{children}</main>
               <Footer></Footer>
               <FloatingChatbot></FloatingChatbot>
             </AuthProvider>
