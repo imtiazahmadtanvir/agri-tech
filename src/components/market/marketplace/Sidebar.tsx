@@ -42,7 +42,7 @@ export default function Sidebar() {
       </h3>
 
       {/* Navigation Buttons */}
-      <div className="space-y-2">
+      <div className="lg:space-y-2 flex gap-2 overflow-auto">
         <Link
           href="/marketplace"
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
@@ -148,15 +148,18 @@ export default function Sidebar() {
         {/* Categories */}
         <div className="mt-4">
           <h3 className="text-lg font-semibold text-gray-700">Categories</h3>
-          <div className="space-y-2 mt-2">
+          <div
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className="flex gap-2 mt-2 overflow-x-auto  
+          scrollbar-thumb-gray-300"
+          >
             {marketplaceCategories.map(({ name, emoji }) => (
               <button
                 key={name}
                 onClick={() => setSelectedCategories(name)}
-                className="w-full py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
+                className="whitespace-nowrap py-2 px-3 text-left border rounded-md bg-white hover:bg-green-100 flex items-center gap-2"
               >
-                {emoji}
-                {name}
+                {emoji} {name}
               </button>
             ))}
           </div>
