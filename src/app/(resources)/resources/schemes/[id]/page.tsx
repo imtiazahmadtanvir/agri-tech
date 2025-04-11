@@ -23,14 +23,14 @@ export default function Schemadetails({ params }) {
   }, [id])
 
   if (!scheme) {
-    return <p className="text-center text-gray-500">Loading or Not Found...</p>
+    return <p className="text-center text-gray-500">Loading...</p>
   }
 
   return (
     <div className="p-6 w-11/12 lg:w-10/12 mx-auto my-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
        
-        {/* Image on the Right */}
+        {/* Image on the left */}
         <div className="w-full ">
           <Image
             src={scheme.image_url}
@@ -38,10 +38,10 @@ export default function Schemadetails({ params }) {
             width={600}
             height={400}
             className="w-full h-auto object-cover rounded-md shadow-md"
-            unoptimized // for external images if not added to next.config.js
+            unoptimized 
           />
         </div>
-         {/* Details on the Left */}
+         {/* Details on the right */}
          <div>
          <h3 className="text-2xl font-semibold text-green-700">{scheme.name_bn}</h3>
          <p className="text-gray-600 italic text-xl">{scheme.name_en}</p>

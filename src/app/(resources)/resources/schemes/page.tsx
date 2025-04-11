@@ -1,4 +1,4 @@
-'use client'; // ✅ Important for Next.js App Router
+'use client'; 
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,7 +30,7 @@ export default function GovtSchema() {
   width={500}
   height={160}
   className="w-full h-40 object-cover rounded-md mb-3"
-  unoptimized // Add this if you're using external URLs without domain whitelist
+  unoptimized 
 />
 
             <h3 className="text-lg font-semibold text-green-700">{scheme.name_bn}</h3>
