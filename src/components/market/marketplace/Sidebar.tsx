@@ -42,7 +42,7 @@ export default function Sidebar() {
       </h3>
 
       {/* Navigation Buttons */}
-      <div className="lg:space-y-2 flex gap-2 overflow-auto">
+      <div className="lg:space-y-2 flex lg:flex-col gap-2">
         <Link
           href="/marketplace"
           className={`w-full py-2 px-3 text-left border rounded-md flex items-center hover:bg-green-700 hover:text-white ${
@@ -77,7 +77,7 @@ export default function Sidebar() {
         {/* Create Listing Button */}
         <Link
           href={"/marketplace/create"}
-          className={`w-full py-2 px-3 text-center border rounded-md flex items-center justify-center gap-2 hover:bg-green-700 hover:text-white ${
+          className={`w-full py-2 px-3 text-center border z-50 lg:z-auto fixed lg:static bottom-0 rounded-md flex items-center justify-center gap-2 hover:bg-green-700 hover:text-white ${
             pathname === "/marketplace/create"
               ? "bg-green-700 text-white"
               : "bg-white"
