@@ -194,7 +194,7 @@ export default function Home() {
               htmlFor="image"
               className="block text-sm font-medium text-gray-700 mb-2 md:mb-4"
             >
-              Upload Crop/Farm Photo
+              Upload Crop/Plant Photo
             </label>
 
             {!image ? (
