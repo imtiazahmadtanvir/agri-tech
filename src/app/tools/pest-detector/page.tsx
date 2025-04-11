@@ -14,25 +14,19 @@ export default function Detector() {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const responseRef = useRef<HTMLDivElement>(null);
 
-  // Typing animation effect
   useEffect(() => {
     if (response && !isTyping) {
-      const trimmedResponse = response.trimStart(); // Remove leading whitespace/newlines
+      const trimmedResponse = response.trimStart();
       setIsTyping(true);
       setDisplayResponse("");
 
       let index = 0;
-      const typingSpeed = 10; // ms per character
+      const typingSpeed = 10;
 
       const typeNextChar = () => {
         if (index < trimmedResponse.length) {
           const nextChar = trimmedResponse.charAt(index);
-          // console.log(`Appending char: "${nextChar}", index: ${index}`); // Debug
-          setDisplayResponse((prev) => {
-            const newValue = prev + nextChar;
-            // console.log(`New displayResponse: "${newValue}"`); // Debug
-            return newValue;
-          });
+          setDisplayResponse((prev) => prev + nextChar);
           index++;
           setTimeout(typeNextChar, typingSpeed);
         } else {
@@ -44,7 +38,6 @@ export default function Detector() {
     }
   }, [response]);
 
-  // Auto-scroll to the bottom of the response as it's typing
   useEffect(() => {
     if (isTyping && responseRef.current) {
       responseRef.current.scrollTop = responseRef.current.scrollHeight;
@@ -81,9 +74,7 @@ export default function Detector() {
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-    }
+    if (file) setImage(file);
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -100,7 +91,6 @@ export default function Detector() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setImage(e.dataTransfer.files[0]);
     }
@@ -109,21 +99,15 @@ export default function Detector() {
   const clearImage = () => setImage(null);
 
   const formatResponse = (text: string) => {
-    // console.log("formatResponse input:", text); // Debug
-
-    // First process bold text with **asterisks**
     const boldProcessed = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
-    // Process lists
     const listProcessed = boldProcessed
-      // Handle numbered lists (1. Item, 2. Item)
       .replace(/(\d+\.\s+(.*?)(?:\n|$))+/g, (match) => {
         const items = match.split(/\n/).filter((item) => item.trim());
         return `<ol class="list-decimal pl-5 my-2 md:my-3 space-y-1">${items
           .map((item) => `<li>${item.replace(/^\d+\.\s+/, "")}</li>`)
           .join("")}</ol>`;
       })
-      // Handle bullet lists (• Item or - Item)
       .replace(/((?:•|\-)\s+(.*?)(?:\n|$))+/g, (match) => {
         const items = match.split(/\n/).filter((item) => item.trim());
         return `<ul class="list-disc pl-5 my-2 md:my-3 space-y-1">${items
@@ -131,21 +115,15 @@ export default function Detector() {
           .join("")}</ul>`;
       });
 
-    // Process paragraphs
     const paragraphs = listProcessed
       .split(/\n\n+/)
       .map((p) => {
-        // Skip if it's already a list
-        if (p.startsWith("<ol") || p.startsWith("<ul")) {
-          return p;
-        }
-        // Process paragraph
+        if (p.startsWith("<ol") || p.startsWith("<ul")) return p;
         return `<p class="mb-2 md:mb-3">${p.replace(/\n/g, "<br>")}</p>`;
       })
-      .filter((p) => p.trim()) // Remove empty paragraphs
+      .filter((p) => p.trim())
       .join("");
 
-    // console.log("formatResponse output:", paragraphs); // Debug
     return paragraphs;
   };
 
@@ -160,7 +138,6 @@ export default function Detector() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-          {/* Prompt Input */}
           <div>
             <label
               htmlFor="prompt"
@@ -178,7 +155,6 @@ export default function Detector() {
             />
           </div>
 
-          {/* Image Upload Zone */}
           <div
             className={`relative border-2 border-dashed rounded-lg md:rounded-xl p-3 sm:p-4 md:p-6 transition-colors ${
               dragActive
@@ -196,7 +172,6 @@ export default function Detector() {
             >
               Upload Crop/Plant Photo
             </label>
-
             {!image ? (
               <div className="flex flex-col items-center justify-center py-3 md:py-4">
                 <Upload className="w-8 h-8 md:w-10 md:h-10 text-green-500 mb-2 md:mb-3" />
@@ -245,62 +220,37 @@ export default function Detector() {
             )}
           </div>
 
-          {/* Submit Button */}
           <div className="flex justify-center">
             <button
               type="submit"
               disabled={loading || (!prompt && !image)}
               className={`w-full sm:w-fit py-2.5 md:py-3.5 px-4 md:px-6 rounded-lg md:rounded-xl font-medium transition-all shadow-sm text-sm md:text-base
-    ${
-      loading || (!prompt && !image)
-        ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-        : "bg-gradient-to-r from-green-600 to-green-600 hover:from-green-700 hover:to-green-700 text-white cursor-pointer"
-    }`}
+                ${
+                  loading || (!prompt && !image)
+                    ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                    : "bg-gradient-to-r from-green-600 to-green-600 hover:from-green-700 hover:to-green-700 text-white cursor-pointer"
+                }`}
             >
               {loading ? (
                 <div className="flex items-center justify-center">
-                  <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin mr-2" />
-                  <span>Analyzing...</span>
+                  <Loader2 className="w-5 h-5 md:w-6 md:h-6 animate-spin mr-2" />
+                  Processing...
                 </div>
               ) : (
-                "Analyze"
+                "Detect"
               )}
             </button>
           </div>
         </form>
 
-        {/* Response Display */}
-        {(displayResponse || isTyping) && (
-          <div className="mt-4 md:mt-8">
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg md:rounded-xl border border-green-100 overflow-hidden">
-              <div className="border-b border-green-100 bg-white bg-opacity-60 px-3 sm:px-4 md:px-6 py-2 md:py-3 flex items-center justify-between">
-                <h2 className="text-lg md:text-xl font-bold text-green-800">
-                  Analysis Results
-                </h2>
-                {isTyping && (
-                  <div className="flex items-center">
-                    <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-600 rounded-full animate-pulse mr-1"></div>
-                    <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-600 rounded-full animate-pulse delay-150 mr-1"></div>
-                    <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-600 rounded-full animate-pulse delay-300"></div>
-                  </div>
-                )}
-              </div>
-              <div
-                ref={responseRef}
-                className="p-3 sm:p-4 md:p-6 max-h-60 sm:max-h-72 md:max-h-96 overflow-y-auto"
-              >
-                <div
-                  className="prose prose-sm md:prose-base prose-green max-w-none text-sm md:text-base"
-                  dangerouslySetInnerHTML={{
-                    __html: formatResponse(displayResponse),
-                  }}
-                />
-                {isTyping && (
-                  <span className="inline-block w-0.5 md:w-1 h-4 md:h-5 bg-green-600 animate-blink ml-0.5 md:ml-1"></span>
-                )}
-              </div>
-            </div>
-          </div>
+        {displayResponse && (
+          <div
+            ref={responseRef}
+            className="mt-6 md:mt-8 max-h-96 overflow-y-auto p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 text-sm md:text-base"
+            dangerouslySetInnerHTML={{
+              __html: formatResponse(displayResponse),
+            }}
+          ></div>
         )}
       </div>
     </div>
