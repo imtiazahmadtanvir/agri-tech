@@ -403,13 +403,13 @@ export default function CommunityFeatures({ defaultTab = "forum" }: { defaultTab
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <header className="mb-8">
+      <header className="mb-8 text-center">
         <h1 className="text-3xl font-bold text-green-700 mb-2">Community Features</h1>
         <p className="text-gray-600">Connect, collaborate, and grow with fellow farmers</p>
       </header>
 
       <Tabs defaultValue={defaultTab} className="w-full">
-        <TabsList className="bg-green-100 text-green-800 mb-6">
+        <TabsList className="bg-green-100 text-green-800 mb-4 mx-auto text-2xl">
           <TabsTrigger value="forum">Farmer Forum</TabsTrigger>
           <TabsTrigger value="events">Local Events</TabsTrigger>
           <TabsTrigger value="cooperatives">Cooperative Groups</TabsTrigger>
