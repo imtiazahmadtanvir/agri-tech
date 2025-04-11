@@ -29,7 +29,7 @@ export default async function MyListing({
   const listings: Listing[] = res.data.data || [];
 
   return (
-    <div className="mt-4 px-4">
+    <div className="my-4 px-4">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-2xl font-semibold">My Listings</h3>
         <Search />
@@ -41,7 +41,7 @@ export default async function MyListing({
             key={item._id}
             className="border rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all bg-white"
           >
-            <div className="relative w-full h-48">
+            <div className="relative w-full h-48 -z-10">
               <Image
                 src={item.photos?.[0]}
                 alt={item.productName}

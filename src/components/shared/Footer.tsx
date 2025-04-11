@@ -104,7 +104,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative bg-[#0a4a1c] text-white">
+    <footer className="relative bg-[#0a4a1c] text-white -z-20">
       {/* Grass pattern at top */}
       <div className="w-full h-4 bg-repeat-x bg-top" aria-hidden="true"></div>
 

@@ -56,22 +56,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </ul>
         </nav>
       </aside>
-
-      {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-lg font-medium text-gray-800">Welcome</h1>
-          </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-gray-600">User Name</span>
-            <button className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition-colors">
-              Logout
-            </button>
-          </div>
-        </header>
-
         {/* Page Content */}
         <main className="p-6  bg-[#F5F6F7]">{children}</main>
       </div>

@@ -59,7 +59,10 @@ export const authOptions: NextAuthOptions = {
         async signIn({ user, account }) {
             if (account?.provider === "google" || account?.provider === "github") {
                 const { providerAccountId, provider } = account;
-                const { email, name, image } = user;
+                const { email, image } = user;
+                const nameArr = user?.name?.split(" ") || []
+                const lastName = nameArr[nameArr?.length - 1]
+                const firstName = nameArr.slice(0, -1).concat("").join(" ")
                 const userCollection = await dbConnect(collectionNameObj.userCollection);
                 const existingUser = await userCollection.findOne({ email });
 
@@ -68,7 +71,8 @@ export const authOptions: NextAuthOptions = {
                         providerAccountId,
                         provider,
                         email,
-                        name,
+                        firstName,
+                        lastName,
                         image,
                         role: "farmer",
                     };
@@ -78,15 +82,15 @@ export const authOptions: NextAuthOptions = {
                 } else {
                     user.role = existingUser.role || "farmer";
                     user.image = existingUser.image || image;
+                    user.firstName = firstName
+                    user.lastName = lastName
                 }
             }
             return true;
         },
         async jwt({ token, user, account }) {
             if (user) {
-
                 token.id = user.id;
-                token.name = user.name;
                 token.email = user.email;
                 token.role = user.role || "farmer";
                 token.image = user.image ?? null;
@@ -97,8 +101,6 @@ export const authOptions: NextAuthOptions = {
                     token.firstName = user.firstName || "";
                     token.lastName = user.lastName || "";
                 }
-
-                // Fetch from DB for consistency
                 const userCollection = await dbConnect(collectionNameObj.userCollection);
                 const dbUser = await userCollection.findOne({ email: user.email });
                 if (dbUser) {
@@ -119,15 +121,8 @@ export const authOptions: NextAuthOptions = {
                 session.user.email = token.email ?? null;
                 session.user.image = token.image ?? null;
                 session.user.role = token.role || "farmer";
-
-                if (token.isOAuth) {
-                    delete session.user.firstName;
-                    delete session.user.lastName;
-                } else {
-
-                    session.user.firstName = token.firstName || "";
-                    session.user.lastName = token.lastName || "";
-                }
+                session.user.firstName = token.firstName || "";
+                session.user.lastName = token.lastName || "";
             }
             return session;
         },
