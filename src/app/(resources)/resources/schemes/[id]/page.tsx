@@ -13,7 +13,6 @@ interface Schema {
     deadline: string;
   };
 }
-
 async function getData(id: string): Promise<Schema | null> {
   const res = await fetch(`${process.env.NEXTAUTH_URL}/schema/schemas.json`);
   const json = await res.json();
