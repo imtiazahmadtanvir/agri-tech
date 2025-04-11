@@ -36,7 +36,7 @@ export default function Detector() {
 
       typeNextChar();
     }
-  }, [response]);
+  }, [response, isTyping]);
 
   useEffect(() => {
     if (isTyping && responseRef.current) {
