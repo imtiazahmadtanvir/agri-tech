@@ -22,7 +22,7 @@ async function getData(id: string): Promise<Schema | null> {
 export default async function Schemadetails({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const res = await params;
   const { id } = res;
