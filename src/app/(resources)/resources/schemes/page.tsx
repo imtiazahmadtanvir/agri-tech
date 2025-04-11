@@ -1,6 +1,7 @@
 'use client'; // ✅ Important for Next.js App Router
 
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 export default function GovtSchema() {
@@ -14,8 +15,8 @@ export default function GovtSchema() {
   }, []);
 
   return (
-    <div className="w-10/12 mx-auto">
-      <h2 className="text-2xl font-bold mb-12 mt-20">📜 Government Schemes for Farmers</h2>
+    <div className="w-10/12 mx-auto mb-20">
+      <h2 className="text-3xl font-bold mb-12 mt-20 ">📜 Government Schemes for Farmers</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {schemes.map((scheme) => (
@@ -38,8 +39,8 @@ export default function GovtSchema() {
             <ul className="list-disc list-inside text-sm my-2 text-gray-700">
               {scheme.benefits.map((b, i) => <li key={i}>{b}</li>)}
             </ul>
-            <p className="text-sm"><strong>How to Apply:</strong> {scheme.application.method}</p>
-            <p className="text-sm"><strong>Deadline:</strong> {scheme.application.deadline}</p>
+            <Link href={`/resources/schemes/${scheme.id}`}><button className='bg-green-700 text-white rounded-sm mt-6 font-semibold px-4 py-2'>Details</button></Link>
+         
           </div>
         ))}
       </div>
