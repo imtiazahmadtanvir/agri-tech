@@ -40,7 +40,7 @@ export default async function ProductDetails({ params }: PageProps) {
   } = res?.data;
   return (
     <div className="my-4 p-4 border rounded-sm ">
-      <div className="flex justify-between ">
+      <div className="flex flex-col lg:flex-row justify-between ">
         <div>
           <h3 className="font-semibold text-xl">{productName}</h3>
           <p className="text-gray-500">
@@ -54,8 +54,8 @@ export default async function ProductDetails({ params }: PageProps) {
           </p>
         </div>
       </div>
-      <div className="flex gap-4">
-        <div className="w-2/3">
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="lg:w-2/3 w-full">
           <ImageSlider data={photos} />
           <div>
             <div className="flex mt-2 gap-2 items-center text-sm">
@@ -84,7 +84,7 @@ export default async function ProductDetails({ params }: PageProps) {
             <p>{description}</p>
           </div>
         </div>
-        <div className="w-1/3 scroll-mt-4 sticky top-0 h-fit border rounded-sm">
+        <div className="lg:w-1/3 w-full scroll-mt-4 sticky top-0 h-fit border rounded-sm">
           <div className="py-3 border-b px-3 -z-10">
             <Image
               width={50}
