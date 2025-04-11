@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, ChangeEvent, FormEvent, useEffect, useRef } from "react";
 import { Camera, Upload, X, Loader2 } from "lucide-react";
 
-export default function Home() {
+export default function Detector() {
   const [prompt, setPrompt] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
   const [response, setResponse] = useState<string>("");
