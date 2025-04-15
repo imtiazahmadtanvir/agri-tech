@@ -15,28 +15,34 @@ export default function Detector() {
   const responseRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (response && !isTyping) {
+    if (response) {
       const trimmedResponse = response.trimStart();
       setIsTyping(true);
       setDisplayResponse("");
 
       let index = 0;
       const typingSpeed = 10;
+      let timeoutId: NodeJS.Timeout;
 
       const typeNextChar = () => {
         if (index < trimmedResponse.length) {
           const nextChar = trimmedResponse.charAt(index);
           setDisplayResponse((prev) => prev + nextChar);
           index++;
-          setTimeout(typeNextChar, typingSpeed);
+          timeoutId = setTimeout(typeNextChar, typingSpeed);
         } else {
           setIsTyping(false);
         }
       };
 
       typeNextChar();
+
+      return () => {
+        clearTimeout(timeoutId);
+        setIsTyping(false);
+      };
     }
-  }, [response, isTyping]);
+  }, [response]);
 
   useEffect(() => {
     if (isTyping && responseRef.current) {
