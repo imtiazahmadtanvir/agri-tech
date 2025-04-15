@@ -1,4 +1,5 @@
 "use client";
+import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,12 +12,17 @@ export default function ForgetPage() {
     setLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const res = await axios.post("/api/forget-password", {
+        email,
+      });
 
-      toast.success("Password reset link has been sent to your email.");
+      toast.success(res.data.message || "Reset link sent successfully.");
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      const axiosError = error as AxiosError<{ message: string }>;
+      const message =
+        axiosError.response?.data?.message ||
+        "Something went wrong. Please try again.";
+      toast.error(message);
     } finally {
       setLoading(false);
     }

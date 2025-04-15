@@ -13,8 +13,6 @@ interface Payload {
 
 export const registerUser = async (payload: Payload) => {
     const { email, password, role } = payload;
-    console.log(payload);
-
     try {
         // Connect to the database
         const userCollection = await dbConnect(collectionNameObj.userCollection);
