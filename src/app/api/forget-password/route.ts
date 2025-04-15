@@ -19,13 +19,13 @@ export const POST = async (req: Request) => {
 
         const resetToken = crypto.randomBytes(20).toString("hex");
         const passwordRestToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-        const passwordRestExpires = Date.now() + 300000; // 5 minutes
+        const passwordRestExpires = new Date(Date.now() + 5 * 60 * 1000).toISOString();
         await userCollection.updateOne(
             { email },
             {
                 $set: {
-                    restToken: passwordRestToken,
-                    restTokenExpiry: passwordRestExpires,
+                    resetToken: passwordRestToken,
+                    resetTokenExpiry: passwordRestExpires,
                 },
             }
         );
@@ -41,7 +41,7 @@ export const POST = async (req: Request) => {
         });
 
         const mailOptions = {
-            from: `"Support Team" <${process.env.EMAIL_USER}>`,
+            from: `"Support Team of Agri-tech" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Password Reset Link",
             html: `
