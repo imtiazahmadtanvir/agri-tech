@@ -1,6 +1,5 @@
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import bcrypt from "bcryptjs";
-import crypto from "crypto";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
