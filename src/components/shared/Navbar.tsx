@@ -6,6 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import Container from "./max-w-container/Container";
 import MobileNav from "@/components/shared/MobileNav";
+import DropdownMenu from "../navBar/DropdownMenu";
 
 // Types for navigation items
 interface NavItem {
@@ -76,7 +77,8 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    label: "Community",href: "/community/forum",
+    label: "Community",
+    href: "/community/forum",
     icon: "▼",
     subItems: [
       { label: "Farmer Forum", href: "/community/forum", icon: "🗣️" },
@@ -85,36 +87,6 @@ const navItems: NavItem[] = [
     ],
   },
 ];
-
-const DropdownMenu = ({ item }: { item: NavItem }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div
-      className="relative group"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-    >
-      <button className="text-white md:text-[#0D401C] hover:text-[#F8C32C] transition-colors flex items-center gap-1">
-        {item.label} <span>{item.icon}</span>
-      </button>
-      {isOpen && item.subItems && (
-        <ul className="absolute left-0 top-full mt-0 w-56 bg-white shadow-lg rounded-md py-2 z-10 border-t border-gray-200">
-          {item.subItems.map((subItem) => (
-            <li key={subItem.href}>
-              <Link
-                href={subItem.href}
-                className="px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-colors flex items-center gap-2"
-              >
-                <span>{subItem.icon}</span> {subItem.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-};
 
 // NavItems component
 const NavItems = ({ isMobile = false }: { isMobile?: boolean }) => (
@@ -187,9 +159,13 @@ const AuthSection = () => {
               My Profile
             </Link>
             <Link
-              href="/dashboard"
+              href={`${
+                session.user.role === "farmer"
+                  ? "/dashboard"
+                  : "/adminDashboard"
+              }`}
               className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
-              onClick={() => setIsOpen(false)} // Close dropdown on click
+              onClick={() => setIsOpen(false)}
             >
               Dashboard 📊
             </Link>
