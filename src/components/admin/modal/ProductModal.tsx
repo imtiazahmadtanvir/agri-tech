@@ -9,7 +9,9 @@ export default function ProductModal({ isOpen, onClose }: ProductModalProps) {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/20 z-50">
-      <button onClick={() => onClose()}>Close</button>
+      <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-md relative px-4 py-6">
+        <button onClick={() => onClose()}>Close</button>
+      </div>
     </div>
   );
 }
