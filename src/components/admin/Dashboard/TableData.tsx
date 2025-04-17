@@ -19,7 +19,10 @@ export default function TableData({ item }: { item: Item }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   return (
     <>
-      <tr onClick={() => setIsModalOpen(true)}>
+      <tr
+        className="hover:bg-gray-200 cursor-pointer"
+        onClick={() => setIsModalOpen(true)}
+      >
         <td>
           <Image
             src={item.photos[0] || ""}
