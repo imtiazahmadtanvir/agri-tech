@@ -1,9 +1,6 @@
 import TableData from "@/components/admin/Dashboard/TableData";
 import axios from "axios";
-import { FileEdit } from "lucide-react";
 import { headers } from "next/headers";
-import Image from "next/image";
-import { IoCheckmarkSharp, IoClose } from "react-icons/io5";
 interface Item {
   _id: string;
   productName: string;

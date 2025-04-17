@@ -1,8 +1,20 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { IoCheckmarkSharp, IoClose } from "react-icons/io5";
-
-export default function TableData({ item }) {
+interface Item {
+  _id: string;
+  productName: string;
+  category: string;
+  price: number;
+  location: string;
+  phoneNumber: string;
+  listed: string;
+  verifyStatus: boolean;
+  userName: string;
+  photos: string[];
+}
+export default function TableData({ item }: { item: Item }) {
   return (
     <tr>
       <td>
