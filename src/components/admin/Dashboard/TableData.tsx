@@ -44,7 +44,10 @@ export default function TableData({ item }: { item: Item }) {
           </span>
         </td>
         <td className="px-4 space-x-2 py-2">
-          <span className="relative group inline-block">
+          <span
+            onClick={(e) => e.stopPropagation()}
+            className="relative group inline-block"
+          >
             <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
               <IoCheckmarkSharp size={18} />
             </button>
@@ -52,7 +55,10 @@ export default function TableData({ item }: { item: Item }) {
               Accept
             </span>
           </span>
-          <span className="relative group inline-block">
+          <span
+            onClick={(e) => e.stopPropagation()}
+            className="relative group inline-block"
+          >
             <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
               <IoClose size={18} />
             </button>
