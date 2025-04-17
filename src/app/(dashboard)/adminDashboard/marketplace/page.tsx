@@ -1,7 +1,9 @@
+import TableData from "@/components/admin/Dashboard/TableData";
 import axios from "axios";
 import { FileEdit } from "lucide-react";
 import { headers } from "next/headers";
 import Image from "next/image";
+import { IoCheckmarkSharp, IoClose } from "react-icons/io5";
 interface Item {
   _id: string;
   productName: string;
@@ -27,7 +29,6 @@ export default async function Marketplace() {
   } catch (error) {
     console.log(error);
   }
-  console.log(items);
   return (
     <div>
       <table className="min-w-full divide-y divide-gray-200 text-sm text-left ">
@@ -44,39 +45,7 @@ export default async function Marketplace() {
         </thead>
         <tbody className="divide-y divide-gray-100">
           {items.map((item) => (
-            <tr key={item._id}>
-              <td>
-                <Image
-                  src={item.photos[0] || ""}
-                  alt={item.productName}
-                  height={60}
-                  width={60}
-                />
-              </td>
-              <td className="px-4 py-2">{item.productName}</td>
-              <td className="px-4 py-2">{item.category}</td>
-              <td className="px-4 py-2">{item.price} ৳</td>
-              <td className="px-4 py-2">{item.userName}</td>
-              <td className="px-4 py-2">
-                <span
-                  className={`inline-block px-2 py-1 rounded text-xs ${
-                    item.verifyStatus
-                      ? "bg-green-200 text-green-800"
-                      : "bg-red-200 text-red-800"
-                  }`}
-                >
-                  {item.verifyStatus ? "Verified" : "Unverified"}
-                </span>
-              </td>
-              <td className="px-4 py-2">
-                <button className=" text-white px-3 py-1 rounded mr-2">
-                  <FileEdit className="text-green-400" />
-                </button>
-                <button className="bg-red-500 text-white px-3 py-1 rounded">
-                  View
-                </button>
-              </td>
-            </tr>
+            <TableData key={item._id} item={item} />
           ))}
         </tbody>
       </table>
