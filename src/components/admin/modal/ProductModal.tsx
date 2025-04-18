@@ -28,7 +28,7 @@ export default function ProductModal({
   onClose,
   id,
 }: ProductModalProps) {
-  const { data, error, loading } = useFetch<{ data: ProductData }>(
+  const { data, error, loading, refetch } = useFetch<{ data: ProductData }>(
     `/api/adminDashboard/marketplace/${id}`
   );
 

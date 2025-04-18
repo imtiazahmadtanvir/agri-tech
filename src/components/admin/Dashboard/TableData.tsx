@@ -3,6 +3,10 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { IoCheckmarkSharp, IoClose } from "react-icons/io5";
 import ProductModal from "../modal/ProductModal";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
 interface Item {
   _id: string;
   productName: string;
@@ -17,6 +21,24 @@ interface Item {
 }
 export default function TableData({ item }: { item: Item }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const router = useRouter();
+  const handelAccept = async (
+    id: string,
+    verifyStatus: boolean
+  ): Promise<void> => {
+    try {
+      await axios.patch(`/api/adminDashboard/marketplace/${id}`, {
+        verifyStatus: verifyStatus,
+      });
+      router.refresh();
+      toast.success("Publish request successful");
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error instanceof Error ? error.message : "An unexpected error occurred"
+      );
+    }
+  };
   return (
     <>
       <tr
@@ -51,7 +73,10 @@ export default function TableData({ item }: { item: Item }) {
             onClick={(e) => e.stopPropagation()}
             className="relative group inline-block"
           >
-            <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+            <button
+              onClick={() => handelAccept(item._id, true)}
+              className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+            >
               <IoCheckmarkSharp size={18} />
             </button>
             <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:inline-block bg-black text-white text-xs rounded py-1 px-2 z-10 whitespace-nowrap">
@@ -62,7 +87,10 @@ export default function TableData({ item }: { item: Item }) {
             onClick={(e) => e.stopPropagation()}
             className="relative group inline-block"
           >
-            <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+            <button
+              onClick={() => handelAccept(item._id, false)}
+              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+            >
               <IoClose size={18} />
             </button>
             <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:inline-block bg-black text-white text-xs rounded py-1 px-2 z-10 whitespace-nowrap">

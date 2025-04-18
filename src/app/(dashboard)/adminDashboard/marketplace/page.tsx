@@ -1,5 +1,4 @@
 import TableData from "@/components/admin/Dashboard/TableData";
-import axios from "axios";
 import { headers } from "next/headers";
 interface Item {
   _id: string;
@@ -16,13 +15,15 @@ interface Item {
 export default async function Marketplace() {
   let items: Item[] = [];
   try {
-    const res = await axios.get(
+    const res = await fetch(
       `${process.env.NEXTAUTH_URL}/api/adminDashboard/marketplace`,
       {
         headers: Object.fromEntries(await headers()),
+        cache: "force-cache",
       }
     );
-    items = res.data.data;
+    const data = await res.json();
+    items = data.data;
   } catch (error) {
     console.log(error);
   }
