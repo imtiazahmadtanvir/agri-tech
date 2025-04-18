@@ -1,6 +1,4 @@
 import useFetch from "@/Hook/useFetch";
-import { useEffect } from "react";
-
 interface ProductModalProps {
   isOpen: boolean;
   id: string;
