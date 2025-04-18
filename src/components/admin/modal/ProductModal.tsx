@@ -72,7 +72,7 @@ export default function ProductModal({
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-4 text-sm mt-4 w-3">
+        <div className="grid grid-cols-2 gap-4 text-sm mt-4">
           <p>
             <strong>Category:</strong> {item?.category}
           </p>
