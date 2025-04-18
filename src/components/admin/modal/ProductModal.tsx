@@ -1,11 +1,20 @@
-import React from "react";
+import useFetch from "@/Hook/useFetch";
+import { useEffect } from "react";
 
 interface ProductModalProps {
   isOpen: boolean;
+  id: string;
   onClose: () => void;
 }
 
-export default function ProductModal({ isOpen, onClose }: ProductModalProps) {
+export default function ProductModal({
+  isOpen,
+  onClose,
+  id,
+}: ProductModalProps) {
+  const { data, error, loading } = useFetch(
+    `/api/adminDashboard/marketplace/${id}`
+  );
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/20 z-50">

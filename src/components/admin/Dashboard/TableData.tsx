@@ -73,6 +73,7 @@ export default function TableData({ item }: { item: Item }) {
       </tr>
       {isModalOpen && (
         <ProductModal
+          id={item._id}
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
         />
