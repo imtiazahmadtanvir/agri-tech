@@ -12,6 +12,7 @@ const useFetch = <T>(url: string) => {
         isLoading,
         isError,
         error,
+        refetch
     } = useQuery<T, Error>({
         queryKey: ["fetch", url],
         queryFn: () => fetchData<T>(url),
@@ -22,6 +23,7 @@ const useFetch = <T>(url: string) => {
         data,
         loading: isLoading,
         error: isError ? error?.message : null,
+        refetch
     };
 };
 
