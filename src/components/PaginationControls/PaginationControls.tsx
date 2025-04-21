@@ -14,14 +14,17 @@ export default function PaginationControls({
   const [page, setPage] = useState<number>(1);
   const itemPerPage = 10;
   const totalPages = Math.ceil(itemCount / itemPerPage);
-  console.log(page);
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
     if (page) {
       params.set("page", page.toString());
+    } else {
+      params.delete("page");
     }
     if (itemPerPage) {
       params.set("limit", itemPerPage.toString());
+    } else {
+      params.delete("limit");
     }
     replace(`${pathname}?${params.toString()}`);
   }, [searchParams, page, pathname, replace]);
