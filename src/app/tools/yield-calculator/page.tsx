@@ -57,7 +57,7 @@ export default function YieldCalculator() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md border border-green-200">
+    <div className="max-w-2xl  mx-auto p-6 bg-white rounded-lg shadow-md border border-green-200">
       <h2 className="text-2xl font-bold text-green-800 mb-6">
         Crop Yield Calculator
       </h2>
