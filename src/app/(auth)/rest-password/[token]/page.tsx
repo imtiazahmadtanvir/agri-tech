@@ -62,7 +62,7 @@ export default function RestPassword() {
       } else {
         setError(res.data.message || "Something went wrong.");
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
       setError("Error updating password.");
     }
