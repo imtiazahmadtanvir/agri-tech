@@ -103,7 +103,9 @@ export default function YieldCalculator() {
           </label>
           <select
             value={soilQuality}
-            onChange={(e) => setSoilQuality(e.target.value)}
+            onChange={(e) =>
+              setSoilQuality(e.target.value as keyof typeof soilMultipliers)
+            }
             className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
           >
             <option value="poor">Poor</option>
