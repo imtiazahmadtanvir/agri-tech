@@ -2,10 +2,12 @@
 import { useState } from "react";
 
 export default function YieldCalculator() {
-  const [cropType, setCropType] = useState("corn");
+  const [cropType, setCropType] = useState<keyof typeof baseYields>("corn");
   const [area, setArea] = useState(10);
-  const [soilQuality, setSoilQuality] = useState("good");
-  const [irrigationLevel, setIrrigationLevel] = useState("adequate");
+  const [soilQuality, setSoilQuality] =
+    useState<keyof typeof soilMultipliers>("good");
+  const [irrigationLevel, setIrrigationLevel] =
+    useState<keyof typeof irrigationMultipliers>("adequate");
   const [fertilizer, setFertilizer] = useState(true);
   const [pestControl, setPestControl] = useState(true);
   const [estimatedYield, setEstimatedYield] = useState(0);
@@ -67,7 +69,9 @@ export default function YieldCalculator() {
           </label>
           <select
             value={cropType}
-            onChange={(e) => setCropType(e.target.value)}
+            onChange={(e) =>
+              setCropType(e.target.value as keyof typeof baseYields)
+            }
             className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
           >
             <option value="corn">Corn (Maize)</option>
