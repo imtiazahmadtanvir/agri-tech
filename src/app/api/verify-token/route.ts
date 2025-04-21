@@ -1,8 +1,8 @@
 import crypto from "crypto";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect"
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (res: Response) => {
+export const POST = async (res: NextRequest) => {
     const { token } = await res.json()
     const userCollection = await dbConnect(collectionNameObj.userCollection)
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
