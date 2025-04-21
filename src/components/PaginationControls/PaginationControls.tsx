@@ -12,7 +12,7 @@ export default function PaginationControls({
   const pathname = usePathname();
   const { replace } = useRouter();
   const [page, setPage] = useState<number>(1);
-  const itemPerPage = 5;
+  const itemPerPage = 10;
   const totalPages = Math.ceil(itemCount / itemPerPage);
   console.log(page);
   useEffect(() => {
