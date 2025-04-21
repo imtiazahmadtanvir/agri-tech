@@ -58,8 +58,8 @@ const ContentModal: React.FC<ContentModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
+    <div className="fixed inset-0 bg-black/25 bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 w-full max-w-2xl">
         <h2 className="text-xl font-bold text-green-800 mb-4">
           {initialData ? "Edit" : "Add"} Content
         </h2>

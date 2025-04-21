@@ -96,7 +96,7 @@ export default function ContentManagement() {
     setIsModalOpen(true);
   };
 
-  const handleSave = (data: any) => {
+  const handleSave = (data) => {
     if (selectedContent) {
       setContent(
         content.map((item) =>
@@ -108,7 +108,13 @@ export default function ContentManagement() {
         ...content,
         {
           id: content.length + 1,
-          type: activeTab === "resources" ? "resource" : "community",
+          type:
+            activeTab === "resources"
+              ? "resource"
+              : activeTab === "community"
+              ? "community"
+              : "resource",
+          category: activeTab === "schemes" ? "Schemes" : data.category,
           ...data,
         },
       ]);
@@ -121,11 +127,12 @@ export default function ContentManagement() {
     setIsAnalyticsOpen(true);
   };
 
-  const filteredContent = content.filter((item) =>
-    activeTab === "resources"
-      ? item.type === "resource"
-      : item.type === "community"
-  );
+  const filteredContent = content.filter((item) => {
+    if (activeTab === "resources") return item.type === "resource";
+    if (activeTab === "community") return item.type === "community";
+    if (activeTab === "schemes") return item.category === "Schemes";
+    return false;
+  });
 
   return (
     <div className="min-h-screen bg-gray-100 font-roboto p-6">
@@ -153,6 +160,16 @@ export default function ContentManagement() {
             onClick={() => setActiveTab("community")}
           >
             Community
+          </button>
+          <button
+            className={`px-4 py-2 font-semibold rounded ${
+              activeTab === "schemes"
+                ? "bg-green-600 text-white"
+                : "bg-white text-green-800"
+            }`}
+            onClick={() => setActiveTab("schemes")}
+          >
+            Government Schemes
           </button>
         </div>
         <button
@@ -182,7 +199,7 @@ export default function ContentManagement() {
           onClose={() => setIsModalOpen(false)}
           onSave={handleSave}
           initialData={selectedContent}
-          isResource={activeTab === "resources"}
+          isResource={activeTab === "resources" || activeTab === "schemes"}
         />
       )}
       {isAnalyticsOpen && (
