@@ -1,12 +1,10 @@
-import { timeAgeCalculator } from "@/utils/timeCalculate";
+import PaginationControls from "@/components/PaginationControls/PaginationControls";
 import { FormData } from "@/types/type";
+import { timeAgeCalculator } from "@/utils/timeCalculate";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
-import Filters from "@/components/market/marketplace/Filters";
-import PaginationControls from "@/components/PaginationControls/PaginationControls";
-
-interface SearchParams {
+interface Params {
   search?: string;
   minPrice?: string;
   maxPrice?: string;
@@ -16,13 +14,7 @@ interface SearchParams {
   page: string;
   limit: string;
 }
-
-export default async function MarketplaceMain({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>;
-}) {
-  const param = await searchParams;
+export default async function ProductLists({ param }: { param: Params }) {
   const search = param.search || "";
   const minPrice = param.minPrice || 0;
   const maxPrice = param.maxPrice || 100000000;
@@ -54,16 +46,8 @@ export default async function MarketplaceMain({
     console.error("Error fetching marketplace items:", error);
     errorMessage = "Failed to fetch marketplace items. Please try again later.";
   }
-
   return (
-    <div className="my-4">
-      <div>
-        <Filters />
-      </div>
-      {errorMessage && (
-        <p className="text-red-500 text-center">{errorMessage}</p>
-      )}
-
+    <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         {items.length === 0 && !errorMessage ? (
           <p className="text-gray-500">No listings found.</p>
@@ -99,6 +83,6 @@ export default async function MarketplaceMain({
         )}
       </div>
       <PaginationControls itemCount={itemCount} />
-    </div>
+    </>
   );
 }
