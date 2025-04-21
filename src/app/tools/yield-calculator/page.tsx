@@ -121,7 +121,11 @@ export default function YieldCalculator() {
           </label>
           <select
             value={irrigationLevel}
-            onChange={(e) => setIrrigationLevel(e.target.value)}
+            onChange={(e) =>
+              setIrrigationLevel(
+                e.target.value as keyof typeof irrigationMultipliers
+              )
+            }
             className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
           >
             <option value="minimal">Minimal</option>
