@@ -30,10 +30,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </li>
             <li>
               <Link
-                href="/dashboard/addProduct"
+                href="/dashboard/products"
                 className="block py-2 px-3 text-gray-600 hover:bg-gray-100 hover:text-gray-800 rounded-md transition-colors"
               >
-                Add Product
+                Products
               </Link>
             </li>
 
