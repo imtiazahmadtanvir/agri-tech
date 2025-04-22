@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PhotoSelectionForm from "../products/ListingForm";
+import PhotoSelectionForm from "../products/PhotoSelectionForm";
 
 interface ModalProps {
   isOpen: boolean;
