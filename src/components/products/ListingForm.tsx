@@ -3,11 +3,15 @@
 import { useState } from "react";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
-
-export default function PhotoSelectionForm() {
-  const [images, setImages] = useState<File[]>([]);
+interface PhotoSelectionFormProps {
+  images: File[];
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+}
+export default function PhotoSelectionForm({
+  images,
+  setImages,
+}: PhotoSelectionFormProps) {
   const [dragActive, setDragActive] = useState(false);
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);

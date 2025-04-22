@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PhotoSelectionForm from "../products/ListingForm";
 
 interface ModalProps {
@@ -7,6 +7,7 @@ interface ModalProps {
 }
 
 export default function ProductForm({ isOpen, onClose }: ModalProps) {
+  const [images, setImages] = useState<File[]>([]);
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -33,7 +34,7 @@ export default function ProductForm({ isOpen, onClose }: ModalProps) {
         className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl relative px-4 py-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <PhotoSelectionForm />
+        <PhotoSelectionForm images={images} setImages={setImages} />
       </div>
     </div>
   );
