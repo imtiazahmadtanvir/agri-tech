@@ -3,19 +3,26 @@ import { GoPlus } from "react-icons/go";
 import { CiExport } from "react-icons/ci";
 export default function page() {
   return (
-    <div className="">
-      <div className="flex justify-between py-2 ">
-        <h3 className="font-bold text-xl">Product List</h3>
+    <div className="rounded-xl bg-white shadow">
+      <div className="flex px-4 justify-between py-2 ">
+        <div>
+          <input
+            className="border px-4 py-2 rounded-full"
+            type="search"
+            name=""
+            id=""
+          />
+        </div>
         <div className="flex gap-4">
-          <button className="flex items-center shadow rounded-md px-2.5 py-2 bg-white">
+          <button className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold">
             <CiExport /> Export
           </button>
-          <button className="flex items-center shadow rounded-md px-2.5 py-2 bg-white">
+          <button className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold">
             <GoPlus /> Add Product
           </button>
         </div>
       </div>
-      <div className="overflow-x-auto rounded-xl bg-white shadow">
+      <div className="overflow-x-auto ">
         <table className="table-auto w-full  border-gray-300 ">
           <thead className="bg-green-100 text-left rounded-2xl">
             <tr>
