@@ -1,5 +1,6 @@
 import { TagsProps } from "@/types/type";
 import { useState } from "react";
+import { IoCloseOutline } from "react-icons/io5";
 
 export default function TagInput({ tags, setTags }: TagsProps) {
   const [input, setInput] = useState("");
@@ -30,9 +31,9 @@ export default function TagInput({ tags, setTags }: TagsProps) {
           <span>{tag}</span>|
           <button
             onClick={() => removeTag(index)}
-            className="text-xs text-red-500 hover:text-red-700"
+            className="cursor-pointer text-white hover:text-gray-400"
           >
-            &times;
+            <IoCloseOutline className="text-lg" />
           </button>
         </div>
       ))}
