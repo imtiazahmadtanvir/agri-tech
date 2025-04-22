@@ -17,7 +17,7 @@ export default function ProductInfoForm({ tags, setTags }: TagsProps) {
         maxLength={50}
         required
       />
-      <p className="text-sm text-gray-400">
+      <p className="text-xs text-gray-400">
         Do not exceed 20 characters when entering the product name.
       </p>
       <div className="grid grid-cols-2 gap-6">
