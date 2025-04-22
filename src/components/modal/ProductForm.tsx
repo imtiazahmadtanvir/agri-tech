@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import ListingForm from "../products/ListingForm";
 
 interface ModalProps {
   isOpen: boolean;
@@ -29,10 +30,10 @@ export default function ProductForm({ isOpen, onClose }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg shadow-lg w-[90%] max-w-md relative px-4 py-6"
+        className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl relative px-4 py-6"
         onClick={(e) => e.stopPropagation()}
       >
-        f
+        <ListingForm />
       </div>
     </div>
   );
