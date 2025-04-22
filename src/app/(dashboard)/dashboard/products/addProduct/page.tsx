@@ -6,9 +6,9 @@ import React, { useState } from "react";
 export default function AddProduct() {
   const [images, setImages] = useState<File[]>([]);
   return (
-    <div>
+    <form className="grid lg:grid-cols-2 gap-4">
       <ProductInfoForm />
       <PhotoSelectionForm images={images} setImages={setImages} />
-    </div>
+    </form>
   );
 }
