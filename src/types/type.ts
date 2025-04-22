@@ -1,3 +1,5 @@
+import { FieldValues, UseFormRegister } from "react-hook-form";
+
 export type WeatherData = {
     coord: {
         lon: number;
@@ -137,7 +139,13 @@ export interface FormData {
     expiryData?: string;
     type?: string
 }
+export interface IFormInput {
+    productName: string;
+    category: string
+}
 export interface TagsProps {
     tags: string[];
     setTags: React.Dispatch<React.SetStateAction<string[]>>;
+    register: UseFormRegister<IFormInput>
+
 }

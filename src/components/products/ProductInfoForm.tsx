@@ -2,7 +2,11 @@ import { productCategories } from "@/lib/productCategory";
 import TagInput from "./TagInput";
 import { TagsProps } from "@/types/type";
 
-export default function ProductInfoForm({ tags, setTags }: TagsProps) {
+export default function ProductInfoForm({
+  tags,
+  setTags,
+  register,
+}: TagsProps) {
   return (
     <div className="bg-white  rounded-2xl">
       <h3 className="font-semibold border-b px-6 py-4 ">Product Information</h3>
@@ -11,13 +15,17 @@ export default function ProductInfoForm({ tags, setTags }: TagsProps) {
           Product name <sup className="text-red-500">*</sup>
         </label>
         <input
+          {...register("productName", {
+            required: "Product name is required",
+            maxLength: {
+              value: 30,
+              message: "Do not exceed 30 characters",
+            },
+          })}
           type="text"
           id="name"
-          name="name"
           className="border rounded-xl px-6 py-3 w-full "
           placeholder="Enter product name"
-          maxLength={50}
-          required
         />
         <p className="text-xs text-gray-400">
           Do not exceed 20 characters when entering the product name.
@@ -29,7 +37,7 @@ export default function ProductInfoForm({ tags, setTags }: TagsProps) {
               Category <sup className="text-red-500">*</sup>
             </label>
             <select
-              required
+              {...register("category")}
               className="border mt-2 rounded-xl px-6 py-3 w-full "
               name="category"
               id="category"
@@ -72,7 +80,7 @@ export default function ProductInfoForm({ tags, setTags }: TagsProps) {
         <label htmlFor="description" className="block  font-medium">
           Tags<sup className="text-red-500">*</sup>
         </label>
-        <TagInput setTags={setTags} tags={tags} />
+        <TagInput setTags={setTags} tags={tags} register={register} />
       </div>
     </div>
   );

@@ -1,27 +1,22 @@
 "use client";
 import PhotoSelectionForm from "@/components/products/PhotoSelectionForm";
 import ProductInfoForm from "@/components/products/ProductInfoForm";
+import { IFormInput } from "@/types/type";
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 export default function AddProduct() {
+  const { register, handleSubmit } = useForm<IFormInput>();
   const [images, setImages] = useState<File[]>([]);
   const [tags, setTags] = useState<string[]>([]);
-  const [agreed, setAgreed] = useState(false); // For policy checkbox
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!agreed) {
-      alert("Please agree to the policy before submitting.");
-      return;
-    }
-
-    // Submit logic here
-    console.log({ images, tags });
-  };
-
+  const [agreed, setAgreed] = useState(false);
+  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
   return (
-    <form className="grid lg:grid-cols-2 gap-4" onSubmit={handleSubmit}>
-      <ProductInfoForm setTags={setTags} tags={tags} />
+    <form
+      className="grid lg:grid-cols-2 gap-4"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <ProductInfoForm register={register} setTags={setTags} tags={tags} />
       <div>
         <PhotoSelectionForm images={images} setImages={setImages} />
 
