@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { GoPlus } from "react-icons/go";
 import { CiExport } from "react-icons/ci";
@@ -56,6 +57,9 @@ export default function page() {
               <th className="px-4 py-2 border-b">Product Name</th>
               <th className="px-4 py-2 border-b">Category</th>
               <th className="px-4 py-2 border-b">Price</th>
+              <th className="px-4 py-2 border-b">Stock</th>
+              <th className="px-4 py-2 border-b">Status</th>
+              <th className="px-4 py-2 border-b">Action</th>
             </tr>
           </thead>
           <tbody>
