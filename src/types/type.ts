@@ -137,3 +137,7 @@ export interface FormData {
     expiryData?: string;
     type?: string
 }
+export interface TagsProps {
+    tags: string[];
+    setTags: React.Dispatch<React.SetStateAction<string[]>>;
+}

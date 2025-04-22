@@ -1,6 +1,8 @@
 import { productCategories } from "@/lib/productCategory";
+import TagInput from "./TagInput";
+import { TagsProps } from "@/types/type";
 
-export default function ProductInfoForm() {
+export default function ProductInfoForm({ tags, setTags }: TagsProps) {
   return (
     <div className="space-y-2 bg-white p-4 rounded-2xl">
       <label htmlFor="name" className="block  font-medium">
@@ -61,9 +63,10 @@ export default function ProductInfoForm() {
           className="border rounded-xl px-6 py-3 w-full h-52"
           name="description"
           id="description"
-          placeholder="Description"
+          placeholder="Short description about the product"
         ></textarea>
       </div>
+      <TagInput setTags={setTags} tags={tags} />
     </div>
   );
 }

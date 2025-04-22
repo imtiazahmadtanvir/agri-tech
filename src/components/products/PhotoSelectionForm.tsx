@@ -47,7 +47,7 @@ export default function PhotoSelectionForm({
   };
 
   return (
-    <div className="">
+    <div className="bg-white rounded-2xl pb-6">
       <h4 className="text-xl px-6 py-4 font-semibold mb-3 border-b">
         Add Product Photos
       </h4>
