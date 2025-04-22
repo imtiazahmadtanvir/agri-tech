@@ -25,11 +25,9 @@ export default function ProductForm({ isOpen, onClose }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg shadow-lg w-[90%] max-w-md relative px-4 py-6"
+        className="bg-white rounded-lg shadow-lg w-[90%] max-w-2xl relative px-4 py-6"
         onClick={(e) => e.stopPropagation()}
-      >
-        f
-      </div>
+      ></div>
     </div>
   );
 }
