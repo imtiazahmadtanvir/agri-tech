@@ -13,10 +13,10 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <MarketplaceProvider>
       <ContainerSmall className="flex gap-4 flex-col lg:flex-row">
-        <div className={`${activePath ? "hidden" : ""} lg:w-1/4`}>
+        <div className={`${activePath ? "hidden" : ""} lg:w-2/5`}>
           <Sidebar />
         </div>
-        <div className={`${activePath ? "w-full mx-4" : "lg:w-3/4"}`}>
+        <div className={`${activePath ? "w-full mx-4" : "lg:w-4/5"}`}>
           {children}
         </div>
       </ContainerSmall>
