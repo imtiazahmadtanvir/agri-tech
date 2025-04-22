@@ -1,10 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { CiExport } from "react-icons/ci";
-export default function page() {
+import ProductForm from "@/components/modal/ProductForm";
+export default function Products() {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <div className="rounded-xl bg-white shadow">
+      {/* filter */}
       <div className="px-4 py-2">
         <h3 className="text-xl font-semibold">Filter</h3>
         <div className="flex justify-between py-3">
@@ -31,6 +35,7 @@ export default function page() {
           </div>
         </div>
       </div>
+      {/* search */}
       <div className="flex  border-t border-b px-4 justify-between py-2 ">
         <div>
           <input
@@ -45,11 +50,15 @@ export default function page() {
           <button className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold">
             <CiExport /> Export
           </button>
-          <button className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold"
+          >
             <GoPlus /> Add Product
           </button>
         </div>
       </div>
+      {/* table here */}
       <div className="overflow-x-auto ">
         <table className="table-auto w-full  border-gray-300 ">
           <thead className="bg-green-100 text-left rounded-2xl">
@@ -76,6 +85,7 @@ export default function page() {
           </tbody>
         </table>
       </div>
+      <ProductForm isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 }
