@@ -1,24 +1,12 @@
 "use client";
 
+import { productCategories } from "@/lib/productCategory";
 import { useState } from "react";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 
 export default function Sidebar() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
-
-  const marketplaceCategories = [
-    { id: 1, name: "Fresh Fruits" },
-    { id: 2, name: "Vegetables" },
-    { id: 3, name: "Grains & Cereals" },
-    { id: 4, name: "Dairy Products" },
-    { id: 5, name: "Eggs" },
-    { id: 6, name: "Honey & Jams" },
-    { id: 7, name: "Organic Products" },
-    { id: 8, name: "Herbs & Spices" },
-    { id: 9, name: "Poultry & Meat" },
-    { id: 10, name: "Flowers & Plants" },
-  ];
 
   const restFiler = () => {
     setPriceRange([0, 10000]);
@@ -33,7 +21,7 @@ export default function Sidebar() {
           Categories
         </h3>
         <div className="flex px-7 pb-3 flex-col text-left">
-          {marketplaceCategories.map((item) => (
+          {productCategories.map((item) => (
             <button
               className={`text-xl py-4 px-2 text-left w-full border-dashed ${
                 item.id !== 10 ? "border-b" : ""

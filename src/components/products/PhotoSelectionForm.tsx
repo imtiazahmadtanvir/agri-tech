@@ -53,9 +53,7 @@ export default function PhotoSelectionForm({
       </h4>
       <div
         className={`mx-6 relative border-2 border-dashed  rounded-lg p-4 transition-colors ${
-          dragActive
-            ? "border-green-500 bg-green-50"
-            : "border-gray-300 hover:border-green-400"
+          dragActive ? "border-green-500 bg-green-50" : "border-gray-300"
         }`}
         onDragEnter={handleDrag}
         onDragOver={handleDrag}
@@ -118,6 +116,10 @@ export default function PhotoSelectionForm({
           className="hidden"
         />
       </div>
+      <p className="text-xs px-6 mt-4 text-gray-400">
+        You need to add at least 3 images. Pay attention to the quality of the
+        pictures you add, comply with the background color standards.
+      </p>
     </div>
   );
 }
