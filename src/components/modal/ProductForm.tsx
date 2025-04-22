@@ -8,12 +8,16 @@ interface ModalProps {
 export default function ProductForm({ isOpen, onClose }: ModalProps) {
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add("overflow-hidden");
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = "15px";
     } else {
-      document.body.classList.remove("overflow-hidden");
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     }
+
     return () => {
-      document.body.classList.remove("overflow-hidden");
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [isOpen]);
 
@@ -25,9 +29,11 @@ export default function ProductForm({ isOpen, onClose }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg shadow-lg w-[90%] max-w-2xl relative px-4 py-6"
+        className="bg-white rounded-lg shadow-lg w-[90%] max-w-md relative px-4 py-6"
         onClick={(e) => e.stopPropagation()}
-      ></div>
+      >
+        f
+      </div>
     </div>
   );
 }
