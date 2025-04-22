@@ -31,7 +31,7 @@ export default function ProductForm({ isOpen, onClose }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl relative px-4 py-6"
+        className="bg-[#F9F7F7] rounded-lg shadow-lg w-[90%] max-w-3xl relative pb-6"
         onClick={(e) => e.stopPropagation()}
       >
         <PhotoSelectionForm images={images} setImages={setImages} />

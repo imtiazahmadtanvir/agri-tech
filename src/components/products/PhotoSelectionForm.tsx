@@ -47,10 +47,12 @@ export default function PhotoSelectionForm({
   };
 
   return (
-    <div>
-      <h4 className="text-xl font-semibold mb-3">Add Product Photos</h4>
+    <div className="">
+      <h4 className="text-xl px-6 py-4 font-semibold mb-3 border-b">
+        Add Product Photos
+      </h4>
       <div
-        className={`relative border-2 border-dashed rounded-lg p-4 transition-colors ${
+        className={`mx-6 relative border-2 border-dashed  rounded-lg p-4 transition-colors ${
           dragActive
             ? "border-green-500 bg-green-50"
             : "border-gray-300 hover:border-green-400"

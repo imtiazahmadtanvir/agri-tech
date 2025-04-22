@@ -1,11 +1,9 @@
 "use client";
-import React, { useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { CiExport } from "react-icons/ci";
-import ProductForm from "@/components/modal/ProductForm";
-export default function Products() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+import Link from "next/link";
 
+export default function Products() {
   return (
     <div className="rounded-xl bg-white shadow">
       {/* filter */}
@@ -50,12 +48,12 @@ export default function Products() {
           <button className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold">
             <CiExport /> Export
           </button>
-          <button
-            onClick={() => setIsOpen(true)}
+          <Link
+            href={"/dashboard/products/addProduct"}
             className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold"
           >
             <GoPlus /> Add Product
-          </button>
+          </Link>
         </div>
       </div>
       {/* table here */}
@@ -85,7 +83,6 @@ export default function Products() {
           </tbody>
         </table>
       </div>
-      <ProductForm isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );
 }
