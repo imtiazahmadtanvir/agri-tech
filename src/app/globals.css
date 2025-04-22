@@ -196,12 +196,9 @@
   }
 }
 
-.mySwiper .swiper-slide {
-  width: 25%;
-  height: 100%;
-  opacity: 0.4;
-}
-
-.mySwiper .swiper-slide-thumb-active {
-  opacity: 1;
+.custom-slider {
+  width: 100%;
+  accent-color: red;
+  /* Modern browsers */
+  /* For further customization, use ::-webkit-slider-thumb, ::-moz-range-thumb, etc. */
 }
