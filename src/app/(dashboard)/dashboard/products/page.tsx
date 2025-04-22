@@ -4,13 +4,40 @@ import { CiExport } from "react-icons/ci";
 export default function page() {
   return (
     <div className="rounded-xl bg-white shadow">
-      <div className="flex px-4 justify-between py-2 ">
+      <div className="px-4 py-2">
+        <h3 className="text-xl font-semibold">Filter</h3>
+        <div className="flex justify-between py-3">
+          <select className="border rounded-md px-3 py-1.5" name="" id="">
+            <option value="">Status</option>
+            <option value="pending">Pending</option>
+            <option value=""></option>
+            <option value="">Status</option>
+          </select>
+          <div>
+            <select className="border rounded-md px-3 py-1.5" name="" id="">
+              <option value="">Category</option>
+              <option value="pending">Pending</option>
+              <option value=""></option>
+              <option value="">Status</option>
+            </select>
+          </div>
+          <div>
+            <select className="border rounded-md px-3 py-1.5" name="" id="">
+              <option value="">Stock</option>
+              <option value="inStock">In Stuck</option>
+              <option value="">Out Of Stuck</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div className="flex  border-t border-b px-4 justify-between py-2 ">
         <div>
           <input
-            className="border px-4 py-2 rounded-full"
+            className="border  px-4 py-2 rounded-full"
             type="search"
             name=""
             id=""
+            placeholder="search Product"
           />
         </div>
         <div className="flex gap-4">
