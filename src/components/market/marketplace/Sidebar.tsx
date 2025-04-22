@@ -65,6 +65,12 @@ export default function Sidebar() {
           Price ৳ {priceRange[0]} - ৳ {priceRange[1]}
         </div>
       </div>
+      <div className="mt-6 border rounded-2xl">
+        <h4 className="bg-[#0D401C] text-2xl rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
+          Popular Products
+        </h4>
+        <div className="px-7 pb-3"></div>
+      </div>
     </aside>
   );
 }
