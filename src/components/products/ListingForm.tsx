@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
 
-export default function ListingForm() {
+export default function PhotoSelectionForm() {
   const [images, setImages] = useState<File[]>([]);
   const [dragActive, setDragActive] = useState(false);
 
@@ -12,7 +12,7 @@ export default function ListingForm() {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
       setImages((prev) => [...prev, ...selectedFiles]);
-      e.target.value = ""; // Allow re-selecting the same file
+      e.target.value = "";
     }
   };
 

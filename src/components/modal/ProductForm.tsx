@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import ListingForm from "../products/ListingForm";
+import PhotoSelectionForm from "../products/ListingForm";
 
 interface ModalProps {
   isOpen: boolean;
@@ -33,7 +33,7 @@ export default function ProductForm({ isOpen, onClose }: ModalProps) {
         className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl relative px-4 py-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <ListingForm />
+        <PhotoSelectionForm />
       </div>
     </div>
   );
