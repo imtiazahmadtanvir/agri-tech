@@ -38,7 +38,7 @@ export default function TagInput({ tags, setTags }: TagsProps) {
       ))}
       <input
         type="text"
-        className="outline-none flex-grow min-w-[100px]"
+        className="outline-none flex-grow min-w-[100px] px-5 "
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}

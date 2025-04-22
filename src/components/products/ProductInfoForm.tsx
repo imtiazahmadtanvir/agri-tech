@@ -66,6 +66,9 @@ export default function ProductInfoForm({ tags, setTags }: TagsProps) {
           placeholder="Short description about the product"
         ></textarea>
       </div>
+      <label htmlFor="description" className="block  font-medium">
+        Tags<sup className="text-red-500">*</sup>
+      </label>
       <TagInput setTags={setTags} tags={tags} />
     </div>
   );
