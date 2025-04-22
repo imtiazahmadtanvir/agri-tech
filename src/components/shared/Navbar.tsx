@@ -7,6 +7,7 @@ import { useState } from "react";
 import Container from "./max-w-container/Container";
 import MobileNav from "@/components/shared/MobileNav";
 import DropdownMenu from "../navBar/DropdownMenu";
+import { TiShoppingCart } from "react-icons/ti";
 
 // Types for navigation items
 interface NavItem {
@@ -129,53 +130,58 @@ const AuthSection = () => {
 
   if (session) {
     return (
-      <div className="relative">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="focus:outline-none"
-        >
-          {session.user?.image ? (
-            <Image
-              src={session.user.image}
-              alt="Profile"
-              width={32}
-              height={32}
-              className="rounded-full"
-            />
-          ) : (
-            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-[#0D401C]">
-              {displayName[0]}
+      <div className="flex  gap-4">
+        <div className="relative">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="focus:outline-none"
+          >
+            {session.user?.image ? (
+              <Image
+                src={session.user.image}
+                alt="Profile"
+                width={44}
+                height={44}
+                className="rounded-full"
+              />
+            ) : (
+              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-[#0D401C]">
+                {displayName[0]}
+              </div>
+            )}
+          </button>
+          {isOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10 border border-gray-200">
+              <Link
+                className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
+                href="/profile"
+              >
+                My Profile
+              </Link>
+              <Link
+                href={`${
+                  session.user.role === "farmer"
+                    ? "/dashboard"
+                    : "/adminDashboard"
+                }`}
+                className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
+                onClick={() => setIsOpen(false)}
+              >
+                Dashboard 📊
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="w-full text-left px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
+              >
+                Logout
+              </button>
             </div>
           )}
-        </button>
+        </div>
 
-        {isOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10 border border-gray-200">
-            <Link
-              className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
-              href="/profile"
-            >
-              My Profile
-            </Link>
-            <Link
-              href={`${
-                session.user.role === "farmer"
-                  ? "/dashboard"
-                  : "/adminDashboard"
-              }`}
-              className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
-              onClick={() => setIsOpen(false)}
-            >
-              Dashboard 📊
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="w-full text-left px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
-            >
-              Logout
-            </button>
-          </div>
-        )}
+        <button className="size-11 hover:bg-[#165728] hover:text-white transition-all duration-300 cursor-pointer flex justify-center items-center border rounded-full">
+          <TiShoppingCart size={20} />
+        </button>
       </div>
     );
   }

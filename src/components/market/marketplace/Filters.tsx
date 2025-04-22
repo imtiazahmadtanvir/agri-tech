@@ -62,7 +62,7 @@ export default function Filters() {
       <select
         defaultValue={searchParams.get("sortBy")?.toString()}
         onChange={(e) => setSortBy(e.target.value)}
-        className="border px-3 py-2 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+        className=" hover:border-[#0D401C] text-md bg-[#F3F5F3] py-3.5 px-5 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0D401C]"
       >
         <option value="">Date: Newest on Top</option>
         <option value="date-old">Date: Oldest on Top</option>
