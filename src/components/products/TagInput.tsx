@@ -22,7 +22,7 @@ export default function TagInput({ tags, setTags }: TagsProps) {
   };
 
   return (
-    <div className="border rounded-md p-2 flex flex-wrap gap-2 min-h-[50px]">
+    <div className="border rounded-xl p-2 flex flex-wrap gap-2 min-h-[50px]">
       {tags.map((tag, index) => (
         <div
           key={index}
