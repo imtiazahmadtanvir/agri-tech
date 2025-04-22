@@ -120,6 +120,33 @@ export default function PhotoSelectionForm({
         You need to add at least 3 images. Pay attention to the quality of the
         pictures you add, comply with the background color standards.
       </p>
+      {/* price info */}
+      <div className="grid px-6 lg:grid-cols-1 gap-4">
+        {/* regular price */}
+        <div>
+          <label htmlFor="price">Price</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            className="border rounded-xl px-6 py-3 w-full mt-2 "
+            placeholder="Enter product price"
+            required
+          />
+        </div>
+        {/* discount price */}
+        <div>
+          <label htmlFor="discountedPrice">Discounted Price</label>
+          <input
+            type="number"
+            id="discountedPrice"
+            name="discountedPrice"
+            className="border rounded-xl px-6 py-3 w-full mt-2 "
+            placeholder="Enter product price"
+            required
+          />
+        </div>
+      </div>
     </div>
   );
 }
