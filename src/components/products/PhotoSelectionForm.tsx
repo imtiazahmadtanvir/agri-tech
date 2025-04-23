@@ -10,12 +10,14 @@ interface PhotoSelectionFormProps {
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
   register: UseFormRegister<IFormInput>;
   errors: FieldErrors<IFormInput>;
+  photoError: string;
 }
 export default function PhotoSelectionForm({
   images,
   setImages,
   register,
   errors,
+  photoError,
 }: PhotoSelectionFormProps) {
   const [dragActive, setDragActive] = useState(false);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,10 +124,10 @@ export default function PhotoSelectionForm({
           className="hidden"
         />
       </div>
-      <p className="text-xs px-6 mt-4 text-gray-400">
-        You need to add at least 3 images. Pay attention to the quality of the
-        pictures you add, comply with the background color standards.
-      </p>
+      {photoError && (
+        <p className="text-xs text-red-500 px-6 mt-4">{photoError}</p>
+      )}
+
       {/* price info */}
       <div className="grid px-6 lg:grid-cols-1 gap-4">
         {/* regular price */}

@@ -3,6 +3,7 @@ import PhotoSelectionForm from "@/components/products/PhotoSelectionForm";
 import ProductInfoForm from "@/components/products/ProductInfoForm";
 import Spinner from "@/components/shared/Spinner";
 import { IFormInput } from "@/types/type";
+import { uploadPhotos } from "@/utils/imageUpload";
 import axios from "axios";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -17,12 +18,20 @@ export default function AddProduct() {
   const [images, setImages] = useState<File[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [agreed, setAgreed] = useState(false);
+  const [photoError, setPhotoError] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    const formData = { ...data, images, tags };
     try {
+      if (images.length === 0) {
+        setPhotoError("At least one photo is required to post a listing.");
+        setLoading(false);
+        return;
+      }
+      const photoUrls = await uploadPhotos(images);
       setLoading(true);
+      const formData = { ...data, photoUrls, tags };
       const res = await axios.post("/api/listings", formData);
+
       if (res.data.success) {
         toast.success(res.data.message);
       }
@@ -46,6 +55,7 @@ export default function AddProduct() {
       />
       <div>
         <PhotoSelectionForm
+          photoError={photoError}
           images={images}
           setImages={setImages}
           register={register}
