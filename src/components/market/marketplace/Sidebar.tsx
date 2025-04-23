@@ -2,21 +2,29 @@
 
 import { productCategories } from "@/lib/productCategory";
 import { useState } from "react";
-import RangeSlider from "react-range-slider-input";
-import "react-range-slider-input/dist/style.css";
 import { FiArrowRight } from "react-icons/fi";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import { useSearchParams } from "next/navigation";
-
+interface HandleChangeEvent {
+  target: {
+    id: string;
+    value: string;
+  };
+}
 export default function Sidebar() {
   const searchParams = useSearchParams();
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
-  const { setCategory } = useMarketPlace();
+
+  const { setCategory, setMaxPrice, setMinPrice } = useMarketPlace();
   const category = searchParams.get("category")?.toString();
+
+  const handleChange = (e: HandleChangeEvent) => {
+    const { id, value } = e.target;
+    if (id === "minPrice") setMinPrice(Number(value));
+    if (id === "maxPrice") setMaxPrice(Number(value));
+  };
   return (
     <aside className="h-fit sticky mt-4 top-0 left-0">
       <div className="border rounded-2xl">
-        {/* Categories */}
         <h3 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Categories
         </h3>
@@ -61,27 +69,45 @@ export default function Sidebar() {
             </button>
           ))}
         </div>
-
-        {/* Price Range */}
       </div>
+
+      {/* Price Filter Section */}
       <div className="border rounded-2xl mt-6">
         <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Filter by Price
         </h4>
-        <div className="px-7 pt-6">
-          <RangeSlider
-            min={0}
-            max={10000}
-            step={10}
-            defaultValue={priceRange}
-            onInput={setPriceRange}
-            className="custom-slider accent-green-400 "
-          />
-        </div>
-        <div className="mt-2 px-7 py-3 text-sm">
-          Price ৳ {priceRange[0]} - ৳ {priceRange[1]}
+        <div className="px-7 pt-6 flex gap-4">
+          <div className="flex flex-col">
+            <label htmlFor="minPrice" className="text-sm font-medium">
+              Min Price
+            </label>
+            <input
+              id="minPrice"
+              type="number"
+              min="0"
+              max="10000"
+              step="10"
+              onChange={handleChange}
+              className="border border-gray-300 rounded px-2 py-1"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="maxPrice" className="text-sm font-medium">
+              Max Price
+            </label>
+            <input
+              id="maxPrice"
+              type="number"
+              min="0"
+              max="100000"
+              step="10"
+              onChange={handleChange}
+              className="border border-gray-300 rounded px-2 py-1"
+            />
+          </div>
         </div>
       </div>
+
       <div className="mt-6 border rounded-2xl">
         <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Popular Products
