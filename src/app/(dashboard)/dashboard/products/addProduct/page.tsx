@@ -1,6 +1,7 @@
 "use client";
 import PhotoSelectionForm from "@/components/products/PhotoSelectionForm";
 import ProductInfoForm from "@/components/products/ProductInfoForm";
+import Spinner from "@/components/shared/Spinner";
 import { IFormInput } from "@/types/type";
 import axios from "axios";
 import React, { useState } from "react";
@@ -16,9 +17,11 @@ export default function AddProduct() {
   const [images, setImages] = useState<File[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [agreed, setAgreed] = useState(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     const formData = { ...data, images, tags };
     try {
+      setLoading(true);
       const res = await axios.post("/api/listings", formData);
       if (res.data.success) {
         toast.success(res.data.message);
@@ -26,6 +29,8 @@ export default function AddProduct() {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Error creating product!");
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -72,9 +77,11 @@ export default function AddProduct() {
           </div>
           <button
             type="submit"
-            className="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition-colors"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center gap-2"
+            disabled={isLoading}
           >
-            Create Product
+            {isLoading ? "Creating..." : "Create Product"}{" "}
+            {isLoading && <Spinner size={14} />}
           </button>
         </div>
       </div>
