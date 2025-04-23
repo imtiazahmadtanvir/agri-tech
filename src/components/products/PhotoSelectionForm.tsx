@@ -130,7 +130,9 @@ export default function PhotoSelectionForm({
       <div className="grid px-6 lg:grid-cols-1 gap-4">
         {/* regular price */}
         <div>
-          <label htmlFor="price">Price</label>
+          <label htmlFor="price" className="block  font-medium">
+            Price <sup className="text-red-500">*</sup>
+          </label>
           <input
             type="number"
             {...register("price", { required: "Price is required" })}
@@ -144,7 +146,9 @@ export default function PhotoSelectionForm({
         </div>
         {/* discount price */}
         <div>
-          <label htmlFor="discountedPrice">Discounted Price</label>
+          <label className="font-medium" htmlFor="discountedPrice">
+            Discounted Price (Optional)
+          </label>
           <input
             type="number"
             {...register("discountedPrice")}
