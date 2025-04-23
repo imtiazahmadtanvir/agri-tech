@@ -70,11 +70,11 @@ export default function ProductInfoForm({
                 {...register("stock", {
                   required: "Product stuck is required",
                 })}
-                className="focus:outline-none focus:ring-0 focus:border-none px-6 py-3 w-full "
+                className="focus:outline-none focus:ring-0 focus:border-none px-6 py-3 w-full [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield] "
                 placeholder="Enter product stock"
               />
               <select
-                {...register("unit", { required: true })}
+                {...register("unit", { required: "Please select a unit" })}
                 className="focus:outline-none focus:ring-0 focus:border-none"
               >
                 <option value="">Unit</option>
@@ -87,9 +87,10 @@ export default function ProductInfoForm({
                 <option value="dozen">Dozen</option>
               </select>
             </div>
-            {errors.stock && (
+            {(errors.stock?.message || errors.unit?.message) && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.stock.message}
+                {(errors.stock?.message as string) ||
+                  (errors.unit?.message as string)}
               </p>
             )}
           </div>
