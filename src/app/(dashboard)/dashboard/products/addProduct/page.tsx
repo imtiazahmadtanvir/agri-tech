@@ -14,6 +14,7 @@ export default function AddProduct() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IFormInput>();
   const [images, setImages] = useState<File[]>([]);
   const [tags, setTags] = useState<string[]>([]);
@@ -22,6 +23,7 @@ export default function AddProduct() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
+      setPhotoError("");
       if (images.length === 0) {
         setPhotoError("At least one photo is required to post a listing.");
         setLoading(false);
@@ -35,6 +37,9 @@ export default function AddProduct() {
       if (res.data.success) {
         toast.success(res.data.message);
       }
+      reset();
+      setImages([]);
+      setTags([]);
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Error creating product!");
