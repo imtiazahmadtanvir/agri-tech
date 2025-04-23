@@ -17,13 +17,13 @@ export default function Sidebar() {
     <aside className="h-fit sticky mt-4 top-0 left-0">
       <div className="border rounded-2xl">
         {/* Categories */}
-        <h3 className="bg-[#0D401C] text-2xl rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
+        <h3 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Categories
         </h3>
         <div className="flex px-7 pb-3 flex-col text-left">
           {productCategories.map((item) => (
             <button
-              className={`text-xl py-4 px-2 text-left w-full border-dashed ${
+              className={` py-4 px-2 text-left w-full border-dashed ${
                 item.id !== 10 ? "border-b" : ""
               }`}
               key={item.id}
@@ -36,7 +36,7 @@ export default function Sidebar() {
         {/* Price Range */}
       </div>
       <div className="border rounded-2xl mt-6">
-        <h4 className="bg-[#0D401C] text-2xl rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
+        <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Filter by Price
         </h4>
         <div className="px-7 pt-6">
@@ -54,7 +54,7 @@ export default function Sidebar() {
         </div>
       </div>
       <div className="mt-6 border rounded-2xl">
-        <h4 className="bg-[#0D401C] text-2xl rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
+        <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Popular Products
         </h4>
         <div className="px-7 pb-3"></div>
