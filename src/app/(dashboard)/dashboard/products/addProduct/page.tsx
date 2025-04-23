@@ -2,8 +2,10 @@
 import PhotoSelectionForm from "@/components/products/PhotoSelectionForm";
 import ProductInfoForm from "@/components/products/ProductInfoForm";
 import { IFormInput } from "@/types/type";
+import axios from "axios";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export default function AddProduct() {
   const {
@@ -14,8 +16,17 @@ export default function AddProduct() {
   const [images, setImages] = useState<File[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [agreed, setAgreed] = useState(false);
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log({ ...data, images, tags });
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const formData = { ...data, images, tags };
+    try {
+      const res = await axios.post("/api/listings", formData);
+      if (res.data.success) {
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Error creating product!");
+    }
   };
   return (
     <form
