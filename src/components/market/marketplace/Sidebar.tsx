@@ -5,9 +5,11 @@ import { useState } from "react";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import { FiArrowRight } from "react-icons/fi";
+import { useMarketPlace } from "@/context/MarketplaceContext";
 
 export default function Sidebar() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
+  const { setCategory } = useMarketPlace();
 
   const restFiler = () => {
     setPriceRange([0, 10000]);
@@ -22,6 +24,19 @@ export default function Sidebar() {
           Categories
         </h3>
         <div className="flex px-7 pb-3 flex-col text-left">
+          <button
+            className={`group cursor-pointer py-4 px-2 text-left w-full border-dashed 
+              hover:text-green-700 
+              
+              transition-all duration-300  border-b`}
+          >
+            <span className="relative">
+              <span className="absolute left-[-20px] opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1 transition-all translate-y-1 duration-300 text-[#F8C32C]">
+                <FiArrowRight />
+              </span>
+              All Product
+            </span>
+          </button>
           {productCategories.map((item) => (
             <button
               className={`group cursor-pointer py-4 px-2 text-left w-full border-dashed 
