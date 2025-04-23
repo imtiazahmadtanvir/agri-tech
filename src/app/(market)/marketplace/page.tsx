@@ -2,6 +2,8 @@ import Filters from "@/components/market/marketplace/Filters";
 import ProductLists from "@/components/market/marketplace/ProductLists";
 import { Suspense } from "react";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+import PaginationControls from "@/components/PaginationControls/PaginationControls";
+import axios from "axios";
 
 interface SearchParams {
   search?: string;
@@ -20,6 +22,11 @@ export default async function MarketplaceMain({
   searchParams: Promise<SearchParams>;
 }) {
   const param = await searchParams;
+  let items = [];
+  try {
+    const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`);
+    items = res.data.data;
+  } catch (error) {}
 
   return (
     <div className="my-4">
@@ -27,8 +34,9 @@ export default async function MarketplaceMain({
         <Filters />
       </div>
       <Suspense key={JSON.stringify(param)} fallback={<LoadingSpinner />}>
-        <ProductLists param={param} />
+        <ProductLists items={items} />
       </Suspense>
+      <PaginationControls itemCount={0} />
     </div>
   );
 }

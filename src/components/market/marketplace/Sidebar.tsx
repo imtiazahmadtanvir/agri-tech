@@ -4,6 +4,7 @@ import { productCategories } from "@/lib/productCategory";
 import { useState } from "react";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
+import { FiArrowRight } from "react-icons/fi";
 
 export default function Sidebar() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
@@ -23,12 +24,17 @@ export default function Sidebar() {
         <div className="flex px-7 pb-3 flex-col text-left">
           {productCategories.map((item) => (
             <button
-              className={` py-4 px-2 text-left w-full border-dashed ${
+              className={`group cursor-pointer py-4 px-2 text-left w-full border-dashed hover:text-green-700 gap-2 ${
                 item.id !== 10 ? "border-b" : ""
               }`}
               key={item.id}
             >
-              {item.name}
+              <span className="relative">
+                <span className="absolute left-[-20px] opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1 transition-all translate-y-1 duration-300 text-[#F8C32C]">
+                  <FiArrowRight />
+                </span>
+                {item.name}
+              </span>
             </button>
           ))}
         </div>

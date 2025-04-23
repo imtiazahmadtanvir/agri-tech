@@ -6,7 +6,7 @@ interface ContainerProps {
 export default function ContainerSmall({
   className = "",
   children,
-  weight = 1280,
+  weight = 1380,
 }: ContainerProps) {
   return (
     <div style={{ maxWidth: `${weight}px` }} className={`${className} mx-auto`}>

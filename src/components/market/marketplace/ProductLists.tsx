@@ -1,88 +1,47 @@
-import PaginationControls from "@/components/PaginationControls/PaginationControls";
-import { FormData } from "@/types/type";
-import { timeAgeCalculator } from "@/utils/timeCalculate";
-import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
-interface Params {
-  search?: string;
-  minPrice?: string;
-  maxPrice?: string;
-  sortBy?: string;
-  location?: string;
-  category?: string;
-  page: string;
-  limit: string;
-}
-export default async function ProductLists({ param }: { param: Params }) {
-  const search = param.search || "";
-  const minPrice = param.minPrice || 0;
-  const maxPrice = param.maxPrice || 100000000;
-  const sortBy = param.sortBy || "";
-  const location = param.location || "";
-  const categories = param.category || "";
-  const page = param.page || "1";
-  const limit = param.limit || "10";
-  let errorMessage = "";
-  let items: FormData[] = [];
-  let itemCount = 10;
-  try {
-    const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
-      params: {
-        search,
-        maxPrice,
-        minPrice,
-        sortBy,
-        location,
-        categories,
-        page,
-        limit,
-      },
-    });
+import React from "react";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
-    items = res.data.data;
-    itemCount = res.data.total;
-  } catch (error) {
-    console.error("Error fetching marketplace items:", error);
-    errorMessage = "Failed to fetch marketplace items. Please try again later.";
+interface Product {
+  _id: string;
+  productName: string;
+  photoUrls?: string[];
+  price: string;
+}
+
+export default function ProductLists({ items }: { items: Product[] }) {
+  console.log(items);
+
+  if (!items || items.length === 0) {
+    return <p>No products found.</p>;
   }
+
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        {items.length === 0 && !errorMessage ? (
-          <p className="text-gray-500">No listings found.</p>
-        ) : (
-          items.map((item) => (
-            <Link href={`/marketplace/product/${item._id}`} key={item._id}>
-              <div className="border hover:shadow-xl p-3 rounded-md">
-                <div className="w-full h-56 relative -z-10">
-                  <Image
-                    className="object-cover rounded-md border"
-                    fill
-                    src={
-                      typeof item.photos[0] === "string"
-                        ? item.photos[0]
-                        : URL.createObjectURL(item.photos[0])
-                    }
-                    alt={item.productName}
-                  />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold capitalize mt-2">
-                    {item.productName}
-                  </h3>
-                  <p className="text-green-400 font-bold mt-1">
-                    {item.price} $
-                  </p>
-                  <p className="text-gray-500 text-sm">{item.location}</p>
-                  <p>{timeAgeCalculator(item?.listed || "")}</p>
-                </div>
-              </div>
-            </Link>
-          ))
-        )}
-      </div>
-      <PaginationControls itemCount={itemCount} />
-    </>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {items.map((item) => (
+        <div className="border p-4 rounded-2xl" key={item._id}>
+          {item.photoUrls?.[0] && (
+            <div className="w-full h-64 relative -z-10">
+              <Image
+                className="object-contain"
+                fill
+                src={item.photoUrls[0]}
+                alt={item.productName}
+              />
+            </div>
+          )}
+          <h3 className=" font-medium">{item.productName}</h3>
+          <h4 className="text-[#3D9958] font-medium flex items-center gap-0.5">
+            {item.price}.00 <FaBangladeshiTakaSign />{" "}
+          </h4>
+          <div>
+            <button className="size-8 flex justify-center cursor-pointer rounded-full border items-center text-[#3D9958] hover:text-white hover:bg-[#3D9958]">
+              <FaShoppingCart />
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
