@@ -3,13 +3,19 @@
 import { useState } from "react";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { IFormInput } from "@/types/type";
 interface PhotoSelectionFormProps {
   images: File[];
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
+  register: UseFormRegister<IFormInput>;
+  errors: FieldErrors<IFormInput>;
 }
 export default function PhotoSelectionForm({
   images,
   setImages,
+  register,
+  errors,
 }: PhotoSelectionFormProps) {
   const [dragActive, setDragActive] = useState(false);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,23 +133,24 @@ export default function PhotoSelectionForm({
           <label htmlFor="price">Price</label>
           <input
             type="number"
+            {...register("price", { required: "Price is required" })}
             id="price"
-            name="price"
             className="border rounded-xl px-6 py-3 w-full mt-2 "
             placeholder="Enter product price"
-            required
           />
+          {errors.price && (
+            <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
+          )}
         </div>
         {/* discount price */}
         <div>
           <label htmlFor="discountedPrice">Discounted Price</label>
           <input
             type="number"
+            {...register("discountedPrice")}
             id="discountedPrice"
-            name="discountedPrice"
             className="border rounded-xl px-6 py-3 w-full mt-2 "
             placeholder="Enter product price"
-            required
           />
         </div>
       </div>

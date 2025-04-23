@@ -6,19 +6,35 @@ import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 export default function AddProduct() {
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>();
   const [images, setImages] = useState<File[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [agreed, setAgreed] = useState(false);
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log({ ...data, images, tags });
+  };
   return (
     <form
       className="grid lg:grid-cols-2 gap-4"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <ProductInfoForm register={register} setTags={setTags} tags={tags} />
+      <ProductInfoForm
+        register={register}
+        setTags={setTags}
+        tags={tags}
+        errors={errors}
+      />
       <div>
-        <PhotoSelectionForm images={images} setImages={setImages} />
+        <PhotoSelectionForm
+          images={images}
+          setImages={setImages}
+          register={register}
+          errors={errors}
+        />
 
         <div className=" mt-3 bg-white flex justify-between items-center px-6 py-3 rounded-2xl">
           <div className="">

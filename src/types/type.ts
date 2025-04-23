@@ -1,4 +1,4 @@
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 export type WeatherData = {
     coord: {
@@ -141,11 +141,16 @@ export interface FormData {
 }
 export interface IFormInput {
     productName: string;
-    category: string
+    category: string;
+    stock: number;
+    description: string;
+    price: number;
+    discountedPrice: number
 }
 export interface TagsProps {
     tags: string[];
     setTags: React.Dispatch<React.SetStateAction<string[]>>;
     register: UseFormRegister<IFormInput>
+    errors: FieldErrors<IFormInput>
 
 }

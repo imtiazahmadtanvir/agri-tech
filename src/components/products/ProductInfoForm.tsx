@@ -6,6 +6,7 @@ export default function ProductInfoForm({
   tags,
   setTags,
   register,
+  errors,
 }: TagsProps) {
   return (
     <div className="bg-white  rounded-2xl">
@@ -27,9 +28,11 @@ export default function ProductInfoForm({
           className="border rounded-xl px-6 py-3 w-full "
           placeholder="Enter product name"
         />
-        <p className="text-xs text-gray-400">
-          Do not exceed 20 characters when entering the product name.
-        </p>
+        {errors.productName && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.productName.message}
+          </p>
+        )}
         <div className="grid grid-cols-2 gap-6">
           {/* category */}
           <div>
@@ -37,18 +40,23 @@ export default function ProductInfoForm({
               Category <sup className="text-red-500">*</sup>
             </label>
             <select
-              {...register("category")}
+              {...register("category", { required: "Category is required" })}
               className="border mt-2 rounded-xl px-6 py-3 w-full "
               name="category"
               id="category"
             >
               <option value="">Choose category</option>
               {productCategories.map((item) => (
-                <option key={item.id} value="">
+                <option key={item.id} value={item.name}>
                   {item.name}
                 </option>
               ))}
             </select>
+            {errors.category && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.category.message}
+              </p>
+            )}
           </div>
           {/* stock */}
           <div>
@@ -58,11 +66,15 @@ export default function ProductInfoForm({
             <input
               type="number"
               id="stock"
-              name="stock"
+              {...register("stock", { required: "Product stuck is required" })}
               className="border rounded-xl px-6 py-3 w-full mt-2 "
-              placeholder="Enter product name"
-              required
+              placeholder="Enter product stock"
             />
+            {errors.stock && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.stock.message}
+              </p>
+            )}
           </div>
         </div>
         <div>
@@ -70,17 +82,29 @@ export default function ProductInfoForm({
             Description<sup className="text-red-500">*</sup>
           </label>
           <textarea
-            required
+            {...register("description", {
+              required: "Description is required",
+            })}
             className="border rounded-xl px-6 py-3 w-full h-52"
             name="description"
             id="description"
             placeholder="Short description about the product"
           ></textarea>
+          {errors.description && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.description.message}
+            </p>
+          )}
         </div>
         <label htmlFor="description" className="block  font-medium">
           Tags<sup className="text-red-500">*</sup>
         </label>
-        <TagInput setTags={setTags} tags={tags} register={register} />
+        <TagInput
+          setTags={setTags}
+          tags={tags}
+          register={register}
+          errors={errors}
+        />
       </div>
     </div>
   );
