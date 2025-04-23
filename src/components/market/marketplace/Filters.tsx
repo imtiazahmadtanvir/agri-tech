@@ -11,7 +11,7 @@ export default function Filters() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { minPrice, maxPrice, selectedCategories, location } = useMarketPlace();
+  const { minPrice, maxPrice, category } = useMarketPlace();
   const [sortBy, setSortBy] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [text] = useDebounce(searchQuery, 400);
@@ -37,10 +37,8 @@ export default function Filters() {
     } else {
       params.delete("maxPrice");
     }
-
-    if (location) params.set("location", location);
-    if (selectedCategories) {
-      params.set("category", selectedCategories);
+    if (category) {
+      params.set("category", category);
     } else {
       params.delete("category");
     }
@@ -48,11 +46,10 @@ export default function Filters() {
   }, [
     searchParams,
     text,
-    location,
     maxPrice,
     minPrice,
     sortBy,
-    selectedCategories,
+    category,
     replace,
     pathname,
   ]);
@@ -74,10 +71,10 @@ export default function Filters() {
           type="search"
           defaultValue={searchParams.get("search")?.toString()}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="border px-4 py-2 w-full rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="border bg-[#F3F5F3] px-5 py-3.5 w-full rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-700"
           placeholder="Search..."
         />
-        <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex justify-center items-center size-8 bg-yellow-400 text-white rounded-full">
+        <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex justify-center items-center size-8 bg-green-700 text-white rounded-full">
           <IoSearch size={20} />
         </div>
       </div>
