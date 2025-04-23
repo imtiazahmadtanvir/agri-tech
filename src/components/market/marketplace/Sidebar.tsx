@@ -24,9 +24,10 @@ export default function Sidebar() {
         <div className="flex px-7 pb-3 flex-col text-left">
           {productCategories.map((item) => (
             <button
-              className={`group cursor-pointer py-4 px-2 text-left w-full border-dashed hover:text-green-700 gap-2 ${
-                item.id !== 10 ? "border-b" : ""
-              }`}
+              className={`group cursor-pointer py-4 px-2 text-left w-full border-dashed 
+              hover:text-green-700 
+              
+              transition-all duration-300 ${item.id !== 10 && "border-b"}`}
               key={item.id}
             >
               <span className="relative">
