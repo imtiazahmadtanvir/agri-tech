@@ -63,13 +63,30 @@ export default function ProductInfoForm({
             <label htmlFor="name" className="block  font-medium">
               Stock<sup className="text-red-500">*</sup>
             </label>
-            <input
-              type="number"
-              id="stock"
-              {...register("stock", { required: "Product stuck is required" })}
-              className="border rounded-xl px-6 py-3 w-full mt-2 "
-              placeholder="Enter product stock"
-            />
+            <div className="flex mt-2 border rounded-xl">
+              <input
+                type="number"
+                id="stock"
+                {...register("stock", {
+                  required: "Product stuck is required",
+                })}
+                className="focus:outline-none focus:ring-0 focus:border-none px-6 py-3 w-full "
+                placeholder="Enter product stock"
+              />
+              <select
+                {...register("unit", { required: true })}
+                className="focus:outline-none focus:ring-0 focus:border-none"
+              >
+                <option value="">Unit</option>
+                <option value="kg">Kg</option>
+                <option value="g">G</option>
+                <option value="liter">Liter</option>
+                <option value="ml">Ml</option>
+                <option value="piece">Piece</option>
+                <option value="bag">Bag</option>
+                <option value="dozen">Dozen</option>
+              </select>
+            </div>
             {errors.stock && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.stock.message}

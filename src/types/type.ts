@@ -145,7 +145,8 @@ export interface IFormInput {
     stock: number;
     description: string;
     price: number;
-    discountedPrice: number
+    discountedPrice: number;
+    unit: string;
 }
 export interface TagsProps {
     tags: string[];
