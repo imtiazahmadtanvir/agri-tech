@@ -39,8 +39,8 @@ export default function ImageSlider({ data }: ImageSliderProps) {
           className="mySwiper2"
         >
           {data.map((item, index) => (
-            <SwiperSlide className="mb-2 rounded-xl border" key={index}>
-              <div className="w-full relative rounded-xl  h-96  ">
+            <SwiperSlide className="mb-4 rounded-xl border" key={index}>
+              <div className="w-full relative rounded-xl  h-[500px]  ">
                 <Image
                   className="rounded-xl object-contain"
                   fill

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/shared/Footer";
-
 import TopInfoBar from "@/components/shared/TopInfoBar";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/provider/AuthProvider";
@@ -11,14 +10,11 @@ import FloatingChatbot from "@/components/chatbot/floating-chatbot";
 import GlobalContextProvider from "@/context/GlobalContext";
 import QueryProvider from "@/components/react-query/QueryProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+//
+const workSans = Work_Sans({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-work-sans",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -33,10 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-      >
+    <html lang="en" className={workSans.className}>
+      <body className="antialiased min-h-screen flex flex-col">
         <QueryProvider>
           <GlobalContextProvider>
             <AuthProvider>
@@ -44,8 +38,8 @@ export default function RootLayout({
               <TopInfoBar />
               <Navbar />
               <main className="flex-1">{children}</main>
-              <Footer></Footer>
-              <FloatingChatbot></FloatingChatbot>
+              <Footer />
+              <FloatingChatbot />
             </AuthProvider>
           </GlobalContextProvider>
         </QueryProvider>

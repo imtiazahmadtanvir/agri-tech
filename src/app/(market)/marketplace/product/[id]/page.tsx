@@ -2,7 +2,8 @@ import ImageSlider from "@/components/market/marketplace/ImageSlider";
 import axios from "axios";
 import Link from "next/link";
 import React from "react";
-
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import { BsBoxSeamFill } from "react-icons/bs";
 export default async function ProductDetails({
   params,
 }: {
@@ -35,15 +36,19 @@ export default async function ProductDetails({
             <button>BACK TO SHOP</button>
           </div>
           {/* info */}
-          <div>
-            <h2>{productName}</h2>
+          <div className="mt-7">
+            <h2 className="text-2xl font-medium">{productName}</h2>
             {/* Rating */}
             {/* price */}
-            <h4>{price}</h4>
-            <p>{description}</p>
-            <div>
-              <span>
-                Available:{stock} {unit} in stock
+            <h4 className="text-[#3D9958] font-medium flex items-center mt-3 gap-0.5">
+              {price}.00 <FaBangladeshiTakaSign />{" "}
+            </h4>
+            <p className="text-[#6E7673] py-6">{description}</p>
+            <div className="flex items-center gap-1.5">
+              <BsBoxSeamFill className="text-[#FF9500]" />
+              <span className="text-[#6E7673] capitalize font-semibold">
+                Available:{stock} <span className="capitalize">{unit}</span> in
+                stock
               </span>
             </div>
             {/* add cart */}
