@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { productCategories } from "@/lib/productCategory";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import { FiArrowRight } from "react-icons/fi";
+import { useDebounce } from "use-debounce";
 
 export default function Sidebar() {
   const searchParams = useSearchParams();
@@ -17,24 +18,24 @@ export default function Sidebar() {
   const [min, setMin] = useState("");
   const [max, setMax] = useState("");
   const [error, setError] = useState("");
-
+  const [maxDebounce] = useDebounce(max, 300);
   useEffect(() => {
     const minVal = parseFloat(min) || 1;
-    const maxVal = parseFloat(max);
-    if (max) {
+    const maxVal = parseFloat(maxDebounce);
+    if (maxDebounce) {
       if (minVal >= maxVal) {
         setError("Min price must be less than Max price");
       } else {
         setError("");
         setMinPrice(min);
-        setMaxPrice(max);
+        setMaxPrice(maxDebounce);
       }
     } else {
       setMinPrice("");
       setMaxPrice("");
       setError("");
     }
-  }, [min, max, setMinPrice, setMaxPrice]);
+  }, [min, max, setMinPrice, setMaxPrice, maxDebounce]);
 
   const handleReset = () => {
     setMin("");
