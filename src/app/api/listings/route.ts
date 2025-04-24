@@ -14,19 +14,20 @@ type QueryType = {
         $regex: string;
         $options: string;
     };
-    location?: {
-        $regex: string;
-        $options: string;
-    };
 };
 
 export const GET = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url)
     const category = searchParams.get('category');
-    console.log(category);
+    const search = searchParams.get("search")
     const query: QueryType = {}
     if (category) {
         query.category = category
+    }
+    if (search) {
+        query.productName = {
+            $regex: search, $options: 'i'
+        }
     }
     try {
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
