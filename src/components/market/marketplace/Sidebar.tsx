@@ -60,15 +60,15 @@ export default function Sidebar() {
         <div className="flex px-6 pb-1 flex-col text-left">
           <button
             onClick={handelAllProduct}
-            className={`group cursor-pointer py-3.5 px-2 text-left w-full border-dashed 
+            className={`group cursor-pointer py-3.5 px-2 text-left w-full hover:pl-6 border-dashed 
               hover:text-green-700 
-              ${category ? "" : "text-green-700"}
+              ${category ? "" : "text-green-700 pl-6"}
               transition-all duration-300  border-b`}
           >
             <span className="relative">
               <span
-                className={`absolute left-[-20px] opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1 transition-all translate-y-1 duration-300 text-[#F8C32C] ${
-                  category ? "" : "opacity-100 translate-x-1"
+                className={`absolute left-[-20px] opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:-translate-x-1 transition-all translate-y-1 duration-300 text-[#F8C32C] ${
+                  category ? "" : "opacity-100 -translate-x-1"
                 }`}
               >
                 <FiArrowRight />
@@ -82,14 +82,15 @@ export default function Sidebar() {
               key={item.id}
               onClick={() => setCategory(item.name)}
               className={`group cursor-pointer py-3.5 px-2 text-left w-full border-dashed 
+                hover:pl-6
                 hover:text-green-700  
-                ${category === item.name ? "text-green-700" : ""} 
+                ${category === item.name ? "text-green-700 pl-6" : ""} 
                 transition-all duration-300 ${item.id !== 10 && "border-b"}`}
             >
               <span className="relative">
                 <span
-                  className={`absolute left-[-20px] opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:translate-x-1 transition-all translate-y-1 duration-300 text-[#F8C32C] ${
-                    category === item.name ? "opacity-100 translate-x-1" : ""
+                  className={`absolute left-[-20px] opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:-translate-x-1 transition-all translate-y-1 duration-300 text-[#F8C32C] ${
+                    category === item.name ? "opacity-100 -translate-x-1" : ""
                   }`}
                 >
                   <FiArrowRight />

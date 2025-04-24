@@ -11,7 +11,7 @@ export default function PaginationControls({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  // const [page, setPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const itemPerPage = 3;
   const numberOfPage = Math.ceil(itemCount / itemPerPage);
   const pages = [
@@ -39,7 +39,10 @@ export default function PaginationControls({
       <div className="flex justify-center items-center gap-4 mt-6">
         {pages.map((page) => (
           <button
-            className="size-12 bg-[#E2E8E3] hover:bg-[#0A4A1C] rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer"
+            onClick={() => setCurrentPage(page)}
+            className={`size-12 hover:bg-[#0A4A1C] rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer ${
+              currentPage === page ? "bg-[#0A4A1C] text-white" : "bg-[#E2E8E3]"
+            }`}
             key={page}
           >
             {page}
