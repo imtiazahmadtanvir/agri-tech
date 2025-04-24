@@ -63,8 +63,9 @@ export default async function ProductLists({
           <div className={`${view ? "w-2/3 flex flex-col" : ""}`}>
             <div className={`${view && "grow"}`}>
               <Link href={`/marketplace/product/${item._id}`}>
-                {" "}
-                <h3 className=" font-medium">{item.productName}</h3>
+                <h3 className=" font-medium hover:decoration-green-600 hover:underline">
+                  {item.productName}
+                </h3>
               </Link>
 
               <h4 className="text-[#3D9958] font-medium flex items-center mt-3 gap-0.5">
