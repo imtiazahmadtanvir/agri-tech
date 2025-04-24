@@ -22,8 +22,11 @@ export const GET = async (req: NextRequest) => {
     const sortBy = searchParams.get("sortBy")
     const min = searchParams.get("minPrice")
     const max = searchParams.get("maxPrice")
+    const pageParam = searchParams.get("page");
+    const page = pageParam ? parseInt(pageParam) : 1;
+    const limit = 3
+    const skip = (page - 1) * limit
     const query: QueryType = {}
-
     if (category) {
         query.category = category
     }
@@ -62,7 +65,7 @@ export const GET = async (req: NextRequest) => {
     try {
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const total = await listingsCollection.countDocuments(query)
-        const result = await listingsCollection.find(query).sort(sortOption).toArray()
+        const result = await listingsCollection.find(query).sort(sortOption).skip(skip).limit(limit).toArray()
         return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result, total }, { status: 200 })
     } catch (error) {
         console.error("error fetching listing", error)

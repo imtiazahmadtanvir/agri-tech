@@ -23,7 +23,7 @@ export default async function MarketplaceMain({
   searchParams: Promise<SearchParams>;
 }) {
   const param = await searchParams;
-  const { category, search, maxPrice, minPrice, sortBy } = param;
+  const { category, search, maxPrice, minPrice, sortBy, page } = param;
   let items = [];
   let itemCount = 0;
   try {
@@ -34,6 +34,7 @@ export default async function MarketplaceMain({
         maxPrice,
         minPrice,
         sortBy,
+        page,
       },
     });
     items = res.data.data;

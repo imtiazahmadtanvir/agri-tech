@@ -21,20 +21,17 @@ export default function PaginationControls({
       .map((i) => i + 1),
   ];
   console.log(pages);
-  // useEffect(() => {
-  //   const params = new URLSearchParams(searchParams.toString());
-  //   if (page) {
-  //     params.set("page", page.toString());
-  //   } else {
-  //     params.delete("page");
-  //   }
-  //   if (itemPerPage) {
-  //     params.set("limit", itemPerPage.toString());
-  //   } else {
-  //     params.delete("limit");
-  //   }
-  //   replace(`${pathname}?${params.toString()}`);
-  // }, [searchParams, page, pathname, replace]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (currentPage > 1) {
+      params.set("page", currentPage.toString());
+    } else {
+      params.delete("page");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, [searchParams, currentPage, pathname, replace]);
+
   const handelPrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
