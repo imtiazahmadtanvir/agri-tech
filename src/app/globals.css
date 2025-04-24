@@ -1,6 +1,29 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+:root {
+  --font-work-sans: 'Work Sans', system-ui, sans-serif;
+  --font-nunito-sans: 'Nunito Sans', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-work-sans), sans-serif;
+}
+
+.nunito {
+  font-family: var(--font-nunito-sans), sans-serif;
+}
+
+@layer utilities {
+  .font-work {
+    font-family: var(--font-work-sans) !important;
+  }
+
+  .font-nunito {
+    font-family: var(--font-nunito-sans) !important;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

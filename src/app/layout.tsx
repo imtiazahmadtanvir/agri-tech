@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Work_Sans } from "next/font/google";
+import { Nunito_Sans, Work_Sans } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/shared/Footer";
 import TopInfoBar from "@/components/shared/TopInfoBar";
@@ -16,7 +16,11 @@ const workSans = Work_Sans({
   variable: "--font-work-sans",
   weight: ["400", "500", "600", "700"],
 });
-
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  variable: "--font-nunito-sans",
+  weight: ["400", "500", "600", "700"],
+});
 export const metadata: Metadata = {
   title: "Agri-Tech",
   description:
@@ -29,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={workSans.className}>
+    <html lang="en" className={`${workSans.variable} ${nunitoSans.variable}`}>
       <body className="antialiased min-h-screen flex flex-col">
         <QueryProvider>
           <GlobalContextProvider>

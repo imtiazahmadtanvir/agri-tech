@@ -73,7 +73,7 @@ export default async function ProductLists({
               {/* description */}
               {view && (
                 <>
-                  <div className="border-t mt-3 py-3">
+                  <div className="border-t mt-3 py-3 font-nunito">
                     <p className="line-clamp-3">{item.description}</p>
                   </div>
                 </>

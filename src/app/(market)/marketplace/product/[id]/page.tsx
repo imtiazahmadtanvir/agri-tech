@@ -43,7 +43,7 @@ export default async function ProductDetails({
             <h4 className="text-[#3D9958] font-medium flex items-center mt-3 gap-0.5">
               {price}.00 <FaBangladeshiTakaSign />{" "}
             </h4>
-            <p className="text-[#6E7673] py-6">{description}</p>
+            <p className="text-[#6E7673] py-6 font-nunito">{description}</p>
             <div className="flex items-center gap-1.5">
               <BsBoxSeamFill className="text-[#FF9500]" />
               <span className="text-[#6E7673] capitalize font-semibold">
