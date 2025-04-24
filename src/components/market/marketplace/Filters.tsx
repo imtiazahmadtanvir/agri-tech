@@ -17,7 +17,7 @@ export default function Filters() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const { minPrice, maxPrice, category } = useMarketPlace();
+  const { minPrice, maxPrice, category, setCurrentPage } = useMarketPlace();
   const [sortBy, setSortBy] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [text] = useDebounce(searchQuery, 400);
@@ -25,6 +25,8 @@ export default function Filters() {
     const params = new URLSearchParams(searchParams.toString());
     if (text) {
       params.set("search", text);
+      params.delete("page");
+      setCurrentPage(1);
     } else {
       params.delete("search");
     }

@@ -1,7 +1,8 @@
 "use client";
 
+import { useMarketPlace } from "@/context/MarketplaceContext";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 export default function PaginationControls({
@@ -12,14 +13,13 @@ export default function PaginationControls({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage, setCurrentPage } = useMarketPlace();
 
   const pages = [
     ...Array(totalPages)
       .keys()
       .map((i) => i + 1),
   ];
-  console.log(pages);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
