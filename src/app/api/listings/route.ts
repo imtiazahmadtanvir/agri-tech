@@ -66,7 +66,7 @@ export const GET = async (req: NextRequest) => {
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const total = await listingsCollection.countDocuments(query)
         const result = await listingsCollection.find(query).sort(sortOption).skip(skip).limit(limit).toArray()
-        return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result, total }, { status: 200 })
+        return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result, totalPages: Math.ceil(total / limit) }, { status: 200 })
     } catch (error) {
         console.error("error fetching listing", error)
         return NextResponse.json({ message: "An error occurred while fetching the listing." }, { status: 500 })

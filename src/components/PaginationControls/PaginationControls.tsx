@@ -5,18 +5,17 @@ import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 export default function PaginationControls({
-  itemCount,
+  totalPages,
 }: {
-  itemCount: number;
+  totalPages: number;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemPerPage = 3;
-  const numberOfPage = Math.ceil(itemCount / itemPerPage);
+
   const pages = [
-    ...Array(numberOfPage)
+    ...Array(totalPages)
       .keys()
       .map((i) => i + 1),
   ];

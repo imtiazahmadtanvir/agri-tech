@@ -25,7 +25,7 @@ export default async function MarketplaceMain({
   const param = await searchParams;
   const { category, search, maxPrice, minPrice, sortBy, page } = param;
   let items = [];
-  let itemCount = 0;
+  let totalPages = 0;
   try {
     const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
       params: {
@@ -38,7 +38,7 @@ export default async function MarketplaceMain({
       },
     });
     items = res.data.data;
-    itemCount = res.data.total;
+    totalPages = res.data.totalPages;
   } catch (error) {
     console.log(error);
   }
@@ -50,7 +50,7 @@ export default async function MarketplaceMain({
       <Suspense key={JSON.stringify(param)} fallback={<LoadingSpinner />}>
         <ProductLists searchParams={searchParams} items={items} />
       </Suspense>
-      <PaginationControls itemCount={itemCount} />
+      <PaginationControls totalPages={totalPages} />
     </div>
   );
 }
