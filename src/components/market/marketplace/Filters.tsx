@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { HiViewGrid } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import { useDebounce } from "use-debounce";
+import { useDebounce, useDebouncedCallback } from "use-debounce";
 import { FaListUl } from "react-icons/fa";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
@@ -19,17 +19,9 @@ export default function Filters() {
   const { replace } = useRouter();
   const { minPrice, maxPrice, category, setCurrentPage } = useMarketPlace();
   const [sortBy, setSortBy] = useState<string>("");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [text] = useDebounce(searchQuery, 400);
+
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
-    if (text) {
-      params.set("search", text);
-      params.delete("page");
-      setCurrentPage(1);
-    } else {
-      params.delete("search");
-    }
     if (sortBy) {
       params.set("sortBy", sortBy);
     } else {
@@ -51,17 +43,17 @@ export default function Filters() {
       params.delete("category");
     }
     replace(`${pathname}?${params.toString()}`);
-  }, [
-    searchParams,
-    text,
-    maxPrice,
-    minPrice,
-    sortBy,
-    category,
-    replace,
-    pathname,
-  ]);
-
+  }, [searchParams, maxPrice, minPrice, sortBy, category, replace, pathname]);
+  const handelSearch = useDebouncedCallback((val) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (val) {
+      params.set("search", val);
+      setCurrentPage(1);
+    } else {
+      params.delete("search");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, 400);
   const handelView = (view: HandleViewParams["view"]): void => {
     const params = new URLSearchParams(searchParams.toString());
     if (view === "list") {
@@ -84,11 +76,11 @@ export default function Filters() {
         <option value="price-high">Price: High to Low</option>
         <option value="price-low">Price: Low to High</option>
       </select>
-      <div className="max-w-[300px] relative">
+      <div className="max-w-[600px] relative">
         <input
           type="search"
           defaultValue={searchParams.get("search")?.toString()}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => handelSearch(e.target.value)}
           className="border bg-[#F3F5F3] px-5 py-3.5 w-full rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-700"
           placeholder="Search..."
         />
