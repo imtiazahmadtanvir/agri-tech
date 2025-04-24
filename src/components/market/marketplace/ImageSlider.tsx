@@ -23,7 +23,7 @@ export default function ImageSlider({ data }: ImageSliderProps) {
 
   return (
     <>
-      <div className="relative group">
+      <div className="relative group border rounded-2xl">
         <Swiper
           style={
             {
@@ -39,14 +39,9 @@ export default function ImageSlider({ data }: ImageSliderProps) {
           className="mySwiper2"
         >
           {data.map((item, index) => (
-            <SwiperSlide className="mb-4 rounded-xl border" key={index}>
+            <SwiperSlide className=" " key={index}>
               <div className="w-full relative rounded-xl  h-[500px]  ">
-                <Image
-                  className="rounded-xl object-contain"
-                  fill
-                  alt=""
-                  src={item}
-                />
+                <Image className="object-contain" fill alt="" src={item} />
               </div>
             </SwiperSlide>
           ))}
@@ -59,7 +54,7 @@ export default function ImageSlider({ data }: ImageSliderProps) {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper"
+        className="mySwiper mt-7"
       >
         {data.map((item, index) => (
           <SwiperSlide className="rounded-2xl" key={index}>

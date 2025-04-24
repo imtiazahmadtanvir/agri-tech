@@ -2,8 +2,9 @@ import ImageSlider from "@/components/market/marketplace/ImageSlider";
 import axios from "axios";
 import Link from "next/link";
 import React from "react";
-import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import { FaBangladeshiTakaSign, FaCartShopping } from "react-icons/fa6";
 import { BsBoxSeamFill } from "react-icons/bs";
+import ShareButtons from "@/components/market/marketplace/ShareButtons";
 export default async function ProductDetails({
   params,
 }: {
@@ -26,7 +27,7 @@ export default async function ProductDetails({
       stock,
     } = await res.data;
     return (
-      <div className="flex gap-6 mt-6">
+      <div className="flex gap-20 mb-24 mt-6">
         <div className="w-2/5">
           <ImageSlider data={photoUrls} />
         </div>
@@ -52,12 +53,32 @@ export default async function ProductDetails({
               </span>
             </div>
             {/* add cart */}
-            <div>
-              <input type="number" />
-              <button>Add To Cart</button>
+            <div className="flex gap-2 my-6">
+              <input
+                defaultValue={1}
+                className="bg-[#E0E6E2] w-16 py-3 rounded-2xl px-3  outline-none"
+                type="number"
+              />
+
+              <button className="pl-4 bg-green-900 py-1 rounded-full text-white cursor-pointer flex items-center gap-2">
+                Add To Cart{" "}
+                <span className="size-9 flex items-center justify-center rounded-full bg-yellow-500 mr-2">
+                  <FaCartShopping className="text-green-900" />
+                </span>
+              </button>
             </div>
             {/* other info */}
-            <p>Category: {category}</p>
+            <div className="font-nunito space-y-1.5 text-[#6E7673]">
+              <p>Category: {category}</p>
+              <p>
+                Tags:
+                {tags.length > 0 && (
+                  <span className="uppercase pl-0.5">{tags.join(" / ")}</span>
+                )}
+              </p>
+              {/* share button */}
+              <ShareButtons />
+            </div>
           </div>
         </div>
       </div>
