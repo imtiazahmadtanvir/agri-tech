@@ -1,3 +1,4 @@
+import NoResults from "@/components/NoResults";
 import Image from "next/image";
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
@@ -23,7 +24,7 @@ export default async function ProductLists({
   const { view } = await searchParams;
 
   if (!items || items.length === 0) {
-    return <p>No products found.</p>;
+    return <NoResults />;
   }
 
   return (
