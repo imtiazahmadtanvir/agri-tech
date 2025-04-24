@@ -46,6 +46,7 @@ export default function Sidebar() {
   const handelAllProduct = () => {
     const params = new URLSearchParams(searchParams.toString());
     setCategory("");
+    params.delete("category");
     replace(`${pathname}?${params.toString()}`);
   };
   return (
