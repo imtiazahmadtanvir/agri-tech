@@ -14,6 +14,7 @@ interface SearchParams {
   category?: string;
   page: string;
   limit: string;
+  view?: string | undefined;
 }
 
 export default async function MarketplaceMain({
@@ -36,7 +37,7 @@ export default async function MarketplaceMain({
         <Filters />
       </div>
       <Suspense key={JSON.stringify(param)} fallback={<LoadingSpinner />}>
-        <ProductLists items={items} />
+        <ProductLists searchParams={searchParams} items={items} />
       </Suspense>
       <PaginationControls itemCount={0} />
     </div>
