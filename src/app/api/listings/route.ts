@@ -21,10 +21,17 @@ type QueryType = {
 };
 
 export const GET = async (req: NextRequest) => {
+    const { searchParams } = new URL(req.url)
+    const category = searchParams.get('category');
+    console.log(category);
+    const query: QueryType = {}
+    if (category) {
+        query.category = category
+    }
     try {
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
-        const total = await listingsCollection.countDocuments()
-        const result = await listingsCollection.find().toArray()
+        const total = await listingsCollection.countDocuments(query)
+        const result = await listingsCollection.find(query).toArray()
         return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result, total }, { status: 200 })
     } catch (error) {
         console.error("error fetching listing", error)

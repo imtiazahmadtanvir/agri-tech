@@ -23,9 +23,14 @@ export default async function MarketplaceMain({
   searchParams: Promise<SearchParams>;
 }) {
   const param = await searchParams;
+  const { category } = param;
   let items = [];
   try {
-    const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`);
+    const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
+      params: {
+        category: category || "",
+      },
+    });
     items = res.data.data;
   } catch (error) {
     console.log(error);
