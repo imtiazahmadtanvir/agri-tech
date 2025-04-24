@@ -19,9 +19,9 @@ export default function Sidebar() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const minVal = parseFloat(min);
+    const minVal = parseFloat(min) || 1;
     const maxVal = parseFloat(max);
-    if (min && max) {
+    if (max) {
       if (minVal >= maxVal) {
         setError("Min price must be less than Max price");
       } else {
@@ -101,17 +101,17 @@ export default function Sidebar() {
       </div>
 
       {/* Price Filter Section */}
-      <div className="border rounded-2xl mt-6">
+      <div className="border pb-5 rounded-2xl mt-6">
         <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Filter by Price
         </h4>
-        <div className="px-7 py-6 flex items-center gap-2">
+        <div className="px-7 pt-6 flex items-center gap-2">
           <input
             type="number"
             placeholder="min"
             value={min}
             onChange={(e) => setMin(e.target.value)}
-            className="border w-full border-gray-300 rounded px-2 py-1"
+            className="border w-full border-gray-300 rounded px-2 py-1 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
           <p>To</p>
           <input
@@ -119,7 +119,7 @@ export default function Sidebar() {
             placeholder="max"
             value={max}
             onChange={(e) => setMax(e.target.value)}
-            className="border w-full border-gray-300 rounded px-2 py-1"
+            className="border w-full border-gray-300 rounded px-2 py-1 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
           <button
             onClick={handleReset}
@@ -128,7 +128,9 @@ export default function Sidebar() {
             <RotateCcw size={18} />
           </button>
         </div>
-        {error && <p className="text-red-500 text-xs px-7">{error}</p>}
+        {error && (
+          <p className="text-red-500 text-center text-xs px-7">{error}</p>
+        )}
       </div>
 
       {/* Popular Products Placeholder */}

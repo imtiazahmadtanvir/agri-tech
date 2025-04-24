@@ -139,8 +139,8 @@ export default function PhotoSelectionForm({
             type="number"
             {...register("price", { required: "Price is required" })}
             id="price"
-            className="border rounded-xl px-6 py-3 w-full mt-2 "
-            placeholder="Enter product price"
+            className="border rounded-xl px-6 py-3 w-full mt-2 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none "
+            placeholder="Enter product price "
           />
           {errors.price && (
             <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
@@ -155,7 +155,7 @@ export default function PhotoSelectionForm({
             type="number"
             {...register("discountedPrice")}
             id="discountedPrice"
-            className="border rounded-xl px-6 py-3 w-full mt-2 "
+            className="border rounded-xl px-6 py-3 w-full mt-2 appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             placeholder="Enter product price"
           />
         </div>
