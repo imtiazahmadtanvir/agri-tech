@@ -49,10 +49,10 @@ export default function Sidebar() {
         <h3 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Categories
         </h3>
-        <div className="flex px-7 pb-3 flex-col text-left">
+        <div className="flex px-6 pb-1 flex-col text-left">
           <button
             onClick={() => setCategory("")}
-            className={`group cursor-pointer py-4 px-2 text-left w-full border-dashed 
+            className={`group cursor-pointer py-3.5 px-2 text-left w-full border-dashed 
               hover:text-green-700 
               ${category ? "" : "text-green-700"}
               transition-all duration-300  border-b`}
@@ -73,7 +73,7 @@ export default function Sidebar() {
             <button
               key={item.id}
               onClick={() => setCategory(item.name)}
-              className={`group cursor-pointer py-4 px-2 text-left w-full border-dashed 
+              className={`group cursor-pointer py-3.5 px-2 text-left w-full border-dashed 
                 hover:text-green-700  
                 ${category === item.name ? "text-green-700" : ""} 
                 transition-all duration-300 ${item.id !== 10 && "border-b"}`}
