@@ -69,6 +69,7 @@ export default function Filters() {
     }
     replace(`${pathname}?${params.toString()}`);
   };
+  const activeView = searchParams.get("view")?.toString();
   return (
     <div className="my-4 flex justify-between">
       <select
@@ -102,7 +103,10 @@ export default function Filters() {
           data-tooltip-place="left"
           className="size-12 bg-[#0D401C] flex rounded-full cursor-pointer items-center justify-center"
         >
-          <HiViewGrid className="text-white" size={25} />
+          <HiViewGrid
+            className={`${!activeView ? "text-[#FFBB05]" : "text-white"}`}
+            size={25}
+          />
         </button>
         <Tooltip id="grid-tooltip" />
         <button
@@ -112,7 +116,10 @@ export default function Filters() {
           data-tooltip-place="right"
           className="size-12 bg-[#0D401C] flex rounded-full cursor-pointer items-center justify-center"
         >
-          <FaListUl className="text-white" size={20} />
+          <FaListUl
+            className={`${activeView ? "text-[#FFBB05]" : "text-white"}`}
+            size={20}
+          />
         </button>
         <Tooltip id="list-tooltip" />
       </div>
