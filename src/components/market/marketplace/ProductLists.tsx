@@ -72,7 +72,7 @@ export default async function ProductLists({
 
             {/* all buttons */}
             <div>
-              <button className="size-8 flex justify-center cursor-pointer rounded-full border items-center text-[#3D9958] hover:text-white hover:bg-[#3D9958]">
+              <button className="size-8 flex justify-center cursor-pointer rounded-full border items-center text-[#3D9958] hover:text-white hover:bg-[#3D9958] transition-all duration-300 ease-in-out">
                 <FaShoppingCart />
               </button>
             </div>

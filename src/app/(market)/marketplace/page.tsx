@@ -25,6 +25,7 @@ export default async function MarketplaceMain({
   const param = await searchParams;
   const { category, search, maxPrice, minPrice, sortBy } = param;
   let items = [];
+  let itemCount = 0;
   try {
     const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
       params: {
@@ -36,10 +37,10 @@ export default async function MarketplaceMain({
       },
     });
     items = res.data.data;
+    itemCount = res.data.total;
   } catch (error) {
     console.log(error);
   }
-
   return (
     <div className="my-4">
       <div>
@@ -48,7 +49,7 @@ export default async function MarketplaceMain({
       <Suspense key={JSON.stringify(param)} fallback={<LoadingSpinner />}>
         <ProductLists searchParams={searchParams} items={items} />
       </Suspense>
-      <PaginationControls itemCount={0} />
+      <PaginationControls itemCount={itemCount} />
     </div>
   );
 }
