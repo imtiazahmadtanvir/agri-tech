@@ -1,6 +1,5 @@
 import { authOptions } from "@/lib/auth";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
-import { SortDirection } from "mongodb";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 type QueryType = {
@@ -21,26 +20,36 @@ export const GET = async (req: NextRequest) => {
     const category = searchParams.get('category');
     const search = searchParams.get("search")
     const sortBy = searchParams.get("sortBy")
+    const min = searchParams.get("minPrice")
+    const max = searchParams.get("maxPrice")
     const query: QueryType = {}
     if (category) {
         query.category = category
     }
     // sort 
-    let sortOption = {}
-    switch (sortBy) {
-        case "":
-            sortOption = { listed: -1 }
-            break
-        case "date-old":
-            sortOption = { listed: 1 }
-            break
-        case "price-high":
-            sortOption = { price: -1 }
-            break
-        case "price-low":
-            sortOption = { price: 1 }
-            break
-        default: sortOption = {}
+    let sortOption = {};
+
+    if (!sortBy) {
+        sortOption = { listed: -1 };
+    } else if (sortBy === "date-old") {
+        sortOption = { listed: 1 };
+    } else if (sortBy === "price-high") {
+        sortOption = { price: -1 };
+    } else if (sortBy === "price-low") {
+        sortOption = { price: 1 };
+    } else {
+        sortOption = {};
+    }
+
+    //  price
+    if (min && max) {
+        const minPrice = parseFloat(min);
+        const maxPrice = parseFloat(max);
+        query.price = { $gte: minPrice, $lte: maxPrice }
+    } else if (min) {
+        query.price = query.price = { $gte: parseFloat(min) };
+    } else if (max) {
+        query.price = { $lte: parseFloat(max) };
     }
     // search 
     if (search) {
