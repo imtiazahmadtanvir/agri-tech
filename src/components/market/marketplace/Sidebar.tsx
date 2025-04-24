@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { RotateCcw } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { productCategories } from "@/lib/productCategory";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import { FiArrowRight } from "react-icons/fi";
 
 export default function Sidebar() {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const { setCategory, setMaxPrice, setMinPrice } = useMarketPlace();
   const category = searchParams.get("category")?.toString();
 
@@ -41,7 +43,11 @@ export default function Sidebar() {
     setMaxPrice("");
     setError("");
   };
-
+  const handelAllProduct = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    setCategory("");
+    replace(`${pathname}?${params.toString()}`);
+  };
   return (
     <aside className="h-fit sticky mt-4 top-0 left-0">
       {/* Category Section */}
@@ -51,7 +57,7 @@ export default function Sidebar() {
         </h3>
         <div className="flex px-6 pb-1 flex-col text-left">
           <button
-            onClick={() => setCategory("")}
+            onClick={handelAllProduct}
             className={`group cursor-pointer py-3.5 px-2 text-left w-full border-dashed 
               hover:text-green-700 
               ${category ? "" : "text-green-700"}
