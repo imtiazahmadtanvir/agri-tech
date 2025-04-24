@@ -1,5 +1,6 @@
 import NoResults from "@/components/NoResults";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
@@ -42,18 +43,23 @@ export default async function ProductLists({
           }`}
           key={item._id}
         >
-          {item.photoUrls?.[0] && (
-            <div
-              className={` relative -z-10 ${view ? "w-1/3" : "w-full h-64"}`}
-            >
-              <Image
-                className="object-contain"
-                fill
-                src={item.photoUrls[0]}
-                alt={item.productName}
-              />
-            </div>
-          )}
+          <Link
+            className="group overflow-hidden"
+            href={`/marketplace/product/${item._id}`}
+          >
+            {item.photoUrls?.[0] && (
+              <div
+                className={`relative -z-10 ${view ? "w-1/3" : "w-full h-64"}`}
+              >
+                <Image
+                  className="object-contain transition-transform duration-1000  ease-in-out group-hover:scale-110"
+                  fill
+                  src={item.photoUrls[0]}
+                  alt={item.productName}
+                />
+              </div>
+            )}
+          </Link>
           <div className={`${view ? "w-2/3 flex flex-col" : ""}`}>
             <div className={`${view && "grow"}`}>
               <h3 className=" font-medium">{item.productName}</h3>
