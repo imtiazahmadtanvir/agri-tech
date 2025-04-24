@@ -20,10 +20,29 @@ export const GET = async (req: NextRequest) => {
     const { searchParams } = new URL(req.url)
     const category = searchParams.get('category');
     const search = searchParams.get("search")
+    const sortBy = searchParams.get("sortBy")
     const query: QueryType = {}
     if (category) {
         query.category = category
     }
+    // sort 
+    let sortOption = {}
+    switch (sortBy) {
+        case "":
+            sortOption = { listed: -1 }
+            break
+        case "date-old":
+            sortOption = { listed: 1 }
+            break
+        case "price-high":
+            sortOption = { price: -1 }
+            break
+        case "price-low":
+            sortOption = { price: 1 }
+            break
+        default: sortOption = {}
+    }
+    // search 
     if (search) {
         query.productName = {
             $regex: search, $options: 'i'
@@ -32,7 +51,7 @@ export const GET = async (req: NextRequest) => {
     try {
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const total = await listingsCollection.countDocuments(query)
-        const result = await listingsCollection.find(query).toArray()
+        const result = await listingsCollection.find(query).sort(sortOption).toArray()
         return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result, total }, { status: 200 })
     } catch (error) {
         console.error("error fetching listing", error)
