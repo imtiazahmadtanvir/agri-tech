@@ -38,31 +38,35 @@ export default async function ProductLists({
     >
       {items.map((item) => (
         <div
-          className={`border p-4 rounded-2xl ${
+          className={`border p-4 rounded-2xl hover:shadow-[0_3px_10px_rgba(0,0,0,0.2)] ${
             view ? "flex justify-between" : ""
           }`}
           key={item._id}
         >
-          <Link
-            className="group overflow-hidden"
-            href={`/marketplace/product/${item._id}`}
-          >
-            {item.photoUrls?.[0] && (
-              <div
-                className={`relative -z-10 ${view ? "w-1/3" : "w-full h-64"}`}
-              >
+          {item.photoUrls?.[0] && (
+            <Link
+              href={`/marketplace/product/${item._id}`}
+              className={`block overflow-hidden ${
+                view ? "w-1/3 " : "w-full h-64"
+              }`}
+            >
+              <div className="relative transition-transform duration-300 ease-in-out hover:scale-110 h-full w-full">
                 <Image
-                  className="object-contain transition-transform duration-1000  ease-in-out group-hover:scale-110"
+                  className="object-contain"
                   fill
                   src={item.photoUrls[0]}
                   alt={item.productName}
                 />
               </div>
-            )}
-          </Link>
+            </Link>
+          )}
           <div className={`${view ? "w-2/3 flex flex-col" : ""}`}>
             <div className={`${view && "grow"}`}>
-              <h3 className=" font-medium">{item.productName}</h3>
+              <Link href={`/marketplace/product/${item._id}`}>
+                {" "}
+                <h3 className=" font-medium">{item.productName}</h3>
+              </Link>
+
               <h4 className="text-[#3D9958] font-medium flex items-center mt-3 gap-0.5">
                 {item.price}.00 <FaBangladeshiTakaSign />{" "}
               </h4>
