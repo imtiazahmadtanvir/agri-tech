@@ -25,7 +25,6 @@ export const GET = async (req: NextRequest) => {
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const total = await listingsCollection.countDocuments()
         const result = await listingsCollection.find().toArray()
-        console.log(result);
         return NextResponse.json({ success: true, message: 'Listing fetched successfully!', data: result, total }, { status: 200 })
     } catch (error) {
         console.error("error fetching listing", error)

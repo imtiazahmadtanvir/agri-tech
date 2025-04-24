@@ -1,27 +1,35 @@
 "use client";
 
 import { productCategories } from "@/lib/productCategory";
-import { useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import { useMarketPlace } from "@/context/MarketplaceContext";
 import { useSearchParams } from "next/navigation";
-interface HandleChangeEvent {
-  target: {
-    id: string;
-    value: string;
-  };
+import { SubmitHandler, useForm } from "react-hook-form";
+import { SquarePlay } from "lucide-react";
+interface Inputs {
+  min: number | string;
+  max: number | string;
 }
 export default function Sidebar() {
   const searchParams = useSearchParams();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
 
   const { setCategory, setMaxPrice, setMinPrice } = useMarketPlace();
   const category = searchParams.get("category")?.toString();
-
-  const handleChange = (e: HandleChangeEvent) => {
-    const { id, value } = e.target;
-    if (id === "minPrice") setMinPrice(Number(value));
-    if (id === "maxPrice") setMaxPrice(Number(value));
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    if (data.min) {
+      setMinPrice(data.min);
+    }
+    if (data.max) {
+      setMaxPrice(data.max);
+    }
   };
+  const maxPrice = watch("max");
   return (
     <aside className="h-fit sticky mt-4 top-0 left-0">
       <div className="border rounded-2xl">
@@ -76,36 +84,49 @@ export default function Sidebar() {
         <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Filter by Price
         </h4>
-        <div className="px-7 pt-6 flex gap-4">
-          <div className="flex flex-col">
-            <label htmlFor="minPrice" className="text-sm font-medium">
-              Min Price
-            </label>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="px-7 py-6 flex items-center  gap-2"
+        >
+          <div className="">
             <input
               id="minPrice"
+              placeholder="min"
               type="number"
-              min="0"
-              max="10000"
-              step="10"
-              onChange={handleChange}
-              className="border border-gray-300 rounded px-2 py-1"
+              {...register("min", {
+                required: "Minimum price is required",
+                validate: (value) =>
+                  parseFloat(value.toString()) <
+                    parseFloat(maxPrice?.toString()) ||
+                  "Min price must be less than Max price",
+              })}
+              className="border w-full border-gray-300 rounded px-2 py-1"
             />
+            {errors.min && (
+              <span className="text-red-500 text-xs">{errors.min.message}</span>
+            )}
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="maxPrice" className="text-sm font-medium">
-              Max Price
-            </label>
+          <p>To</p>
+          <div className="">
             <input
-              id="maxPrice"
               type="number"
-              min="0"
-              max="100000"
-              step="10"
-              onChange={handleChange}
-              className="border border-gray-300 rounded px-2 py-1"
+              placeholder="max"
+              {...register("max", { required: "Maximum price is required" })}
+              className="border w-full border-gray-300 rounded px-2 py-1"
             />
+            {errors.max && (
+              <span className="text-red-500 text-xs">{errors.max.message}</span>
+            )}
           </div>
-        </div>
+          <div>
+            <button
+              className="bg-green-800 rounded cursor-pointer"
+              type="submit"
+            >
+              <SquarePlay className="text-white" size={32} />
+            </button>
+          </div>
+        </form>
       </div>
 
       <div className="mt-6 border rounded-2xl">

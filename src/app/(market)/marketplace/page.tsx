@@ -26,7 +26,9 @@ export default async function MarketplaceMain({
   try {
     const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`);
     items = res.data.data;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
   return (
     <div className="my-4">

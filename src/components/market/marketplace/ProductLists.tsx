@@ -11,8 +11,6 @@ interface Product {
 }
 
 export default function ProductLists({ items }: { items: Product[] }) {
-  console.log(items);
-
   if (!items || items.length === 0) {
     return <p>No products found.</p>;
   }
