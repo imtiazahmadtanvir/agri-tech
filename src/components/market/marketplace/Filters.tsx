@@ -53,7 +53,6 @@ export default function Filters() {
     replace,
     pathname,
   ]);
-
   return (
     <div className="my-4 flex justify-between">
       <select

@@ -1,37 +1,50 @@
 "use client";
 
-import { productCategories } from "@/lib/productCategory";
-import { FiArrowRight } from "react-icons/fi";
-import { useMarketPlace } from "@/context/MarketplaceContext";
+import { useState, useEffect } from "react";
+import { RotateCcw } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { SquarePlay } from "lucide-react";
-interface Inputs {
-  min: number | string;
-  max: number | string;
-}
+import { productCategories } from "@/lib/productCategory";
+import { useMarketPlace } from "@/context/MarketplaceContext";
+import { FiArrowRight } from "react-icons/fi";
+
 export default function Sidebar() {
   const searchParams = useSearchParams();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-
   const { setCategory, setMaxPrice, setMinPrice } = useMarketPlace();
   const category = searchParams.get("category")?.toString();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (data.min) {
-      setMinPrice(data.min);
+
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const minVal = parseFloat(min);
+    const maxVal = parseFloat(max);
+    if (min && max) {
+      if (minVal >= maxVal) {
+        setError("Min price must be less than Max price");
+      } else {
+        setError("");
+        setMinPrice(min);
+        setMaxPrice(max);
+      }
+    } else {
+      setMinPrice("");
+      setMaxPrice("");
+      setError("");
     }
-    if (data.max) {
-      setMaxPrice(data.max);
-    }
+  }, [min, max, setMinPrice, setMaxPrice]);
+
+  const handleReset = () => {
+    setMin("");
+    setMax("");
+    setMinPrice("");
+    setMaxPrice("");
+    setError("");
   };
-  const maxPrice = watch("max");
+
   return (
     <aside className="h-fit sticky mt-4 top-0 left-0">
+      {/* Category Section */}
       <div className="border rounded-2xl">
         <h3 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Categories
@@ -55,14 +68,15 @@ export default function Sidebar() {
               All Product
             </span>
           </button>
+
           {productCategories.map((item) => (
             <button
+              key={item.id}
               onClick={() => setCategory(item.name)}
               className={`group cursor-pointer py-4 px-2 text-left w-full border-dashed 
-              hover:text-green-700  
-              ${category === item.name ? "text-green-700" : ""} 
-              transition-all duration-300 ${item.id !== 10 && "border-b"}`}
-              key={item.id}
+                hover:text-green-700  
+                ${category === item.name ? "text-green-700" : ""} 
+                transition-all duration-300 ${item.id !== 10 && "border-b"}`}
             >
               <span className="relative">
                 <span
@@ -84,51 +98,33 @@ export default function Sidebar() {
         <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Filter by Price
         </h4>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="px-7 py-6 flex items-center  gap-2"
-        >
-          <div className="">
-            <input
-              id="minPrice"
-              placeholder="min"
-              type="number"
-              {...register("min", {
-                required: "Minimum price is required",
-                validate: (value) =>
-                  parseFloat(value.toString()) <
-                    parseFloat(maxPrice?.toString()) ||
-                  "Min price must be less than Max price",
-              })}
-              className="border w-full border-gray-300 rounded px-2 py-1"
-            />
-            {errors.min && (
-              <span className="text-red-500 text-xs">{errors.min.message}</span>
-            )}
-          </div>
+        <div className="px-7 py-6 flex items-center gap-2">
+          <input
+            type="number"
+            placeholder="min"
+            value={min}
+            onChange={(e) => setMin(e.target.value)}
+            className="border w-full border-gray-300 rounded px-2 py-1"
+          />
           <p>To</p>
-          <div className="">
-            <input
-              type="number"
-              placeholder="max"
-              {...register("max", { required: "Maximum price is required" })}
-              className="border w-full border-gray-300 rounded px-2 py-1"
-            />
-            {errors.max && (
-              <span className="text-red-500 text-xs">{errors.max.message}</span>
-            )}
-          </div>
-          <div>
-            <button
-              className="bg-green-800 rounded cursor-pointer"
-              type="submit"
-            >
-              <SquarePlay className="text-white" size={32} />
-            </button>
-          </div>
-        </form>
+          <input
+            type="number"
+            placeholder="max"
+            value={max}
+            onChange={(e) => setMax(e.target.value)}
+            className="border w-full border-gray-300 rounded px-2 py-1"
+          />
+          <button
+            onClick={handleReset}
+            className="bg-gray-300 text-black px-2 py-1 rounded cursor-pointer flex items-center gap-1"
+          >
+            <RotateCcw size={18} />
+          </button>
+        </div>
+        {error && <p className="text-red-500 text-xs px-7">{error}</p>}
       </div>
 
+      {/* Popular Products Placeholder */}
       <div className="mt-6 border rounded-2xl">
         <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Popular Products
