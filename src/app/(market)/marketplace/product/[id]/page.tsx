@@ -5,6 +5,7 @@ import React from "react";
 import { FaBangladeshiTakaSign, FaCartShopping } from "react-icons/fa6";
 import { BsBoxSeamFill } from "react-icons/bs";
 import ShareButtons from "@/components/market/marketplace/ShareButtons";
+import BackButton from "@/components/market/marketplace/BackButton";
 export default async function ProductDetails({
   params,
 }: {
@@ -34,11 +35,11 @@ export default async function ProductDetails({
         <div className="w-3/5">
           {/* Button*/}
           <div>
-            <button>BACK TO SHOP</button>
+            <BackButton />
           </div>
           {/* info */}
           <div className="mt-7">
-            <h2 className="text-2xl font-medium">{productName}</h2>
+            <h2 className="text-2xl font-bold">{productName}</h2>
             {/* Rating */}
             {/* price */}
             <h4 className="text-[#3D9958] font-medium flex items-center mt-3 gap-0.5">
