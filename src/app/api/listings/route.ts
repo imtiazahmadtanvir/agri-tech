@@ -23,6 +23,7 @@ export const GET = async (req: NextRequest) => {
     const min = searchParams.get("minPrice")
     const max = searchParams.get("maxPrice")
     const query: QueryType = {}
+
     if (category) {
         query.category = category
     }
@@ -57,6 +58,7 @@ export const GET = async (req: NextRequest) => {
             $regex: search, $options: 'i'
         }
     }
+    console.log(query);
     try {
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const total = await listingsCollection.countDocuments(query)

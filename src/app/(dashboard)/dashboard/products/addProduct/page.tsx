@@ -31,7 +31,7 @@ export default function AddProduct() {
       }
       const photoUrls = await uploadPhotos(images);
       setLoading(true);
-      const formData = { ...data, photoUrls, tags };
+      const formData = { ...data, photoUrls, tags, price: Number(data.price) };
       const res = await axios.post("/api/listings", formData);
 
       if (res.data.success) {
