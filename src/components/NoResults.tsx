@@ -6,7 +6,7 @@ export default function NoResults() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col items-center justify-center py-16">
+    <div className="flex h-[60vh] flex-col items-center justify-center py-16">
       <svg
         className="w-16 h-16 text-gray-400 mb-4"
         fill="none"
@@ -22,7 +22,7 @@ export default function NoResults() {
         for.
       </p>
       <button
-        className="px-4 py-2 bg-green-600 text-white rounded"
+        className="px-4 py-2 bg-green-600 text-white cursor-pointer rounded-full"
         onClick={() => router.push("/marketplace")}
       >
         Browse All Products
