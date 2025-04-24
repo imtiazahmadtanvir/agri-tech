@@ -1,114 +1,75 @@
 import ImageSlider from "@/components/market/marketplace/ImageSlider";
-import PhoneCall from "@/components/market/marketplace/PhoneCall";
-import { timeStamp } from "@/utils/timestamp";
 import axios from "axios";
-import Image from "next/image";
+import Link from "next/link";
 import React from "react";
-import { IoMdChatboxes } from "react-icons/io";
-import { IoShareSocialSharp } from "react-icons/io5";
-type PageProps = {
-  params: Promise<{ id: string }>;
-};
 
-export default async function ProductDetails({ params }: PageProps) {
-  const resolvedParams = await params;
-  const { id } = resolvedParams;
-  const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings/${id}`);
-  const {
-    productName,
-    listed,
-    location,
-    photos,
-    price,
-    isNegotiable,
-    condition,
-    organicStatus,
-    userName,
-    userImage,
-    breed,
-    age,
-    healthStatus,
-    description,
-    plantingSeason,
-    phoneNumber,
-    expiryData,
-    yearOfManufacture,
-    type,
-    brand,
-    volume,
-    nutritionalContent,
-  } = res?.data;
-  return (
-    <div className="my-4 p-4 border rounded-sm ">
-      <div className="flex flex-col lg:flex-row justify-between ">
-        <div>
-          <h3 className="font-semibold text-xl">{productName}</h3>
-          <p className="text-gray-500">
-            Posted on {timeStamp(listed)}, <span>{location}</span>
-          </p>
+export default async function ProductDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const resParams = await params;
+  const { id } = resParams;
+  try {
+    const res = await axios.get(
+      `${process.env.NEXTAUTH_URL}/api/listings/${id}`
+    );
+    const {
+      productName,
+      price,
+      description,
+      photoUrls,
+      category,
+      tags,
+      unit,
+      stock,
+    } = await res.data;
+    return (
+      <div className="flex gap-6 mt-6">
+        <div className="w-2/5">
+          <ImageSlider data={photoUrls} />
         </div>
-        <div>
-          <p className="flex items-center">
-            <IoShareSocialSharp />
-            Share
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-col lg:flex-row gap-4">
-        <div className="lg:w-2/3 w-full">
-          <ImageSlider data={photos} />
+        <div className="w-3/5">
+          {/* Button*/}
           <div>
-            <div className="flex mt-2 gap-2 items-center text-sm">
-              <h3 className="text-2xl font-bold text-green-500"> $ {price}</h3>
-              <p className="italic">{isNegotiable ? "Negotiable" : ""}</p>
-            </div>
-            {condition && <p>Condition: {condition}</p>}
-            <ul>
-              {brand && <li>Brand : {brand}</li>}
-              {yearOfManufacture && <li>Manufactured : {yearOfManufacture}</li>}
-              {organicStatus && (
-                <li>Organic: {organicStatus ? "Yes" : "No"}</li>
-              )}
-              {volume && <li>Volume : {volume}</li>}
-              {breed && <li>Breed : {breed}</li>}
-              {healthStatus && <li>status : {healthStatus}</li>}
-              {age && <li>Age : {age} month</li>}
-              {plantingSeason && <li>Planting Season: {plantingSeason}</li>}
-              {type && <li>Organic : {type === "Organic" ? "yes" : "no"}</li>}
-              {expiryData && <li> Expiry Date : {expiryData}</li>}
-              {nutritionalContent && (
-                <li>Nutritional : {nutritionalContent}</li>
-              )}
-            </ul>
-            <h2 className="font-semibold">Description</h2>
+            <button>BACK TO SHOP</button>
+          </div>
+          {/* info */}
+          <div>
+            <h2>{productName}</h2>
+            {/* Rating */}
+            {/* price */}
+            <h4>{price}</h4>
             <p>{description}</p>
-          </div>
-        </div>
-        <div className="lg:w-1/3 w-full scroll-mt-4 sticky top-0 h-fit border rounded-sm">
-          <div className="py-3 border-b px-3 -z-10">
-            <Image
-              width={50}
-              height={50}
-              className="rounded-full"
-              alt={userName}
-              src={userImage}
-            />
-            <div className="flex gap-1.5">
-              <p className="text-gray-400">For sale by</p>
-              <h3 className="font-semibold">{userName}</h3>
+            <div>
+              <span>
+                Available:{stock} {unit} in stock
+              </span>
             </div>
-          </div>
-          <div className="">
-            <PhoneCall phoneNumber={phoneNumber} />
-          </div>
-          <div className="p-3 flex gap-2">
-            <span className="size-8  bg-green-500 rounded-full flex justify-center items-center">
-              <IoMdChatboxes className="text-white " />
-            </span>
-            <span className="font-semibold">Chat Now</span>
+            {/* add cart */}
+            <div>
+              <input type="number" />
+              <button>Add To Cart</button>
+            </div>
+            {/* other info */}
+            <p>Category: {category}</p>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+    return (
+      <div className="p-6 h-[65vh] text-center text-red-600">
+        <h1 className="text-xl font-bold">😔 Something went wrong</h1>
+        <p>Failed to load the product. Please try again later.</p>
+        <Link
+          href="/marketplace"
+          className="text-blue-500 underline mt-4 inline-block"
+        >
+          ← Back to Products
+        </Link>
+      </div>
+    );
+  }
 }

@@ -23,28 +23,35 @@ export default function ImageSlider({ data }: ImageSliderProps) {
 
   return (
     <>
-      <Swiper
-        style={
-          {
-            "--swiper-navigation-color": "#ffff",
-            "--swiper-pagination-color": "#ffff",
-          } as React.CSSProperties
-        }
-        loop={true}
-        spaceBetween={10}
-        navigation={true}
-        thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2"
-      >
-        {data.map((item, index) => (
-          <SwiperSlide className="mb-2 rounded-sm" key={index}>
-            <div className="w-full relative  h-96 object-cover ">
-              <Image className="rounded-sm" fill alt="" src={item} />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="relative group">
+        <Swiper
+          style={
+            {
+              "--swiper-navigation-color": "#072010",
+              "--swiper-pagination-color": "#072010",
+            } as React.CSSProperties
+          }
+          loop={true}
+          spaceBetween={10}
+          navigation={true}
+          thumbs={{ swiper: thumbsSwiper }}
+          modules={[FreeMode, Navigation, Thumbs]}
+          className="mySwiper2"
+        >
+          {data.map((item, index) => (
+            <SwiperSlide className="mb-2 rounded-xl border" key={index}>
+              <div className="w-full relative rounded-xl  h-96  ">
+                <Image
+                  className="rounded-xl object-contain"
+                  fill
+                  alt=""
+                  src={item}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
       <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
@@ -55,9 +62,14 @@ export default function ImageSlider({ data }: ImageSliderProps) {
         className="mySwiper"
       >
         {data.map((item, index) => (
-          <SwiperSlide key={index}>
-            <div className="w-full relative h-20  object-cover cursor-pointer">
-              <Image fill className="rounded-sm" alt="" src={item} />
+          <SwiperSlide className="rounded-2xl" key={index}>
+            <div className="w-full relative h-20   cursor-pointer border rounded-2xl">
+              <Image
+                fill
+                className="rounded-sm object-contain"
+                alt=""
+                src={item}
+              />
             </div>
           </SwiperSlide>
         ))}

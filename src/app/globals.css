@@ -202,3 +202,16 @@
   /* Modern browsers */
   /* For further customization, use ::-webkit-slider-thumb, ::-moz-range-thumb, etc. */
 }
+
+.mySwiper2 .swiper-button-next,
+.mySwiper2 .swiper-button-prev {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.group:hover .mySwiper2 .swiper-button-next,
+.group:hover .mySwiper2 .swiper-button-prev {
+  opacity: 1;
+  pointer-events: auto;
+}
