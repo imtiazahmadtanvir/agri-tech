@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 export default function PaginationControls({
   itemCount,
@@ -35,14 +35,27 @@ export default function PaginationControls({
   //   }
   //   replace(`${pathname}?${params.toString()}`);
   // }, [searchParams, page, pathname, replace]);
+  const handelPrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const handelNextPage = () => {
+    if (currentPage < pages.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   return (
     <>
       <div className="flex justify-center items-center gap-4 mt-6">
-        <button
-          className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
-        >
-          <FaAngleLeft />
-        </button>
+        {currentPage > 1 && (
+          <button
+            onClick={handelPrevPage}
+            className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
+          >
+            <FaAngleLeft />
+          </button>
+        )}
         {pages.map((page) => (
           <button
             onClick={() => setCurrentPage(page)}
@@ -54,6 +67,14 @@ export default function PaginationControls({
             {page}
           </button>
         ))}
+        {currentPage < pages.length && (
+          <button
+            onClick={handelNextPage}
+            className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
+          >
+            <FaAngleRight />
+          </button>
+        )}
       </div>
     </>
   );
