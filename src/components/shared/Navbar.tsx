@@ -159,6 +159,12 @@ const AuthSection = () => {
                 My Profile
               </Link>
               <Link
+                className="block px-4 py-2 text-[#0D401C] hover:bg-[#F8C32C] hover:text-white transition-all duration-300 font-semibold"
+                href={"/myOrder"}
+              >
+                My Orders
+              </Link>
+              <Link
                 href={`${
                   session.user.role === "farmer"
                     ? "/dashboard"
