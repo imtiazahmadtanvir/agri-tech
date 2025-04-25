@@ -36,7 +36,7 @@ export default function CartMenu({
           }
         )}
       >
-        <div className="relative px-6">
+        <div className="relative px-7">
           <div
             className="flex  justify-between items-center  py-6
          "
@@ -44,7 +44,7 @@ export default function CartMenu({
             <h2 className="text-2xl font-medium ">Basket ({data.length})</h2>
           </div>
 
-          <div className="border-t">Cart content goes here...</div>
+          <div className="border-t pt-4">Cart content goes here...</div>
           <button
             onClick={handleClose}
             className="cursor-pointer absolute top-0 bg-green-900 flex justify-center items-center size-10 text-white right-0 "

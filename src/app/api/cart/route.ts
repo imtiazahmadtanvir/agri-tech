@@ -50,17 +50,50 @@ export const POST = async (req: NextRequest) => {
 }
 export const GET = async () => {
     try {
-        const session = await getServerSession(authOptions)
+        const session = await getServerSession(authOptions);
         if (!session?.user?.email) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
-        const userEmail = session?.user.email
-        const cartsCollection = await dbConnect(collectionNameObj.cartsCollection)
-        const cart = await cartsCollection.findOne({ userEmail });
-        return NextResponse.json({ cart: cart?.items || [] })
+
+        const userEmail = session.user.email;
+        const cartsCollection = await dbConnect(collectionNameObj.cartsCollection);
+
+        const pipeline = [
+            { $match: { userEmail } },
+            { $unwind: "$items" },
+            {
+                $addFields: {
+                    "items.productId": { $toObjectId: "$items.productId" }
+                }
+            },
+            {
+                $lookup: {
+                    from: collectionNameObj.listingsCollection,
+                    localField: "items.productId",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+            { $unwind: "$productDetails" },
+            {
+                $project: {
+                    _id: 0,
+                    productId: "$items.productId",
+                    quantity: "$items.quantity",
+                    name: "$productDetails.productName",
+                    price: "$productDetails.price",
+                    photoUrls: { $arrayElemAt: ["$productDetails.photoUrls", 0] },
+                    userEmail: 1,
+                }
+            }
+        ];
+
+        const enrichedCart = await cartsCollection.aggregate(pipeline).toArray();
+
+        return NextResponse.json({ cart: enrichedCart }, { status: 200 });
 
     } catch (error) {
         console.error("GET /cart error:", error);
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
-}
+};
