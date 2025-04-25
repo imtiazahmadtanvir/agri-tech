@@ -201,7 +201,11 @@ const AuthSection = () => {
             <span>{cartItem.length}</span>
           </div>
         </div>
-        <CartMenu setToggleCart={setCartOpen} toggleCart={cartOpen} />
+        <CartMenu
+          data={cartItem}
+          setToggleCart={setCartOpen}
+          toggleCart={cartOpen}
+        />
       </div>
     );
   }

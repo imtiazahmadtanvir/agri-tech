@@ -6,12 +6,13 @@ import { TfiLayoutLineSolid } from "react-icons/tfi";
 export default function CartMenu({
   toggleCart,
   setToggleCart,
+  data,
 }: {
   toggleCart: boolean;
   setToggleCart: (val: boolean) => void;
 }) {
   const handleClose = () => setToggleCart(false);
-
+  console.log(data);
   return (
     <>
       <div
@@ -28,22 +29,22 @@ export default function CartMenu({
       {/* Slide-in Cart Menu */}
       <div
         className={clsx(
-          "fixed inset-y-0  right-0 z-50 md:w-[50%] lg:w-[35%] bg-white shadow-lg transform transition-all duration-500",
+          "fixed inset-y-0  right-0 z-50 md:w-[50%] lg:w-[30%] bg-white shadow-lg transform transition-all duration-500",
           {
             "translate-x-0 opacity-100": toggleCart,
             "translate-x-full opacity-0 pointer-events-none": !toggleCart,
           }
         )}
       >
-        <div className="relative">
+        <div className="relative px-6">
           <div
-            className="flex  justify-between items-center px-5 py-6
+            className="flex  justify-between items-center  py-6
          "
           >
-            <h2 className="text-2xl font-medium ">Basket()</h2>
+            <h2 className="text-2xl font-medium ">Basket ({data.length})</h2>
           </div>
 
-          <div className="p-4">Cart content goes here...</div>
+          <div className="border-t">Cart content goes here...</div>
           <button
             onClick={handleClose}
             className="cursor-pointer absolute top-0 bg-green-900 flex justify-center items-center size-10 text-white right-0 "
