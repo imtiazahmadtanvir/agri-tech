@@ -12,7 +12,6 @@ export const POST = async (req: NextRequest) => {
     try {
         const { productId, quantity } = await req.json()
         const session = await getServerSession(authOptions)
-        console.log(session);
         if (!session?.user?.email) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
@@ -52,7 +51,6 @@ export const POST = async (req: NextRequest) => {
 export const GET = async () => {
     try {
         const session = await getServerSession(authOptions)
-        console.log(session);
         if (!session?.user?.email) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }

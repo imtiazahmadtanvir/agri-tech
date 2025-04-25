@@ -1,9 +1,11 @@
 "use client";
+import { useCart } from "@/Hook/useCart";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
 export default function ButtonOfCard({ id }: { id: string }) {
+  const { refetch } = useCart();
   const handleAddToCart = async () => {
     console.log(id);
     try {
@@ -12,6 +14,7 @@ export default function ButtonOfCard({ id }: { id: string }) {
         quantity: 1,
       });
       toast.success("Added to cart!");
+      refetch();
     } catch (error) {
       console.error("Error adding to cart", error);
       toast.error("failed to added cart");
