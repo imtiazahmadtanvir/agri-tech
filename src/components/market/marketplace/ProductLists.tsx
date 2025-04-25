@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import ButtonOfCard from "./ButtonOfCard";
 
 interface Product {
   _id: string;
@@ -82,11 +83,7 @@ export default async function ProductLists({
             </div>
 
             {/* all buttons */}
-            <div>
-              <button className="size-8 flex justify-center cursor-pointer rounded-full border items-center text-[#3D9958] hover:text-white hover:bg-[#3D9958] transition-all duration-300 ease-in-out">
-                <FaShoppingCart />
-              </button>
-            </div>
+            <ButtonOfCard id={item._id} />
           </div>
         </div>
       ))}

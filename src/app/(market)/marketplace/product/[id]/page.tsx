@@ -6,6 +6,7 @@ import { FaBangladeshiTakaSign, FaCartShopping } from "react-icons/fa6";
 import { BsBoxSeamFill } from "react-icons/bs";
 import ShareButtons from "@/components/market/marketplace/ShareButtons";
 import BackButton from "@/components/market/marketplace/BackButton";
+import Review from "@/components/market/marketplace/Products/Review";
 export default async function ProductDetails({
   params,
 }: {
@@ -28,61 +29,66 @@ export default async function ProductDetails({
       stock,
     } = await res.data;
     return (
-      <div className="flex gap-20 mb-24 mt-6">
-        <div className="w-2/5">
-          <ImageSlider data={photoUrls} />
-        </div>
-        <div className="w-3/5">
-          {/* Button*/}
-          <div>
-            <BackButton />
+      <>
+        <div className="flex gap-20 mb-24 mt-6">
+          <div className="w-2/5">
+            <ImageSlider data={photoUrls} />
           </div>
-          {/* info */}
-          <div className="mt-7">
-            <h2 className="text-2xl font-bold">{productName}</h2>
-            {/* Rating */}
-            {/* price */}
-            <h4 className="text-[#3D9958] font-medium flex items-center mt-3 gap-0.5">
-              {price}.00 <FaBangladeshiTakaSign />{" "}
-            </h4>
-            <p className="text-[#6E7673] py-6 font-nunito">{description}</p>
-            <div className="flex items-center gap-1.5">
-              <BsBoxSeamFill className="text-[#FF9500]" />
-              <span className="text-[#6E7673] capitalize font-semibold">
-                Available:{stock} <span className="capitalize">{unit}</span> in
-                stock
-              </span>
+          <div className="w-3/5">
+            {/* Button*/}
+            <div>
+              <BackButton />
             </div>
-            {/* add cart */}
-            <div className="flex gap-2 my-6">
-              <input
-                defaultValue={1}
-                className="bg-[#E0E6E2] w-16 py-3 rounded-2xl px-3  outline-none"
-                type="number"
-              />
-
-              <button className="pl-4 bg-green-900 py-1 rounded-full text-white cursor-pointer flex items-center gap-2">
-                Add To Cart{" "}
-                <span className="size-9 flex items-center justify-center rounded-full bg-yellow-500 mr-2">
-                  <FaCartShopping className="text-green-900" />
+            {/* info */}
+            <div className="mt-7">
+              <h2 className="text-2xl font-bold">{productName}</h2>
+              {/* Rating */}
+              {/* price */}
+              <h4 className="text-[#3D9958] font-medium flex items-center mt-3 gap-0.5">
+                {price}.00 <FaBangladeshiTakaSign />{" "}
+              </h4>
+              <p className="text-[#6E7673] py-6 font-nunito">{description}</p>
+              <div className="flex items-center gap-1.5">
+                <BsBoxSeamFill className="text-[#FF9500]" />
+                <span className="text-[#6E7673] capitalize font-semibold">
+                  Available:{stock} <span className="capitalize">{unit}</span>{" "}
+                  in stock
                 </span>
-              </button>
-            </div>
-            {/* other info */}
-            <div className="font-nunito space-y-1.5 text-[#6E7673]">
-              <p>Category: {category}</p>
-              <p>
-                Tags:
-                {tags.length > 0 && (
-                  <span className="uppercase pl-0.5">{tags.join(" / ")}</span>
-                )}
-              </p>
-              {/* share button */}
-              <ShareButtons />
+              </div>
+              {/* add cart */}
+              <div className="flex gap-2 my-6">
+                <input
+                  defaultValue={1}
+                  className="bg-[#E0E6E2] w-16 py-3 rounded-2xl px-3  outline-none"
+                  type="number"
+                />
+
+                <button className="pl-4 bg-green-900 py-1 rounded-full text-white cursor-pointer flex items-center gap-2">
+                  Add To Cart{" "}
+                  <span className="size-9 flex items-center justify-center rounded-full bg-yellow-500 mr-2">
+                    <FaCartShopping className="text-green-900" />
+                  </span>
+                </button>
+              </div>
+              {/* other info */}
+              <div className="font-nunito space-y-1.5 text-[#6E7673]">
+                <p>Category: {category}</p>
+                <p>
+                  Tags:
+                  {tags.length > 0 && (
+                    <span className="uppercase pl-0.5">{tags.join(" / ")}</span>
+                  )}
+                </p>
+                {/* share button */}
+                <ShareButtons />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div>
+          <Review />
+        </div>
+      </>
     );
   } catch (error) {
     console.error("Failed to fetch products:", error);
