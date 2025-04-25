@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
 import { IoMdClose } from "react-icons/io";
 import QuantityBtn from "../cart/QuantityBtn";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import CheckoutBtn from "../cart/CheckoutBtn";
+
 type DataType = {
   productId: string;
   photo: string;
@@ -13,6 +15,7 @@ type DataType = {
   price: number;
   quantity: number;
 };
+
 export default function CartMenu({
   toggleCart,
   setToggleCart,
@@ -23,7 +26,20 @@ export default function CartMenu({
   setToggleCart: (val: boolean) => void;
 }) {
   const handleClose = () => setToggleCart(false);
-  console.log(data);
+
+  // Disable body scroll when cart is open
+  useEffect(() => {
+    if (toggleCart) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [toggleCart]);
+
   return (
     <>
       <div
@@ -40,22 +56,19 @@ export default function CartMenu({
       {/* Slide-in Cart Menu */}
       <div
         className={clsx(
-          "fixed inset-y-0  right-0 z-50 md:w-[60%] lg:w-[30%] bg-white shadow-lg transform transition-all duration-500",
+          "fixed inset-y-0 w-full right-0 z-50 md:w-[60%] lg:w-[30%] bg-white shadow-lg transform transition-all duration-500",
           {
             "translate-x-0 opacity-100": toggleCart,
             "translate-x-full opacity-0 pointer-events-none": !toggleCart,
           }
         )}
       >
-        <div className="relative px-7">
-          <div
-            className="flex  justify-between items-center  py-6
-         "
-          >
-            <h2 className="text-2xl font-medium ">Basket ({data.length})</h2>
+        <div className="relative px-7 overflow-y-auto max-h-screen pb-20">
+          <div className="flex justify-between items-center py-6">
+            <h2 className="text-2xl font-medium">Basket ({data.length})</h2>
           </div>
 
-          <div className="border-t pt-4">
+          <div className="border-t pt-4 h-[75vh]">
             {data.map((item) => (
               <div
                 className="flex border-b justify-between py-4 border-dashed items-center"
@@ -84,9 +97,12 @@ export default function CartMenu({
               </div>
             ))}
           </div>
+
+          <CheckoutBtn data={data} />
+
           <button
             onClick={handleClose}
-            className="cursor-pointer absolute top-0 bg-green-900 flex justify-center items-center size-10 text-white right-0 "
+            className="cursor-pointer absolute top-0 bg-green-900 flex justify-center items-center size-10 text-white right-0"
           >
             <MdClose size={30} />
           </button>
