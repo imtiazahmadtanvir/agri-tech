@@ -198,7 +198,7 @@ const AuthSection = () => {
             <TiShoppingCart size={20} />
           </button>
           <div className="bg-[#F8C32C] size-5 flex justify-center items-center text-sm rounded-full text-green-900 absolute -top-1 -right-1">
-            <span>{cartItem.length}</span>
+            <span>{cartItem?.length}</span>
           </div>
         </div>
         <CartMenu

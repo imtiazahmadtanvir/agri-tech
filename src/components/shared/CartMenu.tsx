@@ -2,13 +2,16 @@
 import React from "react";
 import clsx from "clsx";
 import { MdClose } from "react-icons/md";
-import { TfiLayoutLineSolid } from "react-icons/tfi";
+import Image from "next/image";
+import { IoMdClose } from "react-icons/io";
+
 export default function CartMenu({
   toggleCart,
   setToggleCart,
   data,
 }: {
   toggleCart: boolean;
+  data: [];
   setToggleCart: (val: boolean) => void;
 }) {
   const handleClose = () => setToggleCart(false);
@@ -44,7 +47,23 @@ export default function CartMenu({
             <h2 className="text-2xl font-medium ">Basket ({data.length})</h2>
           </div>
 
-          <div className="border-t pt-4">Cart content goes here...</div>
+          <div className="border-t pt-4">
+            {data.map((item) => (
+              <div
+                className="flex justify-between items-center"
+                key={item?.productId}
+              >
+                <div className="flex items-center">
+                  <Image height={90} width={90} alt="fjsf" src={item.photo} />
+                  <div>
+                    <h3>{item?.name}</h3>
+                    <h4>{item?.price}.00</h4>
+                  </div>
+                </div>
+                <IoMdClose />
+              </div>
+            ))}
+          </div>
           <button
             onClick={handleClose}
             className="cursor-pointer absolute top-0 bg-green-900 flex justify-center items-center size-10 text-white right-0 "

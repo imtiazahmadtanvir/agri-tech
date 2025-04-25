@@ -82,7 +82,7 @@ export const GET = async () => {
                     quantity: "$items.quantity",
                     name: "$productDetails.productName",
                     price: "$productDetails.price",
-                    photoUrls: { $arrayElemAt: ["$productDetails.photoUrls", 0] },
+                    photo: { $arrayElemAt: ["$productDetails.photoUrls", 0] },
                     userEmail: 1,
                 }
             }
