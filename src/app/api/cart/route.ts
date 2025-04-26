@@ -90,7 +90,6 @@ export const GET = async () => {
 
         const enrichedCart = await cartsCollection.aggregate(pipeline).toArray();
         const totalQuantity = enrichedCart.reduce((sum, item) => sum + item.quantity, 0)
-        console.log(totalQuantity);
         return NextResponse.json({ cart: enrichedCart, totalQuantity }, { status: 200 });
 
     } catch (error) {
@@ -98,3 +97,4 @@ export const GET = async () => {
         return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
 };
+

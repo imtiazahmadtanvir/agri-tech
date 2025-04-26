@@ -3,8 +3,10 @@ import QuantityBtn from "@/components/cart/QuantityBtn";
 import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { useCart } from "@/Hook/useCart";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { CiLocationOn } from "react-icons/ci";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
@@ -23,9 +25,10 @@ type CartData = {
 };
 
 export default function Cart() {
-  const { data, isLoading } = useCart() as {
+  const { data, isLoading, refetch } = useCart() as {
     data: CartData;
     isLoading: boolean;
+    refetch: () => Promise<{ data: CartData }>;
   };
 
   if (isLoading)
@@ -42,7 +45,15 @@ export default function Cart() {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
-
+  const handelDeleteItem = async (id: string) => {
+    try {
+      await axios.delete(`/api/cart/${id}`);
+      refetch();
+    } catch (error) {
+      console.log(error);
+      toast.error("error to delete item");
+    }
+  };
   return (
     <ContainerSmall>
       <div className="bg-white flex flex-col lg:flex-row justify-between gap-15 my-6">
@@ -83,7 +94,12 @@ export default function Cart() {
                       qn={item.quantity}
                       productId={item.productId}
                     />
-                    <IoMdClose size={20} />
+                    <button
+                      className="cursor-pointer"
+                      onClick={() => handelDeleteItem(item.productId)}
+                    >
+                      <IoMdClose size={20} />
+                    </button>
                   </div>
                 </div>
               ))}

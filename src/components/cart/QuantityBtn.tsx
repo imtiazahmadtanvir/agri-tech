@@ -1,3 +1,4 @@
+import { useCart } from "@/Hook/useCart";
 import axios from "axios";
 import { useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
@@ -10,9 +11,11 @@ export default function QuantityBtn({
   productId: string;
 }) {
   const [quantity, setQuantity] = useState(qn);
+  const { refetch } = useCart();
   const updataQuantity = async (quantity: number) => {
     try {
       await axios.patch("/api/cart/update", { quantity, productId });
+      refetch();
     } catch (error) {
       console.log(error);
     }
