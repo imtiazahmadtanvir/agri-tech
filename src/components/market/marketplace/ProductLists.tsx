@@ -2,7 +2,6 @@ import NoResults from "@/components/NoResults";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaShoppingCart } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import ButtonOfCard from "./ButtonOfCard";
 

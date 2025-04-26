@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { CiLocationOn } from "react-icons/ci";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
-
+import { TbAlertHexagonFilled } from "react-icons/tb";
 type CartItem = {
   productId: string;
   name: string;
@@ -38,7 +38,22 @@ export default function Cart() {
       </div>
     );
   if (!data || !data.cart || data.cart.length === 0) {
-    return <div className="p-4">Your cart is empty.</div>;
+    return (
+      <ContainerSmall>
+        <div className="p-4 flex items-center gap-1.5 mt-4 bg-[#F2F2F2] text-[#D18A18]">
+          <TbAlertHexagonFilled />
+          Your cart is empty.
+        </div>
+        <div className="my-10 flex justify-center">
+          <Link
+            href={"/marketplace"}
+            className="bg-green-700 rounded-full py-3 px-6 text-white"
+          >
+            Return To Shop
+          </Link>
+        </div>
+      </ContainerSmall>
+    );
   }
 
   const total = data.cart.reduce(
@@ -105,8 +120,6 @@ export default function Cart() {
               ))}
             </div>
           </div>
-
-          <div className="w-full bg-white p-4"></div>
         </div>
 
         {/* Order Summary */}

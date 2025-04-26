@@ -7,7 +7,6 @@ import { FaHeart, FaShoppingCart } from "react-icons/fa";
 export default function ButtonOfCard({ id }: { id: string }) {
   const { refetch } = useCart();
   const handleAddToCart = async () => {
-    console.log(id);
     try {
       await axios.post("/api/cart", {
         productId: id,

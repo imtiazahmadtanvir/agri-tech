@@ -22,7 +22,7 @@ export default function NoResults() {
         for.
       </p>
       <button
-        className="px-4 py-2 bg-green-600 text-white cursor-pointer rounded-full"
+        className="px-5 py-2 bg-green-800 text-white cursor-pointer rounded-full"
         onClick={() => router.push("/marketplace")}
       >
         Browse All Products
