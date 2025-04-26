@@ -9,7 +9,6 @@ import MobileNav from "@/components/shared/MobileNav";
 import DropdownMenu from "../navBar/DropdownMenu";
 import { TiShoppingCart } from "react-icons/ti";
 import { useCart } from "@/Hook/useCart";
-import CartMenu from "./CartMenu";
 
 // Types for navigation items
 interface NavItem {
@@ -116,9 +115,7 @@ const NavItems = ({ isMobile = false }: { isMobile?: boolean }) => (
 const AuthSection = () => {
   const { data: session, status } = useSession();
   const { data: cartItem } = useCart();
-  console.log(cartItem);
   const [isOpen, setIsOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
 
   const handleLogout = async () => {
     await signOut();
@@ -132,7 +129,6 @@ const AuthSection = () => {
   if (status === "loading") {
     return <span className="text-[#0D401C]">Loading...</span>;
   }
-  console.log(cartOpen);
   if (session) {
     return (
       <div className="flex  gap-4">
@@ -191,21 +187,16 @@ const AuthSection = () => {
         </div>
 
         <div className="relative">
-          <button
-            onClick={() => setCartOpen(!cartOpen)}
+          <Link
+            href={"/cart"}
             className="size-11 hover:bg-[#165728] hover:text-white transition-all duration-300 cursor-pointer flex justify-center items-center border rounded-full"
           >
             <TiShoppingCart size={20} />
-          </button>
+          </Link>
           <div className="bg-[#F8C32C] size-5 flex justify-center items-center text-sm rounded-full text-green-900 absolute -top-1 -right-1">
-            <span>{cartItem?.length}</span>
+            <span>{cartItem?.totalQuantity}</span>
           </div>
         </div>
-        <CartMenu
-          data={cartItem}
-          setToggleCart={setCartOpen}
-          toggleCart={cartOpen}
-        />
       </div>
     );
   }

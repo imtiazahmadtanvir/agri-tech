@@ -89,8 +89,9 @@ export const GET = async () => {
         ];
 
         const enrichedCart = await cartsCollection.aggregate(pipeline).toArray();
-
-        return NextResponse.json({ cart: enrichedCart }, { status: 200 });
+        const totalQuantity = enrichedCart.reduce((sum, item) => sum + item.quantity, 0)
+        console.log(totalQuantity);
+        return NextResponse.json({ cart: enrichedCart, totalQuantity }, { status: 200 });
 
     } catch (error) {
         console.error("GET /cart error:", error);

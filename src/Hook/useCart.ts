@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 const fetchCart = async () => {
     const { data } = await axios.get('/api/cart');
-    return data.cart
+    return data
 }
 export const useCart = () => {
     return useQuery({
