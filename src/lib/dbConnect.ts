@@ -4,7 +4,8 @@ export const collectionNameObj = {
     userCollection: 'users',
     productsCollection: "products",
     agriSupplyMarketCollection: "AgriSupply-Market",
-    listingsCollection: 'listings'
+    listingsCollection: 'listings',
+    cartsCollection: "carts"
 } as const;
 
 const uri = `${process.env.MONGODB_URI}` as string;

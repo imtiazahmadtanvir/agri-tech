@@ -1,3 +1,5 @@
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+
 export type WeatherData = {
     coord: {
         lon: number;
@@ -136,4 +138,20 @@ export interface FormData {
     isNegotiable?: boolean;
     expiryData?: string;
     type?: string
+}
+export interface IFormInput {
+    productName: string;
+    category: string;
+    stock: number;
+    description: string;
+    price: number;
+    discountedPrice: number;
+    unit: string;
+}
+export interface TagsProps {
+    tags: string[];
+    setTags: React.Dispatch<React.SetStateAction<string[]>>;
+    register: UseFormRegister<IFormInput>
+    errors: FieldErrors<IFormInput>
+
 }
