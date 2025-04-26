@@ -1,58 +1,77 @@
 "use client";
 
+import { useMarketPlace } from "@/context/MarketplaceContext";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 export default function PaginationControls({
-  itemCount,
+  totalPages,
 }: {
-  itemCount: number;
+  totalPages: number;
 }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const [page, setPage] = useState<number>(1);
-  const itemPerPage = 10;
-  const totalPages = Math.ceil(itemCount / itemPerPage);
+  const { currentPage, setCurrentPage } = useMarketPlace();
+
+  const pages = [
+    ...Array(totalPages)
+      .keys()
+      .map((i) => i + 1),
+  ];
+
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
-    if (page) {
-      params.set("page", page.toString());
+    if (currentPage > 1) {
+      params.set("page", currentPage.toString());
     } else {
       params.delete("page");
     }
-    if (itemPerPage) {
-      params.set("limit", itemPerPage.toString());
-    } else {
-      params.delete("limit");
-    }
     replace(`${pathname}?${params.toString()}`);
-  }, [searchParams, page, pathname, replace]);
+  }, [searchParams, currentPage, pathname, replace]);
+
+  const handelPrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const handelNextPage = () => {
+    if (currentPage < pages.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
   return (
     <>
-      {(itemCount ?? 0) > itemPerPage && (
-        <div className="flex justify-center items-center gap-4 mt-6">
+      <div className="flex justify-center items-center gap-4 mt-6">
+        {currentPage > 1 && (
           <button
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+            onClick={handelPrevPage}
+            className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
           >
-            Prev
+            <FaAngleLeft />
           </button>
-          <span>
-            Page {page} of {totalPages}
-          </span>
+        )}
+        {pages.map((page) => (
           <button
-            onClick={() =>
-              setPage((prev) => (prev < totalPages ? prev + 1 : prev))
-            }
-            disabled={page === totalPages}
-            className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+            onClick={() => setCurrentPage(page)}
+            className={`size-12 hover:bg-[#0A4A1C] rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer ${
+              currentPage === page ? "bg-[#0A4A1C] text-white" : "bg-[#E2E8E3]"
+            }`}
+            key={page}
           >
-            Next
+            {page}
           </button>
-        </div>
-      )}
+        ))}
+        {currentPage < pages.length && (
+          <button
+            onClick={handelNextPage}
+            className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
+          >
+            <FaAngleRight />
+          </button>
+        )}
+      </div>
     </>
   );
 }
