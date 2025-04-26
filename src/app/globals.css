@@ -238,3 +238,50 @@ body {
   opacity: 1;
   pointer-events: auto;
 }
+
+.zigzag-border {
+  background: #f5f6f8;
+  padding: 2rem;
+  clip-path: polygon(0 10px,
+      5px 0,
+      10px 10px,
+      15px 0,
+      20px 10px,
+      25px 0,
+      30px 10px,
+      35px 0,
+      40px 10px,
+      45px 0,
+      50px 10px,
+      55px 0,
+      60px 10px,
+      65px 0,
+      70px 10px,
+      75px 0,
+      80px 10px,
+      85px 0,
+      90px 10px,
+      95px 0,
+      100% 10px,
+      100% calc(100% - 10px),
+      95% 100%,
+      90% calc(100% - 10px),
+      85% 100%,
+      80% calc(100% - 10px),
+      75% 100%,
+      70% calc(100% - 10px),
+      65% 100%,
+      60% calc(100% - 10px),
+      55% 100%,
+      50% calc(100% - 10px),
+      45% 100%,
+      40% calc(100% - 10px),
+      35% 100%,
+      30% calc(100% - 10px),
+      25% 100%,
+      20% calc(100% - 10px),
+      15% 100%,
+      10% calc(100% - 10px),
+      5% 100%,
+      0 calc(100% - 10px));
+}

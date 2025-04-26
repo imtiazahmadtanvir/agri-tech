@@ -4,6 +4,7 @@ import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { useCart } from "@/Hook/useCart";
 import Image from "next/image";
+import Link from "next/link";
 import { CiLocationOn } from "react-icons/ci";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
@@ -59,24 +60,29 @@ export default function Cart() {
                   className="flex border-b justify-between py-4 border-dashed items-center"
                   key={item.productId}
                 >
-                  <div className="flex gap-4 items-center">
-                    <div className="border rounded-2xl overflow-hidden">
-                      <Image
-                        height={70}
-                        width={70}
-                        alt={item.name}
-                        src={item.photo}
-                      />
+                  <Link href={`/marketplace/product/${item.productId}`}>
+                    <div className="flex gap-4 items-center">
+                      <div className="border rounded-2xl overflow-hidden">
+                        <Image
+                          height={70}
+                          width={70}
+                          alt={item.name}
+                          src={item.photo}
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-bold pb-2">{item.name}</h3>
+                        <h4 className="flex items-center font-semibold text-emerald-700">
+                          {item.price}.00 <FaBangladeshiTakaSign />
+                        </h4>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-bold pb-2">{item.name}</h3>
-                      <h4 className="flex items-center font-semibold text-emerald-700">
-                        {item.price}.00 <FaBangladeshiTakaSign />
-                      </h4>
-                    </div>
-                  </div>
+                  </Link>
                   <div className="flex items-center gap-7">
-                    <QuantityBtn qn={item.quantity} />
+                    <QuantityBtn
+                      qn={item.quantity}
+                      productId={item.productId}
+                    />
                     <IoMdClose size={20} />
                   </div>
                 </div>
@@ -88,7 +94,7 @@ export default function Cart() {
         </div>
 
         {/* Order Summary */}
-        <div className="p-6 h-fit lg:w-[32%] bg-[#F0F1F4]">
+        <div className="p-6 h-fit zigzag-border lg:w-[32%] bg-[#F0F1F4]">
           <div className="border-b pb-4 ">
             <h3 className="pb-2">Location</h3>
             <button className="flex items-center">

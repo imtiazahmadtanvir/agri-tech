@@ -6,7 +6,6 @@ import Image from "next/image";
 import { IoMdClose } from "react-icons/io";
 import QuantityBtn from "../cart/QuantityBtn";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import CheckoutBtn from "../cart/CheckoutBtn";
 
 type DataType = {
   productId: string;
