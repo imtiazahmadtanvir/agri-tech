@@ -1,14 +1,41 @@
+import axios from "axios";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 type Data = {
   totalQuantity: number;
 };
+type DeliveryInfo = {
+  fullName: string;
+  phoneNumber: string;
+  address: string;
+  houseDetails: string;
+  area: string;
+  landmark: string;
+  city: string;
+  region: string;
+};
+
 export default function ProceedToPay({
   data,
   total,
+  dInfo,
 }: {
   data: Data;
   total: number;
+  dInfo: DeliveryInfo | null;
 }) {
+  const handelPayment = async () => {
+    const formData = dInfo;
+
+    try {
+      const { data } = await axios.post("/api/sslcommerz/initiate", {
+        ...formData,
+        amount: total,
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className=" h-fit zigzag-border lg:w-[32%] bg-[#F0F1F4]">
       <div className="space-y-4">
@@ -31,7 +58,10 @@ export default function ProceedToPay({
             {total + 100} <FaBangladeshiTakaSign />
           </span>
         </div>
-        <button className="text-white my-2 py-[12px] px-6 rounded-full lg:w-full bg-[#155628]">
+        <button
+          onClick={handelPayment}
+          className="text-white my-2 py-[12px] px-6 rounded-full lg:w-full bg-[#155628]"
+        >
           Proceed to Pay
         </button>
       </div>

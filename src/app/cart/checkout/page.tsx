@@ -58,10 +58,11 @@ export default function Checkout() {
     data: CartData;
     isLoading: boolean;
   };
-  const { data: dInfo, loading } = useFetch<DeliveryInfo>(
-    "/api/cart/deliveryinfo"
-  );
-  console.log(dInfo);
+  const {
+    data: dInfo,
+    loading,
+    refetch,
+  } = useFetch<DeliveryInfo>("/api/cart/deliveryinfo");
   if (isLoading || loading)
     return (
       <div className="p-4">
@@ -92,6 +93,7 @@ export default function Checkout() {
       await axios.post("/api/cart/deliveryinfo", { data });
       reset();
       toast.success("Delivery information added successfully");
+      refetch();
     } catch (error) {
       console.log(error);
       toast.error("failed please try again");
@@ -338,7 +340,7 @@ export default function Checkout() {
         </div>
       </div>
       {/* Proceed to Pay */}
-      <ProceedToPay data={data} total={total} />
+      <ProceedToPay dInfo={dInfo ?? null} data={data} total={total} />
     </ContainerSmall>
   );
 }

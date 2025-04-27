@@ -24,7 +24,7 @@ export const GET = async (req: NextRequest) => {
     const max = searchParams.get("maxPrice")
     const pageParam = searchParams.get("page");
     const page = pageParam ? parseInt(pageParam) : 1;
-    const limit = 3
+    const limit = 10
     const skip = (page - 1) * limit
     const query: QueryType = {}
     if (category) {
