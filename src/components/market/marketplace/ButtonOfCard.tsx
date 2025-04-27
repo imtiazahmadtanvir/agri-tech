@@ -27,9 +27,9 @@ export default function ButtonOfCard({ id }: { id: string }) {
       >
         <FaShoppingCart />
       </button>
-      <button className="size-8 flex justify-center cursor-pointer rounded-full border items-center text-[#3D9958] hover:text-white hover:bg-[#3D9958] transition-all duration-300 ease-in-out">
+      {/* <button className="size-8 flex justify-center cursor-pointer rounded-full border items-center text-[#3D9958] hover:text-white hover:bg-[#3D9958] transition-all duration-300 ease-in-out">
         <FaHeart />
-      </button>
+      </button> */}
     </div>
   );
 }
