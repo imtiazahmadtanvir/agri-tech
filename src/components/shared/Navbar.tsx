@@ -28,6 +28,11 @@ interface SubItem {
 const navItems: NavItem[] = [
   { label: "Home", href: "/", icon: "🏡" },
   {
+    label: "Market",
+    href: "/marketplace",
+    icon: "🛒",
+  },
+  {
     label: "Resources",
     icon: "▼",
     subItems: [
@@ -35,19 +40,19 @@ const navItems: NavItem[] = [
       { label: "Government Schemes", href: "/resources/schemes", icon: "🏛️" },
     ],
   },
-  {
-    label: "Market",
-    icon: "▼",
-    subItems: [
-      { label: "Price Tracking", href: "/market/prices", icon: "💰" },
-      {
-        label: "Marketplace",
-        href: "/marketplace",
-        icon: "🛒",
-      },
-      { label: "Demand Forecasting", href: "/market/forecasting", icon: "📈" },
-    ],
-  },
+  // {
+  //   label: "Market",
+  //   icon: "▼",
+  //   subItems: [
+  //     { label: "Price Tracking", href: "/market/prices", icon: "💰" },
+  //     {
+  //       label: "Marketplace",
+  //       href: "/marketplace",
+  //       icon: "🛒",
+  //     },
+  //     { label: "Demand Forecasting", href: "/market/forecasting", icon: "📈" },
+  //   ],
+  // },
   {
     label: "Expert Help",
     icon: "▼",
