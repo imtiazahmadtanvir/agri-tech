@@ -2,7 +2,7 @@
 import { useCart } from "@/Hook/useCart";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 
 export default function ButtonOfCard({ id }: { id: string }) {
   const { refetch } = useCart();
