@@ -32,8 +32,8 @@ export default async function ProductDetails({
     } = await res.data;
     return (
       <>
-        <div className="flex gap-20 mb-24 mt-6">
-          <div className="w-2/5">
+        <div className="flex flex-col lg:flex-row gap-20 mb-24 mt-6">
+          <div className="lg:w-2/5  ">
             <ImageSlider data={photoUrls} />
           </div>
           <div className="w-3/5">
