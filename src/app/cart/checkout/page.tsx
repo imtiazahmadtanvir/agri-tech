@@ -5,10 +5,12 @@ import ProceedToPay from "@/components/ProceedToPay";
 import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import { useCart } from "@/Hook/useCart";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { TbAlertHexagonFilled } from "react-icons/tb";
 
@@ -39,6 +41,7 @@ export default function Checkout() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  const [formLoad, setFormLoad] = useState(false);
   const { data, isLoading } = useCart() as {
     data: CartData;
     isLoading: boolean;
@@ -67,8 +70,16 @@ export default function Checkout() {
       </ContainerSmall>
     );
   }
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    setFormLoad(true);
+    try {
+      await axios.post("/api/cart/deliveryinfo", { data });
+    } catch (error) {
+      console.log(error);
+      toast.error("failed please try again");
+    } finally {
+      setFormLoad(false);
+    }
   };
   const total = data?.cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -218,10 +229,11 @@ export default function Checkout() {
 
             <div className="col-span-1 md:col-span-2 flex justify-end">
               <button
+                disabled={formLoad}
                 type="submit"
                 className="w-full px-20 md:w-fit bg-green-800 text-white font-semibold py-3 rounded-full hover:bg-green-700 transition-colors"
               >
-                Save
+                {formLoad ? "Saving..." : "Save"}
               </button>
             </div>
           </form>
