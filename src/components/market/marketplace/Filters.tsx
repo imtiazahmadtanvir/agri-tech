@@ -65,7 +65,7 @@ export default function Filters() {
   };
   const activeView = searchParams.get("view")?.toString();
   return (
-    <div className="my-4 flex justify-between">
+    <div className="my-4 flex justify-between flex-col md:flex-row gap-2 ">
       <select
         defaultValue={searchParams.get("sortBy")?.toString()}
         onChange={(e) => setSortBy(e.target.value)}

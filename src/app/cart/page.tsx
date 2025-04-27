@@ -150,9 +150,12 @@ export default function Cart() {
                 {total + 100} <FaBangladeshiTakaSign />
               </span>
             </div>
-            <button className="text-white py-[12px] px-6 rounded-full lg:w-full bg-[#155628]">
+            <Link
+              href={"/cart/checkout"}
+              className="text-white my-2 py-[12px] px-6 rounded-full lg:w-full bg-[#155628]"
+            >
               Proceed To Checkout
-            </button>
+            </Link>
           </div>
         </div>
       </div>

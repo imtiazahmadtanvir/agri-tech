@@ -136,12 +136,12 @@ export default function Sidebar() {
       </div>
 
       {/* Popular Products Placeholder */}
-      <div className="mt-6 border rounded-2xl">
+      {/* <div className="mt-6 border rounded-2xl">
         <h4 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
           Popular Products
         </h4>
         <div className="px-7 pb-3"></div>
-      </div>
+      </div> */}
     </aside>
   );
 }
