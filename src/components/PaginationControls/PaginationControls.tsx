@@ -43,35 +43,39 @@ export default function PaginationControls({
   };
   return (
     <>
-      <div className="flex justify-center items-center gap-4 mt-6">
-        {currentPage > 1 && (
-          <button
-            onClick={handelPrevPage}
-            className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
-          >
-            <FaAngleLeft />
-          </button>
-        )}
-        {pages.map((page) => (
-          <button
-            onClick={() => setCurrentPage(page)}
-            className={`size-12 hover:bg-[#0A4A1C] rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer ${
-              currentPage === page ? "bg-[#0A4A1C] text-white" : "bg-[#E2E8E3]"
-            }`}
-            key={page}
-          >
-            {page}
-          </button>
-        ))}
-        {currentPage < pages.length && (
-          <button
-            onClick={handelNextPage}
-            className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
-          >
-            <FaAngleRight />
-          </button>
-        )}
-      </div>
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-4 mt-6">
+          {currentPage > 1 && (
+            <button
+              onClick={handelPrevPage}
+              className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
+            >
+              <FaAngleLeft />
+            </button>
+          )}
+          {pages.map((page) => (
+            <button
+              onClick={() => setCurrentPage(page)}
+              className={`size-12 hover:bg-[#0A4A1C] rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer ${
+                currentPage === page
+                  ? "bg-[#0A4A1C] text-white"
+                  : "bg-[#E2E8E3]"
+              }`}
+              key={page}
+            >
+              {page}
+            </button>
+          ))}
+          {currentPage < pages.length && (
+            <button
+              onClick={handelNextPage}
+              className={`size-12 hover:bg-[#0A4A1C] flex justify-center items-center rounded-full transition-all duration-300 ease-in-out hover:text-white font-medium cursor-pointer bg-[#E2E8E3]`}
+            >
+              <FaAngleRight />
+            </button>
+          )}
+        </div>
+      )}
     </>
   );
 }

@@ -48,7 +48,9 @@ export default async function MarketplaceMain({
         <Filters />
       </div>
       <Suspense key={JSON.stringify(param)} fallback={<LoadingSpinner />}>
-        <ProductLists searchParams={searchParams} items={items} />
+        <div className="min-h-screen">
+          <ProductLists searchParams={searchParams} items={items} />
+        </div>
       </Suspense>
       <PaginationControls totalPages={totalPages} />
     </div>
