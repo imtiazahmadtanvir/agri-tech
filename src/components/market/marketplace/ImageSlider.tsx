@@ -23,7 +23,7 @@ export default function ImageSlider({ data }: ImageSliderProps) {
 
   return (
     <>
-      <div className="relative group border rounded-2xl">
+      <div className="relative group border rounded-2xl overflow-hidden">
         <Swiper
           style={
             {
@@ -39,9 +39,9 @@ export default function ImageSlider({ data }: ImageSliderProps) {
           className="mySwiper2"
         >
           {data.map((item, index) => (
-            <SwiperSlide className=" " key={index}>
-              <div className="w-full relative rounded-xl  h-[500px]  ">
-                <Image className="object-contain" fill alt="" src={item} />
+            <SwiperSlide className=" overflow-hidden" key={index}>
+              <div className="w-full relative rounded-xl overflow-hidden h-[500px]  ">
+                <Image className="object-cover" fill alt="" src={item} />
               </div>
             </SwiperSlide>
           ))}
@@ -57,11 +57,11 @@ export default function ImageSlider({ data }: ImageSliderProps) {
         className="mySwiper mt-7"
       >
         {data.map((item, index) => (
-          <SwiperSlide className="rounded-2xl" key={index}>
-            <div className="w-full relative h-20   cursor-pointer border rounded-2xl">
+          <SwiperSlide className="rounded-2xl overflow-hidden" key={index}>
+            <div className="w-full relative h-20  cursor-pointer border rounded-2xl">
               <Image
                 fill
-                className="rounded-sm object-contain"
+                className="rounded-sm object-contain "
                 alt=""
                 src={item}
               />

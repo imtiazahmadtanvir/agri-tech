@@ -38,7 +38,7 @@ export default async function ProductLists({
     >
       {items.map((item) => (
         <div
-          className={`border p-4 rounded-2xl hover:shadow-[0_3px_10px_rgba(0,0,0,0.2)] ${
+          className={`border overflow-hidden rounded-2xl hover:shadow-[0_3px_10px_rgba(0,0,0,0.2)] ${
             view ? "flex justify-between" : ""
           }`}
           key={item._id}
@@ -47,12 +47,12 @@ export default async function ProductLists({
             <Link
               href={`/marketplace/product/${item._id}`}
               className={`block overflow-hidden ${
-                view ? "w-1/3 " : "w-full h-64"
+                view ? "w-1/3 " : "w-full h-60"
               }`}
             >
               <div className="relative transition-transform duration-300 ease-in-out hover:scale-110 h-full w-full">
                 <Image
-                  className="object-contain"
+                  className="object-center"
                   fill
                   src={item.photoUrls[0]}
                   alt={item.productName}
@@ -60,7 +60,7 @@ export default async function ProductLists({
               </div>
             </Link>
           )}
-          <div className={`${view ? "w-2/3 flex flex-col" : ""}`}>
+          <div className={`${view ? "w-2/3 flex flex-col" : ""} p-4`}>
             <div className={`${view && "grow"}`}>
               <Link href={`/marketplace/product/${item._id}`}>
                 <h3 className=" font-medium hover:decoration-green-600 hover:underline">

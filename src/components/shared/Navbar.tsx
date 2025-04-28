@@ -151,7 +151,7 @@ const AuthSection = () => {
                 className="rounded-full"
               />
             ) : (
-              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-[#0D401C]">
+              <div className="w-[44px] h-[44px] bg-gray-300 rounded-full flex items-center justify-center text-[#0D401C]">
                 {displayName[0]}
               </div>
             )}

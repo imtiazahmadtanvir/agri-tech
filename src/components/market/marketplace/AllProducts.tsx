@@ -98,7 +98,7 @@ export default async function MarketplaceMain({
           ))
         )}
       </div>
-      <PaginationControls itemCount={itemCount} />
+      <PaginationControls totalPages={itemCount} />
     </div>
   );
 }
