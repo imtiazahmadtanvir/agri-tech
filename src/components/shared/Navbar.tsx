@@ -78,7 +78,7 @@ const NavItems = ({ isMobile = false }: { isMobile?: boolean }) => (
         <li key={item.href}>
           <Link
             href={item.href!}
-            className="text-white md:text-white hover:text-[#F8C32C] transition-colors flex items-center gap-1"
+            className="text-white lg:text-[#0D401C] hover:text-[#F8C32C] transition-colors flex items-center gap-1"
           >
             {item.icon} {item.label}
           </Link>
@@ -208,7 +208,7 @@ const Navbar = () => {
           <div
             className={`${isDashboardPage ? "hidden" : ""} flex items-center`}
           >
-            <div className="hidden md:hidden lg:block">
+            <div className="hidden  lg:block">
               <Link
                 href={"/"}
                 className={`${

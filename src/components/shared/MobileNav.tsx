@@ -36,8 +36,8 @@ export default function MobileNav({ links }: MobileNavProps) {
       <div
         ref={menuRef}
         tabIndex={-1}
-        className={`lg:hidden gap-6 py-20 w-56 px-10 fixed inset-y-0 left-0 z-50 text-white bg-[#0D401C] transition-transform duration-500 ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        className={`lg:hidden gap-6 py-20 md:w-80 w-60 px-10 fixed inset-y-0 left-0 z-50 text-white bg-[#0D401C] transition-transform duration-500 ${
+          isMenuOpen ? "-translate-x-5" : "-translate-x-full"
         }`}
       >
         <button
@@ -47,7 +47,12 @@ export default function MobileNav({ links }: MobileNavProps) {
         >
           <IoMdClose className="text-[#F8C32C]" size={24} />
         </button>
-        <ul className="flex flex-col">{links}</ul>
+        <ul className="flex flex-col">
+          <div className="mb-6">
+            <Image src="/logo.png" alt="Logo" width={150} height={50} />
+          </div>
+          {links}
+        </ul>
       </div>
     </>
   );

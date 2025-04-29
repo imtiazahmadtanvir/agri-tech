@@ -19,7 +19,7 @@ export default function DropdownMenu({ item }: { item: NavItem }) {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <button className="text-white md:text-white hover:text-[#F8C32C] transition-colors flex items-center gap-1">
+      <button className="text-white lg:text-[#0D401C] hover:text-[#F8C32C] transition-colors flex items-center gap-1">
         {item.label} <span>{item.icon}</span>
       </button>
       {isOpen && item.subItems && (
