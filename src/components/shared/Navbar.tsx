@@ -62,6 +62,8 @@ const navItems: NavItem[] = [
       { label: "Cooperative Groups", href: "/community/groups", icon: "👥" },
     ],
   },
+  { label: "Services", href: "/services", icon: "" },
+  { label: "Contact", href: "/contact", icon: "" },
 ];
 
 // NavItems component
