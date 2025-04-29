@@ -33,7 +33,7 @@ export default async function ProductDetails({
     return (
       <>
         <div className="flex flex-col lg:flex-row gap-20 mb-24 mt-6">
-          <div className="lg:w-2/5  ">
+          <div className="lg:w-2/5 w-full ">
             <ImageSlider data={photoUrls} />
           </div>
           <div className="w-3/5">

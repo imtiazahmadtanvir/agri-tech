@@ -12,8 +12,8 @@ export async function POST(req: Request) {
     }
 
     const data = {
-        store_id,
-        store_passwd,
+        store_id: "agro680fc75f907d1",
+        store_passwd: "agro680fc75f907d1@ss",
         total_amount: body.amount,
         currency: 'BDT',
         tran_id: Math.random().toString(36).substring(7),
@@ -23,22 +23,22 @@ export async function POST(req: Request) {
         ipn_url: 'http://localhost:3030/ipn',
         shipping_method: 'Courier',
         product_name: 'Computer.',
-        product_category: 'Ecommerce',
+        product_category: 'Electronic',
         product_profile: 'general',
         cus_name: body.fullName,
         cus_email: body.userEmail,
         cus_add1: 'Dhaka',
         cus_add2: 'Dhaka',
-        cus_city: body.city,
+        cus_city: 'Dhaka',
         cus_state: 'Dhaka',
         cus_postcode: '1000',
         cus_country: 'Bangladesh',
         cus_phone: body.phoneNumber,
         cus_fax: body.phoneNumber,
-        ship_name: 'Customer Name',
+        ship_name: body.fullName,
         ship_add1: 'Dhaka',
         ship_add2: 'Dhaka',
-        ship_city: body.city,
+        ship_city: 'Dhaka',
         ship_state: 'Dhaka',
         ship_postcode: 1000,
         ship_country: 'Bangladesh',
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     console.log(data);
     try {
         const response = await axios.post(
-            "https://sandbox.sslcommerz.com/gwprocess/v4/api.php",
+            "https://sandbox.sslcommerz.com/gwprocess/v3/api.php",
             data
         );
 

@@ -36,11 +36,10 @@ export default function ImageSlider({ data }: ImageSliderProps) {
           navigation={true}
           thumbs={{ swiper: thumbsSwiper }}
           modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper2"
         >
           {data.map((item, index) => (
             <SwiperSlide className=" overflow-hidden" key={index}>
-              <div className="w-full relative rounded-xl overflow-hidden h-[500px]  ">
+              <div className="w-full relative rounded-xl overflow-hidden h-[400px] md:h-[400px] lg:h-[500px]  ">
                 <Image className="object-cover" fill alt="" src={item} />
               </div>
             </SwiperSlide>
