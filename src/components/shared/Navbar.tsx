@@ -68,7 +68,7 @@ const navItems: NavItem[] = [
 
 // NavItems component
 const NavItems = ({ isMobile = false }: { isMobile?: boolean }) => (
-  <ul className={isMobile ? "space-y-4" : "md:flex hidden gap-6 items-center"}>
+  <ul className={isMobile ? "space-y-4" : "lg:flex hidden gap-6 items-center"}>
     {navItems.map((item) =>
       item.subItems ? (
         <li key={item.label}>
@@ -78,7 +78,7 @@ const NavItems = ({ isMobile = false }: { isMobile?: boolean }) => (
         <li key={item.href}>
           <Link
             href={item.href!}
-            className="text-white md:text-[#0D401C] hover:text-[#F8C32C] transition-colors flex items-center gap-1"
+            className="text-white md:text-white hover:text-[#F8C32C] transition-colors flex items-center gap-1"
           >
             {item.icon} {item.label}
           </Link>
@@ -208,16 +208,20 @@ const Navbar = () => {
           <div
             className={`${isDashboardPage ? "hidden" : ""} flex items-center`}
           >
-            <Link
-              href={"/"}
-              className={`${isDashboardPage ? "hidden" : ""} flex items-center`}
-            >
-              {" "}
-              <Image src="/logo.png" alt="Logo" width={150} height={50} />
-            </Link>
+            <div className="hidden md:hidden lg:block">
+              <Link
+                href={"/"}
+                className={`${
+                  isDashboardPage ? "hidden" : ""
+                } flex items-center `}
+              >
+                <Image src="/logo.png" alt="Logo" width={150} height={50} />
+              </Link>
+            </div>
+            <MobileNav links={<NavItems isMobile />} />
           </div>
           <NavItems />
-          <MobileNav links={<NavItems isMobile />} />
+
           <AuthSection />
         </div>
       </Container>

@@ -29,14 +29,14 @@ export default function MobileNav({ links }: MobileNavProps) {
       <button
         onClick={toggleMenu}
         aria-label="Toggle mobile menu"
-        className="md:hidden"
+        className="lg:hidden"
       >
         <Image height={45} width={45} alt="Menu icon" src="/icons/menu.svg" />
       </button>
       <div
         ref={menuRef}
         tabIndex={-1}
-        className={`md:hidden gap-6 py-20 w-56 px-10 fixed inset-y-0 left-0 z-50 text-white bg-[#0D401C] transition-transform duration-500 ${
+        className={`lg:hidden gap-6 py-20 w-56 px-10 fixed inset-y-0 left-0 z-50 text-white bg-[#0D401C] transition-transform duration-500 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
