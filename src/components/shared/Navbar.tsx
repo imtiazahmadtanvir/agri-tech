@@ -40,32 +40,7 @@ const navItems: NavItem[] = [
       { label: "Government Schemes", href: "/resources/schemes", icon: "🏛️" },
     ],
   },
-  // {
-  //   label: "Market",
-  //   icon: "▼",
-  //   subItems: [
-  //     { label: "Price Tracking", href: "/market/prices", icon: "💰" },
-  //     {
-  //       label: "Marketplace",
-  //       href: "/marketplace",
-  //       icon: "🛒",
-  //     },
-  //     { label: "Demand Forecasting", href: "/market/forecasting", icon: "📈" },
-  //   ],
-  // },
-  {
-    label: "Expert Help",
-    icon: "▼",
-    subItems: [
-      {
-        label: "Chat/Video Consultation",
-        href: "/expert-help/chat",
-        icon: "💬",
-      },
-      { label: "AI Chatbot", href: "/expert-help/ai", icon: "🤖" },
-      { label: "Q&A Forum", href: "/expert-help/qa", icon: "❓" },
-    ],
-  },
+
   {
     label: "Tools",
     icon: "▼",
