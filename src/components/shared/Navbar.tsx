@@ -45,16 +45,10 @@ const navItems: NavItem[] = [
     label: "Tools",
     icon: "▼",
     subItems: [
-      { label: "Crop Planner", href: "/tools/crop-planner", icon: "🌾" },
       {
         label: "Pest/Disease Detector",
         href: "/tools/pest-detector",
         icon: "🐞",
-      },
-      {
-        label: "Yield Calculator",
-        href: "/tools/yield-calculator",
-        icon: "➗",
       },
     ],
   },
