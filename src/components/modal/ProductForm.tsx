@@ -22,7 +22,6 @@ export default function ProductForm({ isOpen, onClose }: ModalProps) {
   }, [isOpen]);
 
   if (!isOpen) return null;
-
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black/20 z-50"
@@ -31,7 +30,9 @@ export default function ProductForm({ isOpen, onClose }: ModalProps) {
       <div
         className="bg-[#F9F7F7] rounded-lg shadow-lg w-[90%] max-w-3xl relative pb-6"
         onClick={(e) => e.stopPropagation()}
-      ></div>
+      >
+        <button className="text-center">Cancel Payment</button>
+      </div>
     </div>
   );
 }

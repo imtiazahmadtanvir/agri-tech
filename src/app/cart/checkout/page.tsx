@@ -1,6 +1,7 @@
 "use client";
 
 import QuantityBtn from "@/components/cart/QuantityBtn";
+import ProductForm from "@/components/modal/ProductForm";
 import ProceedToPay from "@/components/ProceedToPay";
 import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
@@ -53,7 +54,8 @@ export default function Checkout() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-  const [formLoad, setFormLoad] = useState(false);
+  const [formLoad, setFormLoad] = useState<boolean>(false);
+  const [idOpen, setIsOpen] = useState<boolean>(false);
   const { data, isLoading } = useCart() as {
     data: CartData;
     isLoading: boolean;
@@ -309,7 +311,7 @@ export default function Checkout() {
             <div className="">
               {data.cart.map((item) => (
                 <div
-                  className="flex flex-col border-b justify-between py-4 border-dashed md:items-center"
+                  className="flex flex-col border-b md:flex-row justify-between py-4 border-dashed md:items-center"
                   key={item.productId}
                 >
                   <Link href={`/marketplace/product/${item.productId}`}>
@@ -345,7 +347,13 @@ export default function Checkout() {
         </div>
       </div>
       {/* Proceed to Pay */}
-      <ProceedToPay dInfo={dInfo ?? null} data={data} total={total} />
+      <ProceedToPay
+        setIsOpen={setIsOpen}
+        dInfo={dInfo ?? null}
+        data={data}
+        total={total}
+      />
+      <ProductForm isOpen={idOpen} onClose={() => setIsOpen(false)} />
     </ContainerSmall>
   );
 }

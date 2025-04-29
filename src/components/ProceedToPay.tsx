@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Dispatch, SetStateAction } from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 type Data = {
   totalQuantity: number;
@@ -18,13 +19,17 @@ export default function ProceedToPay({
   data,
   total,
   dInfo,
+  setIsOpen,
 }: {
   data: Data;
   total: number;
   dInfo: DeliveryInfo | null;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
   const handelPayment = async () => {
     const formData = dInfo;
+    console.log(formData);
+    setIsOpen(true);
 
     try {
       const { data } = await axios.post("/api/sslcommerz/initiate", {
@@ -59,8 +64,9 @@ export default function ProceedToPay({
           </span>
         </div>
         <button
+          disabled={dInfo == null}
           onClick={handelPayment}
-          className="text-white my-2 py-[12px] px-6 rounded-full lg:w-full bg-[#155628]"
+          className="text-white my-2 py-[12px] disabled:bg-gray-500 px-6 rounded-full lg:w-full bg-[#155628]"
         >
           Proceed to Pay
         </button>
