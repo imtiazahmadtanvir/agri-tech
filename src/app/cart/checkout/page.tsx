@@ -139,6 +139,7 @@ export default function Checkout() {
                     Full name
                   </label>
                   <input
+                    placeholder="your full name"
                     id="fullName"
                     {...register("fullName", {
                       required: "Full name is required",
@@ -158,6 +159,7 @@ export default function Checkout() {
                     Region
                   </label>
                   <input
+                    placeholder="dhaka"
                     id="region"
                     {...register("region", { required: "Region is required" })}
                     type="text"
@@ -176,6 +178,7 @@ export default function Checkout() {
                   </label>
                   <input
                     id="phoneNumber"
+                    placeholder="01600003810"
                     {...register("phoneNumber", {
                       required: "Phone number is required",
                     })}
@@ -194,6 +197,7 @@ export default function Checkout() {
                     City
                   </label>
                   <input
+                    placeholder="barisal"
                     id="city"
                     {...register("city", { required: "City is required" })}
                     type="text"
@@ -211,6 +215,7 @@ export default function Checkout() {
                     Building / House No / Floor / Street
                   </label>
                   <input
+                    placeholder="Barisal/collage avenew"
                     id="houseDetails"
                     {...register("houseDetails", {
                       required: "House details are required",
@@ -304,12 +309,12 @@ export default function Checkout() {
             <div className="">
               {data.cart.map((item) => (
                 <div
-                  className="flex border-b justify-between py-4 border-dashed items-center"
+                  className="flex flex-col border-b justify-between py-4 border-dashed md:items-center"
                   key={item.productId}
                 >
                   <Link href={`/marketplace/product/${item.productId}`}>
-                    <div className="flex gap-4 items-center">
-                      <div className="border rounded-2xl overflow-hidden">
+                    <div className="flex gap-4 mg:items-center ">
+                      <div className="border rounded-2xl overflow-hidden w-fit h-fit">
                         <Image
                           height={70}
                           width={70}
@@ -325,7 +330,7 @@ export default function Checkout() {
                       </div>
                     </div>
                   </Link>
-                  <div className="flex items-center gap-7">
+                  <div className="flex items-center gap-7 mt-2 md:mt-0">
                     <QuantityBtn
                       qn={item.quantity}
                       productId={item.productId}
