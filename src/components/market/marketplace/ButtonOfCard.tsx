@@ -1,12 +1,19 @@
 "use client";
 import { useCart } from "@/Hook/useCart";
 import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaShoppingCart } from "react-icons/fa";
 
 export default function ButtonOfCard({ id }: { id: string }) {
+  const { data: session } = useSession();
   const { refetch } = useCart();
+  const { push } = useRouter();
   const handleAddToCart = async () => {
+    if (!session) {
+      return push("/login");
+    }
     try {
       await axios.post("/api/cart", {
         productId: id,
