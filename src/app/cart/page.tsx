@@ -83,12 +83,13 @@ export default function Cart() {
             <div className="border-t pt-4">
               {data.cart.map((item) => (
                 <div
-                  className="flex border-b justify-between py-4 border-dashed items-center"
+                  className="flex border-b justify-between py-4 border-dashed 
+                  flex-col md:flex-row md:items-center"
                   key={item.productId}
                 >
                   <Link href={`/marketplace/product/${item.productId}`}>
-                    <div className="flex gap-4 items-center">
-                      <div className="border rounded-2xl overflow-hidden">
+                    <div className="flex gap-4 md:items-center mb-6 md:mb-0 text-sm">
+                      <div className="border rounded-2xl overflow-hidden ">
                         <Image
                           height={70}
                           width={70}
@@ -97,14 +98,16 @@ export default function Cart() {
                         />
                       </div>
                       <div>
-                        <h3 className="font-bold pb-2">{item.name}</h3>
+                        <h3 className="font-bold text-sm md:text-base pb-2">
+                          {item.name}
+                        </h3>
                         <h4 className="flex items-center font-semibold text-emerald-700">
                           {item.price}.00 <FaBangladeshiTakaSign />
                         </h4>
                       </div>
                     </div>
                   </Link>
-                  <div className="flex items-center gap-7">
+                  <div className="flex md:items-center justify-between gap-7">
                     <QuantityBtn
                       qn={item.quantity}
                       productId={item.productId}

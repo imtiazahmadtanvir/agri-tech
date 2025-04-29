@@ -11,7 +11,7 @@ export default function ContainerSmall({
   return (
     <div
       style={{ maxWidth: `${weight}px` }}
-      className={`${className} lg:mx-auto md:mx-6`}
+      className={`${className} lg:mx-auto mx-3 md:mx-6`}
     >
       {children}
     </div>
