@@ -54,18 +54,18 @@ export default function Sidebar() {
     <aside className="h-fit sticky mt-4 top-0 left-0">
       {/* Category Section */}
       <div className="border rounded-2xl">
-        <h3 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold px-5">
+        <h3 className="bg-[#0D401C] text-lg rounded-t-2xl border py-3.5 text-white border-[#0D401C] font-bold lg:px-5 hidden lg:block">
           Categories
         </h3>
-        <div className="flex px-6 pb-1 flex-col text-left">
+        <div className="flex whitespace-nowrap  flex-row px-2 lg:px-6 pb-1 lg:flex-col overflow-x-auto no-scrollbar text-left space-x-4 lg:space-x-0 lg:space-y-2">
           <button
             onClick={handelAllProduct}
-            className={`group cursor-pointer py-3.5 px-2 text-left w-full hover:pl-6 border-dashed 
+            className={`group cursor-pointer py-3.5 px-2 text-left  lg:w-full hover:pl-6 border-dashed 
               hover:text-green-700 
               ${category ? "" : "text-green-700 pl-6"}
-              transition-all duration-300  border-b`}
+              transition-all duration-300  lg:border-b`}
           >
-            <span className="relative">
+            <span className="relative whitespace-nowrap">
               <span
                 className={`absolute left-[-20px] opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:-translate-x-1 transition-all translate-y-1 duration-300 text-[#F8C32C] ${
                   category ? "" : "opacity-100 -translate-x-1"
@@ -85,7 +85,7 @@ export default function Sidebar() {
                 hover:pl-6
                 hover:text-green-700  
                 ${category === item.name ? "text-green-700 pl-6" : ""} 
-                transition-all duration-300 ${item.id !== 10 && "border-b"}`}
+                transition-all duration-300 ${item.id !== 10 && "lg:border-b"}`}
             >
               <span className="relative">
                 <span

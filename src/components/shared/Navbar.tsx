@@ -105,7 +105,7 @@ const AuthSection = () => {
 
   return (
     <div>
-      <div className="flex  gap-4">
+      <div className="flex gap-1 md:gap-4">
         <div className="relative">
           {session ? (
             <>

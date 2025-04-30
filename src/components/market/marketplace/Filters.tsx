@@ -89,7 +89,7 @@ export default function Filters() {
         </div>
       </div>
       {/* grid and list  */}
-      <div className="flex gap-2">
+      <div className="hidden md:flex gap-2">
         <button
           onClick={() => handelView("grid")}
           data-tooltip-id="grid-tooltip"
