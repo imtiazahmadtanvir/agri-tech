@@ -7,74 +7,112 @@ import Link from "next/link";
 import axios from "axios";
 import Image from "next/image";
 import { Product } from "@/types/type";
+import { productCategories } from "@/lib/productCategory";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [stockFilter, setStockFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
 
   useEffect(() => {
     const fetchListings = async () => {
       try {
         const res = await axios.get("/api/my-listing");
-        setProducts(res.data.data); // assuming your response has { data: [...] }
+        setProducts(res.data.data);
       } catch (err) {
         console.error("Failed to fetch listings", err);
       }
     };
-
     fetchListings();
   }, []);
 
+  const filteredProducts = products.filter((product) => {
+    const matchesSearch = product.productName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesCategory =
+      !categoryFilter || product.category === categoryFilter;
+
+    const matchesStock =
+      !stockFilter ||
+      (stockFilter === "in" && Number(product.stock) > 0) ||
+      (stockFilter === "out" && Number(product.stock) <= 0);
+
+    const matchesStatus =
+      !statusFilter ||
+      (statusFilter === "approved" && product.verifyStatus) ||
+      (statusFilter === "pending" && !product.verifyStatus);
+
+    return matchesSearch && matchesCategory && matchesStock && matchesStatus;
+  });
+
   return (
     <div className="rounded-xl bg-white shadow">
-      {/* filter */}
+      {/* Filter Section */}
       <div className="px-4 py-2">
         <h3 className="text-xl font-semibold">Filter</h3>
-        <div className="flex justify-between py-3">
-          <select className="border rounded-md px-3 py-1.5">
-            <option value="">Status</option>
+        <div className="flex flex-col md:flex-row gap-4 py-3">
+          <select
+            className="border rounded-md px-3 py-1.5"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value="">All Status</option>
+            <option value="approved">Approved</option>
             <option value="pending">Pending</option>
           </select>
-          <div>
-            <select className="border rounded-md px-3 py-1.5">
-              <option value="">Category</option>
-              <option value="vegetables">Vegetables</option>
-            </select>
-          </div>
-          <div>
-            <select className="border rounded-md px-3 py-1.5">
-              <option value="">Stock</option>
-              <option value="inStock">In Stock</option>
-              <option value="outStock">Out Of Stock</option>
-            </select>
-          </div>
+
+          <select
+            className="border rounded-md px-3 py-1.5"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            {productCategories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="border rounded-md px-3 py-1.5"
+            value={stockFilter}
+            onChange={(e) => setStockFilter(e.target.value)}
+          >
+            <option value="">All Stock</option>
+            <option value="in">In Stock</option>
+            <option value="out">Out of Stock</option>
+          </select>
         </div>
       </div>
 
-      {/* search */}
-      <div className="flex border-t border-b px-4 justify-between py-2">
-        <div>
-          <input
-            className="border px-4 py-2 rounded-full"
-            type="search"
-            placeholder="Search Product"
-          />
-        </div>
+      {/* Search + Buttons */}
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-t border-b px-4 py-3">
+        <input
+          className="border px-4 py-2 rounded-full w-full md:w-1/2"
+          type="search"
+          placeholder="Search Product"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
         <div className="flex gap-4">
-          <button className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold">
-            <CiExport /> Export
-          </button>
           <Link
             href={"/dashboard/products/addProduct"}
-            className="flex items-center shadow rounded-md px-2.5 py-2 bg-white font-semibold"
+            className="flex items-center shadow rounded-md px-3 py-2 bg-white font-semibold"
           >
-            <GoPlus /> Add Product
+            <GoPlus className="mr-1" /> Add Product
           </Link>
         </div>
       </div>
 
-      {/* table */}
+      {/* Table */}
       <div className="overflow-x-auto">
-        <table className="table-auto w-full border-gray-300">
+        <table className="table-auto w-full border-gray-300 min-w-[600px]">
           <thead className="bg-green-100 text-left">
             <tr>
               <th className="px-4 py-2 border-b">Product Name</th>
@@ -86,8 +124,8 @@ export default function Products() {
             </tr>
           </thead>
           <tbody>
-            {products.length > 0 ? (
-              products.map((product) => (
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
                 <tr key={product._id} className="hover:bg-green-50">
                   <td className="px-4 py-2 border-b flex items-center gap-2">
                     <Image
@@ -128,7 +166,7 @@ export default function Products() {
             ) : (
               <tr>
                 <td className="px-4 py-4 text-center" colSpan={6}>
-                  No products found.
+                  No matching products found.
                 </td>
               </tr>
             )}
