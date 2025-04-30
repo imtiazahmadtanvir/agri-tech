@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function PaymentSuccessPage() {
   return (
-    <div className="h-[calc(100vh-980px)] flex flex-col justify-center items-center">
+    <div className="h-[calc(100vh-180px)] flex flex-col justify-center items-center">
       <h1 className="text-3xl font-bold text-green-600 mb-4">
         Payment Successful!
       </h1>

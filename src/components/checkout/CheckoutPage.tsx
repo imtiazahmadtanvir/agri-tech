@@ -8,6 +8,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { convertTakaToPaisa } from "@/utils/currency";
 import { useSession } from "next-auth/react";
+import { useCart } from "@/Hook/useCart";
 
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
@@ -15,6 +16,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
 
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
+  const { data: cartData } = useCart();
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   useEffect(() => {
@@ -33,10 +35,8 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     event.preventDefault();
     setLoading(true);
 
-    // Early return if any required value is missing
     if (!stripe || !elements || !session || !session.user?.email) return;
 
-    // Submit the form using the PaymentElement
     const { error: submitError } = await elements.submit();
 
     if (submitError) {
@@ -45,7 +45,6 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       return;
     }
 
-    // Confirm the payment using Stripe's confirmPayment function
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       clientSecret,
@@ -65,11 +64,11 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     if (paymentIntent?.status === "succeeded") {
       try {
         const response = await fetch("/api/clear-cart", {
-          method: "DELETE",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userEmail: session.user.email }),
+          body: JSON.stringify(cartData.cart),
         });
 
         if (!response.ok) {
