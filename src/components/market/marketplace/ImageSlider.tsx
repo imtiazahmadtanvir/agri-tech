@@ -57,7 +57,7 @@ export default function ImageSlider({ data }: ImageSliderProps) {
       >
         {data.map((item, index) => (
           <SwiperSlide className="rounded-2xl overflow-hidden" key={index}>
-            <div className="w-full relative h-20  cursor-pointer border rounded-2xl">
+            <div className="w-full relative h-20  cursor-pointer border rounded-2xl overflow-hidden">
               <Image
                 fill
                 className="rounded-sm object-contain "

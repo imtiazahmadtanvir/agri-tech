@@ -32,11 +32,11 @@ export default async function ProductDetails({
     } = await res.data;
     return (
       <>
-        <div className="flex flex-col lg:flex-row gap-20 mb-24 mt-6">
-          <div className="lg:w-2/5 w-full ">
+        <div className="flex -ml-5  flex-col lg:flex-row gap-20 mb-24 mt-6">
+          <div className="lg:w-2/5 w-full -ml-1">
             <ImageSlider data={photoUrls} />
           </div>
-          <div className="w-3/5">
+          <div className="lg:w-3/5 w-full">
             {/* Button*/}
             <div>
               <BackButton />
