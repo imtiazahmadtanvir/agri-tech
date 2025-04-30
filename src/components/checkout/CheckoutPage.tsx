@@ -12,11 +12,11 @@ import { useSession } from "next-auth/react";
 const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { data: session } = useSession();
+
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { data: session } = useSession();
   useEffect(() => {
     fetch("/api/create-payment-intent", {
       method: "POST",
@@ -33,8 +33,10 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     event.preventDefault();
     setLoading(true);
 
-    if (!stripe || !elements || !session || !session.user?.id) return;
+    // Early return if any required value is missing
+    if (!stripe || !elements || !session || !session.user?.email) return;
 
+    // Submit the form using the PaymentElement
     const { error: submitError } = await elements.submit();
 
     if (submitError) {
@@ -43,28 +45,49 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       return;
     }
 
-    const { error } = await stripe.confirmPayment({
+    // Confirm the payment using Stripe's confirmPayment function
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${process.env.NEXTAUTH_URL}/payment-success?amount=${amount}`,
+        return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?amount=${amount}`,
       },
+      redirect: "if_required",
     });
 
-    if (!error) {
-      await fetch("/api/clear-cart", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: session.user.id }),
-      });
-    } else {
+    // If payment fails, show the error message
+    if (error) {
       setErrorMessage(error.message);
       setLoading(false);
+      console.error("Payment confirmation failed:", error);
+      return;
+    }
+    if (paymentIntent?.status === "succeeded") {
+      try {
+        const response = await fetch("/api/clear-cart", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userEmail: session.user.email }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to clear the cart");
+        }
+
+        console.log("Cart cleared successfully");
+        window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/payment-success?amount=${amount}`;
+      } catch (err) {
+        console.error("Error clearing cart:", err);
+        setErrorMessage("An error occurred while clearing the cart.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
+  // If clientSecret, stripe, or elements are not yet ready, show a loading spinner
   if (!clientSecret || !stripe || !elements) {
     return (
       <div className="flex items-center justify-center">
