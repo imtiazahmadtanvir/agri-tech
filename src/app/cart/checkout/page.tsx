@@ -5,6 +5,7 @@ import ProductForm from "@/components/modal/ProductForm";
 import ProceedToPay from "@/components/ProceedToPay";
 import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+import { useGlobalContext } from "@/context/GlobalContext";
 import { useCart } from "@/Hook/useCart";
 import useFetch from "@/Hook/useFetch";
 import axios from "axios";
@@ -54,8 +55,8 @@ export default function Checkout() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  const { setTotal } = useGlobalContext();
   const [formLoad, setFormLoad] = useState<boolean>(false);
-  const [idOpen, setIsOpen] = useState<boolean>(false);
   const { data, isLoading } = useCart() as {
     data: CartData;
     isLoading: boolean;
@@ -107,6 +108,7 @@ export default function Checkout() {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+  setTotal(total);
   return (
     <ContainerSmall className="bg-white flex flex-col lg:flex-row justify-between gap-15 my-6">
       <div className="lg:w-[68%]">
@@ -347,13 +349,7 @@ export default function Checkout() {
         </div>
       </div>
       {/* Proceed to Pay */}
-      <ProceedToPay
-        setIsOpen={setIsOpen}
-        dInfo={dInfo ?? null}
-        data={data}
-        total={total}
-      />
-      <ProductForm isOpen={idOpen} onClose={() => setIsOpen(false)} />
+      <ProceedToPay dInfo={dInfo ?? null} data={data} total={total} />
     </ContainerSmall>
   );
 }
