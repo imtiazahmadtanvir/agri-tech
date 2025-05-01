@@ -1,111 +1,120 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-const OrdersPage = () => {
-  const [orders, setOrders] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch("/api/my-orders");
-        const data = await response.json();
-
-        if (data.success) {
-          setOrders(data.orders);
-        } else {
-          setError("No orders found");
-        }
-      } catch (err) {
-        setError("Failed to fetch orders");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrders();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-64 text-gray-600 text-lg font-medium">
-        Loading...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-64 text-red-600 text-lg font-semibold">
-        {error}
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-5xl mx-auto p-6 space-y-8">
-      {orders.length === 0 ? (
-        <p className="text-center text-gray-700 text-xl font-medium">
-          No orders found
-        </p>
-      ) : (
-        orders.map((order) => (
-          <div
-            key={order._id}
-            className="border rounded-lg shadow-sm p-6 bg-white hover:shadow-md transition-shadow duration-300"
-          >
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              Order ID: <span className="font-mono">{order._id}</span>
-            </h3>
-            <p className="text-gray-600 mb-1">
-              <span className="font-semibold">User Email:</span>{" "}
-              {order.userEmail}
-            </p>
-            <p className="text-gray-600 mb-4">
-              <span className="font-semibold">Order Date:</span>{" "}
-              {new Date(order.orderDate).toLocaleString()}
-            </p>
-
-            <h4 className="text-lg font-semibold mb-3 text-gray-700">
-              Order Items:
-            </h4>
-            <ul className="space-y-4">
-              {order.body.map((item: any, index: number) => (
-                <li
-                  key={index}
-                  className="flex items-center gap-4 border rounded-md p-3 bg-gray-50"
-                >
-                  <Image
-                    src={item.photo}
-                    alt={item.name}
-                    width={80}
-                    height={80}
-                    className="rounded-md object-cover"
-                  />
-                  <div>
-                    <p className="font-semibold text-gray-800">{item.name}</p>
-                    <p className="text-gray-600 text-sm">
-                      Quantity: {item.quantity}
-                    </p>
-                    <p className="text-gray-600 text-sm">
-                      Price: <span className="font-medium">৳{item.price}</span>
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <h4 className="mt-6 text-right text-lg font-bold text-gray-900">
-              Total Price: ৳{order.totalPrice}
-            </h4>
-          </div>
-        ))
-      )}
-    </div>
-  );
+type OrderItem = {
+  productId: string;
+  productName: string;
+  unit: string;
+  quantity: number;
+  price: number;
+  photoUrl: string;
 };
 
-export default OrdersPage;
+type Order = {
+  _id: string;
+  userEmail: string;
+  items: OrderItem[];
+  totalPrice: number;
+  orderDate: string;
+  status?: "pending" | "preparing" | "ready" | "delivered";
+};
+
+export default function OrderPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/my-orders")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setOrders(data.orders);
+        }
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <LoadingSpinner />;
+
+  return (
+    <ContainerSmall>
+      <div className="p-6 min-h-[80vh]">
+        <h1 className="text-xl font-semibold mb-4">Your Orders</h1>
+        {orders.length === 0 ? (
+          <p>No orders found.</p>
+        ) : (
+          orders.map((order) => (
+            <div
+              key={order._id}
+              className="border p-4 rounded-xl mb-6 bg-white shadow-md"
+            >
+              <p className="font-bold">Order ID: {order._id}</p>
+              <p className="text-gray-600 mb-2">
+                Date: {new Date(order.orderDate).toLocaleString()}
+              </p>
+
+              {/* Displaying Status */}
+              <p className="text-sm mt-1">
+                Status:{" "}
+                <span
+                  className={`inline-block px-2 py-0.5 rounded text-xs font-semibold
+                    ${
+                      order.status === "pending"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : order.status === "preparing"
+                        ? "bg-blue-100 text-blue-800"
+                        : order.status === "ready"
+                        ? "bg-green-100 text-green-800"
+                        : order.status === "delivered"
+                        ? "bg-gray-100 text-gray-800"
+                        : "bg-gray-200 text-gray-700"
+                    }`}
+                >
+                  {order.status || "Pending"}
+                </span>
+              </p>
+
+              {/* Order Items */}
+              <ul className="space-y-3">
+                {order.items.map((item, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-center justify-between border-b pb-2"
+                  >
+                    <div className="flex items-center gap-4">
+                      <Image
+                        width={48}
+                        height={48}
+                        src={item.photoUrl}
+                        alt={item.productName}
+                        className="w-12 h-12 object-cover rounded"
+                      />
+                      <div>
+                        <p className="font-medium">{item.productName}</p>
+                        <p className="text-sm text-gray-500">
+                          {item.quantity} {item.unit} × ৳{item.price}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="font-semibold">
+                      ৳{item.quantity * item.price}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Total Price */}
+              <p className="text-right font-bold mt-4 text-green-600">
+                Total: ৳{order.totalPrice}
+              </p>
+            </div>
+          ))
+        )}
+      </div>
+    </ContainerSmall>
+  );
+}

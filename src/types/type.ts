@@ -155,3 +155,20 @@ export interface TagsProps {
     errors: FieldErrors<IFormInput>
 
 }
+export interface Product {
+    _id: string;
+    productName: string;
+    category: string;
+    stock: string;
+    unit: string;
+    description: string;
+    price: string;
+    discountedPrice?: string;
+    photoUrls: string[];
+    tags: string[];
+    userName: string;
+    userEmail: string;
+    userImage: string;
+    listed: string;
+    verifyStatus: boolean;
+}

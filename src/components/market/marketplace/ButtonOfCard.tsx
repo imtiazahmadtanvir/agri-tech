@@ -1,23 +1,31 @@
 "use client";
 import { useCart } from "@/Hook/useCart";
+import { Product } from "@/types/type";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaShoppingCart } from "react-icons/fa";
 
-export default function ButtonOfCard({ id }: { id: string }) {
+export default function ButtonOfCard({ item }: { item: Product }) {
+  console.log(item);
   const { data: session } = useSession();
   const { refetch } = useCart();
   const { push } = useRouter();
+  console.log(item);
   const handleAddToCart = async () => {
     if (!session) {
       return push("/login");
     }
     try {
       await axios.post("/api/cart", {
-        productId: id,
+        productName: item.productName,
+        productId: item._id,
         quantity: 1,
+        unit: item.unit,
+        price: item.price,
+        photoUrl: item.photoUrls[0],
+        vendorEmail: item.userEmail,
       });
       toast.success("Added to cart!");
       refetch();

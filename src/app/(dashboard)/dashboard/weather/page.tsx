@@ -69,9 +69,9 @@ export default function WeatherPage() {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 sm:p-6 ">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4  ">
       {/* 1st Grid: Status and Other Countries */}
-      <div>
+      <div className="col-span-2">
         {/* Status */}
         <div className="w-full bg-white p-4 sm:p-6 rounded-2xl  flex flex-col sm:flex-row justify-between items-center">
           <div className="w-full sm:w-auto">
@@ -110,25 +110,10 @@ export default function WeatherPage() {
             </div>
           </div>
         </div>
-
-        {/* Other Countries  */}
-        <div className="mt-4 sm:mt-6">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
-            Other Countries
-          </h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white p-4 rounded-2xl ">
-              <p className="text-gray-500 text-sm">August</p>
-              <h3 className="text-base sm:text-lg font-semibold">Coral</h3>
-              <p className="text-xs sm:text-sm text-gray-600">Placeholder</p>
-            </div>
-            {/* Add more placeholder cards as needed */}
-          </div>
-        </div>
       </div>
 
       {/* 2nd Grid: Today's Highlight and Forecast */}
-      <div className="w-full">
+      <div className="w-full col-span-2">
         {/* Today's Highlight */}
         <div className="bg-white p-4 sm:p-6 rounded-xl  mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-semibold text-gray-700 mb-4">
