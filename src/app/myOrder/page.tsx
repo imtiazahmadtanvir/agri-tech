@@ -4,6 +4,7 @@ import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+
 type OrderItem = {
   productId: string;
   productName: string;
@@ -19,6 +20,7 @@ type Order = {
   items: OrderItem[];
   totalPrice: number;
   orderDate: string;
+  status?: "pending" | "preparing" | "ready" | "delivered"; // optional
 };
 
 export default function OrderPage() {
@@ -54,6 +56,29 @@ export default function OrderPage() {
               <p className="text-gray-600 mb-2">
                 Date: {new Date(order.orderDate).toLocaleString()}
               </p>
+
+              {/* Displaying Status */}
+              <p className="text-sm mt-1">
+                Status:{" "}
+                <span
+                  className={`inline-block px-2 py-0.5 rounded text-xs font-semibold
+                    ${
+                      order.status === "pending"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : order.status === "preparing"
+                        ? "bg-blue-100 text-blue-800"
+                        : order.status === "ready"
+                        ? "bg-green-100 text-green-800"
+                        : order.status === "delivered"
+                        ? "bg-gray-100 text-gray-800"
+                        : "bg-gray-200 text-gray-700"
+                    }`}
+                >
+                  {order.status || "Pending"}
+                </span>
+              </p>
+
+              {/* Order Items */}
               <ul className="space-y-3">
                 {order.items.map((item, idx) => (
                   <li
@@ -81,6 +106,8 @@ export default function OrderPage() {
                   </li>
                 ))}
               </ul>
+
+              {/* Total Price */}
               <p className="text-right font-bold mt-4 text-green-600">
                 Total: ৳{order.totalPrice}
               </p>
