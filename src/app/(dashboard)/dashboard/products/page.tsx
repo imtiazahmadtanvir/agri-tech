@@ -1,3 +1,4 @@
+// app/dashboard/products/page.tsx
 "use client";
 import { useEffect, useState } from "react";
 import { GoPlus } from "react-icons/go";
@@ -8,7 +9,10 @@ import Image from "next/image";
 import { Product } from "@/types/type";
 import { productCategories } from "@/lib/productCategory";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
-import ProductFormModal from "@/components/products/ProductFormModal"; // You'll need to create this component
+import ProductFormModal from "@/components/products/ProductFormModal";
+
+import toast from "react-hot-toast";
+import DeleteConfirmationModal from "@/components/modal/DeleteConfirmationModal";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -19,6 +23,9 @@ export default function Products() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<string | null>(null);
+  const [productToDeleteName, setProductToDeleteName] = useState("");
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -28,6 +35,7 @@ export default function Products() {
         setProducts(res.data.data);
       } catch (err) {
         console.error("Failed to fetch listings", err);
+        toast.error("Failed to load products");
       } finally {
         setLoading(false);
       }
@@ -35,15 +43,28 @@ export default function Products() {
     fetchListings();
   }, []);
 
-  const handleDelete = async (productId: string) => {
-    if (confirm("Are you sure you want to delete this product?")) {
-      try {
-        await axios.delete(`/api/products/${productId}`);
-        setProducts(products.filter((product) => product._id !== productId));
-      } catch (err) {
-        console.error("Failed to delete product", err);
-      }
+  const handleDelete = async () => {
+    if (!productToDelete) return;
+
+    try {
+      await axios.delete(`/api/products/${productToDelete}`);
+      setProducts(
+        products.filter((product) => product._id !== productToDelete)
+      );
+      toast.success("Product deleted successfully");
+    } catch (err) {
+      console.error("Failed to delete product", err);
+      toast.error("Failed to delete product");
+    } finally {
+      setDeleteModalOpen(false);
+      setProductToDelete(null);
     }
+  };
+
+  const handleDeleteClick = (productId: string, productName: string) => {
+    setProductToDelete(productId);
+    setProductToDeleteName(productName);
+    setDeleteModalOpen(true);
   };
 
   const handleEdit = (product: Product) => {
@@ -60,6 +81,7 @@ export default function Products() {
     setProducts(
       products.map((p) => (p._id === updatedProduct._id ? updatedProduct : p))
     );
+    toast.success("Product updated successfully");
   };
 
   const filteredProducts = products.filter((product) => {
@@ -208,7 +230,12 @@ export default function Products() {
                             <FiEdit size={18} />
                           </button>
                           <button
-                            onClick={() => handleDelete(product._id)}
+                            onClick={() =>
+                              handleDeleteClick(
+                                product._id,
+                                product.productName
+                              )
+                            }
                             className="text-red-500 hover:text-red-700"
                           >
                             <FiTrash2 size={18} />
@@ -255,7 +282,12 @@ export default function Products() {
                             <FiEdit size={16} />
                           </button>
                           <button
-                            onClick={() => handleDelete(product._id)}
+                            onClick={() =>
+                              handleDeleteClick(
+                                product._id,
+                                product.productName
+                              )
+                            }
                             className="text-red-500"
                           >
                             <FiTrash2 size={16} />
@@ -297,12 +329,22 @@ export default function Products() {
         </>
       )}
 
-      {/* Product Form Modal */}
+      {/* Edit Product Modal */}
       {isModalOpen && selectedProduct && (
         <ProductFormModal
           product={selectedProduct}
           onClose={handleModalClose}
           onUpdate={handleProductUpdate}
+        />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && (
+        <DeleteConfirmationModal
+          isOpen={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={handleDelete}
+          productName={productToDeleteName}
         />
       )}
     </div>
