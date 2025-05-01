@@ -4,7 +4,6 @@ import { Product } from "@/types/type";
 import { Dialog } from "@headlessui/react";
 import axios from "axios";
 import Image from "next/image";
-import { CgLaptop } from "react-icons/cg";
 
 interface ProductFormModalProps {
   product: Product;
