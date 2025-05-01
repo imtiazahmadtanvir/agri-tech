@@ -1,3 +1,4 @@
+import { useGlobalContext } from "@/context/GlobalContext";
 import Link from "next/link";
 
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
@@ -24,6 +25,8 @@ export default function ProceedToPay({
   total: number;
   dInfo: DeliveryInfo | null;
 }) {
+  const { setTotal } = useGlobalContext();
+  setTotal(total);
   return (
     <div className=" h-fit zigzag-border lg:w-[32%] bg-[#F0F1F4]">
       <div className="space-y-4">

@@ -69,7 +69,10 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(cartData.cart),
+          body: JSON.stringify({
+            vendorEmail: cartData.vendorEmail,
+            items: cartData.cart,
+          }),
         });
 
         if (!response.ok) {

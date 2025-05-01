@@ -8,7 +8,7 @@ interface CartItem {
 }
 export const POST = async (req: NextRequest) => {
     try {
-        const { productId, quantity, unit, price, photoUrl, productName } = await req.json();
+        const { productId, quantity, unit, price, photoUrl, productName, vendorEmail } = await req.json();
         const session = await getServerSession(authOptions)
         if (!session?.user?.email) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -17,7 +17,7 @@ export const POST = async (req: NextRequest) => {
         const cartsCollection = await dbConnect(collectionNameObj.cartsCollection)
         const existingCart = await cartsCollection.findOne({ userEmail });
         const cartData = {
-            userEmail, items: [
+            userEmail, vendorEmail, items: [
                 { productId, productName, unit, quantity, price, photoUrl }
             ]
         }
@@ -60,6 +60,7 @@ export const GET = async () => {
         const userEmail = session.user.email;
         const cartsCollection = await dbConnect(collectionNameObj.cartsCollection);
         const cart = await cartsCollection.findOne({ userEmail });
+        console.log(cart);
 
         if (!cart) {
             return NextResponse.json(
@@ -83,6 +84,7 @@ export const GET = async () => {
 
         return NextResponse.json(
             {
+                vendorEmail: cart.vendorEmail,
                 cart: cart.items,
                 totalQuantity,
                 totalPrice,

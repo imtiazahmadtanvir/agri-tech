@@ -12,6 +12,7 @@ export default function ButtonOfCard({ item }: { item: Product }) {
   const { data: session } = useSession();
   const { refetch } = useCart();
   const { push } = useRouter();
+  console.log(item);
   const handleAddToCart = async () => {
     if (!session) {
       return push("/login");
@@ -24,6 +25,7 @@ export default function ButtonOfCard({ item }: { item: Product }) {
         unit: item.unit,
         price: item.price,
         photoUrl: item.photoUrls[0],
+        vendorEmail: item.userEmail,
       });
       toast.success("Added to cart!");
       refetch();

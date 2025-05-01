@@ -11,6 +11,7 @@ import {
   FiCloud,
 } from "react-icons/fi";
 import { usePathname } from "next/navigation";
+import { FaBoxOpen } from "react-icons/fa";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,6 +25,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       href: "/dashboard/products",
       icon: <FiShoppingBag size={20} />,
       label: "Products",
+    },
+    {
+      href: "/dashboard/orders",
+      icon: <FaBoxOpen size={20} />,
+      label: "Orders",
     },
     {
       href: "/dashboard/weather",

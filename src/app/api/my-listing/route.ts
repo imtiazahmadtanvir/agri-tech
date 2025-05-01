@@ -11,7 +11,6 @@ export const GET = async () => {
         }
         const listingsCollection = await dbConnect(collectionNameObj.listingsCollection)
         const data = await listingsCollection.find({ userEmail: session.user.email }).toArray()
-        console.log(data);
         return NextResponse.json({ message: " list successfully", data: data }, { status: 200 })
 
     } catch (error) {
