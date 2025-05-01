@@ -2,15 +2,13 @@ import { authOptions } from "@/lib/auth";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-
 interface CartItem {
     productId: string;
     quantity: number;
 }
-
 export const POST = async (req: NextRequest) => {
     try {
-        const { productId, quantity } = await req.json()
+        const { productId, quantity, unit, price, photoUrl, productName } = await req.json();
         const session = await getServerSession(authOptions)
         if (!session?.user?.email) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -18,6 +16,12 @@ export const POST = async (req: NextRequest) => {
         const userEmail = session?.user.email
         const cartsCollection = await dbConnect(collectionNameObj.cartsCollection)
         const existingCart = await cartsCollection.findOne({ userEmail });
+        const cartData = {
+            userEmail, items: [
+                { productId, productName, unit, quantity, price, photoUrl }
+            ]
+        }
+
         if (existingCart) {
             const existingItem = existingCart.items.find((item: CartItem) => item.productId === productId)
             if (existingItem) {
@@ -27,7 +31,7 @@ export const POST = async (req: NextRequest) => {
             } else {
                 const updatedItems = [
                     ...existingCart.items,
-                    { productId, quantity }
+                    { productId, productName, unit, quantity, price, photoUrl }
                 ];
                 await cartsCollection.updateOne({ userEmail }, {
                     $set: { items: updatedItems }
@@ -35,11 +39,9 @@ export const POST = async (req: NextRequest) => {
                 })
             }
         } else {
-            await cartsCollection.insertOne({
-                userEmail,
-                items: [{ productId, quantity }]
-            })
+            await cartsCollection.insertOne(cartData)
         }
+
 
 
         return NextResponse.json({ success: true }, { status: 200 });
@@ -57,44 +59,42 @@ export const GET = async () => {
 
         const userEmail = session.user.email;
         const cartsCollection = await dbConnect(collectionNameObj.cartsCollection);
+        const cart = await cartsCollection.findOne({ userEmail });
 
-        const pipeline = [
-            { $match: { userEmail } },
-            { $unwind: "$items" },
+        if (!cart) {
+            return NextResponse.json(
+                { message: "Cart not found", cart: null },
+                { status: 404 }
+            );
+        }
+
+        const items = cart.items || [];
+
+        let totalQuantity = 0;
+        let totalPrice = 0;
+
+        for (const item of items) {
+            const quantity = Number(item.quantity) || 0;
+            const price = Number(item.price) || 0;
+
+            totalQuantity += quantity;
+            totalPrice += price * quantity;
+        }
+
+        return NextResponse.json(
             {
-                $addFields: {
-                    "items.productId": { $toObjectId: "$items.productId" }
-                }
+                cart: cart.items,
+                totalQuantity,
+                totalPrice,
             },
-            {
-                $lookup: {
-                    from: collectionNameObj.listingsCollection,
-                    localField: "items.productId",
-                    foreignField: "_id",
-                    as: "productDetails"
-                }
-            },
-            { $unwind: "$productDetails" },
-            {
-                $project: {
-                    _id: 0,
-                    productId: "$items.productId",
-                    quantity: "$items.quantity",
-                    name: "$productDetails.productName",
-                    price: "$productDetails.price",
-                    photo: { $arrayElemAt: ["$productDetails.photoUrls", 0] },
-                    userEmail: 1,
-                }
-            }
-        ];
-
-        const enrichedCart = await cartsCollection.aggregate(pipeline).toArray();
-        const totalQuantity = enrichedCart.reduce((sum, item) => sum + item.quantity, 0)
-        return NextResponse.json({ cart: enrichedCart, totalQuantity }, { status: 200 });
-
+            { status: 200 }
+        );
     } catch (error) {
         console.error("GET /cart error:", error);
-        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+        return NextResponse.json(
+            { message: "Internal server error" },
+            { status: 500 }
+        );
     }
 };
 

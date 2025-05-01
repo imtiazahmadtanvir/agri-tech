@@ -4,14 +4,8 @@ import Link from "next/link";
 import React from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import ButtonOfCard from "./ButtonOfCard";
+import { Product } from "@/types/type";
 
-interface Product {
-  _id: string;
-  productName: string;
-  photoUrls?: string[];
-  price: string;
-  description: string;
-}
 interface ParamsProps {
   view?: string | undefined;
 }
@@ -82,7 +76,7 @@ export default async function ProductLists({
             </div>
 
             {/* all buttons */}
-            <ButtonOfCard id={item._id} />
+            <ButtonOfCard item={item} />
           </div>
         </div>
       ))}

@@ -17,6 +17,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const { data: cartData } = useCart();
+  console.log(cartData);
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   useEffect(() => {

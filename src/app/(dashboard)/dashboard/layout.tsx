@@ -7,10 +7,8 @@ import {
   FiChevronLeft,
   FiChevronRight,
   FiHome,
-  FiBarChart2,
   FiShoppingBag,
   FiCloud,
-  FiSettings,
 } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 
@@ -32,14 +30,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       icon: <FiCloud size={20} />,
       label: "Weather",
     },
-    {
-      href: "/dashboard/settings",
-      icon: <FiSettings size={20} />,
-      label: "Settings",
-    },
   ];
 
-  // Load collapsed state from localStorage safely
   useEffect(() => {
     const savedState =
       typeof window !== "undefined"
@@ -48,14 +40,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     setCollapsed(savedState === "true");
   }, []);
 
-  // Save collapsed state to localStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("sidebarCollapsed", collapsed.toString());
     }
   }, [collapsed]);
 
-  // Prevent body scroll when sidebar is open on mobile
   useEffect(() => {
     if (typeof document === "undefined") return;
 

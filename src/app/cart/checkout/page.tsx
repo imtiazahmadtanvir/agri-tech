@@ -1,11 +1,9 @@
 "use client";
 
 import QuantityBtn from "@/components/cart/QuantityBtn";
-import ProductForm from "@/components/modal/ProductForm";
 import ProceedToPay from "@/components/ProceedToPay";
 import ContainerSmall from "@/components/shared/max-w-container/ContainerSmall";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
-import { useGlobalContext } from "@/context/GlobalContext";
 import { useCart } from "@/Hook/useCart";
 import useFetch from "@/Hook/useFetch";
 import axios from "axios";
@@ -42,11 +40,14 @@ type CartItem = {
   name: string;
   price: number;
   quantity: number;
-  photo: string;
+  photoUrl: string;
+
+  productName: string;
 };
 type CartData = {
   cart: CartItem[];
   totalQuantity: number;
+  totalPrice: number;
 };
 export default function Checkout() {
   const {
@@ -55,7 +56,7 @@ export default function Checkout() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-  const { setTotal } = useGlobalContext();
+
   const [formLoad, setFormLoad] = useState<boolean>(false);
   const { data, isLoading } = useCart() as {
     data: CartData;
@@ -72,7 +73,7 @@ export default function Checkout() {
         <LoadingSpinner />
       </div>
     );
-  if (!data || !data.cart || data.cart.length === 0) {
+  if (!data || !data.cart || data.totalPrice === 0) {
     return (
       <ContainerSmall>
         <div className="p-4 flex items-center gap-1.5 mt-4 bg-[#F2F2F2] text-[#D18A18]">
@@ -104,11 +105,7 @@ export default function Checkout() {
       setFormLoad(false);
     }
   };
-  const total = data?.cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  setTotal(total);
+
   return (
     <ContainerSmall className="bg-white flex flex-col lg:flex-row justify-between gap-15 my-6">
       <div className="lg:w-[68%]">
@@ -322,12 +319,12 @@ export default function Checkout() {
                         <Image
                           height={70}
                           width={70}
-                          alt={item.name}
-                          src={item.photo}
+                          alt={item.productName || ""}
+                          src={item.photoUrl}
                         />
                       </div>
                       <div>
-                        <h3 className="font-bold pb-2">{item.name}</h3>
+                        <h3 className="font-bold pb-2">{item.productName}</h3>
                         <h4 className="flex items-center font-semibold text-emerald-700">
                           {item.price}.00 <FaBangladeshiTakaSign />
                         </h4>
@@ -349,7 +346,7 @@ export default function Checkout() {
         </div>
       </div>
       {/* Proceed to Pay */}
-      <ProceedToPay dInfo={dInfo ?? null} data={data} total={total} />
+      <ProceedToPay dInfo={dInfo ?? null} data={data} total={data.totalPrice} />
     </ContainerSmall>
   );
 }

@@ -16,12 +16,15 @@ type CartItem = {
   name: string;
   price: number;
   quantity: number;
-  photo: string;
+  photoUrl: string;
+
+  productName: string;
 };
 
 type CartData = {
   cart: CartItem[];
   totalQuantity: number;
+  totalPrice: number;
 };
 
 export default function Cart() {
@@ -37,7 +40,8 @@ export default function Cart() {
         <LoadingSpinner />
       </div>
     );
-  if (!data || !data.cart || data.cart.length === 0) {
+  console.log(data);
+  if (!data || !data.cart || data.totalQuantity === 0) {
     return (
       <ContainerSmall>
         <div className="p-4 flex items-center gap-1.5 mt-4 bg-[#F2F2F2] text-[#D18A18]">
@@ -56,10 +60,6 @@ export default function Cart() {
     );
   }
 
-  const total = data.cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
   const handelDeleteItem = async (id: string) => {
     try {
       await axios.delete(`/api/cart/${id}`);
@@ -93,13 +93,13 @@ export default function Cart() {
                         <Image
                           height={70}
                           width={70}
-                          alt={item.name}
-                          src={item.photo}
+                          alt={item.productName}
+                          src={item.photoUrl}
                         />
                       </div>
                       <div>
                         <h3 className="font-bold text-sm md:text-base pb-2">
-                          {item.name}
+                          {item.productName}
                         </h3>
                         <h4 className="flex items-center font-semibold text-emerald-700">
                           {item.price}.00 <FaBangladeshiTakaSign />
@@ -138,7 +138,7 @@ export default function Cart() {
             <div className="flex justify-between text-sm">
               <span>Subtotal ({data.totalQuantity} items)</span>
               <span className="flex items-center font-semibold ">
-                {total} <FaBangladeshiTakaSign />
+                {data.totalPrice} <FaBangladeshiTakaSign />
               </span>
             </div>
             <div className="flex justify-between text-sm">
@@ -150,7 +150,7 @@ export default function Cart() {
             <div className="flex justify-between py-3 border-t border-b">
               <h3>TOTAL</h3>
               <span className="font-medium flex items-center text-green-800">
-                {total + 100} <FaBangladeshiTakaSign />
+                {data.totalPrice + 100} <FaBangladeshiTakaSign />
               </span>
             </div>
             <Link
