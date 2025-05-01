@@ -1,3 +1,4 @@
+// app/dashboard/products/page.tsx
 "use client";
 import { useEffect, useState } from "react";
 import { GoPlus } from "react-icons/go";
@@ -8,6 +9,10 @@ import Image from "next/image";
 import { Product } from "@/types/type";
 import { productCategories } from "@/lib/productCategory";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+import ProductFormModal from "@/components/products/ProductFormModal";
+
+import toast from "react-hot-toast";
+import DeleteConfirmationModal from "@/components/modal/DeleteConfirmationModal";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -16,6 +21,11 @@ export default function Products() {
   const [stockFilter, setStockFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<string | null>(null);
+  const [productToDeleteName, setProductToDeleteName] = useState("");
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -25,6 +35,7 @@ export default function Products() {
         setProducts(res.data.data);
       } catch (err) {
         console.error("Failed to fetch listings", err);
+        toast.error("Failed to load products");
       } finally {
         setLoading(false);
       }
@@ -32,15 +43,45 @@ export default function Products() {
     fetchListings();
   }, []);
 
-  const handleDelete = async (productId: string) => {
-    if (confirm("Are you sure you want to delete this product?")) {
-      try {
-        await axios.delete(`/api/products/${productId}`);
-        setProducts(products.filter((product) => product._id !== productId));
-      } catch (err) {
-        console.error("Failed to delete product", err);
-      }
+  const handleDelete = async () => {
+    if (!productToDelete) return;
+
+    try {
+      await axios.delete(`/api/products/${productToDelete}`);
+      setProducts(
+        products.filter((product) => product._id !== productToDelete)
+      );
+      toast.success("Product deleted successfully");
+    } catch (err) {
+      console.error("Failed to delete product", err);
+      toast.error("Failed to delete product");
+    } finally {
+      setDeleteModalOpen(false);
+      setProductToDelete(null);
     }
+  };
+
+  const handleDeleteClick = (productId: string, productName: string) => {
+    setProductToDelete(productId);
+    setProductToDeleteName(productName);
+    setDeleteModalOpen(true);
+  };
+
+  const handleEdit = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
+
+  const handleProductUpdate = (updatedProduct: Product) => {
+    setProducts(
+      products.map((p) => (p._id === updatedProduct._id ? updatedProduct : p))
+    );
+    toast.success("Product updated successfully");
   };
 
   const filteredProducts = products.filter((product) => {
@@ -182,14 +223,19 @@ export default function Products() {
                       </td>
                       <td className="px-4 py-2 border-b">
                         <div className="flex gap-2">
-                          <Link
-                            href={`/dashboard/products/edit/${product._id}`}
+                          <button
+                            onClick={() => handleEdit(product)}
                             className="text-blue-500 hover:text-blue-700"
                           >
                             <FiEdit size={18} />
-                          </Link>
+                          </button>
                           <button
-                            onClick={() => handleDelete(product._id)}
+                            onClick={() =>
+                              handleDeleteClick(
+                                product._id,
+                                product.productName
+                              )
+                            }
                             className="text-red-500 hover:text-red-700"
                           >
                             <FiTrash2 size={18} />
@@ -229,14 +275,19 @@ export default function Products() {
                       <div className="flex justify-between items-start">
                         <h3 className="font-medium">{product.productName}</h3>
                         <div className="flex gap-2">
-                          <Link
-                            href={`/dashboard/products/edit/${product._id}`}
+                          <button
+                            onClick={() => handleEdit(product)}
                             className="text-blue-500"
                           >
                             <FiEdit size={16} />
-                          </Link>
+                          </button>
                           <button
-                            onClick={() => handleDelete(product._id)}
+                            onClick={() =>
+                              handleDeleteClick(
+                                product._id,
+                                product.productName
+                              )
+                            }
                             className="text-red-500"
                           >
                             <FiTrash2 size={16} />
@@ -276,6 +327,25 @@ export default function Products() {
             )}
           </div>
         </>
+      )}
+
+      {/* Edit Product Modal */}
+      {isModalOpen && selectedProduct && (
+        <ProductFormModal
+          product={selectedProduct}
+          onClose={handleModalClose}
+          onUpdate={handleProductUpdate}
+        />
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && (
+        <DeleteConfirmationModal
+          isOpen={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={handleDelete}
+          productName={productToDeleteName}
+        />
       )}
     </div>
   );
