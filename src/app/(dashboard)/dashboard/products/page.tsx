@@ -8,6 +8,7 @@ import axios from "axios";
 import Image from "next/image";
 import { Product } from "@/types/type";
 import { productCategories } from "@/lib/productCategory";
+import LoadingSpinner from "@/components/spinner/LoadingSpinner"; // Import a spinner component
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,14 +16,18 @@ export default function Products() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [stockFilter, setStockFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const [loading, setLoading] = useState(true); // State for loading
 
   useEffect(() => {
     const fetchListings = async () => {
+      setLoading(true); // Set loading to true when fetching
       try {
         const res = await axios.get("/api/my-listing");
         setProducts(res.data.data);
       } catch (err) {
         console.error("Failed to fetch listings", err);
+      } finally {
+        setLoading(false); // Set loading to false once done fetching
       }
     };
     fetchListings();
@@ -110,69 +115,75 @@ export default function Products() {
         </div>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="table-auto w-full border-gray-300 min-w-[600px]">
-          <thead className="bg-green-100 text-left">
-            <tr>
-              <th className="px-4 py-2 border-b">Product Name</th>
-              <th className="px-4 py-2 border-b">Category</th>
-              <th className="px-4 py-2 border-b">Price</th>
-              <th className="px-4 py-2 border-b">Stock</th>
-              <th className="px-4 py-2 border-b">Status</th>
-              <th className="px-4 py-2 border-b">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
-                <tr key={product._id} className="hover:bg-green-50">
-                  <td className="px-4 py-2 border-b flex items-center gap-2">
-                    <Image
-                      width={40}
-                      height={40}
-                      src={product.photoUrls[0]}
-                      alt={product.productName}
-                      className="w-10 h-10 rounded object-cover"
-                    />
-                    <span>{product.productName}</span>
-                  </td>
-                  <td className="px-4 py-2 border-b">
-                    {product.category || "N/A"}
-                  </td>
-                  <td className="px-4 py-2 border-b">
-                    ৳{product.discountedPrice || product.price}/
-                    {product.unit || "unit"}
-                  </td>
-                  <td className="px-4 py-2 border-b">{product.stock || 0}</td>
-                  <td className="px-4 py-2 border-b">
-                    {product.verifyStatus ? (
-                      <span className="text-green-600 font-medium">
-                        Approved
-                      </span>
-                    ) : (
-                      <span className="text-yellow-600 font-medium">
-                        Pending
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-2 border-b">
-                    <button className="text-blue-500 hover:underline">
-                      Edit
-                    </button>
+      {/* Loading Spinner */}
+      {loading ? (
+        <div className="flex justify-center py-6">
+          <LoadingSpinner /> {/* Show the loading spinner */}
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table-auto w-full border-gray-300 min-w-[600px]">
+            <thead className="bg-green-100 text-left">
+              <tr>
+                <th className="px-4 py-2 border-b">Product Name</th>
+                <th className="px-4 py-2 border-b">Category</th>
+                <th className="px-4 py-2 border-b">Price</th>
+                <th className="px-4 py-2 border-b">Stock</th>
+                <th className="px-4 py-2 border-b">Status</th>
+                <th className="px-4 py-2 border-b">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <tr key={product._id} className="hover:bg-green-50">
+                    <td className="px-4 py-2 border-b flex items-center gap-2">
+                      <Image
+                        width={40}
+                        height={40}
+                        src={product.photoUrls[0]}
+                        alt={product.productName}
+                        className="w-10 h-10 rounded object-cover"
+                      />
+                      <span>{product.productName}</span>
+                    </td>
+                    <td className="px-4 py-2 border-b">
+                      {product.category || "N/A"}
+                    </td>
+                    <td className="px-4 py-2 border-b">
+                      ৳{product.discountedPrice || product.price}/
+                      {product.unit || "unit"}
+                    </td>
+                    <td className="px-4 py-2 border-b">{product.stock || 0}</td>
+                    <td className="px-4 py-2 border-b">
+                      {product.verifyStatus ? (
+                        <span className="text-green-600 font-medium">
+                          Approved
+                        </span>
+                      ) : (
+                        <span className="text-yellow-600 font-medium">
+                          Pending
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-2 border-b">
+                      <button className="text-blue-500 hover:underline">
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="px-4 py-4 text-center" colSpan={6}>
+                    No matching products found.
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td className="px-4 py-4 text-center" colSpan={6}>
-                  No matching products found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

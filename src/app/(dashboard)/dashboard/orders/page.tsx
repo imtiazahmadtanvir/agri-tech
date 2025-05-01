@@ -20,7 +20,7 @@ interface Order {
   items: OrderItem[];
   totalPrice: number;
   orderDate: string;
-  status?: "pending" | "preparing" | "ready" | "delivered";
+  status?: "pending" | "processing" | "delivered" | "cancel";
 }
 
 export default function OrdersPage() {
@@ -65,7 +65,7 @@ export default function OrdersPage() {
   }
 
   return (
-    <div className="p-4">
+    <div className="">
       <h1 className="text-2xl font-bold mb-4">Your Orders</h1>
 
       {orders.length === 0 ? (
@@ -134,8 +134,8 @@ export default function OrdersPage() {
                       className="px-2 py-1 rounded border border-gray-300 bg-white text-sm"
                     >
                       <option value="pending">⏳ Pending</option>
-                      <option value="preparing">🛠️ Preparing</option>
-                      <option value="ready">✅ Ready</option>
+                      <option value="processing">🛠️ Processing</option>
+                      <option value="cancel">❌ Cancel</option>
                       <option value="delivered">📦 Delivered</option>
                     </select>
                   </td>
@@ -200,8 +200,8 @@ export default function OrdersPage() {
                     className="w-full px-2 py-1 rounded border border-gray-300 bg-white text-sm"
                   >
                     <option value="pending">⏳ Pending</option>
-                    <option value="preparing">🛠️ Preparing</option>
-                    <option value="ready">✅ Ready</option>
+                    <option value="processing">🛠️ Processing</option>
+                    <option value="cancel">❌ Cancel</option>
                     <option value="delivered">📦 Delivered</option>
                   </select>
                 </div>

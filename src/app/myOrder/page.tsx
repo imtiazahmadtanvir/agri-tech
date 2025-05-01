@@ -20,7 +20,7 @@ type Order = {
   items: OrderItem[];
   totalPrice: number;
   orderDate: string;
-  status?: "pending" | "preparing" | "ready" | "delivered"; // optional
+  status?: "pending" | "preparing" | "ready" | "delivered";
 };
 
 export default function OrderPage() {

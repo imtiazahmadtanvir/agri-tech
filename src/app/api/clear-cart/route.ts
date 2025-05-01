@@ -80,6 +80,7 @@ export async function POST(req: NextRequest) {
         await orderCollection.insertOne({
             vendorEmail: body.vendorEmail || null,
             userEmail,
+            status: "pending",
             items: items.map((item: CartItem) => ({
                 ...item,
                 price: typeof item.price === "string" ? parseFloat(item.price) : item.price,

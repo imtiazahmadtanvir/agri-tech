@@ -6,12 +6,12 @@ import {
   FiX,
   FiChevronLeft,
   FiChevronRight,
-  FiHome,
   FiShoppingBag,
   FiCloud,
 } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import { FaBoxOpen } from "react-icons/fa";
+import { IoBarChartOutline } from "react-icons/io5";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,7 +19,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   const navItems = [
-    { href: "/dashboard", icon: <FiHome size={20} />, label: "Home" },
+    {
+      href: "/dashboard",
+      icon: <IoBarChartOutline size={20} />,
+      label: "Overview",
+    },
 
     {
       href: "/dashboard/products",

@@ -88,6 +88,7 @@ export const GET = async () => {
                 cart: cart.items,
                 totalQuantity,
                 totalPrice,
+                status: "pending"
             },
             { status: 200 }
         );
