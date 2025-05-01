@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Product } from "@/types/type";
 import { productCategories } from "@/lib/productCategory";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
+import ProductFormModal from "@/components/products/ProductFormModal"; // You'll need to create this component
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -16,6 +17,8 @@ export default function Products() {
   const [stockFilter, setStockFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -41,6 +44,22 @@ export default function Products() {
         console.error("Failed to delete product", err);
       }
     }
+  };
+
+  const handleEdit = (product: Product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
+
+  const handleProductUpdate = (updatedProduct: Product) => {
+    setProducts(
+      products.map((p) => (p._id === updatedProduct._id ? updatedProduct : p))
+    );
   };
 
   const filteredProducts = products.filter((product) => {
@@ -182,12 +201,12 @@ export default function Products() {
                       </td>
                       <td className="px-4 py-2 border-b">
                         <div className="flex gap-2">
-                          <Link
-                            href={`/dashboard/products/edit/${product._id}`}
+                          <button
+                            onClick={() => handleEdit(product)}
                             className="text-blue-500 hover:text-blue-700"
                           >
                             <FiEdit size={18} />
-                          </Link>
+                          </button>
                           <button
                             onClick={() => handleDelete(product._id)}
                             className="text-red-500 hover:text-red-700"
@@ -229,12 +248,12 @@ export default function Products() {
                       <div className="flex justify-between items-start">
                         <h3 className="font-medium">{product.productName}</h3>
                         <div className="flex gap-2">
-                          <Link
-                            href={`/dashboard/products/edit/${product._id}`}
+                          <button
+                            onClick={() => handleEdit(product)}
                             className="text-blue-500"
                           >
                             <FiEdit size={16} />
-                          </Link>
+                          </button>
                           <button
                             onClick={() => handleDelete(product._id)}
                             className="text-red-500"
@@ -276,6 +295,15 @@ export default function Products() {
             )}
           </div>
         </>
+      )}
+
+      {/* Product Form Modal */}
+      {isModalOpen && selectedProduct && (
+        <ProductFormModal
+          product={selectedProduct}
+          onClose={handleModalClose}
+          onUpdate={handleProductUpdate}
+        />
       )}
     </div>
   );
