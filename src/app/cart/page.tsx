@@ -39,7 +39,6 @@ export default function Cart() {
         <LoadingSpinner />
       </div>
     );
-  console.log(data);
   if (!data || !data.cart || data.totalQuantity === 0) {
     return (
       <ContainerSmall>
