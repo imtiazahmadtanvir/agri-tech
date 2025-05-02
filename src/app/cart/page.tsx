@@ -33,7 +33,6 @@ export default function Cart() {
     isLoading: boolean;
     refetch: () => Promise<{ data: CartData }>;
   };
-
   if (isLoading)
     return (
       <div className="p-4">

@@ -26,7 +26,6 @@ interface Order {
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchOrders = async () => {
       try {
