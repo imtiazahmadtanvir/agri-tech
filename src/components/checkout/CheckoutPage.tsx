@@ -93,7 +93,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   // If clientSecret, stripe, or elements are not yet ready, show a loading spinner
   if (!clientSecret || !stripe || !elements) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-[80vh]">
         <div className="animate-spin h-8 w-8 rounded-full border-4 border-black border-t-transparent" />
       </div>
     );

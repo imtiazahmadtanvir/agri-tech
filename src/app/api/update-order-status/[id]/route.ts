@@ -9,7 +9,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     try {
         const { status } = await req.json();
 
-        if (!["pending", "cancel", "ready", "delivered"].includes(status)) {
+        if (!["pending", "cancel", "processing", "delivered"].includes(status)) {
             return NextResponse.json({ message: "Invalid status" }, { status: 400 });
         }
 
