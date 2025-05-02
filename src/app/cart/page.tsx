@@ -89,7 +89,7 @@ export default function Cart() {
                 >
                   <Link href={`/marketplace/product/${item.productId}`}>
                     <div className="flex gap-4 md:items-center mb-6 md:mb-0 text-sm">
-                      <div className="border rounded-2xl overflow-hidden ">
+                      <div className="border rounded-2xl overflow-hidden size-[70px] ">
                         <Image
                           height={70}
                           width={70}
