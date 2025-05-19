@@ -18,7 +18,7 @@ AgriTech is a smart agriculture platform built to empower farmers through AI, Io
 
 ## 🚀 Project Documentation
 
-🔗 [documentation](#) (https://docs.google.com/document/d/1KsqJmr-WzcmxCJYMTT6TAIIGBNlmtkrCS5_1s5XtWcs/edit?usp=sharing)*
+🔗 https://docs.google.com/document/d/1KsqJmr-WzcmxCJYMTT6TAIIGBNlmtkrCS5_1s5XtWcs/edit?usp=sharing
 
 ---
 ---
