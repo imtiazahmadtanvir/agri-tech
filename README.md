@@ -1,4 +1,4 @@
-# 🌱 AgriTech – AI-Powered Platform for Farmers
+# 🌱 AgriTech – AI-Powered Platform for Farmers.
 
 👨‍💻 **Contributor:** Imtiaz Ahmad Tanvir  
 🧠 **Team Name:** Ctrl + Alt Elite  
