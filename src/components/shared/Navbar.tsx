@@ -75,7 +75,11 @@ const NavItems = ({ isMobile = false }: { isMobile?: boolean }) => {
           <li key={item.href}>
             <Link
               href={item.href!}
-              className="text-gray-800 hover:text-primary transition-colors"
+              className={
+                isMobile
+                  ? "text-white hover:text-[#F8C32C] transition-colors"
+                  : "text-[#0D401C] hover:text-[#F8C32C] transition-colors"
+              }
             >
               {item.label}
             </Link>
@@ -226,19 +230,16 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <Container className="px-5 py-4">
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <Link href={"/"}>
-              <Image
-                src="/logo.png"
-                alt="Agri-Tech Logo"
-                width={120}
-                height={40}
-              />
-            </Link>
-            <div className="ml-10">
-              <NavItems />
-            </div>
-          </div>
+          <Link href={"/"}>
+            <Image
+              src="/logo.png"
+              alt="Agri-Tech Logo"
+              width={120}
+              height={40}
+            />
+          </Link>
+
+          <NavItems />
 
           <div className="flex items-center gap-x-4">
             <AuthSection />
