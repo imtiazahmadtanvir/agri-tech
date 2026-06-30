@@ -1,0 +1,44 @@
+
+> agri-tech@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.2.8 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+   - Experiments (use with caution):
+     · allowedDevOrigins
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+ ✓ Compiled in 856ms
+ ✓ Ready in 2.2s
+ ○ Compiling / ...
+ ✓ Compiled / in 12.4s
+Error in FeturesProducts component: TypeError: Invalid URL
+    at new Promise (<anonymous>)
+    at FeturesProducts (src/components/FeturesProducts.tsx:16:28)
+  14 | export default async function FeturesProducts() {
+  15 |   try {
+> 16 |     const res = await axios.get(
+     |                            ^
+  17 |       `${process.env.NEXT_PUBLIC_API_URL}/api/features`
+  18 |     );
+  19 |     const products = res.data; {
+  code: 'ERR_INVALID_URL',
+  input: 'undefined/api/features'
+}
+ GET / 200 in 15185ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 2.3s
+[next-auth][warn][NEXTAUTH_URL]
+https://next-auth.js.org/warnings#nextauth_url
+[next-auth][warn][NO_SECRET]
+https://next-auth.js.org/warnings#no_secret
+ GET /api/auth/session 200 in 3929ms
+ ✓ Compiled in 549ms
+ ✓ Compiled in 360ms
+ ✓ Compiled in 289ms
