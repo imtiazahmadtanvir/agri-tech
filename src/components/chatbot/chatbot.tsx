@@ -140,7 +140,7 @@ export default function Chatbot({ onClose }: { onClose?: () => void }) {
   const handleSendMessage = useCallback(
     async (input?: string) => {
       const messageToSend = input || userInput
-      if (!messageToSend.trim() || !chat) return
+      if (!messageToSend.trim()) return
 
       // Hide suggestions when sending a message
       setShowSuggestions(false)
@@ -153,12 +153,32 @@ export default function Chatbot({ onClose }: { onClose?: () => void }) {
 
       setMessages((prevMessages) => [...prevMessages, userMessage])
       setUserInput("")
+      setError(null) // Clear any previous error
 
       setIsLoading(true)
       try {
-        const result = await chat.sendMessage(messageToSend)
+        let responseText = ""
+
+        // 1. Check if the input matches a predefined question to avoid API calls and save quota
+        const matchedQuestion = predefinedQuestions.find(
+          (q) => q.question.toLowerCase().trim() === messageToSend.toLowerCase().trim()
+        )
+
+        if (matchedQuestion) {
+          // Simulate typing delay for predefined questions
+          await new Promise((resolve) => setTimeout(resolve, 800))
+          responseText = matchedQuestion.answer
+        } else {
+          if (!chat) {
+            throw new Error("API payment limit is over or chat session is not initialized.")
+          }
+          // 2. Call the Gemini API
+          const result = await chat.sendMessage(messageToSend)
+          responseText = result.response.text()
+        }
+
         const botMessage: Message = {
-          text: result.response.text(),
+          text: responseText,
           role: "model",
           timestamp: new Date(),
         }
@@ -167,7 +187,32 @@ export default function Chatbot({ onClose }: { onClose?: () => void }) {
         // Show suggestions again after receiving a response
         setShowSuggestions(true)
       } catch (err: any) {
-        setError("Failed to send message: " + err.message)
+        console.error("Gemini API Error:", err)
+        let friendlyMessage = "I am sorry, but I encountered an error. Please try again."
+
+        const isQuotaOrLimitError = 
+          err.message?.includes("Quota exceeded") || 
+          err.message?.includes("429") || 
+          err.message?.includes("payment") || 
+          err.message?.includes("limit") ||
+          err.message?.includes("blocked") ||
+          err.message?.includes("not initialized")
+
+        if (isQuotaOrLimitError) {
+          friendlyMessage = "I'm sorry, but my API payment limit is over or the quota has been exceeded. However, you can still ask me any of the predefined questions below!"
+        } else if (err.message?.includes("API key")) {
+          friendlyMessage = "I couldn't authenticate with the AI service. Please verify that the API key is configured correctly. You can still ask me any of the predefined questions below!"
+        } else {
+          friendlyMessage = `I'm sorry, I'm having trouble connecting right now (API payment limit may be over). (Error: ${err.message || 'Unknown'}). You can still ask me any of the predefined questions below!`
+        }
+
+        const botMessage: Message = {
+          text: friendlyMessage,
+          role: "model",
+          timestamp: new Date(),
+        }
+        setMessages((prevMessages) => [...prevMessages, botMessage])
+        setShowSuggestions(true)
       } finally {
         setIsLoading(false)
         // Focus the input field after sending a message
@@ -176,7 +221,7 @@ export default function Chatbot({ onClose }: { onClose?: () => void }) {
         }, 100)
       }
     },
-    [chat, userInput],
+    [chat, userInput, predefinedQuestions],
   )
 
   const handleKeyDown = useCallback(
