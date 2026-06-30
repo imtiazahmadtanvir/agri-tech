@@ -15,15 +15,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Send, AlertCircle, Loader2, Leaf, MessageSquare, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog"
+// Dialog imports removed
 
 interface Message {
   text: string
@@ -31,19 +23,18 @@ interface Message {
   timestamp: Date
 }
 
-export default function Chatbot() {
+export default function Chatbot({ onClose }: { onClose?: () => void }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [userInput, setUserInput] = useState("")
   const [chat, setChat] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(true)
-  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "AIzaSyDS1UScOoCOAKLe22DTgcFui9bJlKyjnEQ";
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY ;
   const MODEL_NAME = "gemini-2.0-flash"
 
   const predefinedQuestions = [
@@ -205,9 +196,7 @@ export default function Chatbot() {
     [handleSendMessage],
   )
 
-  const handleMessageClick = useCallback((message: Message) => {
-    setSelectedMessage(message)
-  }, [])
+  // Message click handler removed
 
   // Filter out the questions that have already been asked
   const getUnaskedQuestions = useCallback(() => {
@@ -217,40 +206,64 @@ export default function Chatbot() {
   }, [messages])
 
   return (
-    <Card className="w-full h-full flex flex-col shadow-lg border-0 bg-green-50">
-      <CardHeader className="border-b  text-black sticky top-0 z-10 backdrop-filter backdrop-blur-lg py-2 px-3 sm:py-3 sm:px-6 bg-white">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl sm:text-2xl mx-auto font-bold text-center flex items-center gap-1 sm:gap-2">
-            <Leaf className="h-5 w-5 sm:h-6 sm:w-6" />
-            Agri-Tech ChatBot
-          </CardTitle>
+    <Card className="w-full h-full flex flex-col shadow-lg border-0 bg-green-50/35 overflow-hidden">
+      <CardHeader className="border-b border-green-100 text-black py-3 px-4 sm:px-5 bg-white shadow-sm z-10">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-3">
+            <div className="bg-green-100 p-2 rounded-full text-green-700">
+              <Leaf className="h-5 w-5 sm:h-6 sm:w-6" />
+            </div>
+            <div className="text-left">
+              <CardTitle className="text-base sm:text-lg font-bold text-green-900 leading-tight">
+                Agri-Tech Assistant
+              </CardTitle>
+              <span className="text-[10px] sm:text-xs text-green-600 flex items-center gap-1 mt-0.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
+                Online & Ready to help
+              </span>
+            </div>
+          </div>
+          {onClose && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClose}
+              className="rounded-full hover:bg-green-100 text-green-800 transition-colors h-8 w-8 sm:h-9 sm:w-9"
+            >
+              <X className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="sr-only">Close chat</span>
+            </Button>
+          )}
         </div>
       </CardHeader>
 
-      <CardContent className="flex-1 p-0 relative pt-20">
+      <CardContent className="flex-1 min-h-0 p-0 flex flex-col relative bg-green-50/30">
         {error && (
-          <Alert variant="destructive" className="m-2 sm:m-7">
-            <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6" />
-            <AlertDescription className="text-sm sm:text-base">{error}</AlertDescription>
+          <Alert variant="destructive" className="m-2 sm:m-4 absolute top-2 left-2 right-2 z-20 shadow-md">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
         )}
 
-        {/* Added pt-4 to create space after the sticky header */}
-        <ScrollArea className="h-[50vh] sm:h-[60vh] md:h-[70vh] pt-2 sm:pt-4" ref={scrollAreaRef}>
-          <div className="p-2 sm:p-4">
+        <ScrollArea className="flex-1 min-h-0 w-full" ref={scrollAreaRef}>
+          <div className="p-3 sm:p-4">
             {messages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-center text-muted-foreground p-3 sm:p-8">
-                <h3 className="text-base sm:text-lg font-medium mb-1 sm:mb-2 text-green-800">Welcome to AgriChatBot</h3>
-                <p className="text-sm sm:text-base text-green-700">
-                  Ask me anything about farming, agriculture, crops, or gardening!
+              <div className="flex flex-col items-center justify-center min-h-[350px] text-center p-4 sm:p-6">
+                <div className="bg-green-100 p-4 rounded-full text-green-800 mb-3 sm:mb-4">
+                  <Leaf className="h-8 w-8 sm:h-10 sm:w-10 animate-bounce" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold mb-2 text-green-900">Welcome to AgriChatBot</h3>
+                <p className="text-sm sm:text-base text-green-700 max-w-sm mb-4 sm:mb-6">
+                  Ask me anything about farming, agriculture, crop rotation, pests, or gardening!
                 </p>
-                <div className="mt-3 sm:mt-4 space-y-2 w-full">
+                <div className="space-y-2 w-full max-w-md">
+                  <p className="text-xs sm:text-sm font-semibold text-green-800 text-left mb-1">Frequently Asked Questions:</p>
                   {predefinedQuestions.map((item, index) => (
                     <Button
                       key={index}
                       variant="outline"
                       onClick={() => handlePredefinedQuestionClick(item.question)}
-                      className="bg-green-100 hover:bg-green-200 text-green-800 border-green-300 w-full text-left justify-start text-xs sm:text-sm py-2 px-3 h-auto min-h-[40px]"
+                      className="bg-white hover:bg-green-50 text-green-800 border-green-200 hover:border-green-300 w-full text-left justify-start text-xs sm:text-sm py-2.5 px-3 h-auto shadow-sm whitespace-normal text-wrap"
                     >
                       {item.question}
                     </Button>
@@ -258,110 +271,85 @@ export default function Chatbot() {
                 </div>
               </div>
             ) : (
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-4">
                 {messages.map((msg, index) => (
-                  <Dialog key={index}>
-                    <DialogTrigger asChild>
+                  <div
+                    key={index}
+                    className={cn(
+                      "flex items-start gap-2 max-w-[85%] sm:max-w-[80%]",
+                      msg.role === "user" ? "ml-auto flex-row-reverse" : "mr-auto"
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "h-8 w-8 rounded-full flex items-center justify-center shrink-0 text-xs shadow-sm",
+                        msg.role === "user"
+                          ? "bg-green-600 text-white"
+                          : "bg-green-100 text-green-800 border border-green-200"
+                      )}
+                    >
+                      {msg.role === "user" ? "U" : <Leaf className="h-4 w-4" />}
+                    </div>
+                    <div className="flex flex-col">
                       <div
                         className={cn(
-                          "flex flex-col max-w-[85%] sm:max-w-[80%] rounded-lg p-3 sm:p-4 cursor-pointer transition-all hover:opacity-90 hover:shadow-md",
+                          "rounded-2xl px-4 py-2.5 text-sm sm:text-base shadow-sm whitespace-pre-wrap break-words",
                           msg.role === "user"
-                            ? "ml-auto bg-green-600 text-white"
-                            : "mr-auto bg-green-100 text-green-900",
+                            ? "bg-green-600 text-white rounded-tr-none"
+                            : "bg-white text-green-900 border border-green-100 rounded-tl-none"
                         )}
-                        onClick={() => handleMessageClick(msg)}
                       >
-                        <div className="whitespace-pre-wrap text-sm sm:text-base">
-                          {msg.text.length > 150 ? `${msg.text.substring(0, 150)}...` : msg.text}
-                        </div>
-                        <div className="flex items-center justify-between mt-1 sm:mt-2">
-                          <span
-                            className={cn(
-                              "text-[10px] sm:text-xs",
-                              msg.role === "user" ? "text-green-100" : "text-green-700",
-                            )}
-                          >
-                            {msg.role === "model" && <MessageSquare className="h-2 w-2 sm:h-3 sm:w-3 inline mr-1" />}
-                            Click to expand
-                          </span>
-                          <span
-                            className={cn(
-                              "text-[10px] sm:text-xs",
-                              msg.role === "user" ? "text-green-100" : "text-green-700",
-                            )}
-                          >
-                            {format(msg.timestamp, "h:mm a")}
-                          </span>
-                        </div>
-                      </div>
-                    </DialogTrigger>
-                    <DialogContent className="bg-white w-[95vw] max-w-3xl max-h-[90vh] overflow-y-auto p-3 sm:p-6">
-                      {/* Added prominent close button */}
-                      <DialogClose className="absolute right-2 top-2 sm:right-4 sm:top-4 rounded-full p-1.5 sm:p-2 bg-green-100 hover:bg-green-200 transition-colors">
-                        <X className="h-3 w-3 sm:h-4 sm:w-4 text-green-800" />
-                        <span className="sr-only">Close</span>
-                      </DialogClose>
-
-                      <DialogHeader className="mb-2 sm:mb-4">
-                        <DialogTitle
-                          className={cn(
-                            "flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-base sm:text-lg",
-                            msg.role === "user" ? "text-green-700" : "text-green-800",
-                          )}
-                        >
-                          {msg.role === "user" ? "Your Message" : "AgriBot Response"}
-                          <span className="text-xs sm:text-sm font-normal text-gray-500">
-                            {format(msg.timestamp, "MMM d, yyyy h:mm a")}
-                          </span>
-                        </DialogTitle>
-                      </DialogHeader>
-                      <DialogDescription className="text-sm sm:text-base text-black whitespace-pre-wrap">
                         {msg.text}
-                      </DialogDescription>
-
-                      {/* Added bottom close button for better mobile UX */}
-                      <div className="mt-4 sm:mt-6 flex justify-center">
-                        <DialogClose asChild>
-                          <Button
-                            variant="outline"
-                            className="bg-green-100 hover:bg-green-200 text-green-800 border-green-300 text-sm sm:text-base py-1.5 sm:py-2 h-auto"
-                          >
-                            Close
-                          </Button>
-                        </DialogClose>
                       </div>
-                    </DialogContent>
-                  </Dialog>
+                      <span
+                        className={cn(
+                          "text-[10px] text-gray-500 mt-1 px-1",
+                          msg.role === "user" ? "text-right" : "text-left"
+                        )}
+                      >
+                        {format(msg.timestamp, "h:mm a")}
+                      </span>
+                    </div>
+                  </div>
                 ))}
 
                 {isLoading && (
-                  <div className="flex flex-col max-w-[85%] sm:max-w-[80%] rounded-lg p-3 sm:p-4 mr-auto bg-green-100 text-green-900">
-                    <div className="flex items-center gap-1 sm:gap-2">
-                      <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
-                      <span className="text-sm sm:text-base">Thinking...</span>
+                  <div className="flex items-start gap-2 max-w-[85%] sm:max-w-[80%] mr-auto">
+                    <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0 text-xs shadow-sm bg-green-100 text-green-800 border border-green-200">
+                      <Leaf className="h-4 w-4 animate-pulse" />
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="bg-white text-green-850 border border-green-100 rounded-2xl rounded-tl-none px-4 py-2.5 shadow-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="flex gap-1">
+                            <span className="h-1.5 w-1.5 bg-green-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                            <span className="h-1.5 w-1.5 bg-green-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                            <span className="h-1.5 w-1.5 bg-green-500 rounded-full animate-bounce" />
+                          </span>
+                          <span className="text-xs font-medium text-green-600">Typing...</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
 
-                {/* Show remaining questions after each bot response */}
-                {showSuggestions && messages.length > 0 && messages[messages.length - 1].role === "model" && (
-                  <div className="my-3 sm:my-4 p-2 sm:p-3 bg-green-50 border border-green-200 rounded-lg">
-                    <p className="text-xs sm:text-sm font-medium text-green-800 mb-1 sm:mb-2">
-                      You might also want to ask:
+                {/* Show remaining questions as horizontal scrolling/wrapped chips */}
+                {showSuggestions && messages.length > 0 && messages[messages.length - 1].role === "model" && getUnaskedQuestions().length > 0 && (
+                  <div className="space-y-1.5 mt-2 p-1">
+                    <p className="text-[10px] sm:text-xs font-semibold text-green-800 px-1">
+                      Suggested Questions:
                     </p>
-                    <div className="space-y-1.5 sm:space-y-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {getUnaskedQuestions()
-                        .slice(0, 4)
+                        .slice(0, 3)
                         .map((item, index) => (
-                          <Button
+                          <button
                             key={index}
-                            variant="outline"
-                            size="sm"
                             onClick={() => handlePredefinedQuestionClick(item.question)}
-                            className="bg-white hover:bg-green-100 text-green-800 border-green-200 w-full text-left justify-start text-xs sm:text-sm py-1.5 px-2 h-auto min-h-[32px]"
+                            className="bg-white hover:bg-green-100 text-green-800 hover:text-green-900 border border-green-200 rounded-full text-xs py-1 px-2.5 transition-colors cursor-pointer text-left font-medium shadow-sm hover:border-green-300"
                           >
                             {item.question}
-                          </Button>
+                          </button>
                         ))}
                     </div>
                   </div>
@@ -374,8 +362,8 @@ export default function Chatbot() {
         </ScrollArea>
       </CardContent>
 
-      <div className="p-2 sm:p-4 sticky border-t border-green-200 bg-green-50">
-        <div className="flex gap-1 sm:gap-2">
+      <div className="p-3 sm:p-4 border-t border-green-100 bg-white">
+        <div className="flex gap-2 items-center">
           <Input
             ref={inputRef}
             value={userInput}
@@ -383,18 +371,18 @@ export default function Chatbot() {
             onKeyDown={handleKeyDown}
             placeholder="Ask something about farming..."
             disabled={isLoading}
-            className="flex-1 border-green-300 focus-visible:ring-green-500 text-sm sm:text-base h-9 sm:h-10"
+            className="flex-1 border-green-200 focus-visible:ring-green-600 focus-visible:border-green-600 text-sm h-10 px-3.5 bg-green-50/20 rounded-full"
           />
           <Button
             onClick={() => handleSendMessage()}
             disabled={isLoading || !userInput.trim()}
             size="icon"
-            className="bg-green-700 hover:bg-green-800 h-9 w-9 sm:h-10 sm:w-10"
+            className="bg-green-700 hover:bg-green-800 text-white rounded-full h-10 w-10 shrink-0 transition-transform active:scale-95 shadow-md hover:shadow-lg disabled:bg-gray-100 disabled:text-gray-400 disabled:shadow-none cursor-pointer"
           >
             {isLoading ? (
-              <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+              <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <Send className="h-3 w-3 sm:h-4 sm:w-4" />
+              <Send className="h-4 w-4" />
             )}
           </Button>
         </div>

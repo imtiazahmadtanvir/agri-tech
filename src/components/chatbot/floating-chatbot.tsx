@@ -56,10 +56,10 @@ function FloatingChatbot() {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent
           className={cn(
-            "p-0 gap-0 overflow-hidden",
+            "p-0 gap-0 overflow-hidden [&>button]:hidden border border-green-150/50 shadow-2xl",
             isMobile
               ? "w-[95vw] h-[90vh] max-w-none rounded-lg"
-              : "sm:max-w-[425px] md:max-w-[600px] lg:max-w-[800px] h-[80vh] max-h-[800px]",
+              : "sm:max-w-[420px] h-[80vh] max-h-[700px] sm:top-auto sm:left-auto sm:bottom-6 sm:right-6 sm:translate-x-0 sm:translate-y-0 rounded-2xl",
           )}
           onInteractOutside={(e) => {
             // Prevent closing when clicking outside on mobile
@@ -68,22 +68,8 @@ function FloatingChatbot() {
             }
           }}
         >
-          {/* Added prominent close button */}
-          <DialogClose
-            className={cn(
-              "absolute z-50 rounded-full backdrop-blur-sm",
-              isMobile
-                ? "right-2 top-2 p-1.5 bg-white/70 hover:bg-white"
-                : "right-4 top-4 p-2 bg-white/80 hover:bg-white shadow-md",
-            )}
-            onClick={handleClose}
-          >
-            <X className={cn(isMobile ? "h-4 w-4" : "h-5 w-5", "text-green-800")} />
-            <span className="sr-only">Close chat</span>
-          </DialogClose>
-
           {/* Only render Chatbot when dialog is open to save resources */}
-          {isOpen && <Chatbot />}
+          {isOpen && <Chatbot onClose={handleClose} />}
         </DialogContent>
       </Dialog>
     </>
