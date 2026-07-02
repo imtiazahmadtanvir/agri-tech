@@ -1,9 +1,9 @@
 "use client"
 
 import { useState, useCallback, memo, useEffect } from "react"
-import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { MessageCircle, X, Leaf } from "lucide-react"
+import { MessageCircle, Leaf } from "lucide-react"
 import { cn } from "@/lib/utils"
 import dynamic from "next/dynamic"
 
