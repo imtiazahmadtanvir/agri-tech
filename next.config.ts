@@ -34,6 +34,10 @@ const nextConfig: NextConfig = {
         protocol: "http",
         hostname: "openweathermap.org",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
     ],
   },
 };
