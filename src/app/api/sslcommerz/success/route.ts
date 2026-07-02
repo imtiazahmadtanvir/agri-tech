@@ -7,5 +7,5 @@ export async function POST(req: Request) {
 
     // You can update your database/order status here
 
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/payment-success`);
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/payment-success`, { status: 303 });
 }

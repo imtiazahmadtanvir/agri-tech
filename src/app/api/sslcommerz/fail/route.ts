@@ -4,5 +4,5 @@ export async function POST() {
     console.log("Payment Failed!");
 
     // Redirect user to error page
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/payment-fail`);
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/payment-fail`, { status: 303 });
 }
