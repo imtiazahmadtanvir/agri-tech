@@ -6,9 +6,11 @@ import TopInfoBar from "@/components/shared/TopInfoBar";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/provider/AuthProvider";
 import Navbar from "@/components/shared/Navbar";
-import FloatingChatbot from "@/components/chatbot/floating-chatbot";
+import dynamic from "next/dynamic";
 import GlobalContextProvider from "@/context/GlobalContext";
 import QueryProvider from "@/components/react-query/QueryProvider";
+
+import FloatingChatbot from "@/components/chatbot/floating-chatbot";
 
 //
 const workSans = Work_Sans({
@@ -38,7 +40,7 @@ export default function RootLayout({
         <QueryProvider>
           <GlobalContextProvider>
             <AuthProvider>
-              <Toaster position="bottom-right" reverseOrder={false} />
+              <Toaster position="top-center" reverseOrder={false} />
               <TopInfoBar />
               <Navbar />
               <main className="flex-1">{children}</main>

@@ -2,7 +2,7 @@ import { timeAgeCalculator } from "@/utils/timeCalculate";
 import { FormData } from "@/types/type";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
+import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
 import Filters from "@/components/market/marketplace/Filters";
 import PaginationControls from "@/components/PaginationControls/PaginationControls";
 
@@ -16,6 +16,18 @@ interface SearchParams {
   page: string;
   limit: string;
 }
+
+type QueryType = {
+  price?: {
+    $gte?: number;
+    $lte?: number;
+  };
+  category?: string;
+  productName?: {
+    $regex: string;
+    $options: string;
+  };
+};
 
 export default async function MarketplaceMain({
   searchParams,
@@ -34,22 +46,49 @@ export default async function MarketplaceMain({
   let errorMessage = "";
   let items: FormData[] = [];
   let itemCount = 10;
-  try {
-    const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/listings`, {
-      params: {
-        search,
-        maxPrice,
-        minPrice,
-        sortBy,
-        location,
-        categories,
-        page,
-        limit,
-      },
-    });
 
-    items = res.data.data;
-    itemCount = res.data.total;
+  try {
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const skipNum = (pageNum - 1) * limitNum;
+    const query: QueryType = {};
+
+    if (categories) {
+      query.category = categories;
+    }
+
+    let sortOption: any = {};
+    if (!sortBy) {
+      sortOption = { listed: -1 };
+    } else if (sortBy === "date-old") {
+      sortOption = { listed: 1 };
+    } else if (sortBy === "price-high") {
+      sortOption = { price: -1 };
+    } else if (sortBy === "price-low") {
+      sortOption = { price: 1 };
+    }
+
+    query.price = { $gte: parseFloat(String(minPrice)), $lte: parseFloat(String(maxPrice)) };
+
+    if (search) {
+      query.productName = { $regex: search, $options: "i" };
+    }
+
+    const listingsCollection = await dbConnect(collectionNameObj.listingsCollection);
+    const total = await listingsCollection.countDocuments(query);
+    const result = await listingsCollection
+      .find(query)
+      .sort(sortOption)
+      .skip(skipNum)
+      .limit(limitNum)
+      .toArray();
+
+    items = result.map((item) => ({
+      ...item,
+      _id: item._id.toString(),
+    })) as unknown as FormData[];
+
+    itemCount = total;
   } catch (error) {
     console.error("Error fetching marketplace items:", error);
     errorMessage = "Failed to fetch marketplace items. Please try again later.";
