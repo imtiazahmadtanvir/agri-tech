@@ -12,8 +12,8 @@ export async function POST(req: Request) {
     }
 
     const data = {
-        store_id: "agro680fc75f907d1",
-        store_passwd: "agro680fc75f907d1@ss",
+        store_id,
+        store_passwd,
         total_amount: body.amount,
         currency: 'BDT',
         tran_id: Math.random().toString(36).substring(7),
@@ -45,9 +45,19 @@ export async function POST(req: Request) {
     };
     console.log(data);
     try {
+        const params = new URLSearchParams();
+        Object.entries(data).forEach(([key, value]) => {
+            params.append(key, String(value));
+        });
+
         const response = await axios.post(
-            "https://sandbox.sslcommerz.com/gwprocess/v3/api.php",
-            data
+            "https://sandbox.sslcommerz.com/gwprocess/v4/api.php",
+            params,
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }
         );
 
         return NextResponse.json(response.data);
