@@ -35,7 +35,7 @@ export default function Chatbot({ onClose }: { onClose?: () => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY ;
-  const MODEL_NAME = "gemini-2.0-flash"
+  const MODEL_NAME = "gemini-1.5-flash"
 
   const predefinedQuestions = [
     {
