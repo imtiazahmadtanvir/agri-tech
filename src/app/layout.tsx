@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${workSans.variable} ${nunitoSans.variable}`}>
+    <html lang="en" className={`${workSans.variable} ${nunitoSans.variable}`} suppressHydrationWarning>
       <body className="antialiased min-h-screen flex flex-col">
         <QueryProvider>
           <GlobalContextProvider>
