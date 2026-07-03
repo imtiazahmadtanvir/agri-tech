@@ -91,16 +91,18 @@ export default async function MarketplaceMain({
     console.error("Direct db query error in marketplace:", error);
   }
   return (
-    <div className="my-4">
+    <div className="py-2 pb-16 flex flex-col gap-6">
       <div>
         <Filters />
       </div>
       <Suspense key={JSON.stringify(param)} fallback={<LoadingSpinner />}>
-        <div className="min-h-screen">
+        <div className="min-h-[60vh]">
           <ProductLists searchParams={searchParams} items={items} />
         </div>
       </Suspense>
-      <PaginationControls totalPages={totalPages} />
+      <div className="pt-4 border-t border-gray-100">
+        <PaginationControls totalPages={totalPages} />
+      </div>
     </div>
   );
 }
