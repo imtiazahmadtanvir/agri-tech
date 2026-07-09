@@ -50,6 +50,9 @@ export default function ProceedToPay({
         fullName: dInfo.fullName,
         phoneNumber: dInfo.phoneNumber,
         userEmail: session?.user?.email || "",
+        address: `${dInfo.address}${dInfo.houseDetails ? ", " + dInfo.houseDetails : ""}${dInfo.area ? ", " + dInfo.area : ""}${dInfo.landmark ? " (Landmark: " + dInfo.landmark + ")" : ""}`,
+        city: dInfo.city,
+        region: dInfo.region,
       });
 
       if (response.data?.GatewayPageURL) {
