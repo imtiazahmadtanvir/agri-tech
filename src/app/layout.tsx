@@ -6,7 +6,6 @@ import TopInfoBar from "@/components/shared/TopInfoBar";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/provider/AuthProvider";
 import Navbar from "@/components/shared/Navbar";
-import dynamic from "next/dynamic";
 import GlobalContextProvider from "@/context/GlobalContext";
 import QueryProvider from "@/components/react-query/QueryProvider";
 

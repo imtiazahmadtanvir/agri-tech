@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import LoadingSpinner from "@/components/spinner/LoadingSpinner";
 import PaginationControls from "@/components/PaginationControls/PaginationControls";
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect";
+import { Product } from "@/types/type";
 
 interface SearchParams {
   search?: string;
@@ -36,7 +37,7 @@ export default async function MarketplaceMain({
 }) {
   const param = await searchParams;
   const { category, search, maxPrice, minPrice, sortBy, page } = param;
-  let items: any[] = [];
+  let items: Product[] = [];
   let totalPages = 0;
 
   try {
@@ -49,7 +50,7 @@ export default async function MarketplaceMain({
       query.category = category;
     }
 
-    let sortOption: any = {};
+    let sortOption: Record<string, 1 | -1> = {};
     if (!sortBy) {
       sortOption = { listed: -1 };
     } else if (sortBy === "date-old") {
@@ -85,7 +86,7 @@ export default async function MarketplaceMain({
     items = result.map((item) => ({
       ...item,
       _id: item._id.toString(),
-    }));
+    })) as unknown as Product[];
     totalPages = Math.ceil(total / limitNum);
   } catch (error) {
     console.error("Direct db query error in marketplace:", error);

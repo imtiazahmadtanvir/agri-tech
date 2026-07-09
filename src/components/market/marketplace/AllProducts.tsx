@@ -39,7 +39,6 @@ export default async function MarketplaceMain({
   const minPrice = param.minPrice || 0;
   const maxPrice = param.maxPrice || 100000000;
   const sortBy = param.sortBy || "";
-  const location = param.location || "";
   const categories = param.category || "";
   const page = param.page || "1";
   const limit = param.limit || "10";
@@ -57,7 +56,7 @@ export default async function MarketplaceMain({
       query.category = categories;
     }
 
-    let sortOption: any = {};
+    let sortOption: Record<string, 1 | -1> = {};
     if (!sortBy) {
       sortOption = { listed: -1 };
     } else if (sortBy === "date-old") {
